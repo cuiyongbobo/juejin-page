@@ -1,0 +1,1273 @@
+<!doctype html>
+<html data-n-head-ssr lang="zh" data-n-head="%7B%22lang%22:%7B%22ssr%22:%22zh%22%7D%7D">
+  <head >
+    <title>iOS Swift 开发面试题总结（Swift 6.x 修订版）</title><meta data-n-head="ssr" charset="utf-8"><meta data-n-head="ssr" name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, viewport-fit=cover"><meta data-n-head="ssr" name="apple-itunes-app" content="app-id=987739104"><meta data-n-head="ssr" name="theme-color" content="#ffffff"><meta data-n-head="ssr" name="msapplication-TileColor" content="#da532c"><meta data-n-head="ssr" name="msvalidate.01" content="BADCF2429624CB0432BE8924E5343343"><meta data-n-head="ssr" name="google-site-verification" content="H_4N6FRhUA633zQuLcgQvaDDceBxlcb6vMSFXm5G4i8"><meta data-n-head="ssr" vmid="description" name="description" content="按 Swift 6.x 语义修订后的 iOS Swift 面试题总结，重点修正类与结构体、ARC、泛型、访问控制、COW、错误处理、函数重载和初始化器等容易误判的问题。"><meta data-n-head="ssr" vmid="keywords" name="keywords" content="RxSwift,SwiftUI,Alamofire中文技术社区,前端开发社区,前端技术交流,前端框架教程,JavaScript 学习资源,CSS 技巧与最佳实践,HTML5 最新动态,前端工程师职业发展,开源前端项目,前端技术趋势"><link data-n-head="ssr" rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png"><link data-n-head="ssr" rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png"><link data-n-head="ssr" rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png"><link data-n-head="ssr" rel="mask-icon" href="assets/safari-pinned-tab.svg" color="#1E80FF"><link data-n-head="ssr" rel="stylesheet" href="assets/bytedesign.min.css"><link data-n-head="ssr" rel="canonical" href="https://juejin.cn/post/7229877486171930684"><link rel="stylesheet" href="assets/app.070ff99.css"><link rel="stylesheet" href="assets/default.a1d6163.css"><link rel="stylesheet" href="assets/12.782611d.css">
+  
+<style id="local-catalog-style">
+html{scroll-behavior:smooth}
+.article-area h2[id],.article-area h3[id]{scroll-margin-top:6.25rem}
+#sidebar-container .local-catalog{display:flex}
+#sidebar-container .sticky-block-box{max-height:calc(100vh - 8.75rem)}
+#sidebar-container .local-catalog .catalog-body.unfold{max-height:calc(100vh - 13rem);min-height:20rem}
+#sidebar-container .local-catalog .catalog-body.collapse{max-height:0;overflow:hidden;margin-top:0}
+#sidebar-container .local-catalog .catalog-list{padding-bottom:16px}
+#sidebar-container .local-catalog .item.active>.a-container{background:rgba(30,128,255,.07)}
+#sidebar-container .local-catalog .item.active>.a-container:before{content:"";position:absolute;top:2px;left:0;width:3px;height:14px;border-radius:2px;background:#1e80ff}
+#sidebar-container .local-catalog .catalog-aTag.active{color:#1e80ff;font-weight:600}
+#sidebar-container .local-catalog .direction{cursor:pointer;user-select:none}
+@media (max-width:1000px){
+  #sidebar-container{position:relative!important;width:100%!important;margin-top:1rem}
+  #sidebar-container .sticky-block-box{position:relative!important;top:auto!important;max-height:none}
+  #sidebar-container .local-catalog .catalog-body.unfold{max-height:22rem;min-height:0}
+}
+</style>
+
+  </head>
+  <body >
+    <div data-server-rendered="true" id="__nuxt"><div id="__layout"><div id="juejin"><div data-v-539963b4 data-v-61fb5e44><div class="view-container" data-v-539963b4><!----> <header data-fetch-key="data-v-14fe2051:0" class="main-header main-header unauthorized visible" data-v-14fe2051 data-v-539963b4><div class="container" data-v-14fe2051><a rel="noreferrer" class="logo" data-v-14fe2051><img src="assets/logo.svg"" alt="稀土掘金" class="logo-img" data-v-14fe2051> <img src="assets/logo-mobile.svg"" alt="稀土掘金" class="mobile" data-v-14fe2051></a> <!----> <nav role="navigation" class="main-nav" data-v-14fe2051><ul class="nav-list" data-v-14fe2051><!----> <li class="main-nav-list" data-v-14fe2051><!----> <ul class="phone-hide" data-v-14fe2051><li class="nav-item link-item" data-v-14fe2051><a href="/" data-v-14fe2051>首页</a></li> <li class="nav-item link-item activities" data-v-14fe2051><a href="/pins" data-v-14fe2051>
+                沸点
+                <span class="text" data-v-14fe2051><!----></span></a></li> <li class="nav-item link-item book" data-v-14fe2051><a href="/course" data-v-14fe2051>
+                课程
+                <!----></a></li> <li class="nav-item link-item download-center-entry" data-v-14fe2051><a href="/download" target="_blank" rel="noopener" data-v-14fe2051>APP</a></li> <li class="nav-item link-item" data-v-14fe2051><a href="/aiusage/dashboard" data-v-14fe2051>AI用量</a></li> <li class="nav-item link-item" data-v-14fe2051><a href="/vibe-work" data-v-14fe2051>作品广场</a></li> <li class="nav-item link-item" data-v-14fe2051><a href="https://corexpert.juejin.cn/" data-v-14fe2051>
+                专家标注
+              </a></li> <!----></ul></li> <ul class="right-side-nav" data-v-14fe2051><li class="search-add" data-v-14fe2051><ul class="search-add-ul" data-v-14fe2051><li class="nav-item search" data-v-14fe2051><form role="search" class="search-form" data-v-14fe2051><input type="search" maxlength="64" placeholder="" value="" class="search-input" data-v-14fe2051> <div class="seach-icon-container" data-v-14fe2051><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" class="search-icon" data-v-14fe2051 data-v-14fe2051><path d="M12.4008 12.4008C14.744 10.0577 14.744 6.25871 12.4008 3.91556C10.0577 1.57242 6.25871 1.57242 3.91556 3.91556C1.57242 6.25871 1.57242 10.0577 3.91556 12.4008C6.25871 14.744 10.0577 14.744 12.4008 12.4008ZM12.4008 12.4008L15.5828 15.5828" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-v-14fe2051 data-v-14fe2051></path></svg></div> <!----> <div class="typehead" style="display:none;" data-v-14fe2051><!----> <div class="title" data-v-14fe2051><span data-v-14fe2051>搜索历史</span> <span class="clear" data-v-14fe2051>
+                        清空
+                      </span></div> <div class="list" data-v-14fe2051></div></div></form></li> <!----> <li class="nav-item add creator-item" data-v-14fe2051><div class="add-group" data-v-222d7b0f data-v-14fe2051><!----> <button class="add-btn" data-v-222d7b0f>
+    创作者中心
+  </button> <div class="more" data-v-222d7b0f><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" class="unfold12-icon" data-v-222d7b0f data-v-222d7b0f><path d="M2.45025 4.82383C2.17422 4.49908 2.40501 4 2.83122 4H9.16878C9.59499 4 9.82578 4.49908 9.54975 4.82382L6.38097 8.5518C6.1813 8.7867 5.8187 8.7867 5.61903 8.5518L2.45025 4.82383Z" fill="white" data-v-222d7b0f data-v-222d7b0f></path></svg> <div class="more-mask" data-v-222d7b0f></div> <div class="more-list" data-v-222d7b0f><ul class="menu" data-v-222d7b0f><li class="item" data-v-222d7b0f><div class="icon write-article" data-v-222d7b0f></div> <div class="title" data-v-222d7b0f>写文章</div></li><li class="item" data-v-222d7b0f><div class="icon issue-points" data-v-222d7b0f></div> <div class="title" data-v-222d7b0f>发沸点</div></li><li class="item" data-v-222d7b0f><div class="icon write-note" data-v-222d7b0f></div> <div class="title" data-v-222d7b0f>写笔记</div></li><li class="item" data-v-222d7b0f><div class="icon create-jcode" data-v-222d7b0f></div> <div class="title" data-v-222d7b0f>写代码</div></li><li class="item" data-v-222d7b0f><div class="icon drafts" data-v-222d7b0f></div> <div class="title" data-v-222d7b0f>草稿箱</div></li></ul> <div class="divider" data-v-222d7b0f></div> <div class="inspiration" data-v-222d7b0f><div class="info" data-v-222d7b0f><span class="title" data-v-222d7b0f>创作灵感</span> <span class="more-info" data-v-222d7b0f>
+            查看更多
+            <i class="icon byte-icon byte-icon--right" data-v-222d7b0f><svg t="1561636167146" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="404349" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M630.4 512L283.52 165.12a21.12 21.12 0 0 1 0-30.08l30.08-30.08a21.12 21.12 0 0 1 30.08 0l377.6 376.96a42.24 42.24 0 0 1 0 60.16l-377.6 376.96a21.12 21.12 0 0 1-30.08 0l-30.08-30.08a21.12 21.12 0 0 1 0-30.08z" p-id="404350"></path></svg></i></span></div> <div class="list" data-v-222d7b0f>  <div class="item" data-v-21339fef data-v-222d7b0f><div class="xitu-skeleton xitu-skeleton-animated" data-v-21339fef><div class="xitu-skeleton-item" data-v-21339fef><!----> <div class="xitu-skeleton-content" style="padding:20px;" data-v-21339fef><div class="xitu-skeleton-line" data-v-21339fef></div><div class="xitu-skeleton-line" data-v-21339fef></div><div class="xitu-skeleton-line" data-v-21339fef></div></div></div></div></div></div></div></div></div> <!----></div></li></ul></li> <!----> <!----> <!----> <li class="nav-item auth hidden" data-v-14fe2051><div class="login-button-wrap" data-v-14fe2051><button class="login-button" data-v-14fe2051>
+                登录
+                <div class="login-button-inner" data-v-14fe2051><div class="login-button-line" data-v-14fe2051></div>
+                  注册
+                </div></button> <!----></div></li></ul></ul></nav></div></header>  <main class="container main-container" style="max-width:1140px;" data-v-539963b4><div class="view column-view post-view" data-v-539963b4 data-v-61fb5e44><!----> <div class="main-area article-area" data-v-539963b4 data-v-61fb5e44><article itemscope="itemscope" itemtype="http://schema.org/Article" data-entry-id="7229877486171930684" data-draft-id="7229870849573126181" data-original-type="0" class="article" data-v-61fb5e44><!----> <meta itemprop="headline" content="iOS Swift开发面试题总结"> <meta itemprop="keywords" content="RxSwift,SwiftUI,Alamofire"> <meta itemprop="datePublished" content="2023-05-06T02:46:44.000Z"> <meta itemprop="image" content="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-assets/icon/icon-128.png~tplv-t2oaga2asx-image.image"> <div itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><meta itemprop="name" content="会飞的金鱼"> <meta itemprop="url" content="https://juejin.cn/user/4213782311876343"></div> <div itemprop="publisher" itemscope="itemscope" itemtype="http://schema.org/Organization"><meta itemprop="name" content="掘金"> <div itemprop="logo" itemscope="itemscope" itemtype="https://schema.org/ImageObject"><meta itemprop="url" content="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-assets/icon/icon-white-180.png~tplv-t2oaga2asx-image.image"> <meta itemprop="width" content="180"> <meta itemprop="height" content="180"></div></div> <h1 class="article-title" data-v-61fb5e44>
+            iOS Swift开发面试题总结
+            <!----> <!----></h1> <div class="author-info-block block-hidden" data-v-61fb5e44><div class="author-info-box" data-v-61fb5e44><div class="author-name" data-v-61fb5e44><a href="/user/4213782311876343/posts" target="_blank" rel="" class="jj-link username username ellipsis" data-v-65b50b51 data-v-292f6e48 data-v-61fb5e44><span class="name" style="max-width:160px;" data-v-65b50b51 data-v-292f6e48>
+    会飞的金鱼
+  </span> <!----> <!----> <!----> </a></div> <div class="meta-box" data-v-61fb5e44><time datetime="2023-05-06T02:46:44.000Z" title="Sat May 06 2023 02:46:44 GMT+0000 (Coordinated Universal Time)" class="time" data-v-61fb5e44>
+                    2023-05-06
+                  </time> <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="read-icon" data-v-61fb5e44><path d="M7.90078 2.80078C4.49278 2.80078 1.74745 6.11672 0.800781 7.77469C1.74745 9.58339 4.49278 13.2008 7.90078 13.2008C11.3088 13.2008 14.0541 9.58339 15.0008 7.77469C14.0541 6.11672 11.3088 2.80078 7.90078 2.80078Z" stroke="currentColor" data-v-61fb5e44></path><circle cx="7.89922" cy="8.00078" r="2.2" stroke="currentColor" data-v-61fb5e44></circle></svg> <span class="views-count" data-v-61fb5e44>
+                    29,877
+                  </span> <span class="read-time" data-v-61fb5e44><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" data-v-61fb5e44><rect width="16" height="16" fill="none" data-v-61fb5e44></rect><circle cx="8" cy="8" r="5.65625" stroke="#8A919F" data-v-61fb5e44></circle><path d="M7.69141 5.18652V8.30924H10.8141" stroke="#8A919F" stroke-linecap="round" stroke-linejoin="round" data-v-61fb5e44></path></svg>
+                    阅读25分钟
+                  </span> <!----></div></div> <div style="flex:1;" data-v-61fb5e44></div> <!----> <!----></div> <!----> <!----> <!----> <!----> <div id="article-root" itemprop="articleBody" class="main" data-v-61fb5e44><div class="article-viewer markdown-body cache result"><style>.markdown-body{word-break:break-word;line-height:1.75;font-weight:400;font-size:16px;overflow-x:hidden;color:#252933}.markdown-body h1,.markdown-body h2,.markdown-body h3,.markdown-body h4,.markdown-body h5,.markdown-body h6{line-height:1.5;margin-top:35px;margin-bottom:10px;padding-bottom:5px}.markdown-body h1{font-size:24px;line-height:38px;margin-bottom:5px}.markdown-body h2{font-size:22px;line-height:34px;padding-bottom:12px;border-bottom:1px solid #ececec}.markdown-body h3{font-size:20px;line-height:28px}.markdown-body h4{font-size:18px;line-height:26px}.markdown-body h5{font-size:17px;line-height:24px}.markdown-body h6{font-size:16px;line-height:24px}.markdown-body p{line-height:inherit;margin-top:22px;margin-bottom:22px}.markdown-body img{max-width:100%}.markdown-body hr{border:none;border-top:1px solid #ddd;margin-top:32px;margin-bottom:32px}.markdown-body code{word-break:break-word;border-radius:2px;overflow-x:auto;background-color:#fff5f5;color:#ff502c;font-size:.87em;padding:.065em .4em}.markdown-body code,.markdown-body pre{font-family:Menlo,Monaco,Consolas,Courier New,monospace}.markdown-body pre{overflow:auto;position:relative;line-height:1.75}.markdown-body pre>code{font-size:12px;padding:15px 12px;margin:0;word-break:normal;display:block;overflow-x:auto;color:#333;background:#f8f8f8}.markdown-body a{text-decoration:none;color:#0269c8;border-bottom:1px solid #d1e9ff}.markdown-body a:active,.markdown-body a:hover{color:#275b8c}.markdown-body table{display:inline-block!important;font-size:12px;width:auto;max-width:100%;overflow:auto;border:1px solid #f6f6f6}.markdown-body thead{background:#f6f6f6;color:#000;text-align:left}.markdown-body tr:nth-child(2n){background-color:#fcfcfc}.markdown-body td,.markdown-body th{padding:12px 7px;line-height:24px}.markdown-body td{min-width:120px}.markdown-body blockquote{color:#666;padding:1px 23px;margin:22px 0;border-left:4px solid #cbcbcb;background-color:#f8f8f8}.markdown-body blockquote:after{display:block;content:""}.markdown-body blockquote>p{margin:10px 0}.markdown-body ol,.markdown-body ul{padding-left:28px}.markdown-body ol li,.markdown-body ul li{margin-bottom:0;list-style:inherit}.markdown-body ol li .task-list-item,.markdown-body ul li .task-list-item{list-style:none}.markdown-body ol li .task-list-item ol,.markdown-body ol li .task-list-item ul,.markdown-body ul li .task-list-item ol,.markdown-body ul li .task-list-item ul{margin-top:0}.markdown-body ol ol,.markdown-body ol ul,.markdown-body ul ol,.markdown-body ul ul{margin-top:3px}.markdown-body ol li{padding-left:6px}.markdown-body .contains-task-list{padding-left:0}.markdown-body .task-list-item{list-style:none}@media (max-width:720px){.markdown-body h1{font-size:24px}.markdown-body h2{font-size:20px}.markdown-body h3{font-size:18px}}</style><style data-highlight data-highlight-key="juejin">.markdown-body pre,.markdown-body pre>code.hljs{color:#333;background:#f8f8f8}.hljs-comment,.hljs-quote{color:#998;font-style:italic}.hljs-keyword,.hljs-selector-tag,.hljs-subst{color:#333;font-weight:700}.hljs-literal,.hljs-number,.hljs-tag .hljs-attr,.hljs-template-variable,.hljs-variable{color:teal}.hljs-doctag,.hljs-string{color:#d14}.hljs-section,.hljs-selector-id,.hljs-title{color:#900;font-weight:700}.hljs-subst{font-weight:400}.hljs-class .hljs-title,.hljs-type{color:#458;font-weight:700}.hljs-attribute,.hljs-name,.hljs-tag{color:navy;font-weight:400}.hljs-link,.hljs-regexp{color:#009926}.hljs-bullet,.hljs-symbol{color:#990073}.hljs-built_in,.hljs-builtin-name{color:#0086b3}.hljs-meta{color:#999;font-weight:700}.hljs-deletion{background:#fdd}.hljs-addition{background:#dfd}.hljs-emphasis{font-style:italic}.hljs-strong{font-weight:700}</style>
+<h2 id="heading-0" data-id="heading-0">Swift 优点（相对 OC）</h2>
+<blockquote><p><strong>修订说明：</strong>本文已按 Swift 6.x 语义修订，日期为 2026-10-23。重点修正了原文中过度绝对化、过时或不准确的技术表述。</p></blockquote>
+<ul>
+<li>类型系统更严格，可选值、泛型、值语义和编译期检查能减少一类常见错误。</li>
+<li>语法更简洁，很多场景可用更少的代码表达相同逻辑。</li>
+<li>性能表现通常更好，但不是所有场景都必然快于 Objective-C；实际性能取决于代码结构、优化级别、动态派发、桥接和运行时环境。</li>
+</ul>
+<hr>
+
+
+<h2 id="heading-1" data-id="heading-1">Swift 中类(class)和结构体(struct)的区别，以及各自优缺点？</h2>
+<ul>
+<li><strong>类是引用类型</strong>：赋值或传参时复制的是引用；多个变量可能指向同一个实例。</li>
+<li><strong>结构体是值类型</strong>：赋值或传参时获得语义上的独立副本；标准库集合等类型会通过写时复制优化，避免不必要的立即深拷贝。</li>
+</ul>
+<p><strong>存储位置不应简单等同于“类在堆、结构体在栈”。</strong></p>
+<ul>
+<li>类实例本身通常分配在堆上，但引用变量在哪里取决于上下文。</li>
+<li>结构体可以位于栈上，也可以作为类实例的存储属性存放在堆对象内，还可能被闭包捕获或放入 existential 容器。</li>
+<li>值类型的语义由语言规则保证，不应通过“栈/堆”推断。</li>
+</ul>
+<p><strong>继承与运行时能力：</strong></p>
+<ul>
+<li>类可以继承，除非被 <code>final</code> 修饰；结构体和枚举不能继承。</li>
+<li>Swift 类本身具有运行时类型元数据，<code>is</code>、<code>as?</code> 等可用于类型检查和转换。</li>
+<li>Objective-C runtime 的消息派发能力通常需要继承 <code>NSObject</code>、使用 <code>@objc</code> 或 <code>dynamic</code>；不应写成“class 继承 Object 才有 runtime”。</li>
+</ul>
+<p><strong>方法派发：</strong></p>
+<ul>
+<li>类方法可能是直接调用、虚表调用，或 Objective-C runtime 消息派发，取决于 <code>final</code>、可见性、<code>@objc</code>、<code>dynamic</code>、协议和泛型上下文等因素。</li>
+<li>结构体方法通常可静态派发，但通过协议 witness 或 existential 调用时仍可能经过间接派发。</li>
+</ul>
+<p>在不需要继承、身份语义、Objective-C 互操作或析构行为时，Swift 通常建议优先使用结构体。</p>
+<hr>
+
+
+<h2 id="heading-2" data-id="heading-2">Swift 中 strong、weak 和 unowned 是什么意思？有什么不同？何时使用 unowned？</h2>
+<p>Swift 类和 actor 的内存管理使用 ARC（Automatic Reference Counting）。当强引用计数归零时，实例会被释放。</p>
+<ul>
+<li><strong>strong</strong>：强引用，持有对象并增加引用计数，是属性默认所有权语义。</li>
+<li><strong>weak</strong>：弱引用，不持有对象、不增加强引用计数；对象释放后，<code>weak</code> 引用自动变为 <code>nil</code>，因此必须声明为可选类型。</li>
+<li><strong>unowned</strong>：无主引用，同样不增加强引用计数，但假设对象生命周期覆盖引用生命周期；对象释放后继续访问会导致运行时错误。</li>
+</ul>
+<p><strong>适用范围：</strong></p>
+<ul>
+<li><code>weak</code> / <code>unowned</code> 用于引用类型，包括类实例、actor，以及被 <code>AnyObject</code> 或 class-constrained protocol 约束的类型。</li>
+<li>不能用于普通结构体或枚举，因为它们不是引用类型。</li>
+</ul>
+<p><strong>选择建议：</strong></p>
+<ul>
+<li>对象生命周期中可能变为 <code>nil</code>，或无法保证被引用对象一定先释放：使用 <code>weak</code>。</li>
+<li>能确定被引用对象和引用者同生命周期，且对象不会先释放：可使用 <code>unowned</code>。</li>
+<li>两者都能用于打破循环引用；<code>unowned</code> 通常少一次 nil 检查，但错误使用会崩溃。</li>
+</ul>
+<hr>
+
+<h2 id="heading-3" data-id="heading-3">Swift 中什么是可选类型？</h2>
+<ul>
+<li>Swift中可选类型为了表示 一个变量 允许为 空(nil)的情况</li>
+<li>类型名称后 加 <code>?</code> 定义 可选项</li>
+<li>可<code>选项的本质</code>是 枚举类型 </li>
+</ul>
+<hr>
+
+<h2 id="heading-4" data-id="heading-4">Swift 中什么是泛型？</h2>
+<ul>
+<li>泛型将类型参数化，让同一套逻辑在保持类型安全的前提下复用于多种类型。</li>
+<li>协议中的泛型抽象通常通过 <code>associatedtype</code> 表达。</li>
+<li>泛型实现不是简单的“只传类型、永不生成多个函数”。Swift 可能使用泛型元数据和 witness table，也可能在优化和可见性允许时进行特化。</li>
+<li>是否特化取决于优化级别、模块可见性、调用上下文和编译器策略，不应把“不生成多个函数”当成语言保证。</li>
+</ul>
+
+<h2 id="heading-5" data-id="heading-5">怎么理解 Swift 中的泛型约束？</h2>
+<p>泛型约束用于限制类型参数必须满足的条件，让编译器知道可用的能力。</p>
+<ul>
+<li><code>T: SomeProtocol</code> 表示 <code>T</code> 必须遵循该协议。</li>
+<li><code>T: SomeClass</code> 表示 <code>T</code> 必须是 <code>SomeClass</code> 或其子类，不是泛指“任意 class”。</li>
+<li>若只要求引用类型，应使用 <code>T: AnyObject</code>。</li>
+</ul>
+<pre><code>func someFunction&lt;T: AnyObject, U: SomeProtocol&gt;(someT: T, someU: U) {
+    // T 是引用类型，U 遵循 SomeProtocol
+}</code></pre>
+<hr>
+
+
+<h2 id="heading-6" data-id="heading-6">Swift 中 static 和 class 关键字的区别</h2>
+<ul>
+<li><code>static</code> 可用于类、结构体、枚举和协议中的类型成员。</li>
+<li><code>class</code> 只能用于类中的类型成员，且不能修饰存储属性。</li>
+<li><code>static</code> 修饰的成员带有 <code>final</code> 语义，不能被子类重写。</li>
+<li><code>class</code> 修饰的计算属性和方法可以被子类重写。</li>
+</ul>
+<p><strong>注意：</strong><code>static</code> 相当于 <strong>final class member</strong>，不是把整个类变成 <code>final</code>。</p>
+<hr>
+
+
+<h2 id="heading-7" data-id="heading-7">Swift 中的模式匹配？</h2>
+<p>模式匹配是根据值的结构、类型或绑定关系进行匹配，常见位置包括：</p>
+<ul>
+<li><code>switch</code> 的 <code>case</code></li>
+<li><code>if case</code> / <code>guard case</code> / <code>for case</code></li>
+<li><code>catch</code> 错误模式</li>
+<li><code>if let</code> / <code>guard let</code> 的可选值绑定模式</li>
+</ul>
+<p>普通布尔条件、普通 <code>if</code>、<code>guard</code>、<code>while</code> 和 <code>for</code> 循环本身不是模式匹配。</p>
+<hr>
+
+
+<h2 id="heading-8" data-id="heading-8">Swift 中的访问控制？</h2>
+<p>当前 Swift 常见访问级别从宽到窄包括：</p>
+<ul>
+<li><code>open</code>：允许其他模块访问、继承和重写；只能用于类和可重写的类成员。</li>
+<li><code>public</code>：允许其他模块访问，但不允许其他模块继承或重写该类。</li>
+<li><code>package</code>：允许同一 package 内访问。</li>
+<li><code>internal</code>：默认级别，仅当前模块可访问。</li>
+<li><code>fileprivate</code>：仅当前源文件可访问。</li>
+<li><code>private</code>：仅当前声明及其同文件 extension 可访问。</li>
+</ul>
+<hr>
+
+
+<h2 id="heading-9" data-id="heading-9">怎么理解 copy-on-write？</h2>
+<p>Copy-on-write（写时复制）是一种优化：值语义仍保持不变，但只有发生可能修改内容的操作时才真正复制底层存储。</p>
+<ul>
+<li><code>String</code>、<code>Array</code>、<code>Dictionary</code>、<code>Set</code> 等标准库值类型使用 COW 优化。</li>
+<li>用户自定义结构体不会自动获得通用 COW；需要自己设计引用持有缓冲区并配合 <code>isKnownUniquelyReferenced</code> 等机制。</li>
+<li>“复制时指向同一个对象”只适用于 COW 类型的内部实现，不是所有值类型的通用规则。</li>
+</ul>
+<hr>
+
+<h2 id="heading-10" data-id="heading-10">Swift 为什么将 Array、String、Dictionary、Set 设计为值类型？</h2>
+<ul>
+<li>核心目标是<strong>值语义</strong>：赋值、传参和捕获后的值互不影响，避免共享可变状态。</li>
+<li>这能降低别名问题，使不可变数据更容易推理，也让并发中的只读共享更安全。</li>
+<li><code>let</code> 表示绑定不可重新赋值；对这些值类型而言，也意味着不能通过该绑定修改内容。</li>
+<li>不能简单说“值类型一定在栈、引用类型一定在堆”。值类型的存储位置取决于使用场景，标准库集合内部 buffer 通常也涉及堆内存。</li>
+</ul>
+<hr>
+
+<h2 id="heading-11" data-id="heading-11">什么是属性观察器？</h2>
+<p>属性观察是指在当前类型内对特性属性进行监测,并作出响应,属性观察是 swift 中的特性,具有2种, <code>willset</code>和 <code>didset</code></p>
+<ul>
+<li>
+<p>willSet 传递新值 newValue</p>
+</li>
+<li>
+<p>didSet 传递旧值 oldValue</p>
+</li>
+<li>
+<p>在初始化器中对属性初始化时，不会触发观察器</p>
+</li>
+<li>
+<p>属性观察器 只能用在 存储属性 ，不可用在 计算属性</p>
+</li>
+<li>
+<p>可以 为 <strong>非</strong> <code>lazy</code> （即延迟存储属性）的 <code>var</code> <strong>存储属性</strong> 设置 属性观察器</p>
+</li>
+</ul>
+
+<ul>
+<li><code>willSet</code> 会传递新值，默认叫 newValue</li>
+<li><code>didSet</code> 会传递旧值，默认叫 oldValue</li>
+</ul>
+<p>注意：</p>
+<ul>
+<li>在初始化器中设置属性值不会触发 属性观察器</li>
+</ul>
+
+<ul>
+<li>
+<ul>
+<li>属性定义时设置初始值也不会出发 属性观察，原因是 </li>
+</ul>
+</li>
+</ul>
+
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li>属性定义时设置初始值，本质跟在 初始化器中设置值是一样的</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+<ul>
+<li><strong>属性观察器 只能用在 存储属性</strong> ，不可用在 计算属性</li>
+</ul>
+
+<pre><code class="hljs language-swift" lang="swift"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Cicle</span> {
+    <span class="hljs-comment">/// 存储属性</span>
+    <span class="hljs-keyword">var</span> radius :<span class="hljs-type">Double</span> {
+        <span class="hljs-keyword">willSet</span> {
+            <span class="hljs-built_in">print</span>(<span class="hljs-string">"willSet -- "</span>,newValue,<span class="hljs-string">"radius == "</span>,radius)
+        }
+        <span class="hljs-keyword">didSet</span> {
+            <span class="hljs-built_in">print</span>(<span class="hljs-string">"didSet ++ "</span>,oldValue,<span class="hljs-string">"radius == "</span>,radius)
+        }
+    }
+    <span class="hljs-comment">/*
+     上述代码 跟下面等价，不推荐
+     var radius :Double {
+         willSet(jk_newValue) {
+             print("willSet -- ",jk_newValue,"radius == ",radius)
+         }
+         didSet(jk_oldValue) {
+             print("didSet ++ ",jk_oldValue,"radius == ",radius)
+         }
+     }
+     */</span>
+}
+
+<span class="hljs-keyword">var</span> circle <span class="hljs-operator">=</span> <span class="hljs-type">Cicle</span>.<span class="hljs-keyword">init</span>(radius: <span class="hljs-number">10.0</span>)
+
+circle.radius <span class="hljs-operator">=</span> <span class="hljs-number">20.0</span>
+<span class="hljs-comment">/*
+ willSet --  20.0 radius ==  10.0
+ didSet ++  10.0 radius ==  20.0
+ */</span>
+
+<span class="hljs-built_in">print</span>(<span class="hljs-string">"result == "</span>,circle.radius)
+<span class="hljs-comment">//result ==  20.0</span>
+</code></pre>
+<p>拓展：<br>
+●属性观察器，计算属性这两个功能，同样可以应用在全局变量/局部变量<br>
+●属性观察器，计算属性 不可以同时 应用在同一个类(不包括继承)的属性中</p>
+
+<h2 id="heading-12" data-id="heading-12">Swift 异常捕获</h2>
+<p>Swift 使用 <code>throws</code>、<code>try</code>、<code>do-catch</code> 处理错误。</p>
+<ul>
+<li>错误类型遵循 <code>Error</code> 协议。</li>
+<li>可能抛错的函数必须标记 <code>throws</code>。</li>
+<li>调用 throwing 函数时，可以 <code>do-catch</code>，也可以让当前函数继续 <code>throws</code> 向上传播。</li>
+<li>不是必须立即 catch；如果既不 catch 也不传播，才会编译错误。</li>
+<li>未被捕获且传播到程序顶层的错误会导致进程终止。</li>
+</ul>
+
+<h2 id="heading-13" data-id="heading-13">defer 的用法</h2>
+<ul>
+<li><code>defer</code> 会在离开当前作用域时执行，无论正常返回还是抛错。</li>
+<li>多个 <code>defer</code> 按 LIFO 顺序执行：后注册的先执行。</li>
+<li><code>defer</code> 通常在 return 值已计算之后、真正返回调用方之前执行。</li>
+</ul>
+
+
+<h2 id="heading-14" data-id="heading-14">如何将 Swift 协议中的部分方法设计成可选？</h2>
+<p>常见有两种思路：</p>
+<ul>
+<li><strong>@objc optional</strong>：适合需要暴露给 Objective-C 的协议。协议标记 <code>@objc</code>，方法标记 <code>optional</code>。该方案通常限制为 class 类型遵循。</li>
+<li><strong>协议扩展默认实现</strong>：纯 Swift 常用做法。给协议方法提供默认实现，遵循者可选择是否重写。语义上不是“可选协议方法”，但能达到“可选提供实现”的效果。</li>
+</ul>
+<pre><code>protocol SomeProtocol {
+    func test()
+}
+
+extension SomeProtocol {
+    func test() {
+        // 默认实现
+    }
+}</code></pre>
+<hr>
+
+
+<h2 id="heading-15" data-id="heading-15">Swift 和 OC 中的 protocol 有什么不同？</h2>
+<ul>
+<li>两者都可以定义一组能力要求，也都可以用于 delegate 模式，但“协议就是代理”是错误理解。</li>
+<li>Swift protocol 可被类、结构体、枚举遵循，还可作为泛型约束和抽象边界。</li>
+<li>Swift protocol 支持 associatedtype、protocol extension、默认实现、witness dispatch 等能力。</li>
+<li>Objective-C protocol 通常与 Objective-C 类和 runtime 互操作，更适合 <code>@optional</code> 方法和消息派发场景。</li>
+</ul>
+<hr>
+
+<h2 id="heading-16" data-id="heading-16">比较Swift 和OC中的初始化方法 (init) 有什么不同?</h2>
+<p>swift 的初始化方法,因为引入了<a href="https://link.juejin.cn?target=https%3A%2F%2Fwww.yuque.com%2Fjk-coder%2Frhv3ga%2Fwm9ufe" target="_blank" title="https://www.yuque.com/jk-coder/rhv3ga/wm9ufe" ref="nofollow noopener noreferrer"><strong>两段式初始化和安全检查</strong></a>因此更加严格和准确,</p>
+<p>swift初始化方法需要保证所有的非optional的成员变量都完成初始化,</p>
+<p>同时 swfit 新增了convenience和 required两个修饰初始化器的关键字</p>
+<ul>
+<li>convenience只提供一种方便的初始化器,必须通过一个指定初始化器来完成初始化</li>
+<li>required是强制子类重写父类中所修饰的初始化方法</li>
+</ul>
+<hr>
+<h2 id="heading-17" data-id="heading-17">Swift 和OC 中的自省 有什么区别?</h2>
+<ul>
+<li>OC</li>
+</ul>
+
+<ul>
+<li>
+<ul>
+<li>自省在OC中就是判断某一对象是否属于某一个类的操作,有以下2中方式</li>
+</ul>
+</li>
+</ul>
+
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><code>[obj iskinOfClass:[SomeClass class]]</code> : obj 必须是 SomeClass 的 对象或 其子类对象;return YES;</li>
+<li><code>[obj isMemberOfClass:[SomeClass class]]</code> ： obj 必须是 SomeClass 的 对象;return YES;</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+<ul>
+<li>Swift</li>
+</ul>
+
+<ul>
+<li>
+<ul>
+<li> Swift 中由于很多 class 并非继承自 NSObject, 故而 Swift 使用 <code>is</code> 来判断是否属于某一类型, is 不仅可以作用于class, 还可以作用于enum和struct</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="heading-18" data-id="heading-18">Swift 与 OC 如何相互调用</h2>
+<ul>
+<li>Swift -> OC </li>
+</ul>
+
+<ul>
+<li>
+<ul>
+<li>需要创建一个 <code>Target-BriBridging-Header.h</code> (默认在OC项目中，会提示自动创建)的桥文件，在该文件中，导入需要调用的OC代码的头文件即可</li>
+</ul>
+</li>
+</ul>
+
+<ul>
+<li>OC -> Swift</li>
+</ul>
+
+<ul>
+<li>
+<ul>
+<li>直接导入<code>Target-Swift.h</code>(该文件是Xcode自动创建) Swift如何需要被OC调用，需要使用 <code>@objc</code> 对方法或属性进行修饰</li>
+</ul>
+</li>
+</ul>
+<p>Swift 中特殊的标记</p>
+<p><img src="assets/image-1.awebp"#?w=1000&#x26;h=296&#x26;s=174353&#x26;e=png&#x26;b=fefdfd" alt="imagepng" loading="lazy"></p>
+<p>Swift调用OC<br>
+●新建一个桥接文件，文件格式默认为:{targetName}-Bridging-Header.h;（一般在OC项目中，创建Swift文件，Xcode会自动提示生成该文件，仅需点击确认即可）</p>
+<p><img src="assets/image-2.awebp"#?w=1500&#x26;h=400&#x26;s=256311&#x26;e=png&#x26;b=fdfdfd" alt="imagepng" loading="lazy"></p>
+<p>●在{targetName}-Bridging-Header.h 文件中 #import OC 需要 暴露 给 Swift的内容</p>
+<p>OC 调用 Swift<br>
+●Xcode 已经默认 生成 一个 用于 OC 调用 Swift的头文件，文件名格式是: {targetName}-Swift.h</p>
+<p><img src="assets/image-3.awebp"#?w=1620&#x26;h=420&#x26;s=126956&#x26;e=png&#x26;b=fdfdfd" alt="imagepng" loading="lazy"></p>
+<p>●Swift 暴露给 OC的 类 一定要继承 NSObject</p>
+<p>●使用 @objc 修饰 需要暴露 给 OC的成员</p>
+<p>●使用@objcMembers 修饰类<br>
+○代表 默认所有的 成员 都会 暴露给 OC(包括扩展中定义的成员)<br>
+○最终 是否成功 暴露，还需要考虑 成员自身的 访问级别</p>
+<p>拓展<br>
+●为什么Swift 暴露给 OC 的类 要最终 继承 NSObject？<br>
+因为 OC 中的方法调用 是通过 Runtime 机制，需要通过 isa 指针 去完成 一些列消息的发送等， 而 只有继承自 NSObject 的类 才具有 isa 指针，才具备 Runtime 消息 发送的能力<br>
+●p.run() 底层是如何调用的？ 反过来，OC调用Swift 又是如何调用？<br>
+○JKPerson 是 OC 的类，以及OC 中定义的初始化 和 run 方法<br>
+○在Swift中 调用 JKPerson 对象的 run 方法 ，底层是如何调用的？</p>
+<p>Swift复制代码</p>
+<pre><code class="hljs language-less" lang="less"><span class="hljs-selector-tag">var</span> <span class="hljs-selector-tag">p</span> = <span class="hljs-selector-tag">JKPerson</span>(<span class="hljs-attribute">age</span>: <span class="hljs-number">10</span>,<span class="hljs-attribute">name</span>:<span class="hljs-string">"Jack"</span>)
+<span class="hljs-selector-tag">p</span><span class="hljs-selector-class">.run</span>()
+</code></pre>
+<p>答：走 Runtime 运行时机制， 反过来 OC 调用 Swift中的类 跟 问题一 一样，也是通过 Runtime 机制<br>
+●car.run() 底层是如何调用的？</p>
+<p><img src="assets/image-4.awebp"#?w=868&#x26;h=772&#x26;s=247246&#x26;e=png&#x26;b=ffffff" alt="swift" loading="lazy"></p>
+<p>答 : (虽然 Car 类 被暴露给 OC使用)在Swift中 car.run(),底层依然是 通过 类似 C++ 的虚表 机制 来调用的；</p>
+<p>拓展:<br>
+如果想要 Swift中的方法 调用 也使用 Runtime 机制，需要在方法名称前面 加上 dynamic关键字</p>
+<hr>
+
+<h2 id="heading-19" data-id="heading-19">Swift 定义常量和 OC 定义常量的区别？</h2>
+<ul>
+<li><code>const</code> 在 C / Objective-C 中表示只读，不保证值一定是编译期常量。</li>
+<li>例如 <code>const int price = 0</code> 可被编译器当作编译期常量，但对象指针常量的值可能来自运行时。</li>
+<li>Swift 的 <code>let</code> 表示绑定只能赋值一次，类型通常在编译期确定，值可以来自运行时表达式。</li>
+</ul>
+<hr>
+
+
+<h2 id="heading-20" data-id="heading-20">Swift 中的函数重载</h2>
+<p>Swift 函数重载可以由以下差异构成：</p>
+<ul>
+<li>参数个数</li>
+<li>参数类型</li>
+<li>参数标签</li>
+<li>返回类型，前提是调用点能通过上下文消歧</li>
+</ul>
+<p><strong>“返回值类型与重载无关”是错误的。</strong>例如下面两个函数仅返回类型不同，也可以重载：</p>
+<pre><code>func value() -&gt; Int { 1 }
+func value() -&gt; String { "one" }
+
+let intVal: Int = value()
+let stringVal: String = value()</code></pre>
+<p>如果调用点无法推断需要哪个返回类型，才会出现 ambiguous 错误。</p>
+<hr>
+
+<h2 id="heading-21" data-id="heading-21">Swift 中的枚举,关联值 和 原始值的区分?</h2>
+
+<ul>
+<li>
+<ul>
+<li>将 枚举的成员值 跟 其他类型的值 关联 <strong>存储在一起</strong></li>
+<li>存储在枚举变量中，<strong>占用枚举变量内存</strong></li>
+</ul>
+</li>
+</ul>
+
+<pre><code class="hljs language-java" lang="java"><span class="hljs-keyword">enum</span> <span class="hljs-title class_">Score</span> {
+    <span class="hljs-keyword">case</span> <span class="hljs-title function_">points</span><span class="hljs-params">(Int)</span>
+    <span class="hljs-keyword">case</span> <span class="hljs-title function_">grade</span><span class="hljs-params">(Character)</span>
+}
+</code></pre>
+
+<ul>
+<li>
+<ul>
+<li>枚举成员可以使用<strong>相同类型的默认值</strong>预先关联，这个默认值叫做:原始值</li>
+<li>不会存储在 枚举变量中，<strong>不占用枚举变量内存</strong></li>
+</ul>
+</li>
+</ul>
+
+<pre><code class="hljs language-ini" lang="ini">enum PokerSuit : Character {
+    case <span class="hljs-attr">spade</span> = <span class="hljs-string">"♠"</span>
+    case <span class="hljs-attr">heart</span> = <span class="hljs-string">"♥"</span>
+    case <span class="hljs-attr">diamond</span> = <span class="hljs-string">"♦"</span>
+    case <span class="hljs-attr">club</span> = <span class="hljs-string">"♣"</span>
+}
+</code></pre>
+<hr>
+<h3 id="heading-22" data-id="heading-22">闭包是引用类型吗？</h3>
+<p>闭包和函数值在 Swift 中是引用类型。把闭包赋值给另一个变量时，复制的是闭包引用，两个变量指向同一个闭包。</p>
+<p>捕获列表在闭包创建时已经确定；再次复制闭包变量并不会重新复制一次捕获列表。</p>
+<h3 id="heading-23" data-id="heading-23">swift 中的闭包结构是什么样子的?</h3>
+<pre><code class="hljs language-markdown" lang="markdown">{
+<span class="hljs-code">    (参数列表) -> 返回值类型 in 函数体代码
+}
+</span></code></pre>
+<h3 id="heading-24" data-id="heading-24">什么是尾随闭包</h3>
+<ul>
+<li>尾随闭包 是一个被 书写在 函数调用 括号 后面的 闭包表达式</li>
+</ul>
+<p>基本定义<br>
+●Swift中可通过 func 定义一个函数，也可以通过 闭包表达式 定义一个函数</p>
+<p>闭包表达式的格式：</p>
+<pre><code class="hljs language-markdown" lang="markdown">{
+<span class="hljs-code">    (参数列表) -> 返回值类型  in
+    函数体代码
+}
+</span></code></pre>
+<p>闭包表达式与定义函数的语法相对比，有区别如下：<br>
+1没有func<br>
+2没有函数名<br>
+3返回值类型添加了关键字in</p>
+<pre><code class="hljs language-kotlin" lang="kotlin">let fn1 = {
+    (v1 : <span class="hljs-built_in">Int</span>,v2 : <span class="hljs-built_in">Int</span>) -> <span class="hljs-built_in">Int</span> <span class="hljs-keyword">in</span>
+    <span class="hljs-keyword">return</span> v1 + v2
+}
+
+let result1 = fn1(<span class="hljs-number">10</span>,<span class="hljs-number">5</span>)
+
+let result2 = {
+    (v1:<span class="hljs-built_in">Int</span>,v2:<span class="hljs-built_in">Int</span>) -> <span class="hljs-built_in">Int</span> <span class="hljs-keyword">in</span>
+    <span class="hljs-keyword">return</span> v2 + v1
+}(<span class="hljs-number">10</span>,<span class="hljs-number">6</span>)
+
+print(result1,result2) <span class="hljs-comment">// 15 16</span>
+</code></pre>
+<h3 id="heading-25" data-id="heading-25">闭包表达式的简写</h3>
+<pre><code class="hljs language-php" lang="php">func <span class="hljs-title function_ invoke__">exec</span>(<span class="hljs-attr">v1</span>:Int,<span class="hljs-attr">v2</span>:Int,<span class="hljs-attr">fn</span>:(Int,Int)->Int) {
+    <span class="hljs-keyword">print</span>(<span class="hljs-function"><span class="hljs-keyword">fn</span>(<span class="hljs-params">v1,v2</span>))
+}
+
+闭包表达式的简写
+<span class="hljs-title">private</span> <span class="hljs-title">func</span> <span class="hljs-title">test2</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-comment">// 1: 没有简写</span>
+    <span class="hljs-title function_ invoke__">exec</span>(<span class="hljs-attr">v1</span>:<span class="hljs-number">10</span>, <span class="hljs-attr">v2</span>:<span class="hljs-number">20</span>, <span class="hljs-attr">fn</span>: {
+        (<span class="hljs-attr">v1</span>:Int,<span class="hljs-attr">v2</span>:Int) -> Int in
+        <span class="hljs-keyword">return</span> v1 + v2
+    })
+    
+    <span class="hljs-comment">// 2: 简写1</span>
+    <span class="hljs-title function_ invoke__">exec</span>(<span class="hljs-attr">v1</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">v2</span>: <span class="hljs-number">3</span>, <span class="hljs-attr">fn</span>: {
+        v1,v2 in <span class="hljs-keyword">return</span> v1 + v2
+    })
+    
+    <span class="hljs-comment">// 3:简写 2</span>
+    <span class="hljs-title function_ invoke__">exec</span>(<span class="hljs-attr">v1</span>: <span class="hljs-number">3</span>, <span class="hljs-attr">v2</span>: <span class="hljs-number">4</span>, <span class="hljs-attr">fn</span>: {
+        v1,v2 in v1 + v2
+    })
+    
+    <span class="hljs-comment">// 4: 简写3</span>
+    <span class="hljs-title function_ invoke__">exec</span>(<span class="hljs-attr">v1</span>: <span class="hljs-number">5</span>, <span class="hljs-attr">v2</span>: <span class="hljs-number">6</span>, <span class="hljs-attr">fn</span>: {$<span class="hljs-number">0</span> + $<span class="hljs-number">1</span>})
+    
+    <span class="hljs-comment">// 5: 简写4</span>
+    <span class="hljs-title function_ invoke__">exec</span>(<span class="hljs-attr">v1</span>: <span class="hljs-number">7</span>, <span class="hljs-attr">v2</span>: <span class="hljs-number">8</span>, <span class="hljs-attr">fn</span>: +)
+}
+</code></pre>
+<h3 id="heading-26" data-id="heading-26">尾随闭包</h3>
+<ul>
+<li>将一个很长的闭包表达式作为函数的最后一个实参，使用尾随闭包可以增强代码的可读性</li>
+</ul>
+
+<ul>
+<li>
+<ul>
+<li>尾随闭包 是一个被 书写在 函数调用 括号 后面的 闭包表达式</li>
+</ul>
+</li>
+</ul>
+
+<pre><code class="hljs language-javascript" lang="javascript">func <span class="hljs-title function_">test3</span>(<span class="hljs-params"></span>) {
+    
+    <span class="hljs-title function_">exec</span>(<span class="hljs-params">v1: <span class="hljs-number">8</span>, v2: <span class="hljs-number">7</span></span>) { a, b <span class="hljs-keyword">in</span>
+        a + b
+    }
+    
+    <span class="hljs-comment">// or     { 书写在 函数调用 括号 后面的 闭包表达式}</span>
+    <span class="hljs-title function_">exec</span>(<span class="hljs-params">v1: <span class="hljs-number">9</span>, v2: <span class="hljs-number">10</span></span>) {
+        $0 + $1
+    }
+}
+</code></pre>
+<ul>
+<li>如果 闭包表达式 是函数的唯一 实参，且使用了尾随闭包的 语法，则在函数名后面的 <code>()</code> 可省略</li>
+</ul>
+
+<pre><code class="hljs language-javascript" lang="javascript"><span class="hljs-comment">// fn：就是尾随闭包</span>
+func <span class="hljs-title function_">exec1</span>(<span class="hljs-params">fn:(Int,Int)->Int</span>) {
+    <span class="hljs-title function_">print</span>(<span class="hljs-title function_">fn</span>(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>))
+}
+
+<span class="hljs-title function_">exec1</span>(<span class="hljs-attr">fn</span>: {$0 + $1})
+<span class="hljs-title function_">exec1</span>(<span class="hljs-params"></span>) {$0 + $1}
+exec1{$0 + $1}
+</code></pre>
+<h3 id="heading-27" data-id="heading-27">什么是逃逸闭包</h3>
+<ul>
+<li>闭包有可能在<strong>函数结束后调用</strong>，闭包调用 逃离了函数的作用域，需要通过<code>@escaping</code> 声明</li>
+</ul>
+<p>注意：逃逸闭包 不可以 捕获 inout 参数</p>
+<p>原因是: 逃逸闭包不确定 何时开始执行，有可能 在执行逃逸闭包时，可变参数已经被程序回收，造成野指针访问</p>
+<h3 id="heading-28" data-id="heading-28">什么是自动闭包</h3>
+<p>自动闭包是一种自动创建的用来把作为实际参数传递给函数的表达式打包的闭包。</p>
+<p>它不接受任何实际参数，并且当它被调用时，它会返回内部打包的表达式的值。</p>
+<p>这个语法的好处在于通过写普通表达式代替显式闭包而使你省略包围函数形式参数的括号。</p>
+<pre><code class="hljs language-less" lang="less"><span class="hljs-selector-tag">func</span> <span class="hljs-selector-tag">getFirstPositive</span>(_ <span class="hljs-attribute">v1</span>: Int, _ <span class="hljs-attribute">v2</span>: <span class="hljs-variable">@autoclosure</span> () -> Int) <span class="hljs-selector-tag">-</span>> <span class="hljs-selector-tag">Int</span>? {
+    <span class="hljs-selector-tag">return</span> <span class="hljs-selector-tag">v1</span> > <span class="hljs-number">0</span> ? <span class="hljs-selector-tag">v1</span> : <span class="hljs-selector-tag">v2</span>()
+}
+<span class="hljs-selector-tag">getFirstPositive</span>(<span class="hljs-number">10</span>, <span class="hljs-number">20</span>)
+</code></pre>
+<ul>
+<li>为了避免与期望冲突，使用了@autoclosure的地方最好明确注释清楚:这个值会被推迟执行</li>
+<li>@autoclosure 会自动将 20 封装成闭包 { 20 }</li>
+<li>@autoclosure 只支持 () -> T 格式的参数</li>
+<li>@autoclosure 并非只支持最后1个参数</li>
+<li>有@autoclosure、无@autoclosure，构成了函数重载</li>
+</ul>
+<p>如果你想要自动闭包允许逃逸，就同时使用 @autoclosure 和 @escaping 标志。</p>
+<hr>
+<h2 id="heading-29" data-id="heading-29">Swift 中的存储属性与计算属性</h2>
+<p><strong>存储属性(Stored Property)</strong></p>
+<ul>
+<li>类似于成员变量这个概念</li>
+<li>存储在实例对象的内存中</li>
+<li>结构体、类可以定义存储属性</li>
+<li><strong>枚举不可以定义存储属性</strong></li>
+</ul>
+<p>关于 存储属性， Swift 中有个明确的规定</p>
+<ul>
+<li>在创建 类 或者 结构体 的实例时，<strong>必须为所有的存储属性设置一个合适的初始值</strong></li>
+</ul>
+
+<ul>
+<li>
+<ul>
+<li>可以在初始化器里为存储属性设置一个初始值</li>
+<li>可以分配一个默认的属性值作为属性定义的一部分</li>
+</ul>
+</li>
+</ul>
+<p><strong>计算属性(Computed Property)</strong></p>
+<ul>
+<li>本质就是方法(函数)</li>
+<li>不占用实例对象的内存</li>
+<li>枚举、结构体、类都可以定义计算属性</li>
+</ul>
+<p>计算属性(Computed Property)<br>
+○本质就是方法(函数)<br>
+○不占用实例的内存<br>
+○枚举、结构体、类 都可以定义计算属性</p>
+<p>理解计算属性与存储属性：</p>
+<p>如果两个属性之间存在一定的逻辑关系，使用计算属性，原因如下:<br>
+●如果都用存储属性的话，其逻辑对应关系可能有误<br>
+●而使用计算属性，则可以准确的描述 这种逻辑关系<br>
+具体案例参考 下面的 Cicle 中的 radius(半径) 和 diameter(直径) 的逻辑关系</p>
+<p>同时因为计算属性不占用实例的内存，可以有效的节省实例的内存空间</p>
+<p>●set 传入的新值 默认叫做 newValue,也可以自定义</p>
+<pre><code class="hljs language-kotlin" lang="kotlin">struct Cicle {
+    <span class="hljs-comment">/// 存储属性</span>
+    <span class="hljs-keyword">var</span> radius :<span class="hljs-built_in">Double</span>
+    <span class="hljs-comment">/// 计算属性</span>
+    <span class="hljs-keyword">var</span> diameter: <span class="hljs-built_in">Double</span> {
+        <span class="hljs-keyword">get</span> {
+            radius * <span class="hljs-number">2</span>
+        }
+        <span class="hljs-keyword">set</span> (jkNewValue){
+            radius = jkNewValue / <span class="hljs-number">2.0</span>
+        }
+    }
+}
+</code></pre>
+<ul>
+<li>只读计算属性：只有 <code>get</code> , 没有 <code>set</code></li>
+</ul>
+
+<pre><code class="hljs language-swift" lang="swift"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Cicle</span> {
+    <span class="hljs-comment">/// 存储属性</span>
+    <span class="hljs-keyword">var</span> radius :<span class="hljs-type">Double</span>
+    <span class="hljs-comment">/// 计算属性</span>
+    <span class="hljs-comment">/*
+     var diameter: Double {
+         get {
+             radius * 2
+         }
+     }
+     */</span>
+
+    <span class="hljs-comment">// 上述代码与下面的代码等价</span>
+    <span class="hljs-keyword">var</span> diameter: <span class="hljs-type">Double</span> {radius <span class="hljs-operator">*</span> <span class="hljs-number">2</span>}
+}
+
+<span class="hljs-keyword">var</span> cicle <span class="hljs-operator">=</span> <span class="hljs-type">Cicle</span>.<span class="hljs-keyword">init</span>(radius: <span class="hljs-number">12</span>)
+
+<span class="hljs-built_in">print</span>(cicle.radius)<span class="hljs-comment">//12.0</span>
+<span class="hljs-built_in">print</span>(cicle.diameter)<span class="hljs-comment">//24.0</span>
+
+<span class="hljs-comment">// cicle.diameter = 10.0 //Cannot assign to property: 'diameter' is a get-only property</span>
+</code></pre>
+<ul>
+<li>定义计算属性只能用 var,不可以是 let</li>
+</ul>
+
+<ul>
+<li>
+<ul>
+<li>let 表示常量</li>
+<li>计算属性的值是可能会发生变化的(包括只读计算属性)</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="heading-30" data-id="heading-30">什么是[延迟存储属性](Lazy Stored Property)</h2>
+<ul>
+<li>使用 <code>lazy</code> 可以定义一个 延迟存储属性，在第一次用到属性的时候才会进行初始化(类似 OC 中的懒加载)</li>
+</ul>
+<p>注意点：</p>
+<ul>
+<li>lazy 属性 必须是 var </li>
+</ul>
+
+<ul>
+<li>
+<ul>
+<li>因为，let 属性 必须在实例的初始化方法 完成之前 就拥有值</li>
+</ul>
+</li>
+</ul>
+
+<ul>
+<li>
+<p>如果多条线程同时第一次访问 lazy 属性，无法保证 属性 只被 初始化 一次 (即线程不是安全的)</p>
+</li>
+<li>
+<p>使用 <code>lazy</code> 可以定义一个 延迟存储属性，在第一次用到属性的时候才会进行初始化(类似 OC 中的懒加载)</p>
+</li>
+</ul>
+<p>注意点：</p>
+<ul>
+<li>lazy 属性 必须是 var </li>
+</ul>
+
+<ul>
+<li>
+<ul>
+<li>因为Swift 规定：let 属性 必须在实例的初始化方法 完成之前 就拥有值</li>
+</ul>
+</li>
+</ul>
+
+<ul>
+<li>如果多条线程同时第一次访问 lazy 属性，无法保证 属性 只被 初始化 一次 (即线程不是安全的)</li>
+</ul>
+
+<pre><code class="hljs language-swift" lang="swift"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Car</span> {
+    <span class="hljs-keyword">init</span>() {
+        <span class="hljs-built_in">print</span>(<span class="hljs-string">"car has init"</span>)
+    }
+
+    <span class="hljs-keyword">func</span> <span class="hljs-title function_">run</span>() {
+        <span class="hljs-built_in">print</span>(<span class="hljs-string">"car running"</span>)
+    }
+}
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">Person</span> {
+    <span class="hljs-keyword">lazy</span> <span class="hljs-keyword">var</span> car <span class="hljs-operator">=</span> <span class="hljs-type">Car</span>.<span class="hljs-keyword">init</span>()
+
+    <span class="hljs-keyword">init</span>() {
+        <span class="hljs-built_in">print</span>(<span class="hljs-string">"person has init"</span>)
+    }
+
+    <span class="hljs-keyword">func</span> <span class="hljs-title function_">go_out</span>() {
+        car.run()
+    }
+}
+
+<span class="hljs-keyword">let</span> p <span class="hljs-operator">=</span> <span class="hljs-type">Person</span>.<span class="hljs-keyword">init</span>() <span class="hljs-comment">//person has init</span>
+<span class="hljs-built_in">print</span>(<span class="hljs-string">"*******"</span>)
+p.go_out()<span class="hljs-comment">//  car has init ---->   car running</span>
+</code></pre>
+<ul>
+<li>当结构体 包含 一个延迟存储属性时，只有 var 才能访问延迟 存储属性</li>
+</ul>
+
+<ul>
+<li>
+<ul>
+<li>因为延迟属性 初始化时 要改变 结构体的内存</li>
+</ul>
+</li>
+</ul>
+
+<pre><code class="hljs language-swift" lang="swift"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Point</span> {
+    <span class="hljs-keyword">var</span> x <span class="hljs-operator">=</span> <span class="hljs-number">0</span>
+    <span class="hljs-keyword">var</span> y <span class="hljs-operator">=</span> <span class="hljs-number">0</span>
+    <span class="hljs-keyword">lazy</span> <span class="hljs-keyword">var</span> z <span class="hljs-operator">=</span> <span class="hljs-number">0</span>
+}
+
+<span class="hljs-keyword">let</span> p <span class="hljs-operator">=</span> <span class="hljs-type">Point</span>.<span class="hljs-keyword">init</span>()
+<span class="hljs-built_in">print</span>(p.z)<span class="hljs-comment">//Cannot use mutating getter on immutable value: 'p' is a 'let' constant</span>
+</code></pre>
+<hr>
+
+<h2 id="heading-31" data-id="heading-31">什么是类型属性？</h2>
+<ul>
+<li>类型属性通过类型本身访问，而不是实例。</li>
+<li><code>static</code> 可用于类、结构体、枚举和协议中的类型成员。</li>
+<li>类中可用 <code>class</code> 修饰可重写的计算类型成员，但不能修饰存储类型属性。</li>
+<li>存储类型属性全局唯一，并且延迟初始化；Swift 保证其一次初始化和线程安全。</li>
+<li>不应把底层实现固定说成 GCD once；这是实现细节，不是语言保证。</li>
+</ul>
+<hr>
+
+<h2 id="heading-32" data-id="heading-32">Swift 中如何定义单例模式</h2>
+<p>可以通过<code>类型属性+let+private</code> 来写单例; 代码如下如下:</p>
+<pre><code class="hljs language-csharp" lang="csharp"><span class="hljs-comment">// 方式一</span>
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">SingleManager</span>{
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">let</span> shared = SingleManager()
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-title">init</span>()</span>{}
+}
+
+<span class="hljs-comment">// 方式二</span>
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">SingleManager</span>{
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">let</span> shared = {
+        <span class="hljs-comment">//...</span>
+        <span class="hljs-comment">//...</span>
+        <span class="hljs-keyword">return</span> SingleManager()
+    }()
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-title">init</span>()</span>{}
+}
+
+<span class="hljs-comment">// 上述两个方法等价，一般推荐 方式二</span>
+</code></pre>
+<hr>
+<h2 id="heading-33" data-id="heading-33">Swift 中 下标是什么？</h2>
+<ul>
+<li>使用<code>subscript</code> 可以给任意类型(枚举，结构体，类) 增加下标的功能</li>
+</ul>
+<p>subscript 的语法 类似于 实例方法、计算属性，本质就是方法(函数)</p>
+<pre><code class="hljs language-swift" lang="swift"><span class="hljs-keyword">func</span> <span class="hljs-title function_">xiabiaoTest</span>() {
+    <span class="hljs-keyword">class</span> <span class="hljs-title class_">Point</span> {
+        <span class="hljs-keyword">var</span> x <span class="hljs-operator">=</span> <span class="hljs-number">0.0</span>
+        <span class="hljs-keyword">var</span> y <span class="hljs-operator">=</span> <span class="hljs-number">0.0</span>
+        
+        <span class="hljs-keyword">subscript</span> (<span class="hljs-params">index</span>:<span class="hljs-type">Int</span>) -> <span class="hljs-type">Double</span> {
+            <span class="hljs-keyword">set</span>{
+                <span class="hljs-keyword">if</span> index <span class="hljs-operator">==</span> <span class="hljs-number">0</span> {
+                    x <span class="hljs-operator">=</span> newValue
+                } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> index <span class="hljs-operator">==</span> <span class="hljs-number">1</span> {
+                    y <span class="hljs-operator">=</span> newValue
+                }
+            }
+            <span class="hljs-keyword">get</span>{
+                <span class="hljs-keyword">if</span> index <span class="hljs-operator">==</span> <span class="hljs-number">0</span> {
+                    <span class="hljs-keyword">return</span> x
+                } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> index <span class="hljs-operator">==</span> <span class="hljs-number">1</span> {
+                    <span class="hljs-keyword">return</span> y
+                }
+                <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>
+            }
+        }
+    }
+    
+    <span class="hljs-keyword">let</span> p <span class="hljs-operator">=</span> <span class="hljs-type">Point</span>()
+    p[<span class="hljs-number">0</span>] <span class="hljs-operator">=</span> <span class="hljs-number">11.1</span> <span class="hljs-comment">// 调用subscript</span>
+    p[<span class="hljs-number">1</span>] <span class="hljs-operator">=</span> <span class="hljs-number">22.2</span> <span class="hljs-comment">// 调用subscript</span>
+    <span class="hljs-built_in">print</span>(p.x)<span class="hljs-comment">//11.1 不会调用 subscript</span>
+    <span class="hljs-built_in">print</span>(p.y)<span class="hljs-comment">//22/2 不会调用 subscript</span>
+    <span class="hljs-built_in">print</span>(p[<span class="hljs-number">0</span>])<span class="hljs-comment">//11.1 // 调用subscript</span>
+    <span class="hljs-built_in">print</span>(p[<span class="hljs-number">1</span>])<span class="hljs-comment">//22.2 // 调用subscript</span>
+}
+</code></pre>
+<hr>
+
+<h2 id="heading-34" data-id="heading-34">简要说明 Swift 中的初始化器？</h2>
+<ul>
+<li>结构体、类、枚举都可以定义初始化器。</li>
+<li>结构体在未于主体声明中自定义初始化器时，可获得 memberwise initializer。</li>
+<li>在 extension 中定义初始化器不一定影响结构体默认 memberwise initializer。</li>
+<li>类只有在所有存储属性都有默认值时，才会获得默认无参初始化器；否则不会自动生成。</li>
+<li>类有 designated initializer 和 convenience initializer；convenience initializer 必须最终调用同一个类的 designated initializer。</li>
+</ul>
+<hr>
+
+<h2 id="heading-35" data-id="heading-35">什么是可选链？</h2>
+<p>可选链是一个调用和查询可选属性、方法和下标的过程，它可能为 nil 。</p>
+<ul>
+<li>如果可选项包含值，属性、方法或者下标的调用成功；</li>
+<li>如果可选项是 nil ，属性、方法或者下标的调用会返回 nil 。</li>
+<li>多个查询可以链接在一起，如果链中任何一个节点是 nil ，那么整个链就会得体地失败。</li>
+</ul>
+<h3 id="heading-36" data-id="heading-36">可选链(Optional Chaining)</h3>
+<p>如果 可选项 不会nil ,调用 方法 ，下标，属性成功，结果会被包装成 可选项，反之调用失败，返回nil</p>
+<pre><code class="hljs language-swift" lang="swift"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Car</span> { <span class="hljs-keyword">var</span> price <span class="hljs-operator">=</span> <span class="hljs-number">0</span>}
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">Dog</span> { <span class="hljs-keyword">var</span> weight <span class="hljs-operator">=</span> <span class="hljs-number">0</span>}
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">Person</span> {
+    <span class="hljs-keyword">var</span> name:<span class="hljs-type">String</span> <span class="hljs-operator">=</span> <span class="hljs-string">""</span>
+    <span class="hljs-keyword">var</span> dog :<span class="hljs-type">Dog</span> <span class="hljs-operator">=</span> <span class="hljs-type">Dog</span>()
+    <span class="hljs-keyword">var</span> car :<span class="hljs-type">Car</span>? <span class="hljs-operator">=</span> <span class="hljs-type">Car</span>()
+    <span class="hljs-keyword">func</span> <span class="hljs-title function_">age</span>() -> <span class="hljs-type">Int</span> { <span class="hljs-number">18</span> }
+    <span class="hljs-keyword">func</span> <span class="hljs-title function_">eat</span>() {<span class="hljs-built_in">print</span>(<span class="hljs-string">"Person Eat"</span>)}
+    <span class="hljs-keyword">subscript</span> (<span class="hljs-params">index</span>:<span class="hljs-type">Int</span>) -><span class="hljs-type">Int</span> {index}
+}
+
+
+<span class="hljs-keyword">var</span> person :<span class="hljs-type">Person</span>? <span class="hljs-operator">=</span> <span class="hljs-type">Person</span>()
+<span class="hljs-keyword">var</span> age1 <span class="hljs-operator">=</span> person<span class="hljs-operator">!</span>.age() <span class="hljs-comment">//Int</span>
+<span class="hljs-keyword">var</span> age2 <span class="hljs-operator">=</span> person<span class="hljs-operator">?</span>.age() <span class="hljs-comment">// Int?</span>
+<span class="hljs-keyword">var</span> name <span class="hljs-operator">=</span> person<span class="hljs-operator">?</span>.name <span class="hljs-comment">// String?</span>
+<span class="hljs-keyword">var</span> index <span class="hljs-operator">=</span> person<span class="hljs-operator">?</span>[<span class="hljs-number">6</span>] <span class="hljs-comment">// Int?</span>
+
+
+<span class="hljs-keyword">func</span> <span class="hljs-title function_">getName</span>() -> <span class="hljs-type">String</span> {<span class="hljs-string">"jackie"</span>}
+
+<span class="hljs-comment">/*
+ 如果 person 对象 是 nil  ，将不会调用 getName() 方法
+ */</span>
+person<span class="hljs-operator">?</span>.name <span class="hljs-operator">=</span> getName()
+
+</code></pre>
+<ul>
+<li>如果结果本来就是可选项，不会进行再次包装</li>
+</ul>
+
+<pre><code class="hljs language-javascript" lang="javascript"><span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> _ = person?.<span class="hljs-title function_">eat</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-comment">/*
+    Person Eat
+	eat success
+    */</span>
+    <span class="hljs-title function_">print</span>(<span class="hljs-string">"eat success"</span>)
+} <span class="hljs-keyword">else</span> {
+    <span class="hljs-title function_">print</span>(<span class="hljs-string">"eat failure"</span>)
+}
+</code></pre>
+<ul>
+<li>多个 <code>？</code> 可以连接在一起，其中任何一个节点 如果为 nil,那么整条链就会 调用失败</li>
+</ul>
+
+<pre><code class="hljs language-csharp" lang="csharp"><span class="hljs-keyword">var</span> dog = person?.dog <span class="hljs-comment">// Dog?</span>
+<span class="hljs-keyword">var</span> weight = person?.dog.weight <span class="hljs-comment">// Int?</span>
+<span class="hljs-keyword">var</span> price = person?.car?.price <span class="hljs-comment">// Int?</span>
+</code></pre>
+<hr>
+<h2 id="heading-37" data-id="heading-37">什么是运算符重载?</h2>
+<p>类、结构体、枚举可以为现有的运算符提供自定义的实现，这个操作叫做:运算符重载</p>
+<pre><code class="hljs language-less" lang="less"><span class="hljs-selector-tag">struct</span> <span class="hljs-selector-tag">Point</span> {
+    <span class="hljs-selector-tag">var</span> <span class="hljs-selector-tag">x</span>: <span class="hljs-selector-tag">Int</span>,<span class="hljs-selector-tag">y</span>: <span class="hljs-selector-tag">Int</span>
+    <span class="hljs-selector-tag">static</span> <span class="hljs-selector-tag">func</span> + (<span class="hljs-attribute">p1</span>: Point,<span class="hljs-attribute">p2</span>: Point) <span class="hljs-selector-tag">-</span>> <span class="hljs-selector-tag">Point</span> {
+        <span class="hljs-selector-tag">Point</span>(<span class="hljs-attribute">x</span>: p1.x + p2.x ,<span class="hljs-attribute">y</span>: p1.y + p2.y)
+    }
+}
+<span class="hljs-selector-tag">let</span> <span class="hljs-selector-tag">p</span> = <span class="hljs-selector-tag">Point</span>(<span class="hljs-attribute">x</span>:<span class="hljs-number">10</span>,<span class="hljs-attribute">y</span>: <span class="hljs-number">20</span>) + <span class="hljs-selector-tag">Point</span>(<span class="hljs-attribute">x</span>: <span class="hljs-number">30</span>,<span class="hljs-attribute">y</span>: <span class="hljs-number">40</span>)
+<span class="hljs-selector-tag">print</span>(p) <span class="hljs-comment">//Point(x: 40, y: 60)</span>
+</code></pre>
+<hr>
+<h2 id="heading-38" data-id="heading-38">Swift中函数的柯里化</h2>
+<p>将一个 接受 多个参数的 函数，变成 只接受 一个参数的一系列 操作</p>
+<p>示例</p>
+<pre><code class="hljs language-swift" lang="swift"><span class="hljs-keyword">func</span> <span class="hljs-title function_">add</span>(<span class="hljs-keyword">_</span> <span class="hljs-params">v1</span>: <span class="hljs-type">Int</span>,<span class="hljs-keyword">_</span> <span class="hljs-params">v2</span>: <span class="hljs-type">Int</span>) -> <span class="hljs-type">Int</span> {
+    v1 <span class="hljs-operator">+</span> v2
+}
+
+<span class="hljs-keyword">func</span> <span class="hljs-title function_">difference</span>(<span class="hljs-keyword">_</span> <span class="hljs-params">v1</span>: <span class="hljs-type">Int</span>,<span class="hljs-keyword">_</span> <span class="hljs-params">v2</span>: <span class="hljs-type">Int</span>) -> <span class="hljs-type">Int</span> {
+    v1 <span class="hljs-operator">-</span> v2
+}
+
+<span class="hljs-keyword">func</span> <span class="hljs-title function_">add2</span>(<span class="hljs-keyword">_</span> <span class="hljs-params">v1</span>: <span class="hljs-type">Int</span>,<span class="hljs-keyword">_</span> <span class="hljs-params">v2</span>: <span class="hljs-type">Int</span>,<span class="hljs-keyword">_</span> <span class="hljs-params">v3</span> :<span class="hljs-type">Int</span> ,<span class="hljs-keyword">_</span> <span class="hljs-params">v4</span> :<span class="hljs-type">Int</span>) -> <span class="hljs-type">Int</span> {
+    v1 <span class="hljs-operator">+</span> v2 <span class="hljs-operator">-</span> v3 <span class="hljs-operator">+</span> v4
+}
+</code></pre>
+<ul>
+<li>伪柯里化</li>
+</ul>
+
+<pre><code class="hljs language-swift" lang="swift"><span class="hljs-keyword">func</span> <span class="hljs-title function_">currying_add</span>(<span class="hljs-keyword">_</span> <span class="hljs-params">v1</span>:<span class="hljs-type">Int</span>) -> (<span class="hljs-type">Int</span>) -> <span class="hljs-type">Int</span> {
+    <span class="hljs-keyword">return</span> {<span class="hljs-variable">$0</span> <span class="hljs-operator">+</span> v1}
+}
+
+<span class="hljs-comment">/*
+ 将任意一个 接受两个 参数的函数 柯里化
+ */</span>
+<span class="hljs-keyword">func</span> <span class="hljs-title function_">curring_fun_tow_params1</span>(<span class="hljs-keyword">_</span> <span class="hljs-params">f1</span> :<span class="hljs-keyword">@escaping</span> (<span class="hljs-type">Int</span>,<span class="hljs-type">Int</span>) -> <span class="hljs-type">Int</span>, <span class="hljs-keyword">_</span> <span class="hljs-params">v1</span> :<span class="hljs-type">Int</span>) -> (<span class="hljs-type">Int</span>) -> <span class="hljs-type">Int</span> {
+<span class="hljs-comment">//    return {</span>
+<span class="hljs-comment">//        f1($0,v1)</span>
+<span class="hljs-comment">//    }</span>
+    <span class="hljs-keyword">return</span> { (v2) <span class="hljs-keyword">in</span>
+        <span class="hljs-keyword">return</span> f1(v1 , v2)
+    }
+}
+
+<span class="hljs-built_in">print</span>(add(<span class="hljs-number">10</span>, <span class="hljs-number">20</span>)) <span class="hljs-comment">// 30</span>
+<span class="hljs-built_in">print</span>(currying_add(<span class="hljs-number">10</span>)(<span class="hljs-number">20</span>)) <span class="hljs-comment">// 30 // 30</span>
+<span class="hljs-built_in">print</span>(curring_fun_tow_params1(add, <span class="hljs-number">10</span>)(<span class="hljs-number">20</span>))
+</code></pre>
+<ul>
+<li>正宗柯里化</li>
+</ul>
+
+<pre><code class="hljs language-less" lang="less"><span class="hljs-selector-tag">func</span> <span class="hljs-selector-tag">curring_fun_two_params2</span>&#x3C;<span class="hljs-selector-tag">A</span>,<span class="hljs-selector-tag">B</span>,<span class="hljs-selector-tag">C</span>>(_ <span class="hljs-attribute">f1</span>: <span class="hljs-variable">@escaping</span> (A,B) -> C) <span class="hljs-selector-tag">-</span>> (A) <span class="hljs-selector-tag">-</span>> ((B) -> C) {
+    <span class="hljs-comment">/*
+     return {
+         (a) in  // a = 3
+         return {
+             (b) in  // b = 8
+             return  f1(a,b)
+         }
+     }
+     */</span>
+    
+    { <span class="hljs-selector-tag">a</span> <span class="hljs-selector-tag">in</span> { <span class="hljs-selector-tag">b</span> <span class="hljs-selector-tag">in</span> <span class="hljs-selector-tag">f1</span>(a, b)} }
+    
+}
+
+<span class="hljs-selector-tag">let</span> <span class="hljs-selector-tag">result</span> = <span class="hljs-selector-tag">curring_fun_two_params2</span>(add)(<span class="hljs-number">3</span>)(<span class="hljs-number">5</span>)
+<span class="hljs-selector-tag">print</span>(<span class="hljs-string">"result == "</span>,result) <span class="hljs-comment">//8</span>
+</code></pre>
+<ul>
+<li>柯里化拓展</li>
+</ul>
+<pre><code class="hljs language-scss" lang="scss">
+<span class="hljs-comment">/*
+ -> (A) -> (B) -> (C) -> (D) -> E
+ 
+ 实际是 一连串 闭包的 组合  如下所示：
+ 
+ -> (A) -> (  (B) ->    ((C)  ->   ((D) -> E))  )
+ 
+ 
+ 传入 A   >  一个 闭包    (B)   ->   (  (C) -> ((D) -> E)  )
+
+ 
+ 传入 B   >>  一个 闭包   (C)   ->   (  (D) -> E  )
+ 
+ 
+ 传入 C   >>  一个闭包    (D) -> E
+ 
+ 
+ */</span>
+
+
+<span class="hljs-comment">//func curring_fun_more_params&#x3C;A,B,C,D,E>(_ fn: @escaping (A,B,C,D) -> (E)) -> (A) -> ((B) -> ((C) -> ((D) -> E))) {</span>
+  func curring_fun_more_params&#x3C;<span class="hljs-selector-tag">A</span>,<span class="hljs-selector-tag">B</span>,C,D,E>(_ fn: @escaping (A,B,C,D) -> (E)) -> (A) -> (B) -> (C) -> (D) -> E {
+   <span class="hljs-comment">/*
+    return {
+        (a) in
+        return {
+            (b) in
+            return {
+                (c) in
+                return {
+                    d in
+                    return fn(a,b,c,d)
+                }
+            }
+        }
+    }
+    */</span>
+    
+    {<span class="hljs-selector-tag">a</span> in { <span class="hljs-selector-tag">b</span> in { c in { d in <span class="hljs-built_in">fn</span>(a,b,c,d)}}}}
+}
+
+let resutl2 = <span class="hljs-built_in">curring_fun_more_params</span>(add2)(<span class="hljs-number">10</span>)(<span class="hljs-number">20</span>)(<span class="hljs-number">30</span>)(<span class="hljs-number">40</span>)
+<span class="hljs-built_in">print</span>(resutl2) <span class="hljs-comment">// 40</span>
+
+let resutl2_func = <span class="hljs-built_in">curring_fun_more_params</span>(add2)
+let resutl2_func_value = <span class="hljs-built_in">resutl2_func</span>(<span class="hljs-number">10</span>)(<span class="hljs-number">20</span>)(<span class="hljs-number">30</span>)(<span class="hljs-number">40</span>)
+<span class="hljs-built_in">print</span>(resutl2_func_value) <span class="hljs-comment">// 40</span>
+</code></pre></div></div></article> <div class="article-end" data-v-539963b4 data-v-61fb5e44><div class="rank-entry-bottom" data-v-539963b4 data-v-61fb5e44><!----></div> <div class="tag-list-box" data-v-539963b4 data-v-61fb5e44><!----><!----><!----></div></div> <!----><!----><!----><!----><!----></div> <div id="sidebar-container" class="sidebar article-sidebar" data-v-4ed317c2 data-v-61fb5e44><div class="sidebar-block author-block author-block-container pure" data-v-7e7e812a data-v-1902877e data-v-4ed317c2><a href="/user/4213782311876343/posts" target="_blank" rel="" class="jj-link user-item item" data-v-65b50b51 data-v-1902877e><div class="avatar jj-avatar avatar" data-v-03256cc6 data-v-1902877e><img loading="eager" src="assets/avatar.awebp"" alt="avatar" class="lazy avatar-img immediate" data-v-5244ef91 data-v-03256cc6> </div> <div class="info-box" style="visibility:hidden;" data-v-65b50b51 data-v-1902877e><span to="[object Object]" blank="true" class="username" data-v-292f6e48 data-v-1902877e><span class="name" style="max-width:128px;" data-v-292f6e48>
+    会飞的金鱼
+  </span> <span to="" blank="true" class="rank" data-v-23743940 data-v-292f6e48><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8AQMAAAAAMksxAAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAAA5JREFUKM9jGAWjAAcAAAIcAAE27nY6AAAAAElFTkSuQmCC" alt="创作等级LV.5" title="创作等级LV.5" class="lazy" style="aspect-ratio:NaN;" data-v-5244ef91 data-v-23743940></span> <!----> <!----> </span> <div title="IT" class="position" data-v-65b50b51 data-v-1902877e>
+        IT
+      </div> <div class="extra-container" data-v-65b50b51 data-v-1902877e><!----> </div></div></a> <div class="count-container" data-v-7e7e812a data-v-1902877e><a href="/user/4213782311876343/posts" target="_blank" rel="" class="jj-link stat-item item" data-v-65b50b51 data-v-1902877e><div class="count" style="display:none;" data-v-65b50b51 data-v-1902877e>
+        106
+      </div> <div data-v-65b50b51 data-v-1902877e>文章</div></a> <a href="/user/4213782311876343/posts" target="_blank" rel="" class="jj-link stat-item item" data-v-65b50b51 data-v-1902877e><div class="count" style="display:none;" data-v-65b50b51 data-v-1902877e>
+        372k
+      </div> <div data-v-65b50b51 data-v-1902877e>阅读</div></a> <a href="/user/4213782311876343/followers" target="_blank" rel="" class="jj-link stat-item item" data-v-65b50b51 data-v-1902877e><div class="count" style="display:none;" data-v-65b50b51 data-v-1902877e>
+        473
+      </div> <div data-v-65b50b51 data-v-1902877e>粉丝</div></a></div> <div class="operate-btn hidden" style="position:relative;z-index:2;min-height:36px;" data-v-7e7e812a data-v-1902877e><!----><!----><!----></div> <!----></div> <div class="sticky-block-box" data-v-4ed317c2><nav class="article-catalog catalog-block local-catalog" data-local-catalog="true" data-v-6239701c data-v-16ed86c3 data-v-4ed317c2><div class="catalog-title" data-v-6239701c><div data-v-6239701c>目录</div> <div class="direction" data-v-6239701c><div class="word" data-v-6239701c>收起</div> <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-rotate" data-v-6239701c data-v-6239701c><g id="&amp;#229;&amp;#177;&amp;#149;&amp;#229;&amp;#188;&amp;#128;" data-v-6239701c data-v-6239701c><path id="&amp;#232;&amp;#183;&amp;#175;&amp;#229;&amp;#190;&amp;#132;" fill-rule="evenodd" clip-rule="evenodd" d="M5.99854 7.93206L10.0644 3.86619C10.162 3.76856 10.3203 3.76856 10.418 3.86619L10.7715 4.21975C10.8691 4.31738 10.8691 4.47567 10.7715 4.5733L6.35209 8.99272C6.15683 9.18798 5.84025 9.18798 5.64498 8.99272L1.22557 4.5733C1.12794 4.47567 1.12794 4.31738 1.22557 4.21975L1.57912 3.86619C1.67675 3.76856 1.83504 3.76856 1.93267 3.86619L5.99854 7.93206Z" fill="#8A919F" data-v-6239701c data-v-6239701c></path></g></svg></div></div> <div class="catalog-body unfold" data-v-6239701c><ul class="catalog-list" style="margin-top:0px;" data-v-6239701c><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-0" title="Swift 优点 （相对 OC）" class="catalog-aTag d1-aTag-title">
+      Swift 优点 （相对 OC）
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-1" title="Swift 中 类(class) 和 结构体(struct) 的区别,以及各自优缺点？" class="catalog-aTag d1-aTag-title">
+      Swift 中 类(class) 和 结构体(struct) 的区别,以及各自优缺点？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-2" title="Swift中strong 、weak和unowned是什么意思？二者有什么不同？何时使用unowned？" class="catalog-aTag d1-aTag-title">
+      Swift中strong 、weak和unowned是什么意思？二者有什么不同？何时使用unowned？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-3" title="Swift 中什么是可选类型？" class="catalog-aTag d1-aTag-title">
+      Swift 中什么是可选类型？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-4" title="Swift 中什么 是 泛型？" class="catalog-aTag d1-aTag-title">
+      Swift 中什么 是 泛型？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-5" title="怎么理解 Swift中的泛型约束" class="catalog-aTag d1-aTag-title">
+      怎么理解 Swift中的泛型约束
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-6" title="Swift 中 static 和 class 关键字的区别" class="catalog-aTag d1-aTag-title">
+      Swift 中 static 和 class 关键字的区别
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-7" title="Swift 中的模式匹配？" class="catalog-aTag d1-aTag-title">
+      Swift 中的模式匹配？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-8" title="Swift 中的访问控制?" class="catalog-aTag d1-aTag-title">
+      Swift 中的访问控制?
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-9" title="怎么理解 copy - on - write? 或者 理解Swift中的写时复制" class="catalog-aTag d1-aTag-title">
+      怎么理解 copy - on - write? 或者 理解Swift中的写时复制
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-10" title="Swift 为什么将 Array，String，Dictionary，Set，设计为值类型？" class="catalog-aTag d1-aTag-title">
+      Swift 为什么将 Array，String，Dictionary，Set，设计为值类型？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-11" title="什么是属性观察器？" class="catalog-aTag d1-aTag-title">
+      什么是属性观察器？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-12" title="Swift 异常捕获" class="catalog-aTag d1-aTag-title">
+      Swift 异常捕获
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-13" title="defer 的用法" class="catalog-aTag d1-aTag-title">
+      defer 的用法
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-14" title="如何将Swift中协议 部分方法 设计成可选？" class="catalog-aTag d1-aTag-title">
+      如何将Swift中协议 部分方法 设计成可选？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-15" title="Swift和OC中的 protocol 有什么不同?" class="catalog-aTag d1-aTag-title">
+      Swift和OC中的 protocol 有什么不同?
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-16" title="比较Swift 和OC中的初始化方法 (init) 有什么不同?" class="catalog-aTag d1-aTag-title">
+      比较Swift 和OC中的初始化方法 (init) 有什么不同?
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-17" title="Swift 和OC 中的自省 有什么区别?" class="catalog-aTag d1-aTag-title">
+      Swift 和OC 中的自省 有什么区别?
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-18" title="Swift 与 OC 如何相互调用" class="catalog-aTag d1-aTag-title">
+      Swift 与 OC 如何相互调用
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-19" title="Swift定义常量 和 OC定义常量的区别？" class="catalog-aTag d1-aTag-title">
+      Swift定义常量 和 OC定义常量的区别？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-20" title="Swift 中的函数重载" class="catalog-aTag d1-aTag-title">
+      Swift 中的函数重载
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-21" title="Swift 中的枚举,关联值 和 原始值的区分?" class="catalog-aTag d1-aTag-title">
+      Swift 中的枚举,关联值 和 原始值的区分?
+    </a></div> <ul class="sub-list"><li class="item d2"><div class="a-container"><a href="#heading-22" title="闭包是引用类型吗？" class="catalog-aTag d2-aTag-title">
+      闭包是引用类型吗？
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-23" title="swift 中的闭包结构是什么样子的?" class="catalog-aTag d2-aTag-title">
+      swift 中的闭包结构是什么样子的?
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-24" title="什么是尾随闭包" class="catalog-aTag d2-aTag-title">
+      什么是尾随闭包
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-25" title="闭包表达式的简写" class="catalog-aTag d2-aTag-title">
+      闭包表达式的简写
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-26" title="尾随闭包" class="catalog-aTag d2-aTag-title">
+      尾随闭包
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-27" title="什么是逃逸闭包" class="catalog-aTag d2-aTag-title">
+      什么是逃逸闭包
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-28" title="什么是自动闭包" class="catalog-aTag d2-aTag-title">
+      什么是自动闭包
+    </a></div> <!----></li></ul></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-29" title="Swift 中的存储属性与计算属性" class="catalog-aTag d1-aTag-title">
+      Swift 中的存储属性与计算属性
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-30" title="什么是[延迟存储属性](Lazy Stored Property)" class="catalog-aTag d1-aTag-title">
+      什么是[延迟存储属性](Lazy Stored Property)
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-31" title="什么是 类型 属性？" class="catalog-aTag d1-aTag-title">
+      什么是 类型 属性？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-32" title="Swift 中如何定义单例模式" class="catalog-aTag d1-aTag-title">
+      Swift 中如何定义单例模式
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-33" title="Swift 中 下标是什么？" class="catalog-aTag d1-aTag-title">
+      Swift 中 下标是什么？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-34" title="简要说明Swift中的初始化器？" class="catalog-aTag d1-aTag-title">
+      简要说明Swift中的初始化器？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-35" title="什么是可选链？" class="catalog-aTag d1-aTag-title">
+      什么是可选链？
+    </a></div> <ul class="sub-list"><li class="item d2"><div class="a-container"><a href="#heading-36" title="可选链(Optional Chaining)" class="catalog-aTag d2-aTag-title">
+      可选链(Optional Chaining)
+    </a></div> <!----></li></ul></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-37" title="什么是运算符重载?" class="catalog-aTag d1-aTag-title">
+      什么是运算符重载?
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-38" title="Swift中函数的柯里化" class="catalog-aTag d1-aTag-title">
+      Swift中函数的柯里化
+    </a></div> <!----></li></ul></div></nav> <!----> <!----> <div class="adverts-list" data-v-0eca8145 data-v-4ed317c2></div> <!----> <!----></div> <!----></div> <!----> <!----> <div id="article-suspended-panel" data-v-539963b4 data-v-61fb5e44></div> <!----></div> <!----><!----><!----><!----><!----><!----><!----></main> <!----></div> <!----></div> <!----> <div class="global-component-box"><!----></div> <!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----> <!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----></div></div></div>
+<script id="local-catalog-script">
+(function () {
+  'use strict';
+  var catalog = document.querySelector('[data-local-catalog="true"]');
+  if (!catalog) return;
+  var links = Array.prototype.slice.call(catalog.querySelectorAll('a[href^="#heading-"]'));
+  var body = catalog.querySelector('.catalog-body');
+  var list = catalog.querySelector('.catalog-list');
+  var title = catalog.querySelector('.catalog-title');
+  var direction = catalog.querySelector('.catalog-title .direction');
+  var directionWord = direction && direction.querySelector('.word');
+  var headings = links.map(function (link) {
+    return document.getElementById(decodeURIComponent(link.hash.slice(1)));
+  }).filter(Boolean);
+
+  function setActive(index, keepCatalogVisible) {
+    links.forEach(function (link, i) {
+      link.classList.toggle('active', i === index);
+      var li = link.closest('li');
+      if (li) li.classList.toggle('active', i === index);
+    });
+    if (index >= 0 && body && !body.classList.contains('collapse')) {
+      var activeLink = links[index];
+      var activeItem = activeLink.closest('li');
+      if (activeItem) {
+        // offsetTop is relative to the nearest positioned ancestor, which is the
+        // link's own .a-container and therefore unsuitable for catalog scrolling.
+        var activeTop = activeItem.getBoundingClientRect().top - body.getBoundingClientRect().top + body.scrollTop;
+        // Always move the clicked/current catalog entry to a stable, visible
+        // position rather than only scrolling when it is already off-screen.
+        var targetTop = Math.max(0, activeTop - body.clientHeight * 0.3);
+        if (body.scrollTo) {
+          body.scrollTo({ top: targetTop, behavior: 'auto' });
+        } else {
+          body.scrollTop = targetTop;
+        }
+      }
+    }
+  }
+
+  function currentHeadingIndex() {
+    var offset = 96;
+    for (var i = headings.length - 1; i >= 0; i--) {
+      if (headings[i].getBoundingClientRect().top - offset <= 0) return i;
+    }
+    return headings.length ? 0 : -1;
+  }
+
+  function ensureCatalogScrollPadding() {
+    if (!body || !list) return;
+    // The catalog can then scroll its final entries to the same visible
+    // position as earlier entries, instead of stopping at the list's end.
+    list.style.paddingBottom = Math.max(16, body.clientHeight * 0.75) + 'px';
+  }
+
+  var activeLockIndex = null;
+
+  function syncActive() {
+    var index = activeLockIndex === null ? currentHeadingIndex() : activeLockIndex;
+    setActive(index, true);
+  }
+
+  function releaseActiveLock(target) {
+    var startedAt = performance.now();
+    function check() {
+      if (activeLockIndex === null) return;
+      var arrived = Math.abs(target.getBoundingClientRect().top - 84) < 2;
+      var timedOut = performance.now() - startedAt > 10000;
+      if (arrived || timedOut) {
+        activeLockIndex = null;
+        syncActive();
+        return;
+      }
+      requestAnimationFrame(check);
+    }
+    requestAnimationFrame(check);
+  }
+
+  links.forEach(function (link, index) {
+    link.addEventListener('click', function (event) {
+      event.preventDefault();
+      var target = headings[index];
+      if (!target) return;
+      // Keep the right-hand catalog pinned to the clicked entry while the
+      // left-hand article is still animating, instead of highlighting headings
+      // that the page passes through during smooth scrolling.
+      activeLockIndex = index;
+      setActive(index, true);
+      window.scrollTo({ top: window.pageYOffset + target.getBoundingClientRect().top - 84, behavior: 'smooth' });
+      if (history.replaceState) history.replaceState(null, '', link.hash);
+      releaseActiveLock(target);
+    });
+  });
+
+  if (direction) {
+    direction.addEventListener('click', function (event) {
+      event.stopPropagation();
+      var collapsed = body.classList.toggle('collapse');
+      body.classList.toggle('unfold', !collapsed);
+      if (title) title.classList.toggle('collapse', collapsed);
+      if (directionWord) directionWord.textContent = collapsed ? '展开' : '收起';
+    });
+  }
+
+  window.addEventListener('scroll', syncActive, { passive: true });
+  window.addEventListener('resize', function () {
+    ensureCatalogScrollPadding();
+    syncActive();
+  });
+  ensureCatalogScrollPadding();
+  syncActive();
+})();
+</script>
+
+</body>
+</html>
