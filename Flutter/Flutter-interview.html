@@ -1,0 +1,770 @@
+<!doctype html>
+<!-- Offline snapshot generated 2026-10-23 from https://juejin.cn/post/7067828374344826887. -->
+<html data-n-head-ssr lang="zh" data-n-head="%7B%22lang%22:%7B%22ssr%22:%22zh%22%7D%7D">
+  <head >
+    <title>Flutter 面试题整理1、Dart 是单线程模型，运行的的流程： 简单来说，Dart 在单线程中是以消息循环机制来运 - 掘金</title><meta data-n-head="ssr" charset="utf-8"><meta data-n-head="ssr" name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, viewport-fit=cover"><meta data-n-head="ssr" name="apple-itunes-app" content="app-id=987739104"><meta data-n-head="ssr" name="theme-color" content="#ffffff"><meta data-n-head="ssr" name="msapplication-TileColor" content="#da532c"><meta data-n-head="ssr" name="msvalidate.01" content="BADCF2429624CB0432BE8924E5343343"><meta data-n-head="ssr" name="google-site-verification" content="H_4N6FRhUA633zQuLcgQvaDDceBxlcb6vMSFXm5G4i8"><meta data-n-head="ssr" vmid="description" name="description" content="1、Dart 是单线程模型，运行的的流程： 简单来说，Dart 在单线程中是以消息循环机制来运行的，包含两个任务队列，一个是“微任务队列” microtask queue，另一个叫做“事件队列” ev"><meta data-n-head="ssr" vmid="keywords" name="keywords" content="Flutter中文技术社区,前端开发社区,前端技术交流,前端框架教程,JavaScript 学习资源,CSS 技巧与最佳实践,HTML5 最新动态,前端工程师职业发展,开源前端项目,前端技术趋势"><link data-n-head="ssr" rel="preconnect" href="//unpkg.byted-static.com/" crossorigin="anonymous"><link data-n-head="ssr" rel="preconnect" href="//lf3-cdn-tos.bytescm.com" crossorigin="anonymous"><link data-n-head="ssr" rel="preconnect" href="//mcs.snssdk.com" crossorigin="anonymous"><link data-n-head="ssr" rel="preconnect" href="//i.snssdk.com" crossorigin="anonymous"><link data-n-head="ssr" rel="dns-prefetch" href="//lf3-short.ibytedapm.com"><link data-n-head="ssr" rel="dns-prefetch" href="//lf3-cdn-tos.bytescm.com"><link data-n-head="ssr" rel="dns-prefetch" href="//api.juejin.cn"><link data-n-head="ssr" rel="dns-prefetch" href="//lf-cdn-tos.bytescm.com"><link data-n-head="ssr" rel="dns-prefetch" href="//unpkg.byted-static.com"><link data-n-head="ssr" rel="dns-prefetch" href="//p1-juejin.byteimg.com"><link data-n-head="ssr" rel="dns-prefetch" href="//p3-juejin.byteimg.com"><link data-n-head="ssr" rel="dns-prefetch" href="//p6-juejin.byteimg.com"><link data-n-head="ssr" rel="dns-prefetch" href="//p9-juejin.byteimg.com"><link data-n-head="ssr" rel="dns-prefetch" href="//p1-jj.byteimg.com"><link data-n-head="ssr" rel="dns-prefetch" href="//p2-jj.byteimg.com"><link data-n-head="ssr" rel="dns-prefetch" href="//p6-jj.byteimg.com"><link data-n-head="ssr" rel="dns-prefetch" href="//p9-jj.byteimg.com"><link data-n-head="ssr" rel="dns-prefetch" href="//mcs.snssdk.com"><link data-n-head="ssr" rel="dns-prefetch" href="//i.snssdk.com"><link data-n-head="ssr" rel="apple-touch-icon" sizes="180x180" href="assets/site/apple-touch-icon.png"><link data-n-head="ssr" rel="icon" type="image/png" sizes="32x32" href="assets/site/favicon-32x32.png"><link data-n-head="ssr" rel="icon" type="image/png" sizes="16x16" href="assets/site/favicon-16x16.png"><link data-n-head="ssr" rel="mask-icon" href="assets/site/safari-pinned-tab.svg" color="#1E80FF"><link data-n-head="ssr" rel="manifest" href="https://lf-web-assets.juejin.cn/obj/juejin-web/xitu_juejin_web/static/favicons/site.webmanifest"><link data-n-head="ssr" rel="search" title="掘金" href="https://lf-web-assets.juejin.cn/obj/juejin-web/xitu_juejin_web/static/search.xml" type="application/opensearchdescription+xml"><link data-n-head="ssr" rel="stylesheet" href="assets/css/bytedesign.min.css"><link data-n-head="ssr" rel="canonical" href="https://juejin.cn/post/7067828374344826887"><script data-n-head="ssr" type="text/javascript" data-sdk-glue-default="init">
+        (function (){
+          var options = {
+            bdms: {
+              aid: 2608,
+              paths: [
+                '/growth_api/v1/publish_benefit_history',
+                '/growth_api/v1/check_in',
+                '/growth_api/v1/lottery/draw',
+                '/growth_api/v1/lottery/ten_draw',
+                '/web_shorten',
+                '/user_api/v1/user/get',
+                '/interact_api/v1/digg/save',
+                '/interact_api/v1/digg/query_page',
+                '/interact_api/v1/comment/list',
+                '/interact_api/v1/comment/hots',
+                '/content_api/v1/article/detail',
+                '/user_api/v1/follow/followees',
+                '/user_api/v1/follow/followers',
+                '/interact_api/v1/follow/tag_list',
+                '/recommend_api/v1/article/recommend_cate_feed',
+                '/interact_api/v1/comment/publish',
+                '/interact_api/v1/reply/publish',
+                '/growth_api/v1/get_benefit_page',
+                '/growth_api/v1/get_cur_point',
+                '/growth_api/v1/ten_draw', 
+                '/growth_api/v1/draw',
+                '/growth_api/v1/lottery_config/get',
+                '/user_api/v1/user_referral/bind',
+              ]
+            },
+            verifyCenter: {
+              interceptPathList: [
+                '/user_api/v1/user/get',
+                '/interact_api/v1/digg/save',
+                '/interact_api/v1/digg/query_page',
+                '/interact_api/v1/comment/list',
+                '/interact_api/v1/comment/hots',
+                '/content_api/v1/article/detail',
+                '/user_api/v1/follow/followees',
+                '/user_api/v1/follow/followers',
+                '/interact_api/v1/follow/tag_list',
+                '/recommend_api/v1/article/recommend_cate_feed',
+              ],
+              commonOptions: {
+                aid: 2608,
+                repoId: 56081
+              },
+              captchaOptions: {
+                showMode: 'mask',
+              },
+            }
+          }
+        var sdkInfo = {
+          bdms: {
+            init: function (options) {
+              window.bdms.init(options)
+            },
+            isLoaded: function () {
+              return !!window.bdms
+            },
+            srcList: [
+              'https://lf-headquarters-speed.yhgfb-cn-static.com/obj/rc-client-security/web/stable/1.0.0.33/bdms.js',
+              'https://lf-c-flwb.bytetos.com/obj/rc-client-security/web/stable/1.0.0.33/bdms.js',
+            ],
+          },
+          verifyCenter: {
+            init: function (options) {
+              window.TTGCaptcha.init(options);
+            },
+            isLoaded: function () {
+              return !!window.TTGCaptcha;
+            },
+            srcList: [
+              'https://lf-cdn-tos.bytescm.com/obj/rc-verifycenter/sec_sdk_build/4.0.10/captcha/index.js',
+              'https://lf-rc1.yhgfb-cn-static.com/obj/rc-verifycenter/sec_sdk_build/4.0.10/captcha/index.js',
+            ],
+          }
+        }
+        window._SdkGlueInit(options, sdkInfo)
+        })();
+        </script><script data-n-head="ssr" vmid="slardar" type="text/javascript" crossorigin="anonymous">;(function (w, d, u, b, n, pc, ga, ae, po, s, p, e, t, pp) {pc = 'precollect';ga = 'getAttribute';ae = 'addEventListener';po = 'PerformanceObserver';s = function (m) {p = [].slice.call(arguments);p.push(Date.now(), location.href);(m == pc ? s.p.a : s.q).push(p)};s.q = [];s.p = { a: [] };w[n] = s;e = document.createElement('script');e.src = u + '?bid=' + b + '&globalName=' + n;e.crossOrigin = u.indexOf('sdk-web') > 0 ? 'anonymous' : 'use-credentials';d.getElementsByTagName('head')[0].appendChild(e);if (ae in w) {s.pcErr = function (e) {e = e || w.event;t = e.target || e.srcElement;if (t instanceof Element || t instanceof HTMLElement) {if (t[ga]('integrity')) {w[n](pc, 'sri', t[ga]('href') || t[ga]('src'))} else {w[n](pc, 'st', { tagName: t.tagName, url: t[ga]('href') || t[ga]('src') })}} else {w[n](pc, 'err', e.error || e.message)}};s.pcRej = function (e) {e = e || w.event;w[n](pc, 'err', e.reason || (e.detail && e.detail.reason))};w[ae]('error', s.pcErr, true);w[ae]('unhandledrejection', s.pcRej, true);};if('PerformanceLongTaskTiming' in w) {pp = s.pp = { entries: [] };pp.observer = new PerformanceObserver(function (l) {pp.entries = pp.entries.concat(l.getEntries())});pp.observer.observe({ entryTypes: ['longtask', 'largest-contentful-paint','layout-shift'] })}})(window,document,'https://lf3-short.ibytedapm.com/slardar/fe/sdk-web/browser.cn.js','2608','SlardarWeb')</script><script data-n-head="ssr" type="application/ld+json">[{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://juejin.cn/post/7067828374344826887"},"headline":"Flutter 面试题整理","description":"1、Dart 是单线程模型，运行的的流程： 简单来说，Dart 在单线程中是以消息循环机制来运行的，包含两个任务队列，一个是“微任务队列” microtask queue，另一个叫做“事件队列” ev","image":[],"author":{"@type":"Organization","name":"建古"},"publisher":{"@type":"Organization","name":"掘金","logo":{"@type":"ImageObject","url":"assets/site/logo.svg"}},"datePublished":"2022-02-23T09:04:08+00:00","dateModified":"2022-03-09T07:04:38+00:00"},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","name":"稀土掘金","position":1,"item":"https://juejin.cn"},{"@type":"ListItem","name":"iOS","position":2,"item":"https://juejin.cn/ios"},{"@type":"ListItem","name":"文章","position":3}]}]</script><link rel="preload" href="//lf-web-assets.juejin.cn/obj/juejin-web/xitu_juejin_web/e970537.js" as="script"><link rel="preload" href="//lf-web-assets.juejin.cn/obj/juejin-web/xitu_juejin_web/bc8b1c3.js" as="script"><link rel="preload" href="//lf-web-assets.juejin.cn/obj/juejin-web/xitu_juejin_web/42b5c95.js" as="script"><link rel="preload" href="assets/css/app.070ff99.css" as="style"><link rel="preload" href="//lf-web-assets.juejin.cn/obj/juejin-web/xitu_juejin_web/739e8f7.js" as="script"><link rel="preload" href="assets/css/layouts.default.a1d6163.css" as="style"><link rel="preload" href="//lf-web-assets.juejin.cn/obj/juejin-web/xitu_juejin_web/3d600ad.js" as="script"><link rel="preload" href="//lf-web-assets.juejin.cn/obj/juejin-web/xitu_juejin_web/ba68fbb.js" as="script"><link rel="preload" href="assets/css/12.782611d.css" as="style"><link rel="preload" href="//lf-web-assets.juejin.cn/obj/juejin-web/xitu_juejin_web/27c3bf4.js" as="script"><link rel="stylesheet" href="assets/css/app.070ff99.css"><link rel="stylesheet" href="assets/css/layouts.default.a1d6163.css"><link rel="stylesheet" href="assets/css/12.782611d.css">
+  </head>
+  <body >
+    <script data-n-head="ssr" type="text/javascript" data-pbody="true">(function () {
+    const pages = [
+        /^\/$/,
+        /^\/following$/,
+        /^\/recommended$/,
+        '^/pins.*',
+        '^/pin.*',
+        /^\/course(?!\/payment\/)/,
+        /^\/post\/.*/,
+        '^/hot.*',
+        /^\/book\/\d+/,
+        /^\/video\/\d+/,
+        /^\/user\/settings.*/,
+        /^\/spost\/\d+/,
+        /^\/notification(?!\/im)/,
+        '^/backend',
+        '^/frontend',
+        '^/android',
+        '^/ios',
+        '^/ai',
+        '^/freebie',
+        '^/career',
+        '^/article',
+        '^/player',
+    ];
+    function isInJuejinApp() {
+        const userAgent = typeof navigator !== 'undefined' ? navigator.userAgent : '';
+        return /juejin/i.test(userAgent);
+    }
+    if (typeof window !== 'undefined' && !isInJuejinApp()) {
+        try {
+            const path = window.location.pathname;
+            const isAvailable = pages.some((page) => {
+                const reg = new RegExp(page);
+                return reg.test(path);
+            });
+            if (isAvailable) {
+                const localValue = localStorage.getItem('juejin_2608_theme') || '{}';
+                let { theme = 'light', isFollowSystem = false } = JSON.parse(localValue);
+                if (isFollowSystem) {
+                    const themeMedia = window.matchMedia('(prefers-color-scheme: light)');
+                    theme = themeMedia.matches ? 'light' : 'dark';
+                    localStorage.setItem('juejin_2608_theme', JSON.stringify({ theme, isFollowSystem }));
+                }
+                document.body.setAttribute('data-theme', theme);
+            }
+            else {
+                document.body.setAttribute('data-theme', 'light');
+            }
+        }
+        catch (e) {
+            console.error('浏览器不支持localStorage');
+        }
+    }
+})()</script><div data-server-rendered="true" id="__nuxt"><div id="__layout"><div id="juejin"><div data-v-539963b4 data-v-61fb5e44><div class="view-container" data-v-539963b4><!----> <header data-fetch-key="data-v-14fe2051:0" class="main-header main-header unauthorized visible" data-v-14fe2051 data-v-539963b4><div class="container" data-v-14fe2051><a rel="noreferrer" class="logo" data-v-14fe2051><img src="assets/site/logo.svg" alt="稀土掘金" class="logo-img" data-v-14fe2051> <img src="assets/site/logo-mobile.svg" alt="稀土掘金" class="mobile" data-v-14fe2051></a> <!----> <nav role="navigation" class="main-nav" data-v-14fe2051><ul class="nav-list" data-v-14fe2051><!----> <li class="main-nav-list" data-v-14fe2051><!----> <ul class="phone-hide" data-v-14fe2051><li class="nav-item link-item" data-v-14fe2051><a href="/" data-v-14fe2051>首页</a></li> <li class="nav-item link-item activities" data-v-14fe2051><a href="/pins" data-v-14fe2051>
+                沸点
+                <span class="text" data-v-14fe2051><!----></span></a></li> <li class="nav-item link-item book" data-v-14fe2051><a href="/course" data-v-14fe2051>
+                课程
+                <!----></a></li> <li class="nav-item link-item download-center-entry" data-v-14fe2051><a href="/download" target="_blank" rel="noopener" data-v-14fe2051>APP</a></li> <li class="nav-item link-item" data-v-14fe2051><a href="/aiusage/dashboard" data-v-14fe2051>AI用量</a></li> <li class="nav-item link-item" data-v-14fe2051><a href="/vibe-work" data-v-14fe2051>作品广场</a></li> <li class="nav-item link-item" data-v-14fe2051><a href="https://corexpert.juejin.cn/" data-v-14fe2051>
+                专家标注
+              </a></li> <!----></ul></li> <ul class="right-side-nav" data-v-14fe2051><li class="search-add" data-v-14fe2051><ul class="search-add-ul" data-v-14fe2051><li class="nav-item search" data-v-14fe2051><form role="search" class="search-form" data-v-14fe2051><input type="search" maxlength="64" placeholder="" value="" class="search-input" data-v-14fe2051> <div class="seach-icon-container" data-v-14fe2051><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" class="search-icon" data-v-14fe2051 data-v-14fe2051><path d="M12.4008 12.4008C14.744 10.0577 14.744 6.25871 12.4008 3.91556C10.0577 1.57242 6.25871 1.57242 3.91556 3.91556C1.57242 6.25871 1.57242 10.0577 3.91556 12.4008C6.25871 14.744 10.0577 14.744 12.4008 12.4008ZM12.4008 12.4008L15.5828 15.5828" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-v-14fe2051 data-v-14fe2051></path></svg></div> <!----> <div class="typehead" style="display:none;" data-v-14fe2051><!----> <div class="title" data-v-14fe2051><span data-v-14fe2051>搜索历史</span> <span class="clear" data-v-14fe2051>
+                        清空
+                      </span></div> <div class="list" data-v-14fe2051></div></div></form></li> <!----> <li class="nav-item add creator-item" data-v-14fe2051><div class="add-group" data-v-222d7b0f data-v-14fe2051><!----> <button class="add-btn" data-v-222d7b0f>
+    创作者中心
+  </button> <div class="more" data-v-222d7b0f><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" class="unfold12-icon" data-v-222d7b0f data-v-222d7b0f><path d="M2.45025 4.82383C2.17422 4.49908 2.40501 4 2.83122 4H9.16878C9.59499 4 9.82578 4.49908 9.54975 4.82382L6.38097 8.5518C6.1813 8.7867 5.8187 8.7867 5.61903 8.5518L2.45025 4.82383Z" fill="white" data-v-222d7b0f data-v-222d7b0f></path></svg> <div class="more-mask" data-v-222d7b0f></div> <div class="more-list" data-v-222d7b0f><ul class="menu" data-v-222d7b0f><li class="item" data-v-222d7b0f><div class="icon write-article" data-v-222d7b0f></div> <div class="title" data-v-222d7b0f>写文章</div></li><li class="item" data-v-222d7b0f><div class="icon issue-points" data-v-222d7b0f></div> <div class="title" data-v-222d7b0f>发沸点</div></li><li class="item" data-v-222d7b0f><div class="icon write-note" data-v-222d7b0f></div> <div class="title" data-v-222d7b0f>写笔记</div></li><li class="item" data-v-222d7b0f><div class="icon create-jcode" data-v-222d7b0f></div> <div class="title" data-v-222d7b0f>写代码</div></li><li class="item" data-v-222d7b0f><div class="icon drafts" data-v-222d7b0f></div> <div class="title" data-v-222d7b0f>草稿箱</div></li></ul> <div class="divider" data-v-222d7b0f></div> <div class="inspiration" data-v-222d7b0f><div class="info" data-v-222d7b0f><span class="title" data-v-222d7b0f>创作灵感</span> <span class="more-info" data-v-222d7b0f>
+            查看更多
+            <i class="icon byte-icon byte-icon--right" data-v-222d7b0f><svg t="1561636167146" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="404349" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M630.4 512L283.52 165.12a21.12 21.12 0 0 1 0-30.08l30.08-30.08a21.12 21.12 0 0 1 30.08 0l377.6 376.96a42.24 42.24 0 0 1 0 60.16l-377.6 376.96a21.12 21.12 0 0 1-30.08 0l-30.08-30.08a21.12 21.12 0 0 1 0-30.08z" p-id="404350"></path></svg></i></span></div> <div class="list" data-v-222d7b0f>  <div class="item" data-v-21339fef data-v-222d7b0f><div class="xitu-skeleton xitu-skeleton-animated" data-v-21339fef><div class="xitu-skeleton-item" data-v-21339fef><!----> <div class="xitu-skeleton-content" style="padding:20px;" data-v-21339fef><div class="xitu-skeleton-line" data-v-21339fef></div><div class="xitu-skeleton-line" data-v-21339fef></div><div class="xitu-skeleton-line" data-v-21339fef></div></div></div></div></div></div></div></div></div> <!----></div></li></ul></li> <!----> <!----> <!----> <li class="nav-item auth hidden" data-v-14fe2051><div class="login-button-wrap" data-v-14fe2051><button class="login-button" data-v-14fe2051>
+                登录
+                <div class="login-button-inner" data-v-14fe2051><div class="login-button-line" data-v-14fe2051></div>
+                  注册
+                </div></button> <!----></div></li></ul></ul></nav></div></header>  <main class="container main-container" style="max-width:1140px;" data-v-539963b4><div class="view column-view post-view" data-v-539963b4 data-v-61fb5e44><!----> <div class="main-area article-area" data-v-539963b4 data-v-61fb5e44><article itemscope="itemscope" itemtype="http://schema.org/Article" data-entry-id="7067828374344826887" data-draft-id="7067828133260427295" data-original-type="0" class="article" data-v-61fb5e44><!----> <meta itemprop="headline" content="Flutter 面试题整理"> <meta itemprop="keywords" content="Flutter"> <meta itemprop="datePublished" content="2022-02-23T09:04:08.000Z"> <meta itemprop="image" content="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-assets/icon/icon-128.png~tplv-t2oaga2asx-image.image"> <div itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><meta itemprop="name" content="建古"> <meta itemprop="url" content="https://juejin.cn/user/2559318802316359"></div> <div itemprop="publisher" itemscope="itemscope" itemtype="http://schema.org/Organization"><meta itemprop="name" content="掘金"> <div itemprop="logo" itemscope="itemscope" itemtype="https://schema.org/ImageObject"><meta itemprop="url" content="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-assets/icon/icon-white-180.png~tplv-t2oaga2asx-image.image"> <meta itemprop="width" content="180"> <meta itemprop="height" content="180"></div></div> <h1 class="article-title" data-v-61fb5e44>
+            Flutter 面试题整理
+            <!----> <!----></h1> <div class="author-info-block block-hidden" data-v-61fb5e44><div class="author-info-box" data-v-61fb5e44><div class="author-name" data-v-61fb5e44><a href="/user/2559318802316359/posts" target="_blank" rel="" class="jj-link username username ellipsis" data-v-65b50b51 data-v-292f6e48 data-v-61fb5e44><span class="name" style="max-width:160px;" data-v-65b50b51 data-v-292f6e48>
+    建古
+  </span> <!----> <!----> <!----> </a></div> <div class="meta-box" data-v-61fb5e44><time datetime="2022-02-23T09:04:08.000Z" title="Wed Feb 23 2022 09:04:08 GMT+0000 (Coordinated Universal Time)" class="time" data-v-61fb5e44>
+                    2022-02-23
+                  </time> <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="read-icon" data-v-61fb5e44><path d="M7.90078 2.80078C4.49278 2.80078 1.74745 6.11672 0.800781 7.77469C1.74745 9.58339 4.49278 13.2008 7.90078 13.2008C11.3088 13.2008 14.0541 9.58339 15.0008 7.77469C14.0541 6.11672 11.3088 2.80078 7.90078 2.80078Z" stroke="currentColor" data-v-61fb5e44></path><circle cx="7.89922" cy="8.00078" r="2.2" stroke="currentColor" data-v-61fb5e44></circle></svg> <span class="views-count" data-v-61fb5e44>
+                    21,972
+                  </span> <span class="read-time" data-v-61fb5e44><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" data-v-61fb5e44><rect width="16" height="16" fill="none" data-v-61fb5e44></rect><circle cx="8" cy="8" r="5.65625" stroke="#8A919F" data-v-61fb5e44></circle><path d="M7.69141 5.18652V8.30924H10.8141" stroke="#8A919F" stroke-linecap="round" stroke-linejoin="round" data-v-61fb5e44></path></svg>
+                    阅读14分钟
+                  </span> <!----></div></div> <div style="flex:1;" data-v-61fb5e44></div> <!----> <!----></div> <!----> <!----> <!----> <!----> <div id="article-root" itemprop="articleBody" class="main" data-v-61fb5e44><div class="article-viewer markdown-body cache result"><style>.markdown-body{word-break:break-word;line-height:1.75;font-weight:400;font-size:16px;overflow-x:hidden;color:#252933}.markdown-body h1,.markdown-body h2,.markdown-body h3,.markdown-body h4,.markdown-body h5,.markdown-body h6{line-height:1.5;margin-top:35px;margin-bottom:10px;padding-bottom:5px}.markdown-body h1{font-size:24px;line-height:38px;margin-bottom:5px}.markdown-body h2{font-size:22px;line-height:34px;padding-bottom:12px;border-bottom:1px solid #ececec}.markdown-body h3{font-size:20px;line-height:28px}.markdown-body h4{font-size:18px;line-height:26px}.markdown-body h5{font-size:17px;line-height:24px}.markdown-body h6{font-size:16px;line-height:24px}.markdown-body p{line-height:inherit;margin-top:22px;margin-bottom:22px}.markdown-body img{max-width:100%}.markdown-body hr{border:none;border-top:1px solid #ddd;margin-top:32px;margin-bottom:32px}.markdown-body code{word-break:break-word;border-radius:2px;overflow-x:auto;background-color:#fff5f5;color:#ff502c;font-size:.87em;padding:.065em .4em}.markdown-body code,.markdown-body pre{font-family:Menlo,Monaco,Consolas,Courier New,monospace}.markdown-body pre{overflow:auto;position:relative;line-height:1.75}.markdown-body pre>code{font-size:12px;padding:15px 12px;margin:0;word-break:normal;display:block;overflow-x:auto;color:#333;background:#f8f8f8}.markdown-body a{text-decoration:none;color:#0269c8;border-bottom:1px solid #d1e9ff}.markdown-body a:active,.markdown-body a:hover{color:#275b8c}.markdown-body table{display:inline-block!important;font-size:12px;width:auto;max-width:100%;overflow:auto;border:1px solid #f6f6f6}.markdown-body thead{background:#f6f6f6;color:#000;text-align:left}.markdown-body tr:nth-child(2n){background-color:#fcfcfc}.markdown-body td,.markdown-body th{padding:12px 7px;line-height:24px}.markdown-body td{min-width:120px}.markdown-body blockquote{color:#666;padding:1px 23px;margin:22px 0;border-left:4px solid #cbcbcb;background-color:#f8f8f8}.markdown-body blockquote:after{display:block;content:""}.markdown-body blockquote>p{margin:10px 0}.markdown-body ol,.markdown-body ul{padding-left:28px}.markdown-body ol li,.markdown-body ul li{margin-bottom:0;list-style:inherit}.markdown-body ol li .task-list-item,.markdown-body ul li .task-list-item{list-style:none}.markdown-body ol li .task-list-item ol,.markdown-body ol li .task-list-item ul,.markdown-body ul li .task-list-item ol,.markdown-body ul li .task-list-item ul{margin-top:0}.markdown-body ol ol,.markdown-body ol ul,.markdown-body ul ol,.markdown-body ul ul{margin-top:3px}.markdown-body ol li{padding-left:6px}.markdown-body .contains-task-list{padding-left:0}.markdown-body .task-list-item{list-style:none}@media (max-width:720px){.markdown-body h1{font-size:24px}.markdown-body h2{font-size:20px}.markdown-body h3{font-size:18px}}</style><style data-highlight data-highlight-key="juejin">.markdown-body pre,.markdown-body pre>code.hljs{color:#333;background:#f8f8f8}.hljs-comment,.hljs-quote{color:#998;font-style:italic}.hljs-keyword,.hljs-selector-tag,.hljs-subst{color:#333;font-weight:700}.hljs-literal,.hljs-number,.hljs-tag .hljs-attr,.hljs-template-variable,.hljs-variable{color:teal}.hljs-doctag,.hljs-string{color:#d14}.hljs-section,.hljs-selector-id,.hljs-title{color:#900;font-weight:700}.hljs-subst{font-weight:400}.hljs-class .hljs-title,.hljs-type{color:#458;font-weight:700}.hljs-attribute,.hljs-name,.hljs-tag{color:navy;font-weight:400}.hljs-link,.hljs-regexp{color:#009926}.hljs-bullet,.hljs-symbol{color:#990073}.hljs-built_in,.hljs-builtin-name{color:#0086b3}.hljs-meta{color:#999;font-weight:700}.hljs-deletion{background:#fdd}.hljs-addition{background:#dfd}.hljs-emphasis{font-style:italic}.hljs-strong{font-weight:700}</style>
+<p><strong>修订说明（2026-10-23）：</strong>本页已按当前 Flutter / Dart 语义修订原文答案，重点校正 Widget / Element / State、async-await、渲染线程、Isolate、mixin、Framework / Engine 分层等概念；原文未作答的题目也补充了简要答案。</p>
+<hr>
+
+<h3>1. Dart 语法中 dynamic、var、Object 三者的区别</h3>
+<blockquote>
+  <ul>
+    <li><code>var</code>：让编译器推断静态类型。推断完成后，这个变量的静态类型就固定了；变量本身仍可重新赋值，但只能赋兼容类型的值。</li>
+    <li><code>Object</code>：所有非空 Dart 对象的根类型。静态类型检查仍然生效；要调用具体子类成员，通常需要类型判断或显式转换。</li>
+    <li><code>dynamic</code>：表示绕过大多数静态类型检查，类型错误推迟到运行时发现；可以赋任意值，包括 null，但牺牲编译期安全性。</li>
+    <li>更准确地说，<code>var</code> 的“类型不可变”指静态类型不可变，不是指对象或变量值不可变。</li>
+  </ul>
+</blockquote>
+
+<h3>2. const 和 final 的区别</h3>
+<blockquote>
+  <p><strong>相同点：</strong>二者声明的变量都只能被赋值一次。</p>
+  <p><strong>主要区别：</strong></p>
+  <ul>
+    <li><code>final</code>：运行时确定后不可再赋值，可以用于实例变量；它修饰的是变量绑定，被引用的对象本身可能是可变的。</li>
+    <li><code>const</code>：编译期常量，值必须由常量表达式组成；<code>const</code> 对象是深不可变的，例如 <code>const []</code> 不能添加或修改元素。</li>
+    <li>Dart 不允许实例字段声明为 <code>const</code>；类中的常量字段通常写作 <code>static const</code>。</li>
+    <li><code>const</code> 构造函数要求类的实例字段都是 <code>final</code>，且构造参数满足常量表达式条件，用于创建编译期规范化的常量对象。</li>
+  </ul>
+</blockquote>
+
+<h3>3. Dart 中 ?? 与 ??= 的区别</h3>
+<blockquote>
+  <ul>
+    <li><code>a ?? b</code>：如果 <code>a</code> 为 null，表达式返回 <code>b</code>；否则返回 <code>a</code>。</li>
+    <li><code>a ??= b</code>：如果 <code>a</code> 为 null，才把 <code>b</code> 赋给 <code>a</code>；表达式返回赋值后的结果。</li>
+  </ul>
+</blockquote>
+
+<h3>4. 什么是 Flutter 里的 Key？有什么用？</h3>
+<blockquote>
+  <p>Key 用于在 Widget 树、Element 树和语义树中标识对应的节点，帮助 Element 树在复用或移动节点时判断状态是否应该保留。</p>
+  <ul>
+    <li><code>LocalKey</code>：作用于同一父节点下的同级节点比较，常见子类包括 <code>ValueKey</code>、<code>ObjectKey</code>、<code>UniqueKey</code>。当同级列表的顺序、数量发生变化时，key 能让 State 与正确的逻辑节点保持关联。</li>
+    <li><code>GlobalKey</code>：全局唯一，可以跨子树移动并保留 State / context，也能用于访问对应的 State、Widget 或 BuildContext，但滥用会增加复杂度和成本。</li>
+  </ul>
+</blockquote>
+
+<h3>5. Flutter 中的 GlobalKey 是什么，有什么作用</h3>
+<blockquote>
+  <ul>
+    <li><code>GlobalKey</code> 是全局唯一 key，可以在 Widget 树中唯一标识一个 Element。</li>
+    <li>通过它可以获取 <code>currentState</code>、<code>currentContext</code>、<code>currentWidget</code>。</li>
+    <li>当对应 Widget 被移动到别的父节点时，GlobalKey 有机会保留其 State，而不是销毁后重建。</li>
+    <li>适合少量需要跨组件访问 State 的场景；不应把它当作常规状态管理方案。</li>
+  </ul>
+</blockquote>
+
+<h3>6. main() 和 runApp() 的作用分别是什么？有什么关系？</h3>
+<blockquote>
+  <ul>
+    <li><code>main()</code> 是 Dart 程序入口。</li>
+    <li><code>runApp()</code> 负责初始化 Binding，并把传入的 Widget 作为根 Widget 挂载到 Flutter 视图上，从而启动 Widget / Element / RenderObject 树。</li>
+    <li>典型写法是在 <code>main()</code> 中调用 <code>runApp(const MyApp())</code>。</li>
+  </ul>
+</blockquote>
+
+<h3>7. 什么是 Widget？有哪几类？生命周期有什么区别？</h3>
+<blockquote>
+  <p>Widget 是不可变的 UI 配置描述，不只是“UI 组件”。Flutter 会把 Widget inflate 成 Element，再由 Element 管理 State 和 RenderObject。</p>
+  <p><code>StatelessWidget</code> 和 <code>StatefulWidget</code> 是最常见的两类状态组织方式，但并不是 Widget 体系仅有的两类；还有 <code>InheritedWidget</code>、<code>RenderObjectWidget</code>、<code>ParentDataWidget</code> 等。</p>
+  <ul>
+    <li><code>StatelessWidget</code>：没有单独的 State 对象，构建只依赖构造参数、InheritedWidget 等输入；输入变化后由父级重建。</li>
+    <li><code>StatefulWidget</code>：由 Element 创建并持有 State；调用 <code>setState()</code> 会把当前 Element 标记为 dirty，下一帧重新执行 build。Widget 本身不会“自己重建”。</li>
+  </ul>
+  <p><strong>State 常见生命周期：</strong></p>
+  <ol>
+    <li><code>createState()</code></li>
+    <li><code>initState()</code>：插入树时一次初始化；末尾必须调用 <code>super.initState()</code>。</li>
+    <li><code>didChangeDependencies()</code>：依赖的 InheritedWidget 变化时调用。</li>
+    <li><code>build()</code>：生成 Widget。</li>
+    <li><code>didUpdateWidget()</code>：父级传入的 Widget 配置变化且 Element 被复用时调用。</li>
+    <li><code>setState()</code>：标记需要重新 build。</li>
+    <li><code>reassemble()</code>：热重载时调用，主要用于调试。</li>
+    <li><code>deactivate()</code>：Element 从树中移除或移动时调用。</li>
+    <li><code>dispose()</code>：永久销毁前释放资源；自己的释放逻辑完成后必须调用 <code>super.dispose()</code>。</li>
+  </ol>
+</blockquote>
+
+<h3>8. 简单说一下 Flutter / Dart 中的 async 和 await</h3>
+<blockquote>
+  <ul>
+    <li><code>async</code> 标记的函数被调用时会立即返回 Future；函数体内的代码异步执行。</li>
+    <li><code>await</code> 是挂起点：它会暂停当前 async 函数的后续代码，把控制权交回事件循环；被等待的 Future 完成后，再恢复执行后续代码。</li>
+    <li><code>await</code> 不阻塞当前线程或 isolate，也不等于“结束当前函数”；它只是挂起当前函数的后续执行。</li>
+    <li>async 函数中可以没有 await，也可以有多个 await。</li>
+  </ul>
+</blockquote>
+
+<h3>9. Future 和 Stream 有什么不一样？</h3>
+<blockquote>
+  <ul>
+    <li><code>Future&lt;T&gt;</code>：表示一个稍后完成的值，只能完成一次，结果可以是成功值或错误。</li>
+    <li><code>Stream&lt;T&gt;</code>：表示一段时间内连续产生的事件序列，可以发出多个数据事件、错误事件和完成事件。</li>
+    <li>Future 适合一次请求；Stream 适合日志、网络状态、传感器、WebSocket 等持续数据。</li>
+  </ul>
+</blockquote>
+
+<h3>10. Widget、Element、RenderObject、Layer 都有什么关系？</h3>
+<blockquote>
+  <ul>
+    <li><strong>Widget</strong>：不可变配置，描述 UI 应该是什么样。</li>
+    <li><strong>Element</strong>：Widget 在树中的实例化结果，是树上的持久节点；负责生命周期、状态管理、diff / reconciliation，并持有当前 Widget。</li>
+    <li><strong>State</strong>：StatefulWidget 对应的可变状态，由 Element 创建和持有，不是由 Widget 直接管理。</li>
+    <li><strong>RenderObject</strong>：负责布局、绘制、命中测试等渲染相关工作。</li>
+    <li><strong>Layer</strong>：绘制阶段生成的合成层描述；Layer Tree 会被提交到 raster 线程做合成和光栅化。<code>RepaintBoundary</code> 可以隔离重绘范围。</li>
+    <li>Element 并不是绝对“不会被重建”。当新旧 Widget 的 <code>runtimeType</code> 和 key 匹配时，Element 可以复用并更新；不匹配时旧 Element 会被 deactivate / unmount，再创建新的 Element。</li>
+  </ul>
+</blockquote>
+
+<h3>11. 简述 State 的生命周期</h3>
+<blockquote>
+  <p><code>createState</code> → <code>initState</code> → <code>didChangeDependencies</code> → <code>build</code>；运行中可能反复出现 <code>setState</code> / <code>build</code>，依赖变化时调用 <code>didChangeDependencies</code>，父 Widget 更新且 Element 复用时调用 <code>didUpdateWidget</code>；最后在移除或销毁时经过 <code>deactivate</code>，再到 <code>dispose</code>。</p>
+</blockquote>
+
+<h3>12. 简述 Flutter 中自定义 View 的流程</h3>
+<blockquote>
+  <ul>
+    <li>优先组合已有 Widget，保持声明式和可维护性。</li>
+    <li>需要自绘时使用 <code>CustomPaint</code>，实现 <code>Painter</code> / <code>hitTest</code> 等逻辑。</li>
+    <li>需要自定义布局或渲染协议时，实现 <code>RenderObjectWidget</code> 与对应的 <code>RenderBox</code> / <code>RenderObject</code>，覆写 <code>performLayout</code>、<code>paint</code>、<code>hitTest</code> 等。</li>
+    <li>同时考虑语义、无障碍、事件命中、parent data、性能和重绘范围。</li>
+  </ul>
+</blockquote>
+
+<h3>13. flutter_boost 的优缺点和内部实现</h3>
+<blockquote>
+  <p>flutter_boost 主要用于混合栈方案，把 Flutter 页面嵌入原生导航容器，并通过路由映射和消息机制同步原生与 Flutter 的页面栈。</p>
+  <ul>
+    <li>优点：便于已有原生 App 渐进式接入 Flutter；复用原生导航、转场和容器能力。</li>
+    <li>缺点：引入额外路由、生命周期和引擎管理复杂度；需要处理多引擎 / 容器复用、内存、插件和页面状态同步等问题。</li>
+    <li>内部通常涉及原生容器管理、FlutterView / engine 复用、路由映射、页面生命周期通知和原生-Flutter 通信。</li>
+  </ul>
+</blockquote>
+
+<h3>14. Flutter 的渲染机制</h3>
+<blockquote>
+  <img src="assets/images/d5b92b67e6aa492bbb93d9ceeaeed6d7.awebp" alt="Flutter Graphics Pipeline" loading="lazy">
+  <ul>
+    <li>平台 / 显示系统产生 VSync 等帧信号，触发 Flutter 调度。</li>
+    <li>UI 线程执行 Dart 代码，完成 build、layout、paint 的对象构建，生成 Layer Tree。</li>
+    <li>Raster 线程接收 Layer Tree，进行图层合成与光栅化，并把 GPU 命令提交给 GPU。</li>
+    <li>IO 线程负责图片解码等耗时资源准备，避免阻塞 UI / raster。</li>
+    <li>历史上 Flutter 主要使用 Skia；较新版本引入并推进 Impeller，以减少着色器编译卡顿等问题。具体渲染后端取决于 Flutter 版本和平台配置。</li>
+  </ul>
+</blockquote>
+
+<h3>15. Flutter 和 Native 的优缺点</h3>
+<blockquote>
+  <ul>
+    <li>Flutter 优点：跨平台 UI 一致性好、开发效率高、热重载体验好、复杂 UI 性能通常接近原生。</li>
+    <li>Flutter 缺点：包体积增加、平台差异和插件依赖仍需处理、部分强平台能力要通过原生集成。</li>
+    <li>Native 优点：系统 API、性能调优、无障碍、包体积和平台深度集成更直接。</li>
+    <li>Native 缺点：多端维护成本更高，UI 复用能力弱。</li>
+  </ul>
+</blockquote>
+
+<h3>16. Flutter 支不支持 120Hz？</h3>
+<blockquote>
+  <p>支持，但实际刷新率取决于设备屏幕、操作系统显示模式、Flutter Engine / 平台配置以及每帧是否能在 8ms 左右完成。需要确保没有强制固定帧率、平台模式正确，且 UI / raster 线程没有长时间阻塞。</p>
+</blockquote>
+
+<h3>17. 状态管理熟悉哪些？</h3>
+<blockquote>
+  <ul>
+    <li>局部状态：<code>setState</code>、父组件向子组件传参、<code>InheritedWidget</code>。</li>
+    <li>常用方案：Provider、Riverpod、BLoC / Bloc、Redux、MobX、signals 等。</li>
+    <li>选择时应关注依赖方向、可测试性、粒度和团队熟悉度，避免为简单页面引入过重方案。</li>
+  </ul>
+</blockquote>
+
+<h3>18. Flutter / Dart 多线程怎么处理？</h3>
+<blockquote>
+  <ul>
+    <li>Dart 的并发模型以 isolate 为核心；isolate 之间没有共享可变对象，需要消息通信。</li>
+    <li>短小耗时任务可使用 <code>compute</code> 或 <code>Isolate.run</code>；更复杂任务可使用 <code>Isolate.spawn</code>。</li>
+    <li>UI isolate 不应执行长同步计算、大文件解析、图片压缩等任务，否则会掉帧。</li>
+    <li>平台线程相关逻辑通过平台通道、Task Runner 或平台 API 调度处理。</li>
+  </ul>
+</blockquote>
+
+<h3>19. Flutter 中大图片上传怎么处理？</h3>
+<blockquote>
+  <ul>
+    <li>先压缩、缩放或转换格式，减少网络流量和内存占用。</li>
+    <li>大文件使用分片 / multipart 上传，并支持进度、取消、断点续传和重试。</li>
+    <li>压缩、哈希、分片等耗时操作放到后台 isolate。</li>
+    <li>上传过程用 Stream 或状态管理展示进度；完成后清理临时文件并处理平台差异。</li>
+  </ul>
+</blockquote>
+
+<h3>20. await for 如何使用？</h3>
+<blockquote>
+  <p><code>await for</code> 用于异步遍历 Stream。每当一个事件到达，就执行一次循环体；Stream 完成后，循环结束，后续代码继续执行。循环体内可以使用 <code>break</code> 提前退出，也应注意在循环外取消订阅或关闭资源。</p>
+  <pre><code>await for (final event in stream) {
+  print(event);
+  if (event == 'stop') break;
+}</code></pre>
+</blockquote>
+
+<h3>21. Stream 有两种订阅模式</h3>
+<blockquote>
+  <ul>
+    <li>单订阅 Stream：只能有一个监听者，事件按顺序推送，适合一次读取的数据源。</li>
+    <li>广播 Stream：可以有多个监听者，事件会同时分发给所有活跃订阅，适合网络状态、主题切换等通知型数据。</li>
+  </ul>
+</blockquote>
+
+<h3>22. build 方法中的 BuildContext 是什么？</h3>
+<blockquote>
+  <p>BuildContext 是 Element 对外暴露的接口。Widget 的 build 方法通过 context 与 Element 树交互，例如向上查找 <code>InheritedWidget</code>、<code>NavigatorState</code>、<code>Theme</code> 等。依赖查找发生在 Element 树上，不是同时遍历 Widget 树。</p>
+</blockquote>
+
+<h3>23. Flutter 打包 Web、移动端、桌面端的过程</h3>
+<blockquote>
+  <ul>
+    <li>Web：<code>flutter build web</code>，产出静态资源，由浏览器加载；可选 renderer。</li>
+    <li>Android：<code>flutter build apk</code> 或 <code>flutter build appbundle</code>，包含 Dart AOT 产物、资源、so 和原生打包结果。</li>
+    <li>iOS：<code>flutter build ios</code> / Xcode archive，产出 app / ipa。</li>
+    <li>桌面端：配置对应平台后使用 <code>flutter build macos / windows / linux</code>。</li>
+    <li>共同点：编译模式通常为 release / AOT，随后处理资源、插件、图标、签名、混淆和平台产物。</li>
+  </ul>
+</blockquote>
+
+<h3>24. Dart 是值传递还是引用传递？</h3>
+<blockquote>
+  <p>更准确的说法是：Dart 按值传递对象引用。函数参数得到的是引用的拷贝，因此修改对象字段会影响外部对象；但在函数内重新给参数赋值，不会改变外部变量。</p>
+</blockquote>
+
+<h3>25. Dart 是弱引用还是强引用？</h3>
+<blockquote>
+  <p>普通对象引用默认是强引用。Dart 也提供 <code>WeakReference</code> 和 <code>Finalizer</code>，可用于缓存或清理辅助资源，但它们不改变普通引用的默认语义。</p>
+</blockquote>
+
+<h3>26. get / set 方法如何实现？</h3>
+<blockquote>
+  <p>Dart 使用 getter / setter 声明：</p>
+  <pre><code>class Temperature {
+  double _celsius = 0;
+
+  double get celsius =&gt; _celsius;
+  set celsius(double value) {
+    assert(value &gt;= -273.15);
+    _celsius = value;
+  }
+
+  double get fahrenheit =&gt; _celsius * 9 / 5 + 32;
+}</code></pre>
+</blockquote>
+
+<h3>27. Flutter 如何与 Android / iOS 原生通信？</h3>
+<blockquote>
+  <ul>
+    <li><code>BasicMessageChannel</code>：双向消息传递，可通过 codec 支持结构化数据、二进制数据等，不限于字符串。</li>
+    <li><code>MethodChannel</code>：方法调用和方法返回值 / 错误。</li>
+    <li><code>EventChannel</code>：原生向 Dart 持续推送事件流。</li>
+    <li>平台通道实现不保证线程安全。原生侧应把调用调度到正确线程或 Task Runner；Dart 侧通常在 root isolate 调用。</li>
+  </ul>
+</blockquote>
+
+<h3>28. 简述 Flutter 的热重载</h3>
+<blockquote>
+  <ul>
+    <li>热重载依赖 debug / JIT 模式下的增量编译，把修改后的 Dart 库推送到运行中的 VM。</li>
+    <li>Flutter 会更新代码并触发 widget 树 reassemble / rebuild，尽量保留 State。</li>
+    <li>它不是简单的 repaint，也不是完整重启。</li>
+    <li>无法覆盖所有修改：例如 <code>main()</code>、<code>initState()</code> 已执行过的初始化逻辑不会自动重跑；全局变量、枚举、泛型结构、Native 代码或不兼容状态可能需要热重启甚至冷启动。</li>
+  </ul>
+</blockquote>
+
+<h3>29. 怎么理解 Isolate？</h3>
+<blockquote>
+  <p>Isolate 是 Dart 的并发执行单元，类似 actor 模型：每个 isolate 有自己的执行栈和对象堆，没有共享可变 Dart 对象，因此不需要传统锁来保护共享字段。isolate 之间通过 SendPort / ReceivePort 传递消息。Dart VM 中 isolate 可以被调度到不同线程并行执行。</p>
+</blockquote>
+
+<h3>30. Dart 的作用域</h3>
+<blockquote>
+  <p>Dart 没有语言级 public / protected / private 关键字。库内默认公开；以下划线开头的名称是库私有。类内部可通过命名参数、私有字段和 getter / setter 控制访问方式。包级别公开性由库导出控制。</p>
+</blockquote>
+
+<h3>31. Dart 的 .. 表示什么？</h3>
+<blockquote>
+  <p><code>..</code> 是级联操作符，用于对同一个对象连续执行操作，并返回原对象，而不是返回某个方法的结果。Dart 还有空安全版本 <code>?..</code>。</p>
+</blockquote>
+
+<h3>32. Dart 是不是单线程模型？是如何运行的？</h3>
+<blockquote>
+  <img src="assets/images/46bcfacd02084e5e974ace0d892bf5c5.awebp" alt="Dart event loop" loading="lazy">
+  <p>更严谨地说，一个 isolate 是单线程执行模型；一个 Flutter App 可以同时存在多个 isolate。每个 isolate 有自己的事件循环、微任务队列和事件队列。当前同步代码执行完后，先清空微任务队列，再处理事件队列中的下一个事件，如此循环。</p>
+</blockquote>
+
+<h3>33. Dart 如何实现多任务并行？</h3>
+<blockquote>
+  <ul>
+    <li>Dart 不能通过共享内存多线程编程实现并行，而是通过多个 isolate 并发执行。</li>
+    <li><code>Isolate.run</code> / <code>compute</code> 适合“传任务、返回结果”的场景；<code>Isolate.spawn</code> 适合长期运行的独立 isolate。</li>
+    <li>isolate 之间通过 SendPort / ReceivePort 消息通信，传递的数据需要序列化或转移。</li>
+    <li>“Dart 没有多线程”这个说法不准确：VM 可以把多个 isolate 调度到不同底层线程并行执行；只是没有共享可变内存的传统线程模型。</li>
+  </ul>
+</blockquote>
+
+<h3>34. Dart 异步编程中的 Future 是什么？</h3>
+<blockquote>
+  <p>Future 表示一个异步任务的最终结果。创建 Future 后调用立即返回，调用者可以先继续执行或通过 <code>await</code> 等待结果。每个 isolate 的事件循环优先执行当前同步代码，再清空微任务，然后处理事件队列。</p>
+</blockquote>
+
+<h3>35. 说一下 mixin 机制</h3>
+<blockquote>
+  <ul>
+    <li>mixin 是一种横向复用代码的机制，通过 <code>with</code> 混入多个行为。</li>
+    <li>它不是多重继承，也不是接口实现；方法冲突按线性化顺序处理。</li>
+    <li><code>mixin</code> 声明不能有生成式构造函数，可以用 <code>on</code> 约束被混入类的父类型。</li>
+    <li>不要说“Dart 为了支持多重继承引入 mixin”；Dart 恰恰不支持类的多重继承。</li>
+  </ul>
+</blockquote>
+
+<h3>36. 介绍 Flutter 的 Framework 层和 Engine 层</h3>
+<blockquote>
+  <ul>
+    <li><strong>Framework</strong>：Dart 编写的应用开发框架，包含 Widgets、Rendering、Animation、Gestures、Painting、Material、Cupertino 等层次。</li>
+    <li><strong>Engine</strong>：主要由 C++ 编写，包含 Dart 运行时、文本排版、图形绘制、平台事件等能力，并向 Framework 暴露 <code>dart:ui</code> 这类底层接口。</li>
+    <li><code>dart:ui</code> 是 Framework 与 Engine 交互的底层库，不是整个 Flutter Framework。应用通常导入 <code>package:flutter/material.dart</code> 等库，而不是只导入 <code>dart:ui</code>。</li>
+    <li>Engine 的渲染后端历史上主要是 Skia，新版本逐步使用 Impeller；不能简单说“Framework SDK 被封装为 dart:ui”。</li>
+  </ul>
+</blockquote>
+
+<h3>37. 简述 Flutter 的线程管理模型</h3>
+<blockquote>
+  <img src="assets/images/39f89b2ff8074facbe0ef7b38ccd4c14.awebp" alt="Flutter threads and task runners" loading="lazy">
+  <ul>
+    <li>Embedder 负责创建平台线程、UI 线程、Raster 线程、IO 线程，并把它们作为 Task Runner 提供给 Engine；Engine 要求相关线程在生命周期内保持稳定。</li>
+    <li>Platform Task Runner：处理平台消息、插件、事件输入等。</li>
+    <li>UI Task Runner：执行 Dart root isolate、build、layout、生成 Layer Tree。</li>
+    <li>Raster Task Runner：合成与光栅化 Layer Tree，提交 GPU 命令。</li>
+    <li>IO Task Runner：图片解码、资源读取等耗时 IO。</li>
+    <li>新 isolate 由 Dart VM 调度，不应简单说由 Flutter Framework 统一管理。</li>
+  </ul>
+</blockquote>
+
+<h3>38. 介绍 Flutter 的整体架构</h3>
+<blockquote>
+  <img src="assets/images/059ea661a3b84e76922ee4253b3f617e.awebp" alt="Flutter architecture" loading="lazy">
+  <ul>
+    <li>Embedder：操作系统适配层，负责 surface、线程、事件、插件容器等平台集成。</li>
+    <li>Engine：Dart VM / runtime、文本、图形、平台能力，并通过 dart:ui 暴露给 Framework。</li>
+    <li>Framework：Dart 编写的 Widget、Rendering、Animation、Gestures、Material / Cupertino 等开发库。</li>
+  </ul>
+</blockquote>
+
+<h3>39. Future 和 Isolate 有什么区别？</h3>
+<blockquote>
+  <ul>
+    <li>Future 表示一个异步任务稍后的结果，仍运行在当前 isolate 的事件模型中；适合 IO、网络请求、定时器等非阻塞异步任务。</li>
+    <li>Isolate 是独立并发执行单元，有自己的堆内存，没有共享可变状态；适合 CPU 密集计算或需要并行的任务。</li>
+    <li>isolate 之间通过 port 消息通信；isolate 是抽象概念，VM 可能将其调度到不同线程，但 isolate 不等价于线程。</li>
+  </ul>
+</blockquote>
+
+<h3>40. 什么是 Navigator？MaterialApp 做了什么？</h3>
+<blockquote>
+  <p>Navigator 是 Flutter 的路由栈管理 Widget，维护 Route 的入栈、出栈、替换和转场。MaterialApp / WidgetsApp 会创建必要的 Navigator 配置。<code>Navigator.of(context)</code> 会沿 Element 树向上查找最近的 NavigatorState，再调用 push / pop 等方法。</p>
+</blockquote>
+
+<hr>
+<p><strong>修订后说明：</strong>以上答案按当前 Dart / Flutter 语义整理。涉及 Impeller、120Hz、状态管理等内容时，具体行为还与 Flutter 版本和平台配置有关。</p>
+</div></div></article> <div class="article-end" data-v-539963b4 data-v-61fb5e44><div class="rank-entry-bottom" data-v-539963b4 data-v-61fb5e44><!----></div> <div class="tag-list-box" data-v-539963b4 data-v-61fb5e44><!----><!----><!----></div></div> <!----><!----><!----><!----><!----></div> <div id="sidebar-container" class="sidebar article-sidebar" data-v-4ed317c2 data-v-61fb5e44><div class="sidebar-block author-block author-block-container pure" data-v-7e7e812a data-v-1902877e data-v-4ed317c2><a href="/user/2559318802316359/posts" target="_blank" rel="" class="jj-link user-item item" data-v-65b50b51 data-v-1902877e><div class="avatar jj-avatar avatar" data-v-03256cc6 data-v-1902877e><img loading="eager" src="assets/images/avatar-449e86f95221f792452cb2d71571dff2.awebp" alt="avatar" class="lazy avatar-img immediate" data-v-5244ef91 data-v-03256cc6> </div> <div class="info-box" style="visibility:hidden;" data-v-65b50b51 data-v-1902877e><span to="[object Object]" blank="true" class="username" data-v-292f6e48 data-v-1902877e><span class="name" style="max-width:128px;" data-v-292f6e48>
+    建古
+  </span> <span to="" blank="true" class="rank" data-v-23743940 data-v-292f6e48><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8AQMAAAAAMksxAAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAAA5JREFUKM9jGAWjAAcAAAIcAAE27nY6AAAAAElFTkSuQmCC" alt="创作等级LV.3" title="创作等级LV.3" class="lazy" style="aspect-ratio:NaN;" data-v-5244ef91 data-v-23743940></span> <!----> <!----> </span> <div title="移动端开发（Flutter/iOS）" class="position" data-v-65b50b51 data-v-1902877e>
+        移动端开发（Flutter/iOS）
+      </div> <div class="extra-container" data-v-65b50b51 data-v-1902877e><!----> </div></div></a> <div class="count-container" data-v-7e7e812a data-v-1902877e><a href="/user/2559318802316359/posts" target="_blank" rel="" class="jj-link stat-item item" data-v-65b50b51 data-v-1902877e><div class="count" style="display:none;" data-v-65b50b51 data-v-1902877e>
+        18
+      </div> <div data-v-65b50b51 data-v-1902877e>文章</div></a> <a href="/user/2559318802316359/posts" target="_blank" rel="" class="jj-link stat-item item" data-v-65b50b51 data-v-1902877e><div class="count" style="display:none;" data-v-65b50b51 data-v-1902877e>
+        66k
+      </div> <div data-v-65b50b51 data-v-1902877e>阅读</div></a> <a href="/user/2559318802316359/followers" target="_blank" rel="" class="jj-link stat-item item" data-v-65b50b51 data-v-1902877e><div class="count" style="display:none;" data-v-65b50b51 data-v-1902877e>
+        59
+      </div> <div data-v-65b50b51 data-v-1902877e>粉丝</div></a></div> <div class="operate-btn hidden" style="position:relative;z-index:2;min-height:36px;" data-v-7e7e812a data-v-1902877e><!----><!----><!----></div> <!----></div> <div class="sticky-block-box" data-v-4ed317c2><nav class="article-catalog catalog-block none" style="display:none;" data-v-6239701c data-v-16ed86c3 data-v-4ed317c2><div class="catalog-title" data-v-6239701c><div data-v-6239701c>目录</div> <div class="direction" data-v-6239701c><div class="word" data-v-6239701c>收起</div> <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-rotate" data-v-6239701c data-v-6239701c><g id="&amp;#229;&amp;#177;&amp;#149;&amp;#229;&amp;#188;&amp;#128;" data-v-6239701c data-v-6239701c><path id="&amp;#232;&amp;#183;&amp;#175;&amp;#229;&amp;#190;&amp;#132;" fill-rule="evenodd" clip-rule="evenodd" d="M5.99854 7.93206L10.0644 3.86619C10.162 3.76856 10.3203 3.76856 10.418 3.86619L10.7715 4.21975C10.8691 4.31738 10.8691 4.47567 10.7715 4.5733L6.35209 8.99272C6.15683 9.18798 5.84025 9.18798 5.64498 8.99272L1.22557 4.5733C1.12794 4.47567 1.12794 4.31738 1.22557 4.21975L1.57912 3.86619C1.67675 3.76856 1.83504 3.76856 1.93267 3.86619L5.99854 7.93206Z" fill="#8A919F" data-v-6239701c data-v-6239701c></path></g></svg></div></div> <div class="catalog-body unfold" data-v-6239701c><ul class="catalog-list" style="margin-top:0px;" data-v-6239701c></ul></div></nav> <!----> <!----> <div class="adverts-list" data-v-0eca8145 data-v-4ed317c2></div> <!----> <!----></div> <!----></div> <!----> <!----> <div id="article-suspended-panel" data-v-539963b4 data-v-61fb5e44></div> <!----></div> <!----><!----><!----><!----><!----><!----><!----></main> <!----></div> <!----></div> <!----> <div class="global-component-box"><!----></div> <!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----> <!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----></div></div></div><script>window.__NUXT__=(function(a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P){t.loading=a;t.skeleton=d;t.cursor=f;t.data=[];t.total=b;t.hasMore=d;G.id=w;G.self_description=m;G.followed=a;G.viewerIsFollowing=m;G.community=m;G.subscribedTagCount=b;G.wroteBookCount=b;G.boughtBookCount=b;G.isBindedPhone=a;G.level=k;G.user_id=w;G.user_name=D;G.company=e;G.job_title="移动端开发（Flutter\u002FiOS）";G.avatar_large="https:\u002F\u002Fp26-passport.byteacctimg.com\u002Fimg\u002Fuser-avatar\u002F449e86f95221f792452cb2d71571dff2~300x300.image";G.description=e;G.followee_count=39;G.follower_count=59;G.post_article_count=18;G.digg_article_count=153;G.got_digg_count=245;G.got_view_count=65674;G.post_shortmsg_count=25;G.digg_shortmsg_count=15;G.isfollowed=a;G.favorable_author=b;G.power=E;G.study_point=b;G.university={university_id:f,name:e,logo:e};G.major={major_id:f,parent_id:f,name:e};G.student_status=b;G.select_event_count=b;G.select_online_course_count=b;G.identity=b;G.is_select_annual=a;G.select_annual_rank=b;G.annual_list_type=b;G.extraMap={};G.is_logout=b;G.annual_info=[];G.account_amount=b;G.user_growth_info={user_id:2559318802316359,jpower:E,jscore:241.6,jpower_level:k,jscore_level:s,jscore_title:"进阶掘友",author_achievement_list:[],vip_level:b,vip_title:e,jscore_next_level_score:500,jscore_this_level_mini_score:150,vip_score:b};G.is_vip=a;G.become_author_days=b;G.collection_set_article_count=b;G.recommend_article_count_daily=b;G.article_collect_count_daily=b;G.user_priv_info={administrator:b,builder:b,favorable_author:b,book_author:b,forbidden_words:b,can_tag_cnt:b,auto_recommend:b,signed_author:b,popular_author:b,can_add_video:b};G.juejinPower=E;G.jobTitle="移动端开发（Flutter\u002FiOS）";G.roles={isBookAuthor:a,isFavorableAuthor:a,isCobuilder:a,isAdmin:a};G.username=D;G.blogAddress=m;G.selfDescription=e;G.beLikedCount=245;G.beReadCount=65674;G.followerCount=59;G.followingCount=39;G.collectionCount=b;G.createdCollectionCount=b;G.followingCollectionCount=b;G.postedPostsCount=18;G.pinCount=25;G.likedArticleCount=153;G.likedPinCount=15;G.avatar="https:\u002F\u002Fp26-passport.byteacctimg.com\u002Fimg\u002Fuser-avatar\u002F449e86f95221f792452cb2d71571dff2~300x300.image";G.latestLoginedInAt=c;G.createdAt=c;G.updatedAt=c;G.phoneNumber=e;G.titleDescription=e;G.followeesCount=39;G.applyEventCount=b;G.need_lead=b;G.followTopicCnt=b;return {layout:"default",data:[{renderPost:d}],fetch:{"data-v-14fe2051:0":{queryString:e,isShowUserDropdownList:a,isShowAddMoreList:a,isFocus:a,isPhoneMenuShow:a,visibleBadge:a,placeholder:e,hiddenProperty:"hidden",searchHistoryVisible:a,searchHistoryItems:[],tabBadge:c,isChangePlaceholder:d,showMallBridge:a,showAIProblemBridge:a,removeSearchInputKeyupListener:c,logoImg:"\u002F\u002Flf-web-assets.juejin.cn\u002Fobj\u002Fjuejin-web\u002Fxitu_juejin_web\u002Fe08da34488b114bd4c665ba2fa520a31.svg",rightHomeLogo:"\u002F\u002Flf-web-assets.juejin.cn\u002Fobj\u002Fjuejin-web\u002Fxitu_juejin_web\u002Fb48a296975c1bcd5efbbfe47c3141ca0.svg"}},error:c,state:{view:{activityIndex:{activityList:[],pageInfo:{hasNextPage:a,endCursor:e},afterPosition:e,activityListIsLoading:d,activityListIsError:a,userActivityList:[],placeholder:e,actionType:{FETCH:"@\u002Fview\u002Factivity-index\u002FFETCH",FETCH_RECOMMEND_LIST:"@\u002Fview\u002Factivity-index\u002FFETCH_RECOMMEND_LIST",RESET_ACTIVITY_LIST:"@\u002Fview\u002Factivity-index\u002FRESET_ACTIVITY_LIST",FETCH_USER_ACTIVITY_LIST:"@\u002Fview\u002Factivity-index\u002FFETCH_USER_ACTIVITY_LIST",FETCH_NEW_COUNT:"@\u002Fview\u002Factivity-index\u002FFETCH_NEW_COUNT",DELETE_ACTIVITY:"@\u002Fview\u002Factivity-index\u002FDELETE_ACTIVITY",TOGGLE_FOLLOW_USER:"@\u002Fview\u002Factivity-index\u002FTOGGLE_FOLLOW_USER",FETCH_ENTRY_COMMENT_LIST:"@\u002Fview\u002Factivity-index\u002FFETCH_ENTRY_COMMENT_LIST",UPDATE_LIST_LOADING:"@\u002Fview\u002Factivity-index\u002FUPDATE_LIST_LOADING",RESET:"@\u002Fview\u002Factivity-index\u002FRESET"},hotList:{list:[],after:e,loading:a,hasNextPage:a,actionType:{UPDATE_STATE:"@\u002Fview\u002Factivity-index\u002Fhot-list\u002FUPDATE_STATE",FETCH_MORE:"@\u002Fview\u002Factivity-index\u002Fhot-list\u002FFETCH_MORE",FETCH:"@\u002Fview\u002Factivity-index\u002Fhot-list\u002FFETCH",RESET:"@\u002Fview\u002Factivity-index\u002Fhot-list\u002FRESET"}},sidebar:{bannerList:[],actionType:{RESET:"@\u002Fview\u002Factivity-index\u002Fsidebar\u002FRESET",UPDATE_STATE:"@\u002Fview\u002Factivity-index\u002Fsidebar\u002FUPDATE_STATE",FETCH_BANNER:"@\u002Fview\u002Factivity-index\u002Fsidebar\u002FFETCH_BANNER"},recommend:{pageSize:h,page:b,total:b,pointer:c,lastPointer:c,list:[],loading:a,error:c,canPrev:d,canNext:d,linkList:[],lastFetchOnServer:a,actionType:{UPDATE:"@\u002Fview\u002Factivity-index\u002Fsidebar\u002Frecommend-topic-list\u002FUPDATE",FETCH:"@\u002Fview\u002Factivity-index\u002Fsidebar\u002Frecommend-topic-list\u002FFETCH",FORCE_FETCH:"@\u002Fview\u002Factivity-index\u002Fsidebar\u002Frecommend-topic-list\u002FFORCE_FETCH",FETCH_MORE:"@\u002Fview\u002Factivity-index\u002Fsidebar\u002Frecommend-topic-list\u002FFETCH_MORE",RESET:"@\u002Fview\u002Factivity-index\u002Fsidebar\u002Frecommend-topic-list\u002FRESET"},after:b},followed:{pageSize:h,page:b,total:b,pointer:c,lastPointer:c,list:[],loading:a,error:c,canPrev:d,canNext:d,linkList:[],lastFetchOnServer:a,actionType:{UPDATE:"@\u002Fview\u002Factivity-index\u002Fsidebar\u002Ffollowed-topic-list\u002FUPDATE",FETCH:"@\u002Fview\u002Factivity-index\u002Fsidebar\u002Ffollowed-topic-list\u002FFETCH",FORCE_FETCH:"@\u002Fview\u002Factivity-index\u002Fsidebar\u002Ffollowed-topic-list\u002FFORCE_FETCH",FETCH_MORE:"@\u002Fview\u002Factivity-index\u002Fsidebar\u002Ffollowed-topic-list\u002FFETCH_MORE",RESET:"@\u002Fview\u002Factivity-index\u002Fsidebar\u002Ffollowed-topic-list\u002FRESET"},after:b},recommendPin:{list:[],after:e,loading:a,hasNextPage:d,actionType:{UPDATE_STATE:"@\u002Fview\u002Factivity-index\u002Fsidebar\u002Frecommend-pin-list\u002FUPDATE_STATE",FETCH_MORE:"@\u002Fview\u002Factivity-index\u002Fsidebar\u002Frecommend-pin-list\u002FFETCH_MORE",FETCH:"@\u002Fview\u002Factivity-index\u002Fsidebar\u002Frecommend-pin-list\u002FFETCH",RESET:"@\u002Fview\u002Factivity-index\u002Fsidebar\u002Frecommend-pin-list\u002FRESET"}}},topicPinList:{pageSize:h,page:g,total:b,pointer:c,lastPointer:c,list:[],loading:a,error:c,canPrev:d,canNext:d,linkList:[],lastFetchOnServer:a,actionType:{UPDATE:"@\u002Fview\u002Factivity-index\u002Ftopic-pin-list\u002FUPDATE",FETCH:"@\u002Fview\u002Factivity-index\u002Ftopic-pin-list\u002FFETCH",FORCE_FETCH:"@\u002Fview\u002Factivity-index\u002Ftopic-pin-list\u002FFORCE_FETCH",FETCH_MORE:"@\u002Fview\u002Factivity-index\u002Ftopic-pin-list\u002FFETCH_MORE",RESET:"@\u002Fview\u002Factivity-index\u002Ftopic-pin-list\u002FRESET"},topicId:e,navList:[{type:j,name:j,title:"推荐 ",id:j},{type:n,name:n,title:"热门 ",id:n},{type:p,name:p,title:"关注 ",id:p},{type:i,name:"opensource",title:"开源推荐 ",id:"5c09ea2b092dcb42c740fe73"},{type:i,name:"recruitment",title:"内推招聘",id:"5abb61e1092dcb4620ca3322"},{type:i,name:"dating",title:"掘金相亲",id:"5abcaa67092dcb4620ca335c"},{type:i,name:"slacking",title:"上班摸鱼",id:"5c106be9092dcb2cc5de7257"},{type:i,name:"app",title:"应用安利",id:"5b514af1092dcb61bd72800d"},{type:i,name:"tool",title:"开发工具",id:"5abb67d2092dcb4620ca3324"},{type:i,name:"news",title:"New资讯",id:"5c46a17f092dcb4737217152"}],sortType:q}},search:{search_result_from:b,query:e,list:[],linkList:[],loading:a,skeleton:d,actionType:{FETCH:"@\u002Fview\u002Fsearch\u002FFETCH",FETCH_MORE:"@\u002Fview\u002Fsearch\u002FFETCH_MORE",RESET:"@\u002Fview\u002Fsearch\u002FRESET"}},columnIndex:{list:{pageSize:h,page:g,total:b,pointer:c,lastPointer:c,list:[],loading:a,error:c,canPrev:d,canNext:d,linkList:[],lastFetchOnServer:a,actionType:{UPDATE:"@\u002Fview\u002FcolumnIndex\u002Flist\u002FUPDATE",FETCH:"@\u002Fview\u002FcolumnIndex\u002Flist\u002FFETCH",FORCE_FETCH:"@\u002Fview\u002FcolumnIndex\u002Flist\u002FFORCE_FETCH",FETCH_MORE:"@\u002Fview\u002FcolumnIndex\u002Flist\u002FFETCH_MORE",RESET:"@\u002Fview\u002FcolumnIndex\u002Flist\u002FRESET"},sort:o,category:"all"},hotList:{pageSize:h,page:g,total:b,pointer:c,lastPointer:c,list:[],loading:a,error:c,canPrev:d,canNext:d,linkList:[],lastFetchOnServer:a,actionType:{UPDATE:"@\u002Fview\u002FcolumnIndex\u002FhotList\u002FUPDATE",FETCH:"@\u002Fview\u002FcolumnIndex\u002FhotList\u002FFETCH",FORCE_FETCH:"@\u002Fview\u002FcolumnIndex\u002FhotList\u002FFORCE_FETCH",FETCH_MORE:"@\u002Fview\u002FcolumnIndex\u002FhotList\u002FFETCH_MORE",RESET:"@\u002Fview\u002FcolumnIndex\u002FhotList\u002FRESET"}}},timelineIndex:{tdkTemplates:[],categoryNavList:[],tagNavList:[],splitTagList:[],timelineAdList:[],list:[],sort:q,category:j,categoryId:e,tagId:e,tag:"全部",actionType:{FETCH_TIMELINE_LIST:"@\u002Fview\u002FtimelineIndex\u002FFETCH_TIMELINE_LIST",FETCH_CATEGORY_LIST:"@\u002Fview\u002FtimelineIndex\u002FFETCH_CATEGORY_LIST",FETCH_TAG_LIST:"@\u002Fview\u002FtimelineIndex\u002FFETCH_TAG_LIST",DELETE_ENTRY:"@\u002Fview\u002FtimelineIndex\u002FDELETE_ENTRY",DELETE_USER_ENTRIES:"@\u002Fview\u002FtimelineIndex\u002FDELETE_USER_ENTRIES",DELETE_TAG_ENTRIES:"@\u002Fview\u002FtimelineIndex\u002FDELETE_TAG_ENTRIES",FETCH_MORE:"@\u002Fview\u002FtimelineIndex\u002FFETCH_MORE",FETCH:"@\u002Fview\u002FtimelineIndex\u002FFETCH",RESET:"@\u002Fview\u002FtimelineIndex\u002FRESET"},serverRenderTimelineList:a,timelineList:{list:[],cursor:f,skeleton:d,loading:a,hasMore:d,categoryId:e,tagId:e,sort:e,actionType:{UPDATE_STATE:"timeline-list\u002FUPDATE_STATE",FETCH_MORE:"timeline-list\u002FFETCH_MORE",FETCH:"timeline-list\u002FFETCH",RESET:"timeline-list\u002FRESET"}},recommendList:{list:[],cursor:f,sort:e,loading:a,skeleton:d,hasMore:d,actionType:{UPDATE_STATE:"recommend-list\u002FUPDATE_STATE",FETCH_MORE:"recommend-list\u002FFETCH_MORE",FETCH:"recommend-list\u002FFETCH",RESET:"recommend-list\u002FRESET"}},followingList:{list:[],cursor:f,skeleton:d,loading:a,hasMore:d,actionType:{UPDATE_STATE:"following-list\u002FUPDATE_STATE",FETCH_MORE:"following-list\u002FFETCH_MORE",FETCH:"following-list\u002FFETCH",RESET:"following-list\u002FRESET"}}},subscribe:{subscribed:{list:[],cursor:f,skeleton:d,loading:a,hasMore:a,actionType:{UPDATE_STATE:"view\u002Fsubscribe\u002Fsubscribed\u002Flist\u002FUPDATE_STATE",FETCH_MORE:"view\u002Fsubscribe\u002Fsubscribed\u002Flist\u002FFETCH_MORE",FETCH:"view\u002Fsubscribe\u002Fsubscribed\u002Flist\u002FFETCH",RESET:"view\u002Fsubscribe\u002Fsubscribed\u002Flist\u002FRESET"}},all:{list:[],cursor:f,loading:a,skeleton:d,hasMore:a,linkList:e,actionType:{UPDATE_STATE:"view\u002Fsubscribe\u002Fall\u002Flist\u002FUPDATE_STATE",FETCH_MORE:"view\u002Fsubscribe\u002Fall\u002Flist\u002FFETCH_MORE",FETCH:"view\u002Fsubscribe\u002Fall\u002Flist\u002FFETCH",RESET:"view\u002Fsubscribe\u002Fall\u002Flist\u002FRESET"}}},entryPublic:{entry:{user:{}},relatedEntryList:[],relatedCollectionList:[],actionType:{FETCH:"@\u002Fview\u002FentryPublic\u002FFETCH",RESET:"@\u002Fview\u002FentryPublic\u002FRESET"}},user:{user:{},serverRendered:a,userAnnuals:[],actionType:{FETCH:"@\u002Fview\u002Fuser\u002FFETCH",RESET:"@\u002Fview\u002Fuser\u002FRESET",UPDATE:"@\u002Fview\u002Fuser\u002FUPDATE",FETCH_ANNUALS:"@\u002Fview\u002Fuser\u002FFETCH_ANNUALS"},detailList:{actionType:{RESET:"@\u002Fview\u002Fuser\u002FdetailList\u002FRESET"},likeList:{list:[],cursor:f,hasMore:a,loading:a,skeleton:a,actionType:{FETCH:"@\u002Fview\u002Fuser\u002FdetailList\u002FlikePostList\u002FFETCH",UPDATE_STATE:"@\u002Fview\u002Fuser\u002FdetailList\u002FlikePostList\u002FUPDATE_STATE",FETCH_MORE:"@\u002Fview\u002Fuser\u002FdetailList\u002FlikePostList\u002FFETCH_MORE",RESET:"@\u002Fview\u002Fuser\u002FdetailList\u002FlikePostList\u002FRESET"}},postList:{list:[],hasMore:a,skeleton:a,loading:a,sort:o,actionType:{FETCH:"@\u002Fview\u002Fuser\u002FdetailList\u002FpostList\u002FFETCH",UPDATE_STATE:"@\u002Fview\u002Fuser\u002FdetailList\u002FpostList\u002FUPDATE_STATE",FETCH_MORE:"@\u002Fview\u002Fuser\u002FdetailList\u002FpostList\u002FFETCH_MORE",RESET:"@\u002Fview\u002Fuser\u002FdetailList\u002FpostList\u002FRESET"}},searchList:{list:[],hasMore:a,skeleton:a,loading:a,key_word:e,search_type:b,cursor:f,isPostSearch:a,actionType:{FETCH:"@\u002Fview\u002Fuser\u002FdetailList\u002FsearchList\u002FFETCH",UPDATE_STATE:"@\u002Fview\u002Fuser\u002FdetailList\u002FsearchList\u002FUPDATE_STATE",FETCH_MORE:"@\u002Fview\u002Fuser\u002FdetailList\u002FsearchList\u002FFETCH_MORE",RESET:"@\u002Fview\u002Fuser\u002FdetailList\u002FsearchList\u002FRESET"}},tagList:{list:[],loading:a,skeleton:a,hasMore:a,cursor:f,actionType:{FETCH:"@\u002Fview\u002Fuser\u002FdetailList\u002FtagList\u002FFETCH",UPDATE_STATE:"@\u002Fview\u002Fuser\u002FdetailList\u002FtagList\u002FUPDATE_STATE",FETCH_MORE:"@\u002Fview\u002Fuser\u002FdetailList\u002FtagList\u002FFETCH_MORE",RESET:"@\u002Fview\u002Fuser\u002FdetailList\u002FtagList\u002FRESET"}},collectionList:{list:[],userId:e,skeleton:a,hasMore:a,cursor:f,type:v,loading:a,actionType:{FETCH:"@\u002Fview\u002Fuser\u002FdetailList\u002FcollectionList\u002FFETCH",UPDATE_STATE:"@\u002Fview\u002Fuser\u002FdetailList\u002FcollectionList\u002FUPDATE_STATE",FETCH_MORE:"@\u002Fview\u002Fuser\u002FdetailList\u002FcollectionList\u002FFETCH_MORE",RESET:"@\u002Fview\u002Fuser\u002FdetailList\u002FcollectionList\u002FRESET",TOGGLE_FOLLOW_COLLECTION:"@\u002Fview\u002Fuser\u002FdetailList\u002FcollectionList\u002FTOGGLE_FOLLOW_COLLECTION",FOLLOW_COLLECTION:"@\u002Fview\u002Fuser\u002FdetailList\u002FcollectionList\u002FFOLLOW_COLLECTION",UNFOLLOW_COLLECTION:"@\u002Fview\u002Fuser\u002FdetailList\u002FcollectionList\u002FUNFOLLOW_COLLECTION",DELELTE_COLLECTION:"@\u002Fview\u002Fuser\u002FdetailList\u002FcollectionList\u002FDELELTE_COLLECTION",ADD_COLLECTION:"@\u002Fview\u002Fuser\u002FdetailList\u002FcollectionList\u002FADD_COLLECTION",EDIT_COLLECTION:"@\u002Fview\u002Fuser\u002FdetailList\u002FcollectionList\u002FEDIT_COLLECTION"}},followerList:{list:[],cursor:f,hasMore:a,loading:a,skeleton:a,actionType:{FETCH:"@\u002Fview\u002Fuser\u002FdetailList\u002FfollowerList\u002FFETCH",UPDATE_STATE:"@\u002Fview\u002Fuser\u002FdetailList\u002FfollowerList\u002FUPDATE_STATE",FETCH_MORE:"@\u002Fview\u002Fuser\u002FdetailList\u002FfollowerList\u002FFETCH_MORE",RESET:"@\u002Fview\u002Fuser\u002FdetailList\u002FfollowerList\u002FRESET"}},followingList:{list:[],cursor:f,hasMore:a,skeleton:a,loading:a,actionType:{FETCH:"@\u002Fview\u002Fuser\u002FdetailList\u002FfollowingList\u002FFETCH",UPDATE_STATE:"@\u002Fview\u002Fuser\u002FdetailList\u002FfollowingList\u002FUPDATE_STATE",FETCH_MORE:"@\u002Fview\u002Fuser\u002FdetailList\u002FfollowingList\u002FFETCH_MORE",RESET:"@\u002Fview\u002Fuser\u002FdetailList\u002FfollowingList\u002FRESET"}},followingTeamsList:{list:[],cursor:f,hasMore:a,skeleton:a,loading:a,actionType:{FETCH:"@\u002Fview\u002Fuser\u002FdetailList\u002FfollowingTeamsList\u002FFETCH",UPDATE_STATE:"@\u002Fview\u002Fuser\u002FdetailList\u002FfollowingTeamsList\u002FUPDATE_STATE",FETCH_MORE:"@\u002Fview\u002Fuser\u002FdetailList\u002FfollowingTeamsList\u002FFETCH_MORE",RESET:"@\u002Fview\u002Fuser\u002FdetailList\u002FfollowingTeamsList\u002FRESET"}},activityList:{list:[],cursor:f,hasMore:a,loading:a,skeleton:a,actionType:{FETCH:"@\u002Fview\u002Fuser\u002FdetailList\u002FactivityList\u002FFETCH",UPDATE_STATE:"@\u002Fview\u002Fuser\u002FdetailList\u002FactivityList\u002FUPDATE_STATE",FETCH_MORE:"@\u002Fview\u002Fuser\u002FdetailList\u002FactivityList\u002FFETCH_MORE",RESET:"@\u002Fview\u002Fuser\u002FdetailList\u002FactivityList\u002FRESET"}},bookList:{list:[],cursor:f,skeleton:a,hasMore:a,loading:a,type:"wrote",actionType:{FETCH:"@\u002Fview\u002Fuser\u002FdetailList\u002FbookList\u002FFETCH",UPDATE_STATE:"@\u002Fview\u002Fuser\u002FdetailList\u002FbookList\u002FUPDATE_STATE",FETCH_MORE:"@\u002Fview\u002Fuser\u002FdetailList\u002FbookList\u002FFETCH_MORE",RESET:"@\u002Fview\u002Fuser\u002FdetailList\u002FbookList\u002FRESET"}},pinList:{list:[],hasMore:a,loading:a,skeleton:a,actionType:{FETCH:"@\u002Fview\u002Fuser\u002FdetailList\u002FpinList\u002FFETCH",UPDATE_STATE:"@\u002Fview\u002Fuser\u002FdetailList\u002FpinList\u002FUPDATE_STATE",FETCH_MORE:"@\u002Fview\u002Fuser\u002FdetailList\u002FpinList\u002FFETCH_MORE",RESET:"@\u002Fview\u002Fuser\u002FdetailList\u002FpinList\u002FRESET"}},courseList:{list:[],hasMore:a,loading:a,skeleton:a,actionType:{FETCH:"@\u002Fview\u002Fuser\u002FdetailList\u002FcourseList\u002FFETCH",UPDATE_STATE:"@\u002Fview\u002Fuser\u002FdetailList\u002FcourseList\u002FUPDATE_STATE",FETCH_MORE:"@\u002Fview\u002Fuser\u002FdetailList\u002FcourseList\u002FFETCH_MORE",RESET:"@\u002Fview\u002Fuser\u002FdetailList\u002FcourseList\u002FRESET"}},pinPraisedList:{list:[],cursor:f,hasMore:a,loading:a,skeleton:a,actionType:{FETCH:"@\u002Fview\u002Fuser\u002FdetailList\u002FpinPraisedList\u002FFETCH",UPDATE_STATE:"@\u002Fview\u002Fuser\u002FdetailList\u002FpinPraisedList\u002FUPDATE_STATE",FETCH_MORE:"@\u002Fview\u002Fuser\u002FdetailList\u002FpinPraisedList\u002FFETCH_MORE",RESET:"@\u002Fview\u002Fuser\u002FdetailList\u002FpinPraisedList\u002FRESET"}},eventList:{list:[],cursor:f,hasMore:a,loading:a,skeleton:a,actionType:{FETCH:"@\u002Fview\u002Fuser\u002FdetailList\u002FeventList\u002FFETCH",UPDATE_STATE:"@\u002Fview\u002Fuser\u002FdetailList\u002FeventList\u002FUPDATE_STATE",FETCH_MORE:"@\u002Fview\u002Fuser\u002FdetailList\u002FeventList\u002FFETCH_MORE",RESET:"@\u002Fview\u002Fuser\u002FdetailList\u002FeventList\u002FRESET"}},selfColumnList:{list:[],hasMore:a,skeleton:a,loading:a,cursor:f,actionType:{FETCH:"@\u002Fview\u002Fuser\u002FdetailList\u002FcolumnList\u002FFETCH",UPDATE_STATE:"@\u002Fview\u002Fuser\u002FdetailList\u002FcolumnList\u002FUPDATE_STATE",FETCH_MORE:"@\u002Fview\u002Fuser\u002FdetailList\u002FcolumnList\u002FFETCH_MORE",RESET:"@\u002Fview\u002Fuser\u002FdetailList\u002FcolumnList\u002FRESET"}},columnFollowedList:{list:[],hasMore:a,skeleton:a,loading:a,cursor:f,actionType:{FETCH:"@\u002Fview\u002Fuser\u002FdetailList\u002FcolumnFollowedList\u002FFETCH",UPDATE_STATE:"@\u002Fview\u002Fuser\u002FdetailList\u002FcolumnFollowedList\u002FUPDATE_STATE",FETCH_MORE:"@\u002Fview\u002Fuser\u002FdetailList\u002FcolumnFollowedList\u002FFETCH_MORE",RESET:"@\u002Fview\u002Fuser\u002FdetailList\u002FcolumnFollowedList\u002FRESET",FILTER:"@\u002Fview\u002Fuser\u002FdetailList\u002FcolumnFollowedList\u002FFILTER"}},realtimes:{list:[],cursor:f,hasMore:a,loading:a,skeleton:a,actionType:{FETCH:"@\u002Fview\u002Fuser\u002FdetailList\u002Frealtimes\u002FFETCH",UPDATE_STATE:"@\u002Fview\u002Fuser\u002FdetailList\u002Frealtimes\u002FUPDATE_STATE",FETCH_MORE:"@\u002Fview\u002Fuser\u002FdetailList\u002Frealtimes\u002FFETCH_MORE",RESET:"@\u002Fview\u002Fuser\u002FdetailList\u002Frealtimes\u002FRESET",DELETE:"@\u002Fview\u002Fuser\u002FdetailList\u002Frealtimes\u002FDELETE"}},realtimeliked:{list:[],cursor:f,hasMore:a,loading:a,skeleton:a,actionType:{FETCH:"@\u002Fview\u002Fuser\u002FdetailList\u002Frealtimeliked\u002FFETCH",UPDATE_STATE:"@\u002Fview\u002Fuser\u002FdetailList\u002Frealtimeliked\u002FUPDATE_STATE",FETCH_MORE:"@\u002Fview\u002Fuser\u002FdetailList\u002Frealtimeliked\u002FFETCH_MORE",RESET:"@\u002Fview\u002Fuser\u002FdetailList\u002Frealtimeliked\u002FRESET",DELETE:"@\u002Fview\u002Fuser\u002FdetailList\u002Frealtimeliked\u002FDELETE"}},robotList:{list:[],cursor:f,type:v,hasMore:a,skeleton:a,loading:a,actionType:{FETCH:"@\u002Fview\u002Fuser\u002FdetailList\u002FrobotList\u002FFETCH",UPDATE_STATE:"@\u002Fview\u002Fuser\u002FdetailList\u002FrobotList\u002FUPDATE_STATE",FETCH_MORE:"@\u002Fview\u002Fuser\u002FdetailList\u002FrobotList\u002FFETCH_MORE",RESET:"@\u002Fview\u002Fuser\u002FdetailList\u002FrobotList\u002FRESET"}}}},tag:{tag:{},actionType:{FETCH:"@\u002Fview\u002Ftag\u002FFETCH",FETCH_LIST:"@\u002Fview\u002Ftag\u002FFETCH_LIST",RESET:"@\u002Fview\u002Ftag\u002FRESET"},list:{list:[],cursor:f,loading:a,skeleton:a,hasMore:a,actionType:{UPDATE_STATE:"@\u002Fview\u002Ftag\u002Flist\u002FUPDATE_STATE",FETCH_MORE:"@\u002Fview\u002Ftag\u002Flist\u002FFETCH_MORE",FETCH:"@\u002Fview\u002Ftag\u002Flist\u002FFETCH",RESET:"@\u002Fview\u002Ftag\u002Flist\u002FRESET"}}},notification:{user:{actionType:{RESET:"@\u002Fview\u002Fnotification\u002Fuser\u002FRESET"},listState:{list:[],cursor:f,hasMore:a,isLoading:a,messageType:k,msgTotal:b,msgSubMap:{"1":b,"2":b,"3":b,"4":b,"7":b}},list:{pageSize:h,page:g,total:b,pointer:c,lastPointer:c,list:[],loading:a,error:c,canPrev:d,canNext:d,linkList:[],lastFetchOnServer:a,actionType:{UPDATE:"@\u002Fview\u002Fnotification\u002Fuser\u002Flist\u002FUPDATE",FETCH:"@\u002Fview\u002Fnotification\u002Fuser\u002Flist\u002FFETCH",FORCE_FETCH:"@\u002Fview\u002Fnotification\u002Fuser\u002Flist\u002FFORCE_FETCH",FETCH_MORE:"@\u002Fview\u002Fnotification\u002Fuser\u002Flist\u002FFETCH_MORE",RESET:"@\u002Fview\u002Fnotification\u002Fuser\u002Flist\u002FRESET"}}},system:{actionType:{RESET:"@\u002Fview\u002Fnotification\u002Fsystem\u002FRESET"},list:{pageSize:h,page:g,total:b,pointer:c,lastPointer:c,list:[],loading:a,error:c,canPrev:d,canNext:d,linkList:[],lastFetchOnServer:a,actionType:{UPDATE:"@\u002Fview\u002Fnotification\u002Fsystem\u002Flist\u002FUPDATE",FETCH:"@\u002Fview\u002Fnotification\u002Fsystem\u002Flist\u002FFETCH",FORCE_FETCH:"@\u002Fview\u002Fnotification\u002Fsystem\u002Flist\u002FFORCE_FETCH",FETCH_MORE:"@\u002Fview\u002Fnotification\u002Fsystem\u002Flist\u002FFETCH_MORE",RESET:"@\u002Fview\u002Fnotification\u002Fsystem\u002Flist\u002FRESET"}}}},column:{serverRenderList:a,column:{id:l},entry:{id:l,screenshot:m,liked:a,article_id:l,article_info:{article_id:l,user_id:w,category_id:"6809635626661445640",tag_ids:[6809641090145059000],visible_level:b,link_url:e,cover_image:e,is_gfw:b,title:x,brief_content:y,is_english:b,is_original:g,user_index:6.191938483220756,original_type:b,original_author:e,content:e,ctime:"1645607048",mtime:"1646809478",rtime:"-62135596800",draft_id:z,view_count:A,collect_count:B,digg_count:r,comment_count:k,hot_index:1180,is_hot:b,rank_index:.00000553,status:g,verify_status:g,audit_status:C,mark_content:e,display_count:b,is_markdown:g,app_html_content:e,version:s,web_html_content:"\u003Cstyle\u003E.markdown-body{word-break:break-word;line-height:1.75;font-weight:400;font-size:16px;overflow-x:hidden;color:#252933}.markdown-body h1,.markdown-body h2,.markdown-body h3,.markdown-body h4,.markdown-body h5,.markdown-body h6{line-height:1.5;margin-top:35px;margin-bottom:10px;padding-bottom:5px}.markdown-body h1{font-size:24px;line-height:38px;margin-bottom:5px}.markdown-body h2{font-size:22px;line-height:34px;padding-bottom:12px;border-bottom:1px solid #ececec}.markdown-body h3{font-size:20px;line-height:28px}.markdown-body h4{font-size:18px;line-height:26px}.markdown-body h5{font-size:17px;line-height:24px}.markdown-body h6{font-size:16px;line-height:24px}.markdown-body p{line-height:inherit;margin-top:22px;margin-bottom:22px}.markdown-body img{max-width:100%}.markdown-body hr{border:none;border-top:1px solid #ddd;margin-top:32px;margin-bottom:32px}.markdown-body code{word-break:break-word;border-radius:2px;overflow-x:auto;background-color:#fff5f5;color:#ff502c;font-size:.87em;padding:.065em .4em}.markdown-body code,.markdown-body pre{font-family:Menlo,Monaco,Consolas,Courier New,monospace}.markdown-body pre{overflow:auto;position:relative;line-height:1.75}.markdown-body pre\u003Ecode{font-size:12px;padding:15px 12px;margin:0;word-break:normal;display:block;overflow-x:auto;color:#333;background:#f8f8f8}.markdown-body a{text-decoration:none;color:#0269c8;border-bottom:1px solid #d1e9ff}.markdown-body a:active,.markdown-body a:hover{color:#275b8c}.markdown-body table{display:inline-block!important;font-size:12px;width:auto;max-width:100%;overflow:auto;border:1px solid #f6f6f6}.markdown-body thead{background:#f6f6f6;color:#000;text-align:left}.markdown-body tr:nth-child(2n){background-color:#fcfcfc}.markdown-body td,.markdown-body th{padding:12px 7px;line-height:24px}.markdown-body td{min-width:120px}.markdown-body blockquote{color:#666;padding:1px 23px;margin:22px 0;border-left:4px solid #cbcbcb;background-color:#f8f8f8}.markdown-body blockquote:after{display:block;content:\"\"}.markdown-body blockquote\u003Ep{margin:10px 0}.markdown-body ol,.markdown-body ul{padding-left:28px}.markdown-body ol li,.markdown-body ul li{margin-bottom:0;list-style:inherit}.markdown-body ol li .task-list-item,.markdown-body ul li .task-list-item{list-style:none}.markdown-body ol li .task-list-item ol,.markdown-body ol li .task-list-item ul,.markdown-body ul li .task-list-item ol,.markdown-body ul li .task-list-item ul{margin-top:0}.markdown-body ol ol,.markdown-body ol ul,.markdown-body ul ol,.markdown-body ul ul{margin-top:3px}.markdown-body ol li{padding-left:6px}.markdown-body .contains-task-list{padding-left:0}.markdown-body .task-list-item{list-style:none}@media (max-width:720px){.markdown-body h1{font-size:24px}.markdown-body h2{font-size:20px}.markdown-body h3{font-size:18px}}\u003C\u002Fstyle\u003E\u003Cstyle data-highlight data-highlight-key=\"juejin\"\u003E.markdown-body pre,.markdown-body pre\u003Ecode.hljs{color:#333;background:#f8f8f8}.hljs-comment,.hljs-quote{color:#998;font-style:italic}.hljs-keyword,.hljs-selector-tag,.hljs-subst{color:#333;font-weight:700}.hljs-literal,.hljs-number,.hljs-tag .hljs-attr,.hljs-template-variable,.hljs-variable{color:teal}.hljs-doctag,.hljs-string{color:#d14}.hljs-section,.hljs-selector-id,.hljs-title{color:#900;font-weight:700}.hljs-subst{font-weight:400}.hljs-class .hljs-title,.hljs-type{color:#458;font-weight:700}.hljs-attribute,.hljs-name,.hljs-tag{color:navy;font-weight:400}.hljs-link,.hljs-regexp{color:#009926}.hljs-bullet,.hljs-symbol{color:#990073}.hljs-built_in,.hljs-builtin-name{color:#0086b3}.hljs-meta{color:#999;font-weight:700}.hljs-deletion{background:#fdd}.hljs-addition{background:#dfd}.hljs-emphasis{font-style:italic}.hljs-strong{font-weight:700}\u003C\u002Fstyle\u003E\u003Cp\u003E\u003Cstrong\u003E注：如果不对，评论更新，谢谢！欢迎追加更新\u003C\u002Fstrong\u003E\u003C\u002Fp\u003E\n\u003Cp\u003E\u003Cstrong\u003E1\u003C\u002Fstrong\u003E、\u003Cstrong\u003EDart\u003C\u002Fstrong\u003E语法中\u003Cstrong\u003Edynamic\u003C\u002Fstrong\u003E，\u003Cstrong\u003Evar\u003C\u002Fstrong\u003E，\u003Cstrong\u003Eobject\u003C\u002Fstrong\u003E三者的区别\u003C\u002Fp\u003E\n\u003Cblockquote\u003E\n\u003Cp\u003Evar定义的类型是不可变的，dynamic和object类型是可以变的，而dynamic 与object 的最大的区别是在静态类型检查上\u003C\u002Fp\u003E\n\u003C\u002Fblockquote\u003E\n\u003Cp\u003E\u003Cstrong\u003E2\u003C\u002Fstrong\u003E、\u003Cstrong\u003Econst\u003C\u002Fstrong\u003E和\u003Cstrong\u003Efinal\u003C\u002Fstrong\u003E的区别\u003C\u002Fp\u003E\n\u003Cblockquote\u003E\n\u003Cp\u003E均表示不可被修改\u003Cbr\u003E\n相同点\u003Cbr\u003E\n1、final、const必须初始化\u003Cbr\u003E\n2、 final、const只能赋值一次\u003Cbr\u003E\n不同点\u003Cbr\u003E\n1、 final可修饰实例变量、const不可以修饰实例变量\u003Cbr\u003E\n2、访问类中const修饰的变量需要static修饰\u003Cbr\u003E\n3、const修饰的List集合任意索引不可修改，final修饰的可以修改\u003Cbr\u003E\n4、const 用来修饰变量 只能被赋值一次，在编译时赋值\u003Cbr\u003E\nfinal 用来修饰变量 只能被赋值一次，在运行时赋值\u003Cbr\u003E\n5、final 只可用来修饰变量， const 关键字即可修饰变量也可用来修饰 常量构造函数\u003Cbr\u003E\n当const修饰类的构造函数时，它要求该类的所有成员都必须是final的。\u003C\u002Fp\u003E\n\u003C\u002Fblockquote\u003E\n\u003Cp\u003E\u003Cstrong\u003E3\u003C\u002Fstrong\u003E、\u003Cstrong\u003EDart\u003C\u002Fstrong\u003E中 \u003Cstrong\u003E??\u003C\u002Fstrong\u003E 与 \u003Cstrong\u003E??=\u003C\u002Fstrong\u003E 的区别\u003C\u002Fp\u003E\n\u003Cblockquote\u003E\n\u003Cp\u003EA??B\u003Cbr\u003E\n左边如果为空返回右边的值，否则不处理。\u003Cbr\u003E\nA??=B\u003Cbr\u003E\n左边如果为空把B的值赋值给A\u003C\u002Fp\u003E\n\u003C\u002Fblockquote\u003E\n\u003Cp\u003E\u003Cstrong\u003E4\u003C\u002Fstrong\u003E、什么是\u003Cstrong\u003Eflutter\u003C\u002Fstrong\u003E里的\u003Cstrong\u003Ekey?\u003C\u002Fstrong\u003E 有什么用？\u003C\u002Fp\u003E\n\u003Cblockquote\u003E\n\u003Cp\u003Ekey是Widgets，Elements和SemanticsNodes的标识符。\u003Cbr\u003E\nkey有LocalKey 和 GlobalKey两种。\u003C\u002Fp\u003E\n\u003Cp\u003ELocalKey 如果要修改集合中的控件的顺序或数量。GlobalKey允许 Widget 在应用中的 任何位置更改父级而不会丢失 State。\u003C\u002Fp\u003E\n\u003C\u002Fblockquote\u003E\n\u003Cp\u003E\u003Cstrong\u003E5\u003C\u002Fstrong\u003E、\u003Cstrong\u003EFlutter\u003C\u002Fstrong\u003E中的\u003Cstrong\u003EGlobalKey\u003C\u002Fstrong\u003E是什么，有什么作用\u003C\u002Fp\u003E\n\u003Cblockquote\u003E\n\u003Cp\u003EGlobalKey可以获取到对应的Widget的State对象\u003C\u002Fp\u003E\n\u003Cp\u003E需求：当我们页面内容很多时，而需要改变的内容只有很少的一部分且在树的底层的时 候，我们如何去实现增量更新？\u003C\u002Fp\u003E\n\u003Cp\u003E通常情况下有两种方式，第一种是通过方法的回调，去实现数据更新，第二种是通过GlobalKey，在StatelessWidget引用StatefulWidget。\u003C\u002Fp\u003E\n\u003C\u002Fblockquote\u003E\n\u003Cp\u003E\u003Cstrong\u003E6\u003C\u002Fstrong\u003E、\u003Cstrong\u003E1main()\u003C\u002Fstrong\u003E 和\u003Cstrong\u003ErunApp()\u003C\u002Fstrong\u003E 函数在\u003Cstrong\u003Eflutter\u003C\u002Fstrong\u003E的作用分别是什么？有什么关系吗？\u003C\u002Fp\u003E\n\u003Cblockquote\u003E\n\u003Cp\u003Emain函数是类似于java语言的程序运行入口函数\u003C\u002Fp\u003E\n\u003Cp\u003ErunApp函数是渲染根widget树的函数\u003C\u002Fp\u003E\n\u003Cp\u003E一般情况下runApp函数会在main函数里执行\u003C\u002Fp\u003E\n\u003C\u002Fblockquote\u003E\n\u003Cp\u003E\u003Cstrong\u003E7\u003C\u002Fstrong\u003E、什么是\u003Cstrong\u003Ewidget?\u003C\u002Fstrong\u003E 在\u003Cstrong\u003Eflutter\u003C\u002Fstrong\u003E里有几种类型的\u003Cstrong\u003Ewidget\u003C\u002Fstrong\u003E？分别有什么区别？能分别说一下生命周期吗？\u003C\u002Fp\u003E\n\u003Cblockquote\u003E\n\u003Cp\u003Ewidget在flutter里基本是一些UI组件\u003C\u002Fp\u003E\n\u003Cp\u003E有两种类型的widget，分别是statefulWidget 和 statelessWidget两种\u003C\u002Fp\u003E\n\u003Cp\u003EstatelessWidget不会自己重新构建自己，但是statefulWidget会\u003C\u002Fp\u003E\n\u003C\u002Fblockquote\u003E\n\u003Cp\u003E\u003Cstrong\u003EstatelessWidget\u003C\u002Fstrong\u003E生命周期：\u003C\u002Fp\u003E\n\u003Cblockquote\u003E\n\u003Col\u003E\n\u003Cli\u003E构造函数\u003C\u002Fli\u003E\n\u003Cli\u003Ebuild方法\u003C\u002Fli\u003E\n\u003C\u002Fol\u003E\n\u003C\u002Fblockquote\u003E\n\u003Cp\u003E\u003Cstrong\u003EStatefulWidget\u003C\u002Fstrong\u003E生命周期：\u003C\u002Fp\u003E\n\u003Cblockquote\u003E\n\u003Col\u003E\n\u003Cli\u003Ewidget的构造方法\u003C\u002Fli\u003E\n\u003Cli\u003Ewidget的createState方法\u003C\u002Fli\u003E\n\u003Cli\u003Estate的构造方法\u003C\u002Fli\u003E\n\u003Cli\u003Estate的initState方法(重写该方法时，必须要先调用super. initState())\u003C\u002Fli\u003E\n\u003Cli\u003EdidChangeDependencies方法，分两种情况：\u003C\u002Fli\u003E\n\u003C\u002Fol\u003E\n\u003Cp\u003E调用initState方法后，会调用该方法\u003C\u002Fp\u003E\n\u003Cp\u003E从其他widget中依赖一些数据发生改变时，比如用InheritedWidget，provider来监听数据的改变\u003C\u002Fp\u003E\n\u003Col\u003E\n\u003Cli\u003Estate的build方法（当调用setState方法，会重新调用build进行渲染）\u003C\u002Fli\u003E\n\u003Cli\u003Estate的deactivate方法（当state被暂时从视图移除的时候会调用，页面push走、pop回来的时候都会调用。因为push、pop会改变widget在视图树位置，需要先移除再添加。重写该方法时，必须要先调用super.deactivate()）\u003C\u002Fli\u003E\n\u003Cli\u003Estate的dispose方法。页面被销毁的时候调用，如：pop操作。通常情况下，自己的释放逻辑放在super.dispose()之前，先操作子类在操作父类。\u003C\u002Fli\u003E\n\u003C\u002Fol\u003E\n\u003C\u002Fblockquote\u003E\n\u003Cp\u003E\u003Cstrong\u003E8\u003C\u002Fstrong\u003E、简单说一下在\u003Cstrong\u003EFlutter\u003C\u002Fstrong\u003E里\u003Cstrong\u003Easync\u003C\u002Fstrong\u003E和\u003Cstrong\u003Eawait\u003C\u002Fstrong\u003E？\u003C\u002Fp\u003E\n\u003Cblockquote\u003E\n\u003Cp\u003Eawait的出现会把await之前和之后的代码分为两部分，await并不像字面意思所表示的程序运行到这里就阻塞了，而是立刻结束当前函数的执行并返回一个Future，函数内剩余代码通过调度异步执行。\u003C\u002Fp\u003E\n\u003Cp\u003Easync是和await搭配使用的，await只在async函数中出现。在async 函数里可以没有await或者有多个await。\u003C\u002Fp\u003E\n\u003C\u002Fblockquote\u003E\n\u003Cp\u003E\u003Cstrong\u003E9\u003C\u002Fstrong\u003E、\u003Cstrong\u003Efuture\u003C\u002Fstrong\u003E和\u003Cstrong\u003Esteam\u003C\u002Fstrong\u003E有什么不一样？\u003C\u002Fp\u003E\n\u003Cblockquote\u003E\n\u003Cp\u003E在 Flutter 中有两种处理异步操作的方式 Future 和 Stream，Future 用于处理单个异步操作，Stream 用来处理连续的异步操作。\u003C\u002Fp\u003E\n\u003C\u002Fblockquote\u003E\n\u003Cp\u003E\u003Cstrong\u003E10\u003C\u002Fstrong\u003E、\u003Cstrong\u003Eflutter\u003C\u002Fstrong\u003E中\u003Cstrong\u003EWidget\u003C\u002Fstrong\u003E、\u003Cstrong\u003EElement\u003C\u002Fstrong\u003E、\u003Cstrong\u003ERenderObject\u003C\u002Fstrong\u003E、\u003Cstrong\u003ELayer\u003C\u002Fstrong\u003E都有什么关系？\u003C\u002Fp\u003E\n\u003Cblockquote\u003E\n\u003Cp\u003E首先看一下这几个对象的含义及作用。\u003C\u002Fp\u003E\n\u003Cp\u003E\u003Cstrong\u003EWidget\u003C\u002Fstrong\u003E：仅用于存储渲染所需要的信息。\u003C\u002Fp\u003E\n\u003Cp\u003E\u003Cstrong\u003ERenderObject\u003C\u002Fstrong\u003E：负责管理布局、绘制等操作。\u003C\u002Fp\u003E\n\u003Cp\u003E\u003Cstrong\u003EElement\u003C\u002Fstrong\u003E：才是这颗巨大的控件树上的实体。\u003C\u002Fp\u003E\n\u003C\u002Fblockquote\u003E\n\u003Cblockquote\u003E\n\u003Cp\u003EWidget会被inflate（填充）到Element，并由Element管理底层渲染树。Widget并不会直接管理状态及渲染,而是通过State这个对象来管理状态。Flutter创建Element的可见树，相对于Widget来说，是可变的，通常界面开发中，我们不用直接操作Element,而是由框架层实现内部逻辑。就如一个UI视图树中，可能包含有多个TextWidget(Widget被使用多次)，但是放在内部视图树的视角，这些TextWidget都是填充到一个个独立的Element中。Element会持有renderObject和widget的实例。记住，Widget 只是一个配置，RenderObject 负责管理布局、绘制等操作。\u003C\u002Fp\u003E\n\u003Cp\u003E在第一次创建 Widget 的时候，会对应创建一个 Element， 然后将该元素插入树中。如果之后 Widget 发生了变化，则将其与旧的 Widget 进行比较，并且相应地更新 Element。重要的是，Element 不会被重建，只是更新而已。\u003C\u002Fp\u003E\n\u003C\u002Fblockquote\u003E\n\u003Cp\u003E\u003Cstrong\u003E11\u003C\u002Fstrong\u003E、简述\u003Cstrong\u003Estate\u003C\u002Fstrong\u003E的生命周期\u003C\u002Fp\u003E\n\u003Cblockquote\u003E\n\u003Cp\u003E\u003Cimg src=\"https:\u002F\u002Fp9-juejin.byteimg.com\u002Ftos-cn-i-k3u1fbpfcp\u002Fb31c704994534c76b5e8d1c986503141~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?\" alt=\"20200614142936682.png\" loading=\"lazy\"\u003E\u003C\u002Fp\u003E\n\u003C\u002Fblockquote\u003E\n\u003Cp\u003E\u003Cstrong\u003E12\u003C\u002Fstrong\u003E、简述\u003Cstrong\u003Eflutter\u003C\u002Fstrong\u003E中自定义\u003Cstrong\u003EView\u003C\u002Fstrong\u003E流程？\u003C\u002Fp\u003E\n\u003Cblockquote\u003E\n\u003Cp\u003E1，已有控件（widget）的继承，组合\u003C\u002Fp\u003E\n\u003Cp\u003E2，自定义绘制widget,也就是利用paint，cavans等进行绘制视图。\u003C\u002Fp\u003E\n\u003C\u002Fblockquote\u003E\n\u003Cp\u003E\u003Cstrong\u003E13\u003C\u002Fstrong\u003E、\u003Cstrong\u003Eflutter_boost\u003C\u002Fstrong\u003E的优缺点，内部实现\u003C\u002Fp\u003E\n\u003Cp\u003E\u003Cstrong\u003E14\u003C\u002Fstrong\u003E、\u003Cstrong\u003Eflutter\u003C\u002Fstrong\u003E的渲染机制\u003C\u002Fp\u003E\n\u003Cblockquote\u003E\n\u003Cp\u003E\u003Cimg src=\"https:\u002F\u002Fp9-juejin.byteimg.com\u002Ftos-cn-i-k3u1fbpfcp\u002Fd5b92b67e6aa492bbb93d9ceeaeed6d7~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?\" alt=\"Graphics Pipeline.webp\" loading=\"lazy\"\u003E\nFlutter只关心向 GPU提供视图数据，GPU的 VSync信号同步到 UI线程，UI线程使用 Dart来构建抽象的视图结构，这份数据结构在 GPU线程进行图层合成，视图数据提供给 Skia引擎渲染为 GPU数据，这些数据通过 OpenGL或者 Vulkan提供给 GPU。\u003C\u002Fp\u003E\n\u003C\u002Fblockquote\u003E\n\u003Cp\u003E\u003Cstrong\u003E15\u003C\u002Fstrong\u003E、\u003Cstrong\u003Eflutter\u003C\u002Fstrong\u003E和\u003Cstrong\u003Enative\u003C\u002Fstrong\u003E的优缺点\u003C\u002Fp\u003E\n\u003Cp\u003E\u003Cstrong\u003E16\u003C\u002Fstrong\u003E、\u003Cstrong\u003Eflutter\u003C\u002Fstrong\u003E支不支持 \u003Cstrong\u003E120hz\u003C\u002Fstrong\u003E\u003C\u002Fp\u003E\n\u003Cp\u003E\u003Cstrong\u003E17\u003C\u002Fstrong\u003E、状态管理熟悉哪些\u003C\u002Fp\u003E\n\u003Cblockquote\u003E\n\u003Cp\u003EFlutter中的状态和前端React中的状态概念是一致的。React框架的核心思想是组件化，应用由组件搭建而成，组件最重要的概念就是状态，状态是一个组件的UI数据模型，是组件渲染时的数据依据。\u003C\u002Fp\u003E\n\u003Cp\u003EFlutter的状态可以分为全局状态和局部状态两种。常用的状态管理有ScopedModel、BLoC、Redux \u002F FishRedux和Provider。\u003C\u002Fp\u003E\n\u003C\u002Fblockquote\u003E\n\u003Cp\u003E\u003Cstrong\u003E18\u003C\u002Fstrong\u003E、多线程怎么处理\u003C\u002Fp\u003E\n\u003Cp\u003E\u003Cstrong\u003E19\u003C\u002Fstrong\u003E、\u003Cstrong\u003Eflutter\u003C\u002Fstrong\u003E中大图片上传\u003C\u002Fp\u003E\n\u003Cp\u003E\u003Cstrong\u003E20\u003C\u002Fstrong\u003E、\u003Cstrong\u003Eawait for\u003C\u002Fstrong\u003E 如何使用\u003C\u002Fp\u003E\n\u003Cblockquote\u003E\n\u003Cp\u003Eawait for是不断获取stream流中的数据，然后执行循环体中的操作。它一般用在直到stream什么时候完成，并且必须等待传递完成之后才能使用，不然就会一直阻塞。\u003C\u002Fp\u003E\n\u003C\u002Fblockquote\u003E\n\u003Cp\u003E\u003Cstrong\u003E21\u003C\u002Fstrong\u003E、Stream有两种订阅模式\u003C\u002Fp\u003E\n\u003Cblockquote\u003E\n\u003Cp\u003EStream 用来处理连续的异步操作，Stream 是一个抽象类，用于表示一系列异步数据的源。它是一种产生连续事件的方式，可以生成数据事件或者错误事件，以及流结束时的完成事件\u003C\u002Fp\u003E\n\u003Cp\u003EStream 分单订阅流和广播流。\u003C\u002Fp\u003E\n\u003Cp\u003E网络状态的监控\u003C\u002Fp\u003E\n\u003C\u002Fblockquote\u003E\n\u003Cp\u003E\u003Cstrong\u003E22\u003C\u002Fstrong\u003E、\u003Cstrong\u003Eflutter butild\u003C\u002Fstrong\u003E 方法中的 \u003Cstrong\u003EBuildContext\u003C\u002Fstrong\u003E 具体是什么东西\u003C\u002Fp\u003E\n\u003Cblockquote\u003E\n\u003Cp\u003EBuildContext底层原理实现实际上就是Element of(context)原理，其实就是通过调用BuildContext各种实现方法遍历widget tree和Element tree 从而获取到指定的对象来达到数据共享的目的\u003C\u002Fp\u003E\n\u003Cp\u003E【【Flutter核心类分析】深入理解BuildContext | 航行学园】\u003Ca href=\"https:\u002F\u002Flink.juejin.cn?target=http%3A%2F%2Fwww.voycn.com%2Farticle%2Fflutterhexinleifenxi-shenrulijiebuildcontext\" target=\"_blank\" title=\"http:\u002F\u002Fwww.voycn.com\u002Farticle\u002Fflutterhexinleifenxi-shenrulijiebuildcontext\" ref=\"nofollow noopener noreferrer\"\u003Ewww.voycn.com\u002Farticle\u002Fflu…\u003C\u002Fa\u003E\u003C\u002Fp\u003E\n\u003C\u002Fblockquote\u003E\n\u003Cp\u003E\u003Cstrong\u003E23\u003C\u002Fstrong\u003E、\u003Cstrong\u003Eflutter\u003C\u002Fstrong\u003E 打包成\u003Cstrong\u003Eweb\u003C\u002Fstrong\u003E 移动端 ****桌面端的过程是怎么样的\u003C\u002Fp\u003E\n\u003Cp\u003E\u003Cstrong\u003E24\u003C\u002Fstrong\u003E、\u003Cstrong\u003Edart\u003C\u002Fstrong\u003E是值传递还是引用传递\u003C\u002Fp\u003E\n\u003Cblockquote\u003E\n\u003Cp\u003E值传递\u003C\u002Fp\u003E\n\u003C\u002Fblockquote\u003E\n\u003Cp\u003E\u003Cstrong\u003E25\u003C\u002Fstrong\u003E、\u003Cstrong\u003Edart\u003C\u002Fstrong\u003E是弱引用还是强引用\u003C\u002Fp\u003E\n\u003Cblockquote\u003E\n\u003Cp\u003E强引用\u003C\u002Fp\u003E\n\u003C\u002Fblockquote\u003E\n\u003Cp\u003E\u003Cstrong\u003E26\u003C\u002Fstrong\u003E、\u003Cstrong\u003Eget set\u003C\u002Fstrong\u003E方法实现\u003C\u002Fp\u003E\n\u003Cp\u003E\u003Cstrong\u003E27\u003C\u002Fstrong\u003E、\u003Cstrong\u003EFlutter\u003C\u002Fstrong\u003E 是如何与原生\u003Cstrong\u003EAndroid\u003C\u002Fstrong\u003E、\u003Cstrong\u003EiOS\u003C\u002Fstrong\u003E进行通信的？\u003C\u002Fp\u003E\n\u003Cblockquote\u003E\n\u003Cp\u003EFlutter 通过 PlatformChannel 与原生进行交互，其中 PlatformChannel 分为三种：\u003C\u002Fp\u003E\n\u003Cp\u003EBasicMessageChannel ：用于传递字符串和半结构化的信息。\u003C\u002Fp\u003E\n\u003Cp\u003EMethodChannel ：用于传递方法调用（method invocation）。\u003C\u002Fp\u003E\n\u003Cp\u003EEventChannel : 用于数据流（event streams）的通信。\u003C\u002Fp\u003E\n\u003Cp\u003E同时 Platform Channel 并非是线程安全的\u003C\u002Fp\u003E\n\u003C\u002Fblockquote\u003E\n\u003Cp\u003E\u003Cstrong\u003E28\u003C\u002Fstrong\u003E、简述\u003Cstrong\u003EFlutter\u003C\u002Fstrong\u003E 的热重载\u003C\u002Fp\u003E\n\u003Cblockquote\u003E\n\u003Cp\u003EFlutter 的热重载是基于 JIT 编译模式的代码增量同步。由于 JIT 属于动态编译，能够将 Dart 代码编译成生成中间代码，让 Dart VM 在运行时解释执行，因此可以通过动态更新中间代码实现增量同步。\u003C\u002Fp\u003E\n\u003Cp\u003E热重载的流程可以分为 5 步，包括：扫描工程改动、增量编译、推送更新、代码合并、Widget 重建。Flutter 在接收到代码变更后，并不会让 App 重新启动执行，而只会触发 Widget 树的重新绘制，因此可以保持改动前的状态，大大缩短了从代码修改到看到修改产生的变化之间所需要的时间。\u003C\u002Fp\u003E\n\u003Cp\u003E另一方面，由于涉及到状态的保存与恢复，涉及状态兼容与状态初始化的场景，热重载是无法支持的，如改动前后 Widget 状态无法兼容、全局变量与静态属性的更改、main 方法里的更改、initState 方法里的更改、枚举和泛型的更改等。\u003C\u002Fp\u003E\n\u003Cp\u003E可以发现，热重载提高了调试 UI 的效率，非常适合写界面样式这样需要反复查看修改效果的场景。但由于其状态保存的机制所限，热重载本身也有一些无法支持的边界。\u003C\u002Fp\u003E\n\u003C\u002Fblockquote\u003E\n\u003Cp\u003E\u003Cstrong\u003E29\u003C\u002Fstrong\u003E、怎么理解\u003Cstrong\u003EIsolate\u003C\u002Fstrong\u003E？\u003C\u002Fp\u003E\n\u003Cblockquote\u003E\n\u003Cp\u003Eisolate是Dart对actor并发模式的实现。 isolate是有自己的内存和单线程控制的运行实体。isolate本身的意思是“隔离”，因为isolate之间的内存在逻辑上是隔离的。isolate中的代码是按顺序执行的，任何Dart程序的并发都是运行多个isolate的结果。因为Dart没有共享内存的并发，没有竞争的可能性所以不需要锁，也就不用担心死锁的问题\u003C\u002Fp\u003E\n\u003C\u002Fblockquote\u003E\n\u003Cp\u003E\u003Cstrong\u003E30\u003C\u002Fstrong\u003E、\u003Cstrong\u003EDart\u003C\u002Fstrong\u003E 的作用域\u003C\u002Fp\u003E\n\u003Cblockquote\u003E\n\u003Cp\u003EDart 没有 「public」「private」等关键字，默认就是公开的，私有变量使用下划线 _开头。\u003C\u002Fp\u003E\n\u003C\u002Fblockquote\u003E\n\u003Cp\u003E\u003Cstrong\u003E31\u003C\u002Fstrong\u003E、\u003Cstrong\u003EDart\u003C\u002Fstrong\u003E 当中的 ****「 \u003Cstrong\u003E..\u003C\u002Fstrong\u003E 」表示什么意思？\u003C\u002Fp\u003E\n\u003Cblockquote\u003E\n\u003Cp\u003EDart 当中的 「..」意思是 「级联操作符」，为了方便配置而使用。「..」和「.」不同的是 调用「..」后返回的相当于是 this，而「.」返回的则是该方法返回的值 。\u003C\u002Fp\u003E\n\u003C\u002Fblockquote\u003E\n\u003Cp\u003E\u003Cstrong\u003E32\u003C\u002Fstrong\u003E、\u003Cstrong\u003EDart\u003C\u002Fstrong\u003E 是不是单线程模型？是如何运行的？\u003C\u002Fp\u003E\n\u003Cblockquote\u003E\n\u003Cp\u003EDart 是单线程模型，运行的的流程如下图。\u003C\u002Fp\u003E\n\u003Cp\u003E\u003Cimg src=\"https:\u002F\u002Fp1-juejin.byteimg.com\u002Ftos-cn-i-k3u1fbpfcp\u002F46bcfacd02084e5e974ace0d892bf5c5~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?\" alt=\"Start app.webp\" loading=\"lazy\"\u003E\u003C\u002Fp\u003E\n\u003Cp\u003E简单来说，Dart 在单线程中是以消息循环机制来运行的，包含两个任务队列，一个是“微任务队列” microtask queue，另一个叫做“事件队列” event queue。\u003C\u002Fp\u003E\n\u003Cp\u003E当Flutter应用启动后，消息循环机制便启动了。首先会按照先进先出的顺序逐个执行微任务队列中的任务，当所有微任务队列执行完后便开始执行事件队列中的任务，事件任务执行完毕后再去执行微任务，如此循环往复，生生不息。\u003C\u002Fp\u003E\n\u003C\u002Fblockquote\u003E\n\u003Cp\u003E\u003Cstrong\u003E33\u003C\u002Fstrong\u003E、\u003Cstrong\u003EDart\u003C\u002Fstrong\u003E 是如何实现多任务并行的？\u003C\u002Fp\u003E\n\u003Cblockquote\u003E\n\u003Cp\u003E前面说过， Dart 是单线程的，不存在多线程，那如何进行多任务并行的呢？其实，Dart的多线程和前端的多线程有很多的相似之处。Flutter的多线程主要依赖Dart的并发编程、异步和事件驱动机制。\u003C\u002Fp\u003E\n\u003Cp\u003E简单的说，在Dart中，一个Isolate对象其实就是一个isolate执行环境的引用，一般来说我们都是通过当前的isolate去控制其他的isolate完成彼此之间的交互，而当我们想要创建一个新的Isolate可以使用Isolate.spawn方法获取返回的一个新的isolate对象，两个isolate之间使用SendPort相互发送消息，而isolate中也存在了一个与之对应的ReceivePort接受消息用来处理，但是我们需要注意的是，ReceivePort和SendPort在每个isolate都有一对，只有同一个isolate中的ReceivePort才能接受到当前类的SendPort发送的消息并且处理。\u003C\u002Fp\u003E\n\u003C\u002Fblockquote\u003E\n\u003Cp\u003E\u003Cstrong\u003E34\u003C\u002Fstrong\u003E、说一下\u003Cstrong\u003EDart\u003C\u002Fstrong\u003E异步编程中的 \u003Cstrong\u003EFuture\u003C\u002Fstrong\u003E关键字？\u003C\u002Fp\u003E\n\u003Cblockquote\u003E\n\u003Cp\u003E前面说过，Dart 在单线程中是以消息循环机制来运行的，其中包含两个任务队列，一个是“微任务队列” microtask queue，另一个叫做“事件队列” event queue。\u003C\u002Fp\u003E\n\u003Cp\u003E在Java并发编程开发中，经常会使用Future来处理异步或者延迟处理任务等操作。而在Dart中，执行一个异步任务同样也可以使用Future来处理。在 Dart 的每一个 Isolate 当中，执行的优先级为 ： Main \u003E MicroTask \u003E EventQueue。\u003C\u002Fp\u003E\n\u003C\u002Fblockquote\u003E\n\u003Cp\u003E\u003Cstrong\u003E35\u003C\u002Fstrong\u003E、说一下 \u003Cstrong\u003Emixin\u003C\u002Fstrong\u003E机制？\u003C\u002Fp\u003E\n\u003Cblockquote\u003E\n\u003Cp\u003Emixin 是Dart 2.1 加入的特性，以前版本通常使用abstract class代替。简单来说，mixin是为了解决继承方面的问题而引入的机制，Dart为了支持多重继承，引入了mixin关键字，它最大的特殊处在于： mixin定义的类不能有构造方法，这样可以避免继承多个类而产生的父类构造方法冲突。\u003C\u002Fp\u003E\n\u003Cp\u003Emixins的对象是类，mixins绝不是继承，也不是接口，而是一种全新的特性，可以mixins多个类，mixins的使用需要满足一定条件。\u003C\u002Fp\u003E\n\u003C\u002Fblockquote\u003E\n\u003Cp\u003E\u003Cstrong\u003E36\u003C\u002Fstrong\u003E、介绍下\u003Cstrong\u003EFlutter\u003C\u002Fstrong\u003E的\u003Cstrong\u003EFrameWork\u003C\u002Fstrong\u003E层和\u003Cstrong\u003EEngine\u003C\u002Fstrong\u003E层，以及它们的作用\u003C\u002Fp\u003E\n\u003Cblockquote\u003E\n\u003Cp\u003EFlutter的FrameWork层是用Dart编写的框架（SDK），它实现了一套基础库，包含Material（Android风格UI）和Cupertino（iOS风格）的UI界面，下面是通用的Widgets（组件），之后是一些动画、绘制、渲染、手势库等。这个纯 Dart实现的 SDK被封装为了一个叫作 dart:ui的 Dart库。我们在使用 Flutter写 App的时候，直接导入这个库即可使用组件等功能。\u003C\u002Fp\u003E\n\u003Cp\u003EFlutter的Engine层是Skia 2D的绘图引擎库，其前身是一个向量绘图软件，Chrome和 Android均采用 Skia作为绘图引擎。Skia提供了非常友好的 API，并且在图形转换、文字渲染、位图渲染方面都提供了友好、高效的表现。Skia是跨平台的，所以可以被嵌入到 Flutter的 iOS SDK中，而不用去研究 iOS闭源的 Core Graphics \u002F Core Animation。Android自带了 Skia，所以 Flutter Android SDK要比 iOS SDK小很多。\u003C\u002Fp\u003E\n\u003C\u002Fblockquote\u003E\n\u003Cp\u003E\u003Cstrong\u003E37\u003C\u002Fstrong\u003E、简述\u003Cstrong\u003EFlutter\u003C\u002Fstrong\u003E的线程管理模型\u003C\u002Fp\u003E\n\u003Cblockquote\u003E\n\u003Cp\u003E\u003Cimg src=\"https:\u002F\u002Fp6-juejin.byteimg.com\u002Ftos-cn-i-k3u1fbpfcp\u002F39f89b2ff8074facbe0ef7b38ccd4c14~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?\" alt=\"APp.webp\" loading=\"lazy\"\u003E\u003C\u002Fp\u003E\n\u003Cp\u003E默认情况下，Flutter Engine层会创建一个Isolate，并且Dart代码默认就运行在这个主Isolate上。必要时可以使用spawnUri和spawn两种方式来创建新的Isolate，在Flutter中，新创建的Isolate由Flutter进行统一的管理。\u003Cbr\u003E\n事实上，Flutter Engine自己不创建和管理线程，Flutter Engine线程的创建和管理是Embeder负责的，Embeder指的是将引擎移植到平台的中间层代码，Flutter Engine层的架构示意图如下图所示。\u003C\u002Fp\u003E\n\u003Cp\u003E在Flutter的架构中，Embeder提供四个Task Runner，分别是Platform Task Runner、UI Task Runner Thread、GPU Task Runner和IO Task Runner，每个Task Runner负责不同的任务，Flutter Engine不在乎Task Runner运行在哪个线程，但是它需要线程在整个生命周期里面保持稳定。\u003C\u002Fp\u003E\n\u003C\u002Fblockquote\u003E\n\u003Cp\u003E\u003Cstrong\u003E38\u003C\u002Fstrong\u003E、介绍下\u003Cstrong\u003EFlutter\u003C\u002Fstrong\u003E的理念架构\u003C\u002Fp\u003E\n\u003Cblockquote\u003E\n\u003Cp\u003E\u003Cimg src=\"https:\u002F\u002Fp9-juejin.byteimg.com\u002Ftos-cn-i-k3u1fbpfcp\u002F059ea661a3b84e76922ee4253b3f617e~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?\" alt=\"Framework.webp\" loading=\"lazy\"\u003E\u003C\u002Fp\u003E\n\u003Cp\u003E由上图可知，Flutter框架自下而上分为Embedder、Engine和Framework三层。其中，Embedder是操作系统适配层，实现了渲染 Surface设置，线程设置，以及平台插件等平台相关特性的适配；Engine层负责图形绘制、文字排版和提供Dart运行时，Engine层具有独立虚拟机，正是由于它的存在，Flutter程序才能运行在不同的平台上，实现跨平台运行；Framework层则是使用Dart编写的一套基础视图库，包含了动画、图形绘制和手势识别等功能，是使用频率最高的一层。\u003C\u002Fp\u003E\n\u003C\u002Fblockquote\u003E\n\u003Cp\u003E\u003Cstrong\u003E39. Future\u003C\u002Fstrong\u003E和\u003Cstrong\u003EIsolate\u003C\u002Fstrong\u003E有什么区别？\u003C\u002Fp\u003E\n\u003Cblockquote\u003E\n\u003Cp\u003Efuture是异步编程，调用本身立即返回，并在稍后的某个时候执行完成时再获得返回结果。在普通代码中可以使用await 等待一个异步调用结束。\u003C\u002Fp\u003E\n\u003Cp\u003Eisolate是并发编程，Dartm有并发时的共享状态，所有Dart代码都在isolate中运行，包括最初的main()。每个isolate都有它自己的堆内存，意味着其中所有内存数据，包括全局数据，都仅对该isolate可见，它们之间的通信只能通过传递消息的机制完成，消息则通过端口(port)收发。isolate只是一个概念，具体取决于如何实现，比如在Dart VM中一个isolate可能会是一个线程，在Web中可能会是一个Web Worker。\u003C\u002Fp\u003E\n\u003C\u002Fblockquote\u003E\n\u003Cp\u003E\u003Cstrong\u003E40\u003C\u002Fstrong\u003E、什么是\u003Cstrong\u003ENavigator? MaterialApp\u003C\u002Fstrong\u003E做了什么？\u003C\u002Fp\u003E\n\u003Cblockquote\u003E\n\u003Cp\u003ENavigator是在Flutter中负责管理维护页面堆栈的导航器。MaterialApp在需要的时候，会自动为我们创建Navigator。Navigator.of(context)，会使用context来向上遍历Element树，找到MaterialApp提供的_NavigatorState再调用其push\u002Fpop方法完成导航操作。\u003C\u002Fp\u003E\n\u003C\u002Fblockquote\u003E\n\u003Cp\u003E\u003Cstrong\u003E注：如果不对，评论更新，谢谢！欢迎追加更新\u003C\u002Fstrong\u003E\u003C\u002Fp\u003E",meta_info:"{\"plugins\":[3]}",catalog:"[]",homepage_top_time:-62135596800,homepage_top_status:b,content_count:4347,read_time:"14分钟",pics_expire_time:b,in_aicoding:c},author_user_info:{user_id:w,user_name:D,company:e,job_title:"移动端开发（Flutter\u002FiOS）",avatar_large:"https:\u002F\u002Fp26-passport.byteacctimg.com\u002Fimg\u002Fuser-avatar\u002F449e86f95221f792452cb2d71571dff2~300x300.image",level:k,description:e,followee_count:39,follower_count:59,post_article_count:18,digg_article_count:153,got_digg_count:245,got_view_count:65674,post_shortmsg_count:25,digg_shortmsg_count:15,isfollowed:a,favorable_author:b,power:E,study_point:b,university:{university_id:f,name:e,logo:e},major:{major_id:f,parent_id:f,name:e},student_status:b,select_event_count:b,select_online_course_count:b,identity:b,is_select_annual:a,select_annual_rank:b,annual_list_type:b,extraMap:{},is_logout:b,annual_info:[],account_amount:b,user_growth_info:{user_id:2559318802316359,jpower:E,jscore:241.6,jpower_level:k,jscore_level:s,jscore_title:"进阶掘友",author_achievement_list:[],vip_level:b,vip_title:e,jscore_next_level_score:500,jscore_this_level_mini_score:150,vip_score:b},is_vip:a,become_author_days:b,collection_set_article_count:b,recommend_article_count_daily:b,article_collect_count_daily:b,user_priv_info:{administrator:b,builder:b,favorable_author:b,book_author:b,forbidden_words:b,can_tag_cnt:b,auto_recommend:b,signed_author:b,popular_author:b,can_add_video:b}},category:{category_id:"6809635626661445640",category_name:"iOS",category_url:"ios",rank:s,back_ground:"https:\u002F\u002Flc-mhke0kuv.cn-n1.lcfile.com\u002F34589746327a360a.png",icon:"https:\u002F\u002Flc-mhke0kuv.cn-n1.lcfile.com\u002F4a218bdf1f6969fd.png",ctime:1461266350,mtime:1432503174,show_type:k,item_type:C,promote_tag_cap:s,promote_priority:s,id:"6809635626661445640",name:"iOS",title:"iOS",alias:"ios"},tags:[{entriesCount:m,subscribed:a,id:"6809641090145058824",tag_id:"6809641090145058824",tag_name:"Flutter",color:e,icon:"https:\u002F\u002Fp1-jj.byteimg.com\u002Ftos-cn-i-t2oaga2asx\u002Fgold-user-assets\u002F1519790365175e2d3ba2174d5c8f3fdc4687a8bbf5768.jpg~tplv-t2oaga2asx-image.image",back_ground:e,show_navi:b,ctime:1519761568,mtime:1788828253,id_type:9,tag_alias:e,post_article_count:20727,concern_user_count:73329,title:"Flutter",tagId:"6809641090145058824",articleCount:20727,subscribersCount:73329,createdAt:c,updatedAt:c}],user_interact:{id:7067828374344827000,omitempty:C,user_id:b,is_digg:a,is_follow:a,is_collect:a,collect_set_count:b},org:{is_followed:a},req_id:"021788850290374fdbddc0200230144d3409576320000975892c4",status:{push_status:b},theme_list:[],extra:{currentVersion:"4",hasAuth:F,imageExpiredEvent:F},title:x,user:G,viewCount:m,commentsCount:k,isEvent:m,abstract:y,latestCommentAt:c,createdAt:new Date(1645607048000),updatedAt:c,isTopicEvent:a,likedCount:r,likeCount:r,content:e,originalUrl:e,type:"post",collected:a,viewsCount:A,username:D,viewerHasLiked:a,draftId:z,collectionCount:B,isCache:d},entryView:{},author:G,adEntryList:[],relatedEntryList:[],selectedList:[],linkVotingList:[],userAnnuals:[],columnList:[],hitArticleCache:d,authorCard:{},relatedLoaded:a,dynamicDataReady:a,followAuthorPopupTime:b,followAuthorPopupType:b,authorBlockVisible:b,compVisible:{},version:s,actionType:{FETCH:"view\u002Fcolumn\u002FFETCH",FETCH_RELATED:"view\u002Fcolumn\u002FFETCH_RELATED",FETCH_RECOMMEND:"view\u002Fcolumn\u002FFETCH_RECOMMEND",FETCH_SELECTED:"view\u002Fcolumn\u002FFETCH_SELECTED",FETCH_ADDITIONAL:"view\u002Fcolumn\u002FFETCH_ADDITIONAL",FETCH_SIDEBAR_ADENTRY:"view\u002Fcolumn\u002FFETCH_SIDEBAR_ADENTRY",FETCH_AUTHOR_EXTRA:"view\u002Fcolumn\u002FFETCH_AUTHOR_EXTRA",MD_FALLBACK_RENDER:"view\u002Fcolumn\u002FMD_FALLBACK_RENDER",RESET:"view\u002Fcolumn\u002FRESET"},recommendedArticleList:{list:[],cursor:f,loading:a,skeleton:a,hasMore:a,articleId:e,actionType:{UPDATE_STATE:"view\u002Fcolumn\u002Frecommend-List\u002FUPDATE_STATE",FETCH_MORE:"view\u002Fcolumn\u002Frecommend-List\u002FFETCH_MORE",FETCH:"view\u002Fcolumn\u002Frecommend-List\u002FFETCH",RESET:"view\u002Fcolumn\u002Frecommend-List\u002FRESET"}}},collection:{collection:{author:{}},actionType:{FETCH:"@\u002Fview\u002Fcollection\u002FFETCH",REFRESH:"@\u002Fview\u002Fcollection\u002FREFRESH",RESET:"@\u002Fview\u002Fcollection\u002FRESET"},list:{pageSize:h,page:g,total:b,pointer:c,lastPointer:c,list:[],loading:a,error:c,canPrev:d,canNext:d,linkList:[],lastFetchOnServer:a,actionType:{UPDATE:"@\u002Fview\u002Fcollection\u002Flist\u002FUPDATE",FETCH:"@\u002Fview\u002Fcollection\u002Flist\u002FFETCH",FORCE_FETCH:"@\u002Fview\u002Fcollection\u002Flist\u002FFORCE_FETCH",FETCH_MORE:"@\u002Fview\u002Fcollection\u002Flist\u002FFETCH_MORE",RESET:"@\u002Fview\u002Fcollection\u002Flist\u002FRESET"},id:e,sort:o}},gettingStarted:{category:{},actionType:{UPDATE_STATE:"@\u002Fview\u002FgettingStarted\u002FUPDATE_STATE",FOLLOW:"@\u002Fview\u002FgettingStarted\u002FFOLLOW",RESET:"@\u002Fview\u002FgettingStarted\u002FRESET",UPDATE_CATEGORY:"@\u002Fview\u002FgettingStarted\u002FUPDATE_CATEGORY"}},pin:{pin:{user:{},imageUrlList:[]},pinList:[],actionType:{FETCH:"@\u002Fview\u002Fpin\u002FFETCH",RESET:"@\u002Fview\u002Fpin\u002FRESET"},sidebar:{list:[],after:e,loading:a,isRecommend:a,hasNextPage:d,actionType:{UPDATE_STATE:"@\u002Fview\u002Fpin\u002Fsidebar\u002FUPDATE_STATE",FETCH_MORE:"@\u002Fview\u002Fpin\u002Fsidebar\u002FFETCH_MORE",FETCH:"@\u002Fview\u002Fpin\u002Fsidebar\u002FFETCH",RESET:"@\u002Fview\u002Fpin\u002Fsidebar\u002FRESET"}},commentList:{pageSize:h,page:g,total:b,pointer:c,lastPointer:c,list:[],loading:a,error:c,canPrev:d,canNext:d,linkList:[],lastFetchOnServer:a,actionType:{UPDATE:"@\u002Fview\u002Fpin\u002FcommentList\u002FUPDATE",FETCH:"@\u002Fview\u002Fpin\u002FcommentList\u002FFETCH",FORCE_FETCH:"@\u002Fview\u002Fpin\u002FcommentList\u002FFORCE_FETCH",FETCH_MORE:"@\u002Fview\u002Fpin\u002FcommentList\u002FFETCH_MORE",RESET:"@\u002Fview\u002Fpin\u002FcommentList\u002FRESET"},pinId:c},subCommentList:{pageSize:h,page:g,total:b,pointer:c,lastPointer:c,list:[],loading:a,error:c,canPrev:d,canNext:d,linkList:[],lastFetchOnServer:a,actionType:{UPDATE:"@\u002Fview\u002Fpin\u002FsubCommentList\u002FUPDATE",FETCH:"@\u002Fview\u002Fpin\u002FsubCommentList\u002FFETCH",FORCE_FETCH:"@\u002Fview\u002Fpin\u002FsubCommentList\u002FFORCE_FETCH",FETCH_MORE:"@\u002Fview\u002Fpin\u002FsubCommentList\u002FFETCH_MORE",RESET:"@\u002Fview\u002Fpin\u002FsubCommentList\u002FRESET"},commentId:c}},topic:{topic:e,followedTopicList:[],actionType:{FETCH:"@\u002Fview\u002Ftopic\u002FFETCH",UPDATE_STATE:"@\u002Fview\u002Ftopic\u002FUPDATE_STATE",RESET:"@\u002Fview\u002Ftopic\u002FRESET"},allTopicList:{pageSize:H,page:b,total:b,pointer:c,lastPointer:c,list:[],loading:a,error:c,canPrev:d,canNext:d,linkList:[],lastFetchOnServer:a,actionType:{UPDATE:"@\u002Fview\u002Ftopic\u002FallTopicList\u002FUPDATE",FETCH:"@\u002Fview\u002Ftopic\u002FallTopicList\u002FFETCH",FORCE_FETCH:"@\u002Fview\u002Ftopic\u002FallTopicList\u002FFORCE_FETCH",FETCH_MORE:"@\u002Fview\u002Ftopic\u002FallTopicList\u002FFETCH_MORE",RESET:"@\u002Fview\u002Ftopic\u002FallTopicList\u002FRESET"},sortType:n},pinlist:{pageSize:h,page:g,total:b,pointer:c,lastPointer:c,list:[],loading:a,error:c,canPrev:d,canNext:d,linkList:[],lastFetchOnServer:a,actionType:{UPDATE:"@\u002Fview\u002Ftopic\u002FpinList\u002FUPDATE",FETCH:"@\u002Fview\u002Ftopic\u002FpinList\u002FFETCH",FORCE_FETCH:"@\u002Fview\u002Ftopic\u002FpinList\u002FFORCE_FETCH",FETCH_MORE:"@\u002Fview\u002Ftopic\u002FpinList\u002FFETCH_MORE",RESET:"@\u002Fview\u002Ftopic\u002FpinList\u002FRESET"},sortType:q},sidebar:{actionType:{RESET:"@\u002Fview\u002Ftopic\u002Fsidebar\u002FRESET",UPDATE_STATE:"@\u002Fview\u002Ftopic\u002Fsidebar\u002FUPDATE_STATE"},attender:{pageSize:h,page:g,total:b,pointer:c,lastPointer:c,list:[],loading:a,error:c,canPrev:d,canNext:d,linkList:[],lastFetchOnServer:a,actionType:{UPDATE:"@\u002Fview\u002Ftopic\u002Fsidebar\u002Fattender\u002FUPDATE",FETCH:"@\u002Fview\u002Ftopic\u002Fsidebar\u002Fattender\u002FFETCH",FORCE_FETCH:"@\u002Fview\u002Ftopic\u002Fsidebar\u002Fattender\u002FFORCE_FETCH",FETCH_MORE:"@\u002Fview\u002Ftopic\u002Fsidebar\u002Fattender\u002FFETCH_MORE",RESET:"@\u002Fview\u002Ftopic\u002Fsidebar\u002Fattender\u002FRESET"},topicId:c}},followedList:{pageSize:H,page:b,total:b,pointer:c,lastPointer:c,list:[],loading:a,error:c,canPrev:d,canNext:d,linkList:[],lastFetchOnServer:a,actionType:{UPDATE:"@\u002Fview\u002Ftopic\u002FfollowedList\u002FUPDATE",FETCH:"@\u002Fview\u002Ftopic\u002FfollowedList\u002FFETCH",FORCE_FETCH:"@\u002Fview\u002Ftopic\u002FfollowedList\u002FFORCE_FETCH",FETCH_MORE:"@\u002Fview\u002Ftopic\u002FfollowedList\u002FFETCH_MORE",RESET:"@\u002Fview\u002Ftopic\u002FfollowedList\u002FRESET"},after:b}},recommendationIndex:{actionType:{FETCH_USER:"@\u002Fview\u002Frecommendation\u002FFETCH_USER",FETCH_MORE:"@\u002Fview\u002Frecommendation\u002FFETCH_MORE",RESET:"@\u002Fview\u002Frecommendation\u002FRESET",FETCH:"@\u002Fview\u002Frecommendation\u002FFETCH"},cursor:e,hasMore:e,userList:[],loading:a,skeleton:d,category:j,categoryNavList:[],serverRenderUserList:a},event:{event:{},loading:a,user:{},actionType:{FETCH:"view\u002Fevent\u002FFETCH",RESET:"view\u002Fevent\u002FRESET"}},coursesIndex:{loading:a,list:[],sort:"online",actionType:{FETCH:"view\u002Fcourses\u002FFETCH",RESET:"view\u002Fcourses\u002FRESET",FETCH_MORE:"view\u002Fcourses\u002FFETCH_MORE"}},team:{team:{},loading:d,actionType:{FETCH:"@\u002Fview\u002Fteam\u002FFETCH",RESET:"@\u002Fview\u002Fteam\u002FRESET",UPDATE:"@\u002Fview\u002Fteam\u002FUPDATE",FOLLOW:"@\u002Fview\u002Fteam\u002FFOLLOW"},detailList:{actionType:{RESET:"@\u002Fview\u002Fteam\u002FdetailList\u002FRESET"},posts:{list:[],hasMore:a,skeleton:a,loading:a,sort:o,actionType:{FETCH:"@\u002Fview\u002Fteam\u002FdetailList\u002Fposts\u002FFETCH",UPDATE_STATE:"@\u002Fview\u002Fteam\u002FdetailList\u002Fposts\u002FUPDATE_STATE",FETCH_MORE:"@\u002Fview\u002Fteam\u002FdetailList\u002Fposts\u002FFETCH_MORE",RESET:"@\u002Fview\u002Fteam\u002FdetailList\u002Fposts\u002FRESET"}},pins:{list:[],hasMore:a,loading:a,skeleton:d,actionType:{FETCH:"@\u002Fview\u002Fteam\u002FdetailList\u002Fpins\u002FFETCH",UPDATE_STATE:"@\u002Fview\u002Fteam\u002FdetailList\u002Fpins\u002FUPDATE_STATE",FETCH_MORE:"@\u002Fview\u002Fteam\u002FdetailList\u002Fpins\u002FFETCH_MORE",RESET:"@\u002Fview\u002Fteam\u002FdetailList\u002Fpins\u002FRESET"}},hire:{list:[],hasMore:a,cursor:f,loading:a,skeleton:d,actionType:{FETCH:"@\u002Fview\u002Fteam\u002FdetailList\u002Fhire\u002FFETCH",UPDATE_STATE:"@\u002Fview\u002Fteam\u002FdetailList\u002Fhire\u002FUPDATE_STATE",FETCH_MORE:"@\u002Fview\u002Fteam\u002FdetailList\u002Fhire\u002FFETCH_MORE",RESET:"@\u002Fview\u002Fteam\u002FdetailList\u002Fhire\u002FRESET"}}}},couponList:{list:{"0":t,"1":t,"2":t},showTooltip:a},payment:{selectedDiscount:{},bookletDetail:{},coupons:{availables:[],unavailables:[]},discountList:[]},activityVip:{selectedVipSku:{}}},component:{indexAside:{bannerList:[],userList:[],botList:[],botCursor:e,actionType:{FETCH_BANNER:"@\u002Fcomponent\u002Faside\u002FFETCH_BANNER",FETCH_USER:"@\u002Fcomponent\u002Faside\u002FFETCH_USER",CLOSE_BANNER:"@\u002Fcomponent\u002Faside\u002FCLOSE_BANNER",FETCH_BOT:"@\u002Fcomponent\u002Faside\u002FFETCH_BOT"}}},dislike:{whiteList:["1398234521548542",I,J,K,L,M,N],officialList:[I,J,"3984285868490807",K,"3562073405009031",L,"4433674252325966","53218623894222","2110693287406632","2498524693925623","430664288836334",M,N,"2832783991648407","3386151545092589"]},ore:{oreCount:b},avatarMenuInfo:{user_basic:{},user_counter:{},user_growth_info:{}},common:{theme:"light",isFollowSystem:a},env:{ua:"Mozilla\u002F5.0 (compatible; ExaSearchBot\u002F1.0; +https:\u002F\u002Fcrawler.exa.ai\u002F)",serverEnv:"production",logId:"20260924172052BBDB0E4F5BABB1E0DC6A"},auth:{user:c,clientId:c,token:c,qrCode:c,qrCodeStatus:c,qrCodeToken:c,userInitiated:a,loginTeaParams:m},tag:{subscribedTagList:[]},entry:{isLikeLoading:a},collection:{},comment:{},bookComment:{},repoComment:{},category:{list:[]},user:{subscribedTagList:[]},notification:{unreadCount:{user:b,system:b,total:b}},error:{location:c,errorView:c,statusCode:200,needRiskModal:a,riskAppealUrl:e},abTest:{info:{}},suspensionPanel:{needSuspension:d},pinComment:{},pin:{deleteDialogVisible:a,reportDialogVisible:a,targetPin:c,isOnFocus:a},topic:{visible:a},activity:{"2020":{},offer:{is_show:b,start_time:b},voteData:m},header:{leadStep:b,isPopupZlink:a},tcc:{tccConfig:c},adAssets:{adverts:[]},route:{name:O,path:u,hash:e,query:{},params:{id:l},fullPath:u,meta:{isAvailableDarkMode:d},from:{name:c,path:P,hash:e,query:{},params:{},fullPath:P,meta:{}}}},serverRendered:d,routePath:u,config:{API_HOST:"api.juejin.cn",CAPTCHA_HOST:"verify.snssdk.com",PLATFORM_APPID:{wechat:1277,weibo:1276,github:1045,wechatApp:1070},SCM_VERSION:"1.0.0.946",REGISTERED_ROUTES:[O,"selfPost","noCDNPost","SeoSearch"]},globalRefs:{}}}(false,0,null,true,"","0",1,20,"topic","recommended",3,"7067828374344826887",void 0,"hot","newest","following","popular",79,4,{},"\u002Fpost\u002F7067828374344826887","created","2559318802316359","Flutter 面试题整理","1、Dart 是单线程模型，运行的的流程： 简单来说，Dart 在单线程中是以消息循环机制来运行的，包含两个任务队列，一个是“微任务队列” microtask queue，另一个叫做“事件队列” ev","7067828133260427295",21972,280,2,"建古",1576,"false",{},100,"1556564194374926","940837680722589","2780007432717400","1204720443866983","852876722177533","3227821828225517","column","\u002F"));</script><style id="custom-right-catalog-style">
+  body .article-catalog.catalog-block{display:flex!important;flex-direction:column;overflow:hidden;margin-bottom:0;background:var(--juejin-layer-1,#fff);box-shadow:0 1px 2px rgba(0,0,0,.05)}
+  body .article-catalog .catalog-body.unfold{max-height:calc(100vh - 9.75rem);margin-top:12px}
+  body .article-catalog .catalog-list .item{line-height:22px}
+  body .article-catalog .catalog-list .item.active>.a-container{font-weight:500}
+  body .article-catalog .catalog-title{user-select:none}
+  body .article-catalog .catalog-title .direction{user-select:none}
+  body .article-catalog .a-container{text-decoration:none}
+  body .article-catalog .a-container:hover{text-decoration:none}
+  body .custom-catalog-anchor{scroll-margin-top:5rem}
+  @media screen and (min-width:1001px){
+    body .sidebar .sticky-block-box{position:fixed!important;top:4.75rem!important;width:24rem!important;max-width:100%;z-index:20}
+    body .article-catalog.catalog-block{width:100%}
+  }
+  @media screen and (max-width:1000px){
+    body .article-catalog.catalog-block{display:none!important}
+  }
+</style>
+<script id="custom-right-catalog">
+(function () {
+  'use strict';
+
+  function makeId(text, index, prefix) {
+    var base = String(text || '').toLowerCase()
+      .replace(/[^\u4e00-\u9fa5a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+    return (base || prefix + '-' + (index + 1)).slice(0, 60);
+  }
+
+  function isQuestionTitle(p) {
+    if (p.closest('blockquote, pre, table')) return false;
+    var text = (p.innerText || p.textContent || '').replace(/\s+/g, ' ').trim();
+    return /^\d+\s*[、.．]\s*/.test(text) && text.length <= 100;
+  }
+
+  function collectTargets() {
+    var article = document.querySelector('.article-viewer.markdown-body');
+    if (!article) return [];
+
+    var result = [];
+    var used = Object.create(null);
+
+    Array.prototype.forEach.call(article.querySelectorAll('h2,h3,h4,h5,h6'), function (el) {
+      var text = (el.innerText || el.textContent || '').replace(/\s+/g, ' ').trim();
+      if (!text) return;
+      var id = el.id || makeId('h-' + text, result.length, 'heading');
+      while (used[id]) id += '-' + result.length;
+      used[id] = true;
+      el.id = id;
+      el.classList.add('custom-catalog-anchor');
+      result.push({ id: id, text: text, level: Math.max(2, Math.min(4, Number(el.tagName.slice(1)))) });
+    });
+
+    Array.prototype.forEach.call(article.querySelectorAll('p'), function (p) {
+      if (!isQuestionTitle(p)) return;
+      var text = (p.innerText || p.textContent || '').replace(/\s+/g, ' ').trim();
+      var number = text.match(/^(\d+)/);
+      var id = 'question-' + (number ? number[1] : String(result.length + 1));
+      while (used[id]) id += '-x';
+      used[id] = true;
+      p.id = id;
+      p.classList.add('custom-catalog-anchor');
+      result.push({ id: id, text: text, level: 2 });
+    });
+
+    return result;
+  }
+
+  function buildCatalog(targets, catalog) {
+    var list = catalog.querySelector('.catalog-list');
+    if (!list) return null;
+    list.innerHTML = '';
+
+    var fragment = document.createDocumentFragment();
+    targets.forEach(function (target) {
+      var item = document.createElement('li');
+      item.className = 'item d' + target.level;
+      item.dataset.targetId = target.id;
+
+      var container = document.createElement('div');
+      container.className = 'a-container';
+
+      var link = document.createElement('a');
+      link.className = 'catalog-aTag d' + target.level + '-aTag-title';
+      link.href = '#' + target.id;
+      link.title = target.text;
+      link.textContent = target.text;
+      link.dataset.targetId = target.id;
+
+      container.appendChild(link);
+      item.appendChild(container);
+      fragment.appendChild(item);
+    });
+    list.appendChild(fragment);
+    return list;
+  }
+
+  function init() {
+    var catalog = document.querySelector('nav.article-catalog.catalog-block');
+    if (!catalog || catalog.dataset.catalogReady === '1') return;
+
+    var targets = collectTargets();
+    if (!targets.length) return;
+
+    catalog.classList.remove('none');
+    catalog.style.removeProperty('display');
+    var body = catalog.querySelector('.catalog-body');
+    var title = catalog.querySelector('.catalog-title');
+    if (body) body.classList.add('unfold');
+    if (title) title.classList.remove('collapse');
+
+    var list = buildCatalog(targets, catalog);
+    if (!list) return;
+    catalog.dataset.catalogReady = '1';
+
+    var direction = catalog.querySelector('.catalog-title .direction');
+    var directionWord = direction && direction.querySelector('.word');
+    var links = [];
+    var items = [];
+    var autoScrolling = false;
+    var clickTimer = null;
+
+    function syncDirectionText() {
+      if (directionWord && body) directionWord.textContent = body.classList.contains('unfold') ? '收起' : '展开';
+    }
+
+    if (direction) {
+      direction.addEventListener('click', function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        if (!body) return;
+        var nextUnfold = !body.classList.contains('unfold');
+        body.classList.toggle('unfold', nextUnfold);
+        if (title) title.classList.toggle('collapse', !nextUnfold);
+        syncDirectionText();
+      });
+    }
+
+    function setActive(id, fromClick) {
+      var activeItem = null;
+      items = Array.prototype.slice.call(list.querySelectorAll('.item'));
+      items.forEach(function (item) {
+        var active = item.dataset.targetId === id;
+        item.classList.toggle('active', active);
+        if (active) activeItem = item;
+      });
+      if (activeItem && body) {
+        var desired = activeItem.offsetTop - body.clientHeight / 2 + activeItem.offsetHeight / 2;
+        if (fromClick || Math.abs(desired - body.scrollTop) > 12) {
+          body.scrollTo({ top: Math.max(0, desired), behavior: fromClick ? 'smooth' : 'auto' });
+        }
+      }
+      return activeItem;
+    }
+
+    function currentTargetId() {
+      var scrollTop = window.pageYOffset || document.documentElement.scrollTop || 0;
+      var offset = window.innerHeight * 0.25;
+      var current = null;
+      links.forEach(function (link) {
+        var target = document.getElementById(link.dataset.targetId);
+        if (!target) return;
+        if (target.getBoundingClientRect().top + scrollTop - 80 <= scrollTop + offset) current = link.dataset.targetId;
+      });
+      return current || (links[0] && links[0].dataset.targetId);
+    }
+
+    list.addEventListener('click', function (event) {
+      var link = event.target.closest('.catalog-aTag');
+      if (!link) return;
+      event.preventDefault();
+      var target = document.getElementById(link.dataset.targetId);
+      if (!target) return;
+
+      autoScrolling = true;
+      if (clickTimer) clearTimeout(clickTimer);
+      setActive(link.dataset.targetId, true);
+      if (window.history && window.history.replaceState) {
+        try {
+          window.history.replaceState(null, '', '#' + link.dataset.targetId);
+        } catch (error) {
+          // Some local file/security contexts do not allow history updates.
+        }
+      }
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+      if (typeof window.addEventListener === 'function') {
+        window.addEventListener('scrollend', function finishClickScroll() {
+          window.removeEventListener('scrollend', finishClickScroll);
+          autoScrolling = false;
+          setActive(link.dataset.targetId, false);
+        }, { once: true, passive: true });
+      }
+      clickTimer = setTimeout(function () {
+        autoScrolling = false;
+        setActive(link.dataset.targetId, false);
+      }, 1000);
+    });
+
+    links = Array.prototype.slice.call(list.querySelectorAll('.catalog-aTag'));
+    var scrollTimer = null;
+    function handleScroll() {
+      if (autoScrolling) return;
+      if (scrollTimer) clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(function () {
+        var id = currentTargetId();
+        if (id) setActive(id, false);
+      }, 80);
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll, { passive: true });
+    handleScroll();
+    syncDirectionText();
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once: true });
+  else init();
+  setTimeout(init, 300);
+})();
+</script>
+</body>
+</html>
