@@ -1,0 +1,1055 @@
+<!doctype html>
+<html data-n-head-ssr lang="zh" data-n-head="%7B%22lang%22:%7B%22ssr%22:%22zh%22%7D%7D">
+  <head >
+    <title>iOS 高级面试题--答案最近准备复习一下面试题，看到了J_Knight_在18年的出一套 iOS 高级面试题尝试着回答 - 掘金</title><meta data-n-head="ssr" charset="utf-8"><meta data-n-head="ssr" name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, viewport-fit=cover"><meta data-n-head="ssr" name="apple-itunes-app" content="app-id=987739104"><meta data-n-head="ssr" name="theme-color" content="#ffffff"><meta data-n-head="ssr" name="msapplication-TileColor" content="#da532c"><meta data-n-head="ssr" name="msvalidate.01" content="BADCF2429624CB0432BE8924E5343343"><meta data-n-head="ssr" name="google-site-verification" content="H_4N6FRhUA633zQuLcgQvaDDceBxlcb6vMSFXm5G4i8"><meta data-n-head="ssr" vmid="description" name="description" content="最近准备复习一下面试题，看到了J_Knight_在18年的出一套 iOS 高级面试题尝试着回答一下题目，由于水平有限，如有错误的地方，请大家多多指教。 1. 分类和扩展有什么区别？可以分别用来做什么？分类有哪些局限性？分类的结构体里面有哪些成员？ 3. 被weak修饰的对象在被…"><meta data-n-head="ssr" vmid="keywords" name="keywords" content="iOS中文技术社区,前端开发社区,前端技术交流,前端框架教程,JavaScript 学习资源,CSS 技巧与最佳实践,HTML5 最新动态,前端工程师职业发展,开源前端项目,前端技术趋势"><link data-n-head="ssr" rel="apple-touch-icon" sizes="180x180" href="assets/advanced/site/apple-touch-icon.png"><link data-n-head="ssr" rel="icon" type="image/png" sizes="32x32" href="assets/advanced/site/favicon-32x32.png"><link data-n-head="ssr" rel="icon" type="image/png" sizes="16x16" href="assets/advanced/site/favicon-16x16.png"><link data-n-head="ssr" rel="mask-icon" href="assets/advanced/site/safari-pinned-tab.svg" color="#1E80FF"><link  data-n-head="ssr" rel="stylesheet" href="assets/advanced/css/bytedesign.min.css"><link data-n-head="ssr" rel="canonical" href="https://juejin.cn/post/6844904030750130183"><link  rel="stylesheet" href="assets/advanced/css/app.070ff99.css"><link  rel="stylesheet" href="assets/advanced/css/default.a1d6163.css"><link  rel="stylesheet" href="assets/advanced/css/12.782611d.css">
+  </head>
+  <body >
+    <div data-server-rendered="true" id="__nuxt"><div id="__layout"><div id="juejin"><div data-v-539963b4 data-v-61fb5e44><div class="view-container" data-v-539963b4><!----> <header data-fetch-key="data-v-14fe2051:0" class="main-header main-header unauthorized visible" data-v-14fe2051 data-v-539963b4><div class="container" data-v-14fe2051><a rel="noreferrer" class="logo" data-v-14fe2051><img src="assets/advanced/images/e08da34488b114bd4c665ba2fa520a31.svg" alt="稀土掘金" class="logo-img" data-v-14fe2051> <img src="assets/advanced/images/6c61ae65d1c41ae8221a670fa32d05aa.svg" alt="稀土掘金" class="mobile" data-v-14fe2051></a> <!----> <nav role="navigation" class="main-nav" data-v-14fe2051><ul class="nav-list" data-v-14fe2051><!----> <li class="main-nav-list" data-v-14fe2051><!----> <ul class="phone-hide" data-v-14fe2051><li class="nav-item link-item" data-v-14fe2051><a href="https://juejin.cn/" data-v-14fe2051>首页</a></li> <li class="nav-item link-item activities" data-v-14fe2051><a href="https://juejin.cn/pins" data-v-14fe2051>
+                沸点
+                <span class="text" data-v-14fe2051><!----></span></a></li> <li class="nav-item link-item book" data-v-14fe2051><a href="https://juejin.cn/course" data-v-14fe2051>
+                课程
+                <!----></a></li> <li class="nav-item link-item download-center-entry" data-v-14fe2051><a href="https://juejin.cn/download" target="_blank" rel="noopener" data-v-14fe2051>APP</a></li> <li class="nav-item link-item" data-v-14fe2051><a href="https://juejin.cn/aiusage/dashboard" data-v-14fe2051>AI用量</a></li> <li class="nav-item link-item" data-v-14fe2051><a href="https://juejin.cn/vibe-work" data-v-14fe2051>作品广场</a></li> <li class="nav-item link-item" data-v-14fe2051><a href="https://corexpert.juejin.cn/" data-v-14fe2051>
+                专家标注
+              </a></li> <!----></ul></li> <ul class="right-side-nav" data-v-14fe2051><li class="search-add" data-v-14fe2051><ul class="search-add-ul" data-v-14fe2051><li class="nav-item search" data-v-14fe2051><form role="search" class="search-form" data-v-14fe2051><input type="search" maxlength="64" placeholder="" value="" class="search-input" data-v-14fe2051> <div class="seach-icon-container" data-v-14fe2051><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" class="search-icon" data-v-14fe2051 data-v-14fe2051><path d="M12.4008 12.4008C14.744 10.0577 14.744 6.25871 12.4008 3.91556C10.0577 1.57242 6.25871 1.57242 3.91556 3.91556C1.57242 6.25871 1.57242 10.0577 3.91556 12.4008C6.25871 14.744 10.0577 14.744 12.4008 12.4008ZM12.4008 12.4008L15.5828 15.5828" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-v-14fe2051 data-v-14fe2051></path></svg></div> <!----> <div class="typehead" style="display:none;" data-v-14fe2051><!----> <div class="title" data-v-14fe2051><span data-v-14fe2051>搜索历史</span> <span class="clear" data-v-14fe2051>
+                        清空
+                      </span></div> <div class="list" data-v-14fe2051></div></div></form></li> <!----> <li class="nav-item add creator-item" data-v-14fe2051><div class="add-group" data-v-222d7b0f data-v-14fe2051><!----> <button class="add-btn" data-v-222d7b0f>
+    创作者中心
+  </button> <div class="more" data-v-222d7b0f><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" class="unfold12-icon" data-v-222d7b0f data-v-222d7b0f><path d="M2.45025 4.82383C2.17422 4.49908 2.40501 4 2.83122 4H9.16878C9.59499 4 9.82578 4.49908 9.54975 4.82382L6.38097 8.5518C6.1813 8.7867 5.8187 8.7867 5.61903 8.5518L2.45025 4.82383Z" fill="white" data-v-222d7b0f data-v-222d7b0f></path></svg> <div class="more-mask" data-v-222d7b0f></div> <div class="more-list" data-v-222d7b0f><ul class="menu" data-v-222d7b0f><li class="item" data-v-222d7b0f><div class="icon write-article" data-v-222d7b0f></div> <div class="title" data-v-222d7b0f>写文章</div></li><li class="item" data-v-222d7b0f><div class="icon issue-points" data-v-222d7b0f></div> <div class="title" data-v-222d7b0f>发沸点</div></li><li class="item" data-v-222d7b0f><div class="icon write-note" data-v-222d7b0f></div> <div class="title" data-v-222d7b0f>写笔记</div></li><li class="item" data-v-222d7b0f><div class="icon create-jcode" data-v-222d7b0f></div> <div class="title" data-v-222d7b0f>写代码</div></li><li class="item" data-v-222d7b0f><div class="icon drafts" data-v-222d7b0f></div> <div class="title" data-v-222d7b0f>草稿箱</div></li></ul> <div class="divider" data-v-222d7b0f></div> <div class="inspiration" data-v-222d7b0f><div class="info" data-v-222d7b0f><span class="title" data-v-222d7b0f>创作灵感</span> <span class="more-info" data-v-222d7b0f>
+            查看更多
+            <i class="icon byte-icon byte-icon--right" data-v-222d7b0f><svg t="1561636167146" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="404349" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M630.4 512L283.52 165.12a21.12 21.12 0 0 1 0-30.08l30.08-30.08a21.12 21.12 0 0 1 30.08 0l377.6 376.96a42.24 42.24 0 0 1 0 60.16l-377.6 376.96a21.12 21.12 0 0 1-30.08 0l-30.08-30.08a21.12 21.12 0 0 1 0-30.08z" p-id="404350"></path></svg></i></span></div> <div class="list" data-v-222d7b0f>  <div class="item" data-v-21339fef data-v-222d7b0f><div class="xitu-skeleton xitu-skeleton-animated" data-v-21339fef><div class="xitu-skeleton-item" data-v-21339fef><!----> <div class="xitu-skeleton-content" style="padding:20px;" data-v-21339fef><div class="xitu-skeleton-line" data-v-21339fef></div><div class="xitu-skeleton-line" data-v-21339fef></div><div class="xitu-skeleton-line" data-v-21339fef></div></div></div></div></div></div></div></div></div> <!----></div></li></ul></li> <!----> <!----> <!----> <li class="nav-item auth hidden" data-v-14fe2051><div class="login-button-wrap" data-v-14fe2051><button class="login-button" data-v-14fe2051>
+                登录
+                <div class="login-button-inner" data-v-14fe2051><div class="login-button-line" data-v-14fe2051></div>
+                  注册
+                </div></button> <!----></div></li></ul></ul></nav></div></header>  <main class="container main-container" style="max-width:1140px;" data-v-539963b4><div class="view column-view post-view" data-v-539963b4 data-v-61fb5e44><!----> <div class="main-area article-area" data-v-539963b4 data-v-61fb5e44><article itemscope="itemscope" itemtype="http://schema.org/Article" data-entry-id="6844904030750130183" data-draft-id="6845076590062206989" data-original-type="0" class="article" data-v-61fb5e44><meta itemprop="url" content="https://juejin.im/post/6844904030750130183"> <meta itemprop="headline" content="iOS 高级面试题--答案"> <meta itemprop="keywords" content="iOS"> <meta itemprop="datePublished" content="2019-12-24T09:23:37.000Z"> <meta itemprop="image" content="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-assets/icon/icon-128.png~tplv-t2oaga2asx-image.image"> <div itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><meta itemprop="name" content="李坤"> <meta itemprop="url" content="https://juejin.cn/user/571401774831662"></div> <div itemprop="publisher" itemscope="itemscope" itemtype="http://schema.org/Organization"><meta itemprop="name" content="掘金"> <div itemprop="logo" itemscope="itemscope" itemtype="https://schema.org/ImageObject"><meta itemprop="url" content="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-assets/icon/icon-white-180.png~tplv-t2oaga2asx-image.image"> <meta itemprop="width" content="180"> <meta itemprop="height" content="180"></div></div> <h1 class="article-title" data-v-61fb5e44>
+            iOS 高级面试题--答案
+            <!----> <!----></h1> <div class="author-info-block block-hidden" data-v-61fb5e44><div class="author-info-box" data-v-61fb5e44><div class="author-name" data-v-61fb5e44><a href="https://juejin.cn/user/571401774831662/posts" target="_blank" rel="" class="jj-link username username ellipsis" data-v-65b50b51 data-v-292f6e48 data-v-61fb5e44><span class="name" style="max-width:160px;" data-v-65b50b51 data-v-292f6e48>
+    李坤
+  </span> <!----> <!----> <!----> </a></div> <div class="meta-box" data-v-61fb5e44><time datetime="2019-12-24T09:23:37.000Z" title="Tue Dec 24 2019 09:23:37 GMT+0000 (Coordinated Universal Time)" class="time" data-v-61fb5e44>
+                    2019-12-24
+                  </time> <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="read-icon" data-v-61fb5e44><path d="M7.90078 2.80078C4.49278 2.80078 1.74745 6.11672 0.800781 7.77469C1.74745 9.58339 4.49278 13.2008 7.90078 13.2008C11.3088 13.2008 14.0541 9.58339 15.0008 7.77469C14.0541 6.11672 11.3088 2.80078 7.90078 2.80078Z" stroke="currentColor" data-v-61fb5e44></path><circle cx="7.89922" cy="8.00078" r="2.2" stroke="currentColor" data-v-61fb5e44></circle></svg> <span class="views-count" data-v-61fb5e44>
+                    23,053
+                  </span> <span class="read-time" data-v-61fb5e44><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" data-v-61fb5e44><rect width="16" height="16" fill="none" data-v-61fb5e44></rect><circle cx="8" cy="8" r="5.65625" stroke="#8A919F" data-v-61fb5e44></circle><path d="M7.69141 5.18652V8.30924H10.8141" stroke="#8A919F" stroke-linecap="round" stroke-linejoin="round" data-v-61fb5e44></path></svg>
+                    阅读39分钟
+                  </span> <!----></div></div> <div style="flex:1;" data-v-61fb5e44></div> <!----> <!----></div> <!----> <!----> <!----> <!----> <div id="article-root" itemprop="articleBody" class="main" data-v-61fb5e44><div class="article-viewer markdown-body cache legacy"><style>.markdown-body{word-break:break-word;line-height:1.75;font-weight:400;font-size:16px;overflow-x:hidden;color:#252933}.markdown-body h1,.markdown-body h2,.markdown-body h3,.markdown-body h4,.markdown-body h5,.markdown-body h6{line-height:1.5;margin-top:35px;margin-bottom:10px;padding-bottom:5px}.markdown-body h1{font-size:24px;line-height:38px;margin-bottom:5px}.markdown-body h2{font-size:22px;line-height:34px;padding-bottom:12px;border-bottom:1px solid #ececec}.markdown-body h3{font-size:20px;line-height:28px}.markdown-body h4{font-size:18px;line-height:26px}.markdown-body h5{font-size:17px;line-height:24px}.markdown-body h6{font-size:16px;line-height:24px}.markdown-body p{line-height:inherit;margin-top:22px;margin-bottom:22px}.markdown-body img{max-width:100%}.markdown-body hr{border:none;border-top:1px solid #ddd;margin-top:32px;margin-bottom:32px}.markdown-body code{word-break:break-word;border-radius:2px;overflow-x:auto;background-color:#fff5f5;color:#ff502c;font-size:.87em;padding:.065em .4em}.markdown-body code,.markdown-body pre{font-family:Menlo,Monaco,Consolas,Courier New,monospace}.markdown-body pre{overflow:auto;position:relative;line-height:1.75}.markdown-body pre>code{font-size:12px;padding:15px 12px;margin:0;word-break:normal;display:block;overflow-x:auto;color:#333;background:#f8f8f8}.markdown-body a{text-decoration:none;color:#0269c8;border-bottom:1px solid #d1e9ff}.markdown-body a:active,.markdown-body a:hover{color:#275b8c}.markdown-body table{display:inline-block!important;font-size:12px;width:auto;max-width:100%;overflow:auto;border:1px solid #f6f6f6}.markdown-body thead{background:#f6f6f6;color:#000;text-align:left}.markdown-body tr:nth-child(2n){background-color:#fcfcfc}.markdown-body td,.markdown-body th{padding:12px 7px;line-height:24px}.markdown-body td{min-width:120px}.markdown-body blockquote{color:#666;padding:1px 23px;margin:22px 0;border-left:4px solid #cbcbcb;background-color:#f8f8f8}.markdown-body blockquote:after{display:block;content:""}.markdown-body blockquote>p{margin:10px 0}.markdown-body ol,.markdown-body ul{padding-left:28px}.markdown-body ol li,.markdown-body ul li{margin-bottom:0;list-style:inherit}.markdown-body ol li .task-list-item,.markdown-body ul li .task-list-item{list-style:none}.markdown-body ol li .task-list-item ol,.markdown-body ol li .task-list-item ul,.markdown-body ul li .task-list-item ol,.markdown-body ul li .task-list-item ul{margin-top:0}.markdown-body ol ol,.markdown-body ol ul,.markdown-body ul ol,.markdown-body ul ul{margin-top:3px}.markdown-body ol li{padding-left:6px}.markdown-body .contains-task-list{padding-left:0}.markdown-body .task-list-item{list-style:none}@media (max-width:720px){.markdown-body h1{font-size:24px}.markdown-body h2{font-size:20px}.markdown-body h3{font-size:18px}}</style><style data-highlight data-highlight-key="juejin"></style><p>最近准备复习一下面试题，看到了<a target="_blank" href="https://juejin.cn/user/3562073402387006" title="https://juejin.cn/user/3562073402387006">J_Knight_</a>在18年的<a target="_blank" href="https://juejin.cn/post/6844903645243260941" title="https://juejin.cn/post/6844903645243260941">出一套 iOS 高级面试题</a>尝试着回答一下题目，由于水平有限，如有错误的地方，请大家多多指教。</p>
+<h3  class="heading" id="heading-0" data-id="heading-0">目录</h3>
+<h4  class="heading" id="heading-1" data-id="heading-1">iOS 基础题</h4>
+<p><a href="#1.1" title="#1.1">1. 分类和扩展有什么区别？可以分别用来做什么？分类有哪些局限性？分类的结构体里面有哪些成员？</a></p>
+<p><a href="#1.2" title="#1.2">2.讲一下atomic的实现机制；为什么不能保证绝对的线程安全（最好可以结合场景来说）？</a></p>
+<p><a href="#1.3" title="#1.3">3. 被weak修饰的对象在被释放的时候会发生什么？是如何实现的？知道sideTable么？里面的结构可以画出来么？</a></p>
+<p><a href="#1.4" title="#1.4">4. 关联对象有什么应用，系统如何管理关联对象？其被释放的时候需要手动将所有的关联对象的指针置空么？</a></p>
+<p><a href="#1.5" title="#1.5">5. KVO的底层实现？如何取消系统默认的KVO并手动触发（给KVO的触发设定条件：改变的值符合某个条件时再触发KVO）？</a></p>
+<p><a href="#1.6" title="#1.6">6. Autoreleasepool所使用的数据结构是什么？AutoreleasePoolPage结构体了解么？</a></p>
+<p><a href="#1.7" title="#1.7">7. 讲一下对象，类对象，元类，跟元类结构体的组成以及他们是如何相关联的？为什么对象方法没有保存的对象结构体里，而是保存在类对象的结构体里？</a></p>
+<p><a href="#1.8" title="#1.8">8. class_ro_t和class_rw_t的区别？</a></p>
+<p><a href="#1.9" title="#1.9">9. iOS中内省的几个方法？class方法和objc_getClass方法有什么区别?</a></p>
+<p><a href="#1.10" title="#1.10">10. 在运行时创建类的方法objc_allocateClassPair的方法名尾部为什么是pair（成对的意思）？</a></p>
+<p><a href="#1.11" title="#1.11">11. 一个int变量被__block修饰与否的区别？</a></p>
+<p><a href="#1.12" title="#1.12">12. 为什么在block外部使用__weak修饰的同时需要在内部使用__strong修饰？</a></p>
+<p><a href="#1.13" title="#1.13">13. RunLoop的作用是什么？它的内部工作机制了解么？（最好结合线程和内存管理来说）</a></p>
+<p><a href="#1.14" title="#1.14">14. 哪些场景可以触发离屏渲染？（知道多少说多少）</a></p>
+<h4  class="heading" id="heading-2" data-id="heading-2">iOS实战题</h4>
+<p><a href="#15" title="#15">15. AppDelegate如何瘦身？</a></p>
+<p><a href="#16" title="#16">16. 反射是什么？可以举出几个应用场景么？（知道多少说多少）</a></p>
+<p><a href="#17" title="#17">17. 有哪些场景是NSOperation比GCD更容易实现的？（或是NSOperation优于GCD的几点，知道多少说多少）</a></p>
+<p><a href="#18" title="#18">18. App 启动优化策略？最好结合启动流程来说（main()函数的执行前后都分别说一下，知道多少说多少）</a></p>
+<p><a href="#19" title="#19">19. App 无痕埋点的思路了解么？你认为理想的无痕埋点系统应该具备哪些特点？（知道多少说多少）</a></p>
+<p><a href="#20" title="#20">20. 你知道有哪些情况会导致app崩溃，分别可以用什么方法拦截并化解？（知道多少说多少）</a></p>
+<p><a href="#21" title="#21">21. 你知道有哪些情况会导致app卡顿，分别可以用什么方法来避免？（知道多少说多少）</a></p>
+<h4  class="heading" id="heading-3" data-id="heading-3">网络题</h4>
+<p><a href="#22" title="#22">22. App 网络层有哪些优化策略？</a></p>
+<p><a href="#23" title="#23">23. TCP为什么要三次握手，四次挥手？</a></p>
+<p><a href="#24" title="#24">24. 对称加密和非对称加密的区别？分别有哪些算法的实现？</a></p>
+<p><a href="#25" title="#25">25. HTTPS的握手流程？为什么密钥的传递需要使用非对称加密？双向认证了解么？</a></p>
+<p><a href="#26" title="#26">26. HTTPS是如何实现验证身份和验证完整性的？</a></p>
+<p><a href="#27" title="#27">27. 如何用Charles抓HTTPS的包？其中原理和流程是什么？</a></p>
+<p><a href="#28" title="#28">28. 什么是中间人攻击？如何避免？</a></p>
+<h4  class="heading" id="heading-4" data-id="heading-4">计算机系统题</h4>
+<p><a href="#29" title="#29">29. 了解编译的过程么？分为哪几个步骤？</a></p>
+<p><a href="#30" title="#30">30. 静态链接了解么？静态库和动态库的区别？</a></p>
+<p><a href="#31" title="#31">31. 内存的几大区域，各自的职能分别是什么？</a></p>
+<p><a href="#32" title="#32">32. static和const有什么区别？</a></p>
+<p><a href="#33" title="#33">33. 了解内联函数么？</a></p>
+<p><a href="#34" title="#34">34. 什么时候会出现死锁？如何避免？</a></p>
+<p><a href="#35" title="#35">35. 说一说你对线程安全的理解？</a></p>
+<p><a href="#36" title="#36">36. 列举你知道的线程同步策略？</a></p>
+<p><a href="#37" title="#37">37. 有哪几种锁？各自的原理？它们之间的区别是什么？最好可以结合使用场景来说</a></p>
+<h4  class="heading" id="heading-5" data-id="heading-5">设计模式题和架构 &#x26; 设计题（由于水平有限，就不误人子弟了）</h4>
+<h4  class="heading" id="heading-6" data-id="heading-6">数据结构&#x26;算法题</h4>
+<p><a href="#38" title="#38">38. 链表和数组的区别是什么？插入和查询的时间复杂度分别是多少？</a></p>
+<p><a href="#39" title="#39">39. 哈希表是如何实现的？如何解决地址冲突？</a></p>
+<p><a href="#40" title="#40">40. 排序题：冒泡排序，选择排序，插入排序，快速排序（二路，三路）能写出那些？</a></p>
+<p><a href="#41" title="#41">41. 链表题：如何检测链表中是否有环？如何删除链表中等于某个值的所有节点？</a></p>
+<p><a href="#42" title="#42">42. 数组题：如何在有序数组中找出和等于给定值的两个元素？如何合并两个有序的数组之后保持有序？</a></p>
+<p><a href="#43" title="#43">43. 二叉树题：如何反转二叉树？如何验证两个二叉树是完全相等的？</a></p>
+<h3  class="heading" id="heading-7" data-id="heading-7">1.分类和扩展有什么区别？可以分别用来做什么？分类有哪些局限性？分类的结构体里面有哪些成员？<span></span></h3>
+<ol>
+<li>分类主要用来为某个类添加方法，属性，协议（我一般用来为系统的类扩展方法或者把某个复杂的类的按照功能拆到不同的文件里）</li>
+<li>扩展主要用来为某个类原来没有的成员变量、属性、方法。注：方法只是声明（我一般用扩展来声明私有属性，或者把.h的只读属性重写成可读写的）</li>
+</ol>
+<p>分类和扩展的区别：</p>
+<ol>
+<li>分类是在运行时把分类信息合并到类信息中，而扩展是在编译时，就把信息合并到类中的</li>
+<li>分类声明的属性，只会生成getter/setter方法的声明，不会自动生成成员变量和getter/setter方法的实现，而扩展会</li>
+<li>分类不可用为类添加实例变量，而扩展可以</li>
+<li>分类可以为类添加方法的实现，而扩展只能声明方法，而不能实现</li>
+</ol>
+<p>分类的局限性：</p>
+<ol>
+<li>无法为类添加实例变量，但可通过关联对象进行实现，注：关联对象中内存管理没有weak，用时需要注意野指针的问题，可通过其他办法来实现，具体可参考<a target="_blank" href="https://link.juejin.cn?target=http%3A%2F%2Fmrpeak.cn%2Fblog%2Fios-weak%2F" title="http://mrpeak.cn/blog/ios-weak/" ref="nofollow noopener noreferrer">iOS weak 关键字漫谈</a></li>
+<li>分类的方法若和类中原本的实现重名，会覆盖原本方法的实现，注：并不是真正的覆盖</li>
+<li>多个分类的方法重名，会调用最后编译的那个分类的实现</li>
+</ol>
+<p>分类的结构体里有哪些成员</p>
+<pre><code class="hljs bash" lang="bash">struct category_t {
+    const char *name; //名字
+    classref_t cls; //类的引用
+    struct method_list_t *instanceMethods;//实例方法列表
+    struct method_list_t *classMethods;//类方法列表
+    struct protocol_list_t *protocols;//协议列表
+    struct property_list_t *instanceProperties;//实例属性列表
+    // 此属性不一定真正的存在
+    struct property_list_t *_classProperties;//类属性列表
+};
+</code></pre><h3  class="heading" id="heading-8" data-id="heading-8">2.讲一下atomic的实现机制；为什么不能保证绝对的线程安全（最好可以结合场景来说）？<span></span></h3>
+<ol>
+<li>atomic的实现机制<br>
+atomic是property的修饰词之一，表示是原子性的，使用方式为<code>@property(atomic)int age;</code>,此时编译器会自动生成getter/setter方法，最终会调用<code>objc_getProperty</code>和<code>objc_setProperty</code>方法来进行存取属性。若此时属性用<code>atomic</code>修饰的话，在这两个方法内部使用<code>os_unfair_lock</code>来进行加锁，来保证读写的原子性。锁都在PropertyLocks中保存着（在iOS平台会初始化8个，mac平台64个），在用之前，会把锁都初始化好，在需要用到时，用对象的地址加上成员变量的偏移量为key，去PropertyLocks中去取。因此存取时用的是同一个锁，所以atomic能保证属性的存取时是线程安全的。注：由于锁是有限的，不用对象，不同属性的读取用的也可能是同一个锁</li>
+<li>atomic为什么不能保证绝对的线程安全？
+<ol>
+<li>atomic在getter/setter方法中加锁，仅保证了存取时的线程安全，假设我们的属性是<code>@property(atomic)NSMutableArray *array;</code>可变的容器时,无法保证对容器的修改是线程安全的</li>
+<li>在编译器自动生产的getter/setter方法，最终会调用<code>objc_getProperty</code>和<code>objc_setProperty</code>方法存取属性，在此方法内部保证了读写时的线程安全的，当我们重写getter/setter方法时，就只能依靠自己在getter/setter中保证线程安全</li>
+</ol>
+</li>
+</ol>
+<h3  class="heading" id="heading-9" data-id="heading-9">3. 被weak修饰的对象在被释放的时候会发生什么？是如何实现的？知道sideTable么？里面的结构可以画出来么？<span></span></h3>
+<ol>
+<li>
+<p>被weak修饰的对象在被释放的时候会发生什么？<br>
+被weak修饰的对象在被释放的时候，会把weak指针自动置位nil</p>
+</li>
+<li>
+<p>weak是如何实现的？<br>
+runTime会把对weak修饰的对象放到一个全局的哈希表中，用weak修饰的对象的内存地址为key，weak指针为值，在对象进行销毁时，用通过自身地址去哈希表中查找到所有指向此对象的weak指针，并把所有的weak指针置位nil</p>
+</li>
+<li>
+<p>sideTable的结构</p>
+</li>
+</ol>
+<pre><code class="hljs bash" lang="bash">struct SideTable {
+    spinlock_t slock;//操作SideTable时用到的锁
+    RefcountMap refcnts;//引用计数器的值
+    weak_table_t weak_table;//存放weak指针的哈希表
+};
+</code></pre><h3  class="heading" id="heading-10" data-id="heading-10">4. 关联对象有什么应用，系统如何管理关联对象？其被释放的时候需要手动将所有的关联对象的指针置空么？<span></span></h3>
+<ol>
+<li>关联对象有什么应用？
+一般用于在分类中给类添加实例变量</li>
+<li>系统如何管理关联对象？<br>
+首先系统中有一个全局<code>AssociationsManager</code>,里面有个<code>AssociationsHashMap</code>哈希表，哈希表中的key是对象的内存地址，value是<code>ObjectAssociationMap</code>,也是一个哈希表，其中key是我们设置关联对象所设置的key，value是<code>ObjcAssociation</code>,里面存放着关联对象设置的值和内存管理的策略。
+已<code>void objc_setAssociatedObject(id object, const void * key,id value, objc_AssociationPolicy policy)</code>为例，首先会通过<code>AssociationsManager</code>获取<code>AssociationsHashMap</code>，然后以<code>object</code>的内存地址为key，从<code>AssociationsHashMap</code>中取出<code>ObjectAssociationMap</code>，若没有，则新创建一个<code>ObjectAssociationMap</code>，然后通过key获取旧值，以及通过key和policy生成新值<code>ObjcAssociation(policy, new_value)</code>，把新值存放到<code>ObjectAssociationMap</code>中，若新值不为nil，并且内存管理策略为<code>retain</code>，则会对新值进行一次<code>retain</code>，若新值为nil，则会删除旧值，若旧值不为空并且内存管理的策略是<code>retain</code>，则对旧值进行一次<code>release</code></li>
+<li>其被释放的时候需要手动将所有的关联对象的指针置空么？
+注：对这个问题我的理解是：当对象被释放时，需要手动移除该对象所设置的关联对象吗？
+不需要，因为在对象的dealloc中，若发现对象有关联对象时，会调用<code>_object_remove_assocations</code>方法来移除所有的关联对象，并根据内存策略，来判断是否需要对关联对象的值进行release</li>
+</ol>
+<h3  class="heading" id="heading-11" data-id="heading-11">5. KVO的底层实现？如何取消系统默认的KVO并手动触发（给KVO的触发设定条件：改变的值符合某个条件时再触发KVO）？<span></span></h3>
+<ol>
+<li>
+<p>KVO的底层实现？</p>
+<ol>
+<li>
+<p>当某个类的属性被观察时，系统会在运行时动态的创建一个该类的子类。并且把改对象的isa指向这个子类</p>
+</li>
+<li>
+<p>假设被观察的属性名是<code>name</code>，若父类里有<code>setName:</code>或这<code>_setName:</code>,那么在子类里重写这2个方法，若2个方法同时存在，则只会重写<code>setName:</code>一个（这里和KVCset时的搜索顺序是一样的）</p>
+</li>
+<li>
+<p>若被观察的类型是NSString,那么重写的方法的实现会指向<code>_NSSetObjectValueAndNotify</code>这个函数，若是Bool类型，那么重写的方法的实现会指向<code>_NSSetBoolValueAndNotify</code>这个函数，这个函数里会调用<code>willChangeValueForKey:</code>和<code>didChangevlueForKey:</code>,并且会在这2个方法调用之间，调用父类set方法的实现</p>
+</li>
+<li>
+<p>系统会在<code>willChangeValueForKey:</code>对observe里的change[old]赋值，取值是用<code>valueForKey:</code>取值的,<code>didChangevlueForKey:</code>对observe里的change[new]赋值，然后调用observe的这个方法<code>- (void)observeValueForKeyPath:(nullable NSString *)keyPath ofObject:(nullable id)object change:(nullable NSDictionary&#x3C;NSKeyValueChangeKey, id> *)change context:(nullable void *)context;</code></p>
+</li>
+<li>
+<p>当使用KVC赋值的时候,在NSObject里的<code>setValue:forKey:</code>方法里,若父类不存在<code>setName:</code>或这<code>_setName:</code>这些方法,会调用<code>_NSSetValueAndNotifyForKeyInIvar</code>这个函数，这个函数里同样也会调用<code>willChangeValueForKey:</code>和<code>didChangevlueForKey:</code>,若存在则调用</p>
+</li>
+</ol>
+</li>
+<li>
+<p>如何取消系统默认的KVO并手动触发（给KVO的触发设定条件：改变的值符合某个条件时再触发KVO）？<br>
+举例：取消Person类age属性的默认KVO，设置age大于18时，手动触发KVO</p>
+</li>
+</ol>
+<pre><code class="hljs bash" lang="bash">+ (BOOL)automaticallyNotifiesObserversForKey:(NSString *)key {
+    <span class="hljs-keyword">if</span> ([key isEqualToString:@<span class="hljs-string">"age"</span>]) {
+        <span class="hljs-built_in">return</span> NO;
+    }
+    <span class="hljs-built_in">return</span> [super automaticallyNotifiesObserversForKey:key];
+}
+
+- (void)<span class="hljs-built_in">set</span>Age:(NSInteger)age {
+    <span class="hljs-keyword">if</span> (age > 18 ) {
+        [self willChangeValueForKey:@<span class="hljs-string">"age"</span>];
+        _age = age;
+        [self didChangeValueForKey:@<span class="hljs-string">"age"</span>];
+    }<span class="hljs-keyword">else</span> {
+        _age = age;
+    }
+}
+</code></pre><h3  class="heading" id="heading-12" data-id="heading-12">6. Autoreleasepool所使用的数据结构是什么？AutoreleasePoolPage结构体了解么？<span></span></h3>
+<p>Autoreleasepool是由多个AutoreleasePoolPage以双向链表的形式连接起来的，
+Autoreleasepool的基本原理：在每个自动释放池创建的时候，会在当前的AutoreleasePoolPage中设置一个标记位，在此期间，当有对象调用autorelsease时，会把对象添加到AutoreleasePoolPage中，若当前页添加满了，会初始化一个新页，然后用双向量表链接起来，并把新初始化的这一页设置为hotPage,当自动释放池pop时，从最下面依次往上pop，调用每个对象的release方法，直到遇到标志位。
+AutoreleasePoolPage结构如下</p>
+<pre><code class="hljs bash" lang="bash">class AutoreleasePoolPage {
+    magic_t const magic;
+    id *next;//下一个存放autorelease对象的地址
+    pthread_t const thread; //AutoreleasePoolPage 所在的线程
+    AutoreleasePoolPage * const parent;//父节点
+    AutoreleasePoolPage *child;//子节点
+    uint32_t const depth;//深度,也可以理解为当前page在链表中的位置
+    uint32_t hiwat;
+}
+</code></pre><h3  class="heading" id="heading-13" data-id="heading-13">7. 讲一下对象，类对象，元类，跟元类结构体的组成以及他们是如何相关联的？为什么对象方法没有保存的对象结构体里，而是保存在类对象的结构体里？<span></span></h3>
+<ol>
+<li>讲一下对象，类对象，元类，跟元类结构体的组成以及他们是如何相关联的？<br>
+对象的结构体里存放着isa和成员变量，isa指向类对象。
+类对象的isa指向元类，元类的isa指向NSObject的元类。
+类对象和元类的结构体有isa、superclass、cache、bits，bits里存放着class_rw_t的指针。
+放一张经典的图
+<figure><img alt="isa" src="assets/advanced/images/advanced-image-1.png" loading="lazy"><figcaption></figcaption></figure></li>
+<li>为什么对象方法没有保存的对象结构体里，而是保存在类对象的结构体里？<br>
+方法是每个对象互相可以共用的，如果每个对象都存储一份方法列表太浪费内存，由于对象的isa是指向类对象的，当调用的时候，直接去类对象中查找就行了。可以节约很多内存空间的</li>
+</ol>
+<h3  class="heading" id="heading-14" data-id="heading-14">8. class_ro_t和class_rw_t的区别？</h3>
+<p>class_rw_t提供了运行时对类拓展的能力，而class_ro_t存储的大多是类在编译时就已经确定的信息。二者都存有类的方法、属性（成员变量）、协议等信息，不过存储它们的列表实现方式不同。简单的说class_rw_t存储列表使用的二维数组，class_ro_t使用的一维数组。
+class_ro_t存储于class_rw_t结构体中，是不可改变的。保存着类的在编译时就已经确定的信息。而运行时修改类的方法，属性，协议等都存储于class_rw_t中</p>
+<h3  class="heading" id="heading-15" data-id="heading-15">9. iOS中内省的几个方法？class方法和objc_getClass方法有什么区别?</h3>
+<ol>
+<li>什么是内省？</li>
+</ol>
+<blockquote>
+<p>在计算机科学中，内省是指计算机程序在运行时（Run time）检查对象（Object）类型的一种能力，通常也可以称作运行时类型检查。
+不应该将内省和反射混淆。相对于内省，反射更进一步，是指计算机程序在运行时（Run time）可以访问、检测和修改它本身状态或行为的一种能力。</p>
+</blockquote>
+<ol start="2">
+<li>
+<p>iOS中内省的几个方法？</p>
+<ul>
+<li>isMemberOfClass //对象是否是某个类型的对象</li>
+<li>isKindOfClass //对象是否是某个类型或某个类型子类的对象</li>
+<li>isSubclassOfClass //某个类对象是否是另一个类型的子类</li>
+<li>isAncestorOfObject //某个类对象是否是另一个类型的父类</li>
+<li>respondsToSelector //是否能响应某个方法</li>
+<li>conformsToProtocol //是否遵循某个协议</li>
+</ul>
+</li>
+<li>
+<p>class方法和object_getClass方法有什么区别?<br>
+实例class方法就直接返回object_getClass(self),类class方法直接返回self，而object_getClass(类对象)，则返回的是元类</p>
+</li>
+</ol>
+<h3  class="heading" id="heading-16" data-id="heading-16">10. 在运行时创建类的方法objc_allocateClassPair的方法名尾部为什么是pair（成对的意思）？</h3>
+<p>因为此方法会创建一个类对象以及元类，正好组成一队</p>
+<pre><code class="hljs bash" lang="bash">Class objc_allocateClassPair(Class superclass, const char *name, 
+                             size_t extraBytes){
+    ...省略了部分代码
+    //生成一个类对象
+    cls  = alloc_class_for_subclass(superclass, extraBytes);
+    //生成一个类对象元类对象
+    meta = alloc_class_for_subclass(superclass, extraBytes);
+    objc_initializeClassPair_internal(superclass, name, cls, meta);
+    <span class="hljs-built_in">return</span> cls;
+}
+</code></pre><h3  class="heading" id="heading-17" data-id="heading-17">11. 一个int变量被__block修饰与否的区别？</h3>
+<p>int变量被__block修饰之后会被包装成一个对象,如<code>__block int age</code>会被包装成下面这样</p>
+<pre><code class="hljs bash" lang="bash">struct __Block_byref_age_0 {
+  void *__isa;
+__Block_byref_age_0 *__forwarding; //指向自己
+ int __flags;
+ int __size;
+ int age;//包装的具体的值
+};
+// age = 20;会被编译成下面这样
+(age.__forwarding->age) = 20;
+</code></pre><h3  class="heading" id="heading-18" data-id="heading-18">12. 为什么在block外部使用__weak修饰的同时需要在内部使用__strong修饰？</h3>
+<p>用__weak修饰之后block不会对该对象进行retain，只是持有了weak指针，在block执行之前或执行的过程时，随时都有可能被释放，将weak指针置位nil，产生一些未知的错误。在内部用__strong修饰，会在block执行时，对该对象进行一次retain，保证在执行时若该指针不指向nil，则在执行过程中不会指向nil。但有可能在执行执行之前已经为nil了</p>
+<h3  class="heading" id="heading-19" data-id="heading-19">13. RunLoop的作用是什么？它的内部工作机制了解么？（最好结合线程和内存管理来说）</h3>
+<ol>
+<li>什么是RunLoop
+一般来讲，一个线程一次只能执行一个任务，执行完成后线程就会退出。如果我们需要一个机制，让线程能随时处理事件但并不退出。这种模型通常被称作 Event Loop。 Event Loop 在很多系统和框架里都有实现，比如 Node.js 的事件处理，比如 Windows 程序的消息循环，再比如 OSX/iOS 里的 RunLoop。实现这种模型的关键点在于：如何管理事件/消息，如何让线程在没有处理消息时休眠以避免资源占用、在有消息到来时立刻被唤醒。</li>
+<li>RunLoop的作用是什么？（由于水平有限，不是很理解作者的本意，我对题目的理解是，利用RunLoop可以做哪些事情？）
+<ol>
+<li>保持程序的持续运行，在iOS线程中，会在main方法给主线程创建一个RunLoop，保证主线程不被销毁</li>
+<li>处理APP中的各种事件（如touch，timer，performSelector等）</li>
+<li>界面更新</li>
+<li>手势识别</li>
+<li>AutoreleasePool
+<ol>
+<li>系统在主线程RunLoop注册了2个observer</li>
+<li>第一个observe监听即将进入RunLoop，调用_objc_autoreleasePoolPush()创建自动释放池</li>
+<li>第二个observe监听两个事件，进入休眠之前和即将退出RunLoop</li>
+<li>在进入休眠之前的回调里，会先释放自动释放池，然后在创建一个自动释放池</li>
+<li>在即将退出的回调里，会释放自动释放池</li>
+</ol>
+</li>
+<li>线程保活</li>
+<li>监测卡顿</li>
+</ol>
+</li>
+<li>RunLoop的内部逻辑（下图来自于YY大神的博客）</li>
+</ol>
+<p></p><figure><img alt="RunLoop_1" src="assets/advanced/images/advanced-image-2.png" loading="lazy"><figcaption></figcaption></figure><p></p>
+<h3  class="heading" id="heading-20" data-id="heading-20">14. 哪些场景可以触发离屏渲染？（知道多少说多少）</h3>
+<ol>
+<li>添加遮罩mask</li>
+<li>添加阴影shadow</li>
+<li>设置圆角并且设置masksToBounds为true</li>
+<li>设置allowsGroupOpacity为true并且layer.opacity小于1.0和有子layer或者背景不为空</li>
+<li>开启光栅化shouldRasterize=true</li>
+</ol>
+<h3  class="heading" id="heading-21" data-id="heading-21">15.AppDelegate如何瘦身？<span id="user-content-15"></span></h3>
+<ol>
+<li>AppDelegate为什么会那么臃肿？
+AppDelegate是一个项目的入口，承担了太多的功能，如初始化根控制器，管理应用的状态，管理推送，和其他APP交互，初始化第三方SDK，获取权限等等</li>
+<li>如何瘦身
+瘦身的方案有很多，比如说把某些方法放到swift扩展或者OC的分类中，抽取中间类，利用通知监听等等，不过我比较喜欢的是使用命令设计模式进行瘦身。
+命令模式是描述对象被称作命令相当于是一个简单的方法或者事件。因为对象封装了触发自身所需的所有参数，因此命令的调用者不知道该命令做了什么以及响应者是谁
+可以为APPdelegate的每一个职责定义一个命令，这个命令的名字有他们自己指定</li>
+</ol>
+<pre><code class="hljs bash" lang="bash">protocol Command {
+    func execute()
+}
+
+struct InitializeThirdPartiesCommand: Command {
+    func <span class="hljs-function"><span class="hljs-title">execute</span></span>() {
+        // 初始化第三方库
+    }
+}
+struct InitialViewControllerCommand: Command {
+    <span class="hljs-built_in">let</span> keyWindow: UIWindow
+    func <span class="hljs-function"><span class="hljs-title">execute</span></span>() {
+        // 设置根控制器
+        keyWindow.rootViewController = UIViewController()
+    }
+}
+
+struct RegisterToRemoteNotificationsCommand: Command {
+    func <span class="hljs-function"><span class="hljs-title">execute</span></span>() {
+        // 注册远程推送
+    }
+}
+</code></pre><p>然后我们定义<code>StartupCommandsBuilder</code>来封装如何创建命令的详细信息。APPdelegate调用这个builder去初始化命令并执行这些命令</p>
+<pre><code class="hljs bash" lang="bash">// MARK: - Builder
+final class StartupCommandsBuilder {
+    private var window: UIWindow!
+    func <span class="hljs-built_in">set</span>KeyWindow(_ window: UIWindow) -> StartupCommandsBuilder {
+        self.window = window
+        <span class="hljs-built_in">return</span> self
+    }
+    func build() -> [Command] {
+        <span class="hljs-built_in">return</span> [
+            InitializeThirdPartiesCommand(),
+            InitialViewControllerCommand(keyWindow: window),
+            RegisterToRemoteNotificationsCommand()
+        ]
+    }
+}
+// MARK: - App Delegate
+@UIApplicationMain
+class AppDelegate: UIResponder, UIApplicationDelegate {
+    var window: UIWindow?
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        StartupCommandsBuilder()
+            .setKeyWindow(window!)
+            .build()
+            .forEach { <span class="hljs-variable">$0</span>.execute() }
+
+        <span class="hljs-built_in">return</span> <span class="hljs-literal">true</span>
+    }
+}
+</code></pre><p>如果APPdelegate需要添加新的职责，则可以创建新的命令，然后把命令添加到builder里去而无需去改变APPdelegate。而且使用命令模式有以下好处</p>
+<ul>
+<li>每个命令都有单一的职责</li>
+<li>无需更改APPdelegate就可以很容易的添加新的命令</li>
+<li>每个命令可以很容易的被单独测试</li>
+</ul>
+<h3  class="heading" id="heading-22" data-id="heading-22">16. 反射是什么？可以举出几个应用场景么？（知道多少说多少）<span id="user-content-16"></span></h3>
+<ol>
+<li>什么是反射</li>
+</ol>
+<blockquote>
+<p>反射是指计算机程序在运行时（runtime）可以访问、检测和修改它本身状态或行为的一种能力。用比喻来说，反射就是程序在运行的时候能够“观察”并且修改自己的行为。</p>
+</blockquote>
+<p>在OC中，反射是指程序在运行时，获取和修改类的信息。
+2. 应用场景</p>
+<ul>
+<li>JSON与模型之间的相互转换</li>
+<li>Method Swizzling</li>
+<li>KVO的实现原理</li>
+<li>实现NSCoding的自动归档和自动解档</li>
+<li>探索系统某些类的具体实现</li>
+</ul>
+<h3  class="heading" id="heading-23" data-id="heading-23">17. 有哪些场景是NSOperation比GCD更容易实现的？（或是NSOperation优于GCD的几点，知道多少说多少）<span id="user-content-17"></span></h3>
+<ol>
+<li>NSOperation可以设置依赖</li>
+<li>NSOperation可以进行暂停，继续等操作</li>
+<li>NSOperation可以监测当前队列运行的状态</li>
+<li>NSOperationQueue可以取消队列里的所有操作</li>
+<li>NSOperationQueue很方便的设置最大并发数</li>
+</ol>
+<h3  class="heading" id="heading-24" data-id="heading-24">18. App启动优化策略？最好结合启动流程来说（main()函数的执行前后都分别说一下，知道多少说多少）<span id="user-content-18"></span></h3>
+<ol>
+<li>iOS的启动流程
+<ol>
+<li>根据 info.plist 里的设置加载闪屏，建立沙箱，对权限进行检查等</li>
+<li>加载可执行文件</li>
+<li>加载动态链接库，进行 rebase 指针调整和 bind 符号绑定</li>
+<li>Objc 运行时的初始处理，包括 Objc 相关类的注册、category 注册、selector 唯一性检查等；</li>
+<li>初始化，包括了执行 +load() 方法、attribute((constructor)) 修饰的函数的调用、创建 C++ 静态全局变量。</li>
+<li>执行 main 函数</li>
+<li>Application 初始化，到 applicationDidFinishLaunchingWithOptions 执行完</li>
+<li>初始化帧渲染，到 viewDidAppear 执行完，用户可见可操作。</li>
+</ol>
+</li>
+<li>启动优化
+<ol>
+<li>减少动态库的加载</li>
+<li>去除掉无用的类和C++全局变量的数量</li>
+<li>尽量让load方法中的内容放到首屏渲染之后再去执行，或者使用initialize替换</li>
+<li>去除在首屏展现之前非必要的功能</li>
+<li>检查首屏展现之前主线程的耗时方法，将没必要的耗时方法滞后或者延迟执行</li>
+</ol>
+</li>
+</ol>
+<h3  class="heading" id="heading-25" data-id="heading-25">19. App无痕埋点的思路了解么？你认为理想的无痕埋点系统应该具备哪些特点？（知道多少说多少））<span id="user-content-19"></span></h3>
+<p>App无痕埋点的思路是利用AOP来拦截用户的操作并进行标记记录然后进行上传</p>
+<p>我认为理想的无痕埋点系统应该具备以下特点</p>
+<ol>
+<li>不侵入业务代码</li>
+<li>统计尽可能多的事件</li>
+<li>自动生成唯一标识</li>
+<li>要能统计到控件在但不同状态意义不同的情况</li>
+<li>需要某些机制能够提供业务数据</li>
+<li>在合适的时机去上传数据</li>
+</ol>
+<h3  class="heading" id="heading-26" data-id="heading-26">20. 你知道有哪些情况会导致app崩溃，分别可以用什么方法拦截并化解？（知道多少说多少））<span id="user-content-20"></span></h3>
+<ol>
+<li>unrecognized selector sent to instance 方法找不到</li>
+<li>数组越界，插入空值</li>
+<li><code>[NSDictionary initWithObjects:forKeys:]</code>使用此方法初始化字典时，objects和keys的数量不一致时</li>
+<li>NSMutableDictionary，<code>setObject:forKey:</code>或者<code>removeObjectForKey:</code>时，key为nil</li>
+<li><code>setValue:forUndefinedKey:</code>，使用KVC对对象进行存取值时传入错误的key或者对不可变字典进行赋值</li>
+<li>NSUserDefaults 存储时key为nil</li>
+<li>对字符串操作时，传递的下标超出范围，判断是否存在前缀，后缀子串时，子串为空</li>
+<li>使用C字符串初始化字符串时，传入null</li>
+<li>对可变集合或字符串使用copy修饰并进行修改操作</li>
+<li>在空间未添加到父元素上之前，就使用autoLayout进行布局</li>
+<li>KVO在对象销毁时，没有移除KVO或者多次移除KVO</li>
+<li>野指针访问</li>
+<li>死锁</li>
+<li>除0</li>
+</ol>
+<p>1-9都可以利用Runtime进行拦截，然后进行一些逻辑处理，防止crash</p>
+<h3  class="heading" id="heading-27" data-id="heading-27">21. 你知道有哪些情况会导致app卡顿，分别可以用什么方法来避免？（知道多少说多少））<span id="user-content-21"></span></h3>
+<ol>
+<li>主线程中进化IO或其他耗时操作，解决：把耗时操作放到子线程中操作</li>
+<li>GCD并发队列短时间内创建大量任务，解决：使用线程池</li>
+<li>文本计算，解决：把计算放在子线程中避免阻塞主线程</li>
+<li>大量图像的绘制，解决：在子线程中对图片进行解码之后再展示</li>
+<li>高清图片的展示，解法：可在子线程中进行下采样处理之后再展示</li>
+</ol>
+<h3  class="heading" id="heading-28" data-id="heading-28">22. App网络层有哪些优化策略？<span id="user-content-22"></span></h3>
+<ol>
+<li>优化DNS解析和缓存</li>
+<li>对传输的数据进行压缩，减少传输的数据</li>
+<li>使用缓存手段减少请求的发起次数</li>
+<li>使用策略来减少请求的发起次数，比如在上一个请求未着地之前，不进行新的请求</li>
+<li>避免网络抖动，提供重发机制</li>
+</ol>
+<h3  class="heading" id="heading-29" data-id="heading-29">23. TCP为什么要三次握手，四次挥手？<span id="user-content-23"></span></h3>
+<p>三次握手：</p>
+<ol>
+<li>客户端向服务端发起请求链接，首先发送SYN报文，SYN=1，seq=x,并且客户端进入SYN_SENT状态</li>
+<li>服务端收到请求链接，服务端向客户端进行回复，并发送响应报文，SYN=1，seq=y,ACK=1,ack=x+1,并且服务端进入到SYN_RCVD状态</li>
+<li>客户端收到确认报文后，向服务端发送确认报文，ACK=1，ack=y+1，此时客户端进入到ESTABLISHED，服务端收到用户端发送过来的确认报文后，也进入到ESTABLISHED状态，此时链接创建成功</li>
+</ol>
+<p>四次挥手：</p>
+<ol>
+<li>客户端向服务端发起关闭链接，并停止发送数据</li>
+<li>服务端收到关闭链接的请求时，向客户端发送回应，我知道了，然后停止接收数据</li>
+<li>当服务端发送数据结束之后，向客户端发起关闭链接，并停止发送数据</li>
+<li>客户端收到关闭链接的请求时，向服务端发送回应，我知道了，然后停止接收数据</li>
+</ol>
+<p>为什么需要三次握手：
+为了防止已失效的连接请求报文段突然又传送到了服务端，因而产生错误，假设这是一个早已失效的报文段。但server收到此失效的连接请求报文段后，就误认为是client再次发出的一个新的连接请求。于是就向client发出确认报文段，同意建立连接。假设不采用“三次握手”，那么只要server发出确认，新的连接就建立了。由于现在client并没有发出建立连接的请求，因此不会理睬server的确认，也不会向server发送数据。但server却以为新的运输连接已经建立，并一直等待client发来数据。这样，server的很多资源就白白浪费掉了。</p>
+<p>为什么需要四次挥手：
+因为TCP是全双工通信的，在接收到客户端的关闭请求时，还可能在向客户端发送着数据，因此不能再回应关闭链接的请求时，同时发送关闭链接的请求</p>
+<h3  class="heading" id="heading-30" data-id="heading-30">24. 对称加密和非对称加密的区别？分别有哪些算法的实现？<span id="user-content-24"></span></h3>
+<p>对称加密，加密的加密和解密使用同一密钥。</p>
+<p>非对称加密，使用一对密钥用于加密和解密，分别为公开密钥和私有密钥。公开密钥所有人都可以获得，通信发送方获得接收方的公开密钥之后，就可以使用公开密钥进行加密，接收方收到通信内容后使用私有密钥解密。</p>
+<p>对称加密常用的算法实现有AES,ChaCha20,DES,不过DES被认为是不安全的;非对称加密用的算法实现有RSA，ECC</p>
+<h3  class="heading" id="heading-31" data-id="heading-31">25. HTTPS的握手流程？为什么密钥的传递需要使用非对称加密？双向认证了解么？<span id="user-content-25"></span></h3>
+<p>HTTPS的握手流程，如下图，摘自图解HTTP</p>
+<p></p><figure><img src="assets/advanced/images/advanced-image-3.png" loading="lazy"><figcaption></figcaption></figure><p></p>
+<ol>
+<li>客户端发送Client Hello 报文开始SSL通信。报文中包含客户端支持的SSL的版本，加密组件列表。</li>
+<li>服务器收到之后，会以Server Hello 报文作为应答。和客户端一样，报文中包含客户端支持的SSL的版本，加密组件列表。服务器的加密组件内容是从接收到的客户端加密组件内筛选出来的</li>
+<li>服务器发送Certificate报文。报文中包含公开密钥证书。</li>
+<li>然后服务器发送Server Hello Done报文通知客户端，最初阶段的SSL握手协商部分结束</li>
+<li>SSL第一次握手结束之后，客户端以Client Key Exchange报文作为会议。报文中包含通信加密中使用的一种被称为Pre-master secret的随机密码串</li>
+<li>接着客户端发送Change Cipher Space报文。该报文会提示服务器，在次报文之后的通信会采用Pre-master secret密钥加密</li>
+<li>客户端发送Finished 报文。该报文包含链接至今全部报文的整体校验值。这次握手协商是否能够成功，要以服务器是否能够正确揭秘该报文作为判定标准</li>
+<li>服务器同样发送Change Cipher Space报文。</li>
+<li>服务器同样发送Finished报文。</li>
+<li>服务器和客户端的Finished报文交换完毕之后，SSL连接建立完成，从此开始HTTP通信，通信的内容都使用Pre-master secret加密。然后开始发送HTTP请求</li>
+<li>应用层收到HTTP请求之后，发送HTTP响应</li>
+<li>最后有客户端断开连接</li>
+</ol>
+<h4  class="heading" id="heading-32" data-id="heading-32">为什么密钥的传递需要使用非对称加密？</h4>
+<p>答：使用非对称加密是为了后面客户端生成的Pre-master secret密钥的安全，通过上面的步骤能得知，服务器向客户端发送公钥证书这一步是有可能被别人拦截的，如果使用对称加密的话，在客户端向服务端发送Pre-master secret密钥的时候，被黑客拦截的话，就能够使用公钥进行解码，就无法保证Pre-master secret密钥的安全了</p>
+<h4  class="heading" id="heading-33" data-id="heading-33">双向认证了解么？（这里我真想说一句不了解）</h4>
+<p>答：上面的HTTPS的通信流程只验证了服务端的身份，而服务端没有验证客户端的身份，双向认证是服务端也要确保客户端的身份，大概流程是客户端在校验完服务器的证书之后，会向服务器发送自己的公钥，然后服务端用公钥加密产生一个新的密钥，传给客户端，客户端再用私钥解密，以后就用此密钥进行对称加密的通信</p>
+<h3  class="heading" id="heading-34" data-id="heading-34">26. HTTPS是如何实现验证身份和验证完整性的？<span id="user-content-26"></span></h3>
+<p>使用数字证书和CA来验证身份,首先服务端先向CA机构去申请证书，CA审核之后会给一个数字证书，里面包裹公钥、签名、有效期，用户信息等各种信息，在客户端发送请求时，服务端会把数字证书发给客户端，然后客户端会通过信任链来验证数字证书是否是有效的，来验证服务端的身份。</p>
+<p>使用摘要算法来验证完整性，也就是说在发送消息时，会对消息的内容通过摘要算法生成一段摘要，在收到收到消息时也使用同样的算法生成摘要，来判断摘要是否一致。</p>
+<h3  class="heading" id="heading-35" data-id="heading-35">27. 如何用Charles抓HTTPS的包？其中原理和流程是什么？<span id="user-content-27"></span></h3>
+<p>流程：</p>
+<ol>
+<li>首先在手机上安装Charles证书</li>
+<li>在代理设置中开启Enable SSL Proxying</li>
+<li>之后添加需要抓取服务端的地址</li>
+</ol>
+<p>原理：</p>
+<p>Charles作为中间人，对客户端伪装成服务端，对服务端伪装成客户端。简单来说：</p>
+<ul>
+<li>截获客户端的HTTPS请求，伪装成中间人客户端去向服务端发送HTTPS请求</li>
+<li>接受服务端返回，用自己的证书伪装成中间人服务端向客户端发送数据内容。</li>
+</ul>
+<p>具体流程如下图,图片来自<a target="_blank" href="https://juejin.cn/post/6844903809068564493#heading-3" title="https://juejin.cn/post/6844903809068564493#heading-3">扯一扯HTTPS单向认证、双向认证、抓包原理、反抓包策略</a></p>
+<p></p><figure><img src="assets/advanced/images/advanced-image-4.png" loading="lazy"><figcaption></figcaption></figure><p></p>
+<h3  class="heading" id="heading-36" data-id="heading-36">28. 什么是中间人攻击？如何避免？<span id="user-content-28"></span></h3>
+<p>中间人攻击就是截获到客户端的请求以及服务器的响应，比如Charles抓取HTTPS的包就属于中间人攻击。</p>
+<p>避免的方式：客户端可以预埋证书在本地，然后进行证书的比较是否是匹配的</p>
+<h3  class="heading" id="heading-37" data-id="heading-37">29. 了解编译的过程么？分为哪几个步骤？<span id="user-content-29"></span></h3>
+<ol>
+<li>预编译：主要处理以“#”开始的预编译指令。</li>
+<li>编译：
+<ol>
+<li>词法分析：将字符序列分割成一系列的记号。</li>
+<li>语法分析：根据产生的记号进行语法分析生成语法树。</li>
+<li>语义分析：分析语法树的语义，进行类型的匹配、转换、标识等。</li>
+<li>中间代码生成：源码级优化器将语法树转换成中间代码，然后进行源码级优化，比如把 1+2 优化为 3。中间代码使得编译器被分为前端和后端，不同的平台可以利用不同的编译器后端将中间代码转换为机器代码，实现跨平台。</li>
+<li>目标代码生成：此后的过程属于编译器后端，代码生成器将中间代码转换成目标代码（汇编代码），其后目标代码优化器对目标代码进行优化，比如调整寻址方式、使用位移代替乘法、删除多余指令、调整指令顺序等。</li>
+</ol>
+</li>
+<li>汇编：汇编器将汇编代码转变成机器指令。</li>
+<li>静态链接：链接器将各个已经编译成机器指令的目标文件链接起来，经过重定位过后输出一个可执行文件。</li>
+<li>装载：装载可执行文件、装载其依赖的共享对象。</li>
+<li>动态链接：动态链接器将可执行文件和共享对象中需要重定位的位置进行修正。</li>
+<li>最后，进程的控制权转交给程序入口，程序终于运行起来了。</li>
+</ol>
+<h3  class="heading" id="heading-38" data-id="heading-38">30. 静态链接了解么？静态库和动态库的区别？<span id="user-content-30"></span></h3>
+<p>静态链接是指将多个目标文件合并为一个可执行文件，直观感觉就是将所有目标文件的段合并。需要注意的是可执行文件与目标文件的结构基本一致，不同的是是否“可执行”。
+静态库：链接时完整地拷贝至可执行文件中，被多次使用就有多份冗余拷贝。
+动态库：链接时不复制，程序运行时由系统动态加载到内存，供程序调用，系统只加载一次，多个程序共用，节省内存。</p>
+<h3  class="heading" id="heading-39" data-id="heading-39">31. 内存的几大区域，各自的职能分别是什么？<span id="user-content-31"></span></h3>
+<ol>
+<li>栈区：有系统自动分配并释放，一般存放函数的参数值，局部变量等</li>
+<li>堆区：有程序员分配和释放，若程序员未释放，则在程序结束时有系统释放，在iOS里创建出来的对象会放在堆区</li>
+<li>数据段：字符串常量，全局变量，静态变量</li>
+<li>代码段：编译之后的代码</li>
+</ol>
+<h3  class="heading" id="heading-40" data-id="heading-40">32. static和const有什么区别？<span id="user-content-32"></span></h3>
+<p>const是指声明一个常量
+static修饰全局变量时，表示此全局变量只在当前文件可见
+static修饰局部变量时，表示每次调用的初始值为上一次调用的值，调用结束后存储空间不释放</p>
+<h3  class="heading" id="heading-41" data-id="heading-41">33. 了解内联函数么？<span id="user-content-33"></span></h3>
+<p>内联函数是为了减少函数调用的开销，编译器在编译阶段把函数体内的代码复制到函数调用处</p>
+<h3  class="heading" id="heading-42" data-id="heading-42">34. 什么时候会出现死锁？如何避免？<span id="user-content-34"></span></h3>
+<p>死锁是指两个或两个以上的线程在执行过程中，由于竞争资源或者由于彼此通信而造成的一种阻塞的现象，若无外力作用，它们都将无法推进下去。
+发生死锁的四个必要条件：</p>
+<ol>
+<li>互斥条件：一个资源每次只能被一个线程使用。</li>
+<li>请求与保持条件：一个线程因请求资源而阻塞时，对已获得的资源保持不放。</li>
+<li>不剥夺条件：线程已获得的资源，在未使用完之前，不能强行剥夺。</li>
+<li>循环等待条件：若干线程之间形成一种头尾相接的循环等待资源关系。</li>
+</ol>
+<p>只要上面四个条件有一个条件不被满足就能避免死锁</p>
+<h3  class="heading" id="heading-43" data-id="heading-43">35. 说一说你对线程安全的理解？<span id="user-content-35"></span></h3>
+<p>在并发执行的环境中，对于共享数据通过同步机制保证各个线程都可以正确的执行，不会出现数据污染的情况，或者对于某个资源，在被多个线程访问时，不管运行时执行这些线程有什么样的顺序或者交错，不会出现错误的行为，就认为这个资源是线程安全的，一般来说，对于某个资源如果只有读操作，则这个资源无需同步就是线程安全的，若有多个线程进行读写操作，则需要线程同步来保证线程安全。</p>
+<h3  class="heading" id="heading-44" data-id="heading-44">36. 列举你知道的线程同步策略？<span id="user-content-36"></span></h3>
+<ol>
+<li>OSSpinLock 自旋锁，已不再安全，除了这个锁之外，下面写的锁，在等待时，都会进入线程休眠状态，而非忙等</li>
+<li>os_unfair_lock atomic就是使用此锁来保证原子性的</li>
+<li>pthread_mutex_t 互斥锁，并且支持递归实现和条件实现</li>
+<li>NSLock,NSRecursiveLock,基本的互斥锁，NSRecursiveLock支持递归调用，都是对pthread_mutex_t的封装</li>
+<li>NSCondition,NSConditionLock，条件锁，也都是对pthread_mutex_t的封装</li>
+<li>dispatch_semaphore_t 信号量</li>
+<li>@synchronized 也是pthread_mutex_t的封装</li>
+</ol>
+<h3  class="heading" id="heading-45" data-id="heading-45">37. 有哪几种锁？各自的原理？它们之间的区别是什么？最好可以结合使用场景来说<span id="user-content-37"></span></h3>
+<ol>
+<li>自旋锁：自旋锁在无法进行加锁时，会不断的进行尝试，一般用于临界区的执行时间较短的场景，不过iOS的自旋锁OSSpinLock不再安全，主要原因发生在低优先级线程拿到锁时，高优先级线程进入忙等(busy-wait)状态，消耗大量 CPU 时间，从而导致低优先级线程拿不到 CPU 时间，也就无法完成任务并释放锁。这种问题被称为优先级反转。</li>
+<li>互斥锁：对于某一资源同时只允许有一个访问，无论读写，平常使用的NSLock就属于互斥锁</li>
+<li>读写锁：对于某一资源同时只允许有一个写访问或者多个读访问，iOS中pthread_rwlock就是读写锁</li>
+<li>条件锁：在满足某个条件的时候进行加锁或者解锁，iOS中可使用NSConditionLock来实现</li>
+<li>递归锁：可以被一个线程多次获得，而不会引起死锁。它记录了成功获得锁的次数，每一次成功的获得锁，必须有一个配套的释放锁和其对应，这样才不会引起死锁。只有当所有的锁被释放之后，其他线程才可以获得锁，iOS可使用NSRecursiveLock来实现</li>
+</ol>
+<h3  class="heading" id="heading-46" data-id="heading-46">38. 链表和数组的区别是什么？插入和查询的时间复杂度分别是多少？<span id="user-content-38"></span></h3>
+<p>链表和数组都是一个有序的集合，数组需要连续的内存空间，而链表不需要，链表的插入删除的时间复杂度是O(1)，数组是O(n)，根据下标查询的时间复杂度数组是O(1)，链表是O(n),根据值查询的时间复杂度，链表和数组都是O(n)</p>
+<h3  class="heading" id="heading-47" data-id="heading-47">39. 哈希表是如何实现的？如何解决地址冲突？<span id="user-content-39"></span></h3>
+<p>哈希表是也是通过数组来实现的，首先对key值进行哈希化得到一个整数，然后对整数进行计算，得到一个数组中的下标，然后进行存取，解决地址冲突常用方法有开放定址法和链表法。runtime源码的存放weak指针哈希表使用的就是开放定址法，Java里的HashMap使用的是链表法。</p>
+<h3  class="heading" id="heading-48" data-id="heading-48">40. 排序题：冒泡排序，选择排序，插入排序，快速排序（二路，三路）能写出那些？<span id="user-content-40"></span></h3>
+<p>这里简单的说下几种快速排序的不同之处，随机快排，是为了解决在近似有序的情况下，时间复杂度会退化为O(n^2),双路快排是为了解决快速排序在大量数据重复的情况下，时间复杂度会退化为O(n^2)，三路快排是在大量数据重复的情况下，对双路快排的一种优化。</p>
+<ol>
+<li>冒泡排序</li>
+</ol>
+<pre><code class="hljs bash" lang="bash">extension Array <span class="hljs-built_in">where</span> Element : Comparable{
+    public mutating func <span class="hljs-function"><span class="hljs-title">bubbleSort</span></span>() {
+        <span class="hljs-built_in">let</span> count = self.count
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> 0..&#x3C;count {
+            <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> 0..&#x3C;(count - 1 - i) {
+                <span class="hljs-keyword">if</span> self[j] > self[j + 1] {
+                    (self[j], self[j + 1]) = (self[j + 1], self[j])
+                }
+            }
+        }
+    }
+}
+</code></pre><ol start="2">
+<li>选择排序</li>
+</ol>
+<pre><code class="hljs bash" lang="bash">extension Array <span class="hljs-built_in">where</span> Element : Comparable{
+    public mutating func <span class="hljs-function"><span class="hljs-title">selectionSort</span></span>() {
+        <span class="hljs-built_in">let</span> count = self.count
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> 0..&#x3C;count {
+            var minIndex = i
+            <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> (i+1)..&#x3C;count {
+                <span class="hljs-keyword">if</span> self[j] &#x3C; self[minIndex] {
+                    minIndex = j
+                }
+            }
+            (self[i], self[minIndex]) = (self[minIndex], self[i])
+        }
+    }
+}
+</code></pre><ol start="3">
+<li>插入排序</li>
+</ol>
+<pre><code class="hljs bash" lang="bash">extension Array <span class="hljs-built_in">where</span> Element : Comparable{
+    public mutating func <span class="hljs-function"><span class="hljs-title">insertionSort</span></span>() {
+        <span class="hljs-built_in">let</span> count = self.count
+        guard count > 1 <span class="hljs-keyword">else</span> { <span class="hljs-built_in">return</span> }
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> 1..&#x3C;count {
+            var preIndex = i - 1
+            <span class="hljs-built_in">let</span> currentValue = self[i]
+            <span class="hljs-keyword">while</span> preIndex >= 0 &#x26;&#x26; currentValue &#x3C; self[preIndex] {
+                self[preIndex + 1] = self[preIndex]
+                preIndex -= 1
+            }
+            self[preIndex + 1] = currentValue
+        }
+    }
+}
+</code></pre><ol start="4">
+<li>快速排序</li>
+</ol>
+<pre><code class="hljs bash" lang="bash">extension Array <span class="hljs-built_in">where</span> Element : Comparable{
+    public mutating func <span class="hljs-function"><span class="hljs-title">quickSort</span></span>() {
+        func quickSort(left:Int, right:Int) {
+            guard left &#x3C; right <span class="hljs-keyword">else</span> { <span class="hljs-built_in">return</span> }
+            var i = left + 1,j = left
+            <span class="hljs-built_in">let</span> key = self[left]
+            <span class="hljs-keyword">while</span> i &#x3C;= right {
+                <span class="hljs-keyword">if</span> self[i] &#x3C; key {
+                    j += 1
+                    (self[i], self[j]) = (self[j], self[i])
+                }
+                i += 1
+            }
+            (self[left], self[j]) = (self[j], self[left])
+            quickSort(left: j + 1, right: right)
+            quickSort(left: left, right: j - 1)
+        }
+        quickSort(left: 0, right: self.count - 1)
+    }
+}
+</code></pre><ol start="5">
+<li>随机快排</li>
+</ol>
+<pre><code class="hljs bash" lang="bash">extension Array <span class="hljs-built_in">where</span> Element : Comparable{
+    public mutating func <span class="hljs-function"><span class="hljs-title">quickSort1</span></span>() {
+        func quickSort(left:Int, right:Int) {
+            guard left &#x3C; right <span class="hljs-keyword">else</span> { <span class="hljs-built_in">return</span> }
+            <span class="hljs-built_in">let</span> randomIndex = Int.random(<span class="hljs-keyword">in</span>: left...right)
+            (self[left], self[randomIndex]) = (self[randomIndex], self[left])
+            var i = left + 1,j = left
+            <span class="hljs-built_in">let</span> key = self[left]
+            <span class="hljs-keyword">while</span> i &#x3C;= right {
+                <span class="hljs-keyword">if</span> self[i] &#x3C; key {
+                    j += 1
+                    (self[i], self[j]) = (self[j], self[i])
+                }
+                i += 1
+            }
+            (self[left], self[j]) = (self[j], self[left])
+            quickSort(left: j + 1, right: right)
+            quickSort(left: left, right: j - 1)
+        }
+        quickSort(left: 0, right: self.count - 1)
+    }
+}
+</code></pre><ol start="6">
+<li>双路快排</li>
+</ol>
+<pre><code class="hljs bash" lang="bash">extension Array <span class="hljs-built_in">where</span> Element : Comparable{
+    public mutating func <span class="hljs-function"><span class="hljs-title">quickSort2</span></span>() {
+        func quickSort(left:Int, right:Int) {
+            guard left &#x3C; right <span class="hljs-keyword">else</span> { <span class="hljs-built_in">return</span> }
+            <span class="hljs-built_in">let</span> randomIndex = Int.random(<span class="hljs-keyword">in</span>: left...right)
+            (self[left], self[randomIndex]) = (self[randomIndex], self[left])
+            var l = left + 1, r = right
+            <span class="hljs-built_in">let</span> key = self[left]
+            <span class="hljs-keyword">while</span> <span class="hljs-literal">true</span> {
+                <span class="hljs-keyword">while</span> l &#x3C;= r &#x26;&#x26; self[l] &#x3C; key {
+                    l += 1
+                }
+                <span class="hljs-keyword">while</span> l &#x3C; r &#x26;&#x26; key &#x3C; self[r]{
+                    r -= 1
+                }
+                <span class="hljs-keyword">if</span> l > r { <span class="hljs-built_in">break</span> }
+                (self[l], self[r]) = (self[r], self[l])
+                l += 1
+                r -= 1
+            }
+            (self[r], self[left]) = (self[left], self[r])
+            quickSort(left: r + 1, right: right)
+            quickSort(left: left, right: r - 1)
+        }
+        quickSort(left: 0, right: self.count - 1)
+    }
+}
+
+</code></pre><ol start="7">
+<li>三路快排</li>
+</ol>
+<pre><code class="hljs bash" lang="bash">// 三路快排
+extension Array <span class="hljs-built_in">where</span> Element : Comparable{
+    public mutating func <span class="hljs-function"><span class="hljs-title">quickSort3</span></span>() {
+        func quickSort(left:Int, right:Int) {
+            guard left &#x3C; right <span class="hljs-keyword">else</span> { <span class="hljs-built_in">return</span> }
+            <span class="hljs-built_in">let</span> randomIndex = Int.random(<span class="hljs-keyword">in</span>: left...right)
+            (self[left], self[randomIndex]) = (self[randomIndex], self[left])
+            var lt = left, gt = right
+            var i = left + 1
+            <span class="hljs-built_in">let</span> key = self[left]
+            <span class="hljs-keyword">while</span> i &#x3C;= gt {
+                <span class="hljs-keyword">if</span> self[i] == key {
+                    i += 1
+                }<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> self[i] &#x3C; key{
+                    (self[i], self[lt + 1]) = (self[lt + 1], self[i])
+                    lt += 1
+                    i += 1
+                }<span class="hljs-keyword">else</span> {
+                    (self[i], self[gt]) = (self[gt], self[i])
+                    gt -= 1
+                }
+                
+            }
+            (self[left], self[lt]) = (self[lt], self[left])
+            quickSort(left: gt + 1, right: right)
+            quickSort(left: left, right: lt - 1)
+        }
+        quickSort(left: 0, right: self.count - 1)
+    }
+}
+</code></pre><h3  class="heading" id="heading-49" data-id="heading-49">41. 链表题：如何检测链表中是否有环？如何删除链表中等于某个值的所有节点？<span id="user-content-41"></span></h3>
+<ol>
+<li>如何检测链表中是否有环？</li>
+</ol>
+<pre><code class="hljs bash" lang="bash">public class ListNode {
+    public var val: Int
+    public var next: ListNode?
+    public init(_ val: Int) {
+        self.val = val
+        self.next = nil
+    }
+}
+
+extension ListNode {
+    var hasCycle: Bool {
+        var slow:ListNode? = self
+        var fast = self.next
+        <span class="hljs-keyword">while</span> fast != nil {
+            <span class="hljs-keyword">if</span> slow! === fast! {
+                <span class="hljs-built_in">return</span> <span class="hljs-literal">true</span>
+            }
+            slow = slow?.next
+            fast = fast?.next?.next
+        }
+        <span class="hljs-built_in">return</span> <span class="hljs-literal">false</span>
+    }
+}
+</code></pre><ol start="2">
+<li>如何删除链表中等于某个值的所有节点？</li>
+</ol>
+<pre><code class="hljs bash" lang="bash">func remove(with value:Int, from listNode:ListNode?) -> ListNode? {
+    <span class="hljs-built_in">let</span> tmpNode = ListNode(0)
+    tmpNode.next = listNode
+    var currentNode = tmpNode.next
+    var persiousNode:ListNode? = tmpNode
+    <span class="hljs-keyword">while</span> currentNode != nil {
+        <span class="hljs-keyword">if</span> <span class="hljs-built_in">let</span> nodeValue = currentNode?.val, nodeValue == value {
+            persiousNode?.next = currentNode?.next
+        }<span class="hljs-keyword">else</span> {
+            persiousNode = currentNode
+        }
+        currentNode = currentNode?.next
+    }
+    <span class="hljs-built_in">return</span> tmpNode.next
+}
+</code></pre><h3  class="heading" id="heading-50" data-id="heading-50">42. 数组题：如何在有序数组中找出和等于给定值的两个元素？如何合并两个有序的数组之后保持有序？<span id="user-content-42"></span></h3>
+<ol>
+<li>如何在有序数组中找出和等于给定值的两个元素？LeetCode第167题</li>
+</ol>
+<pre><code class="hljs bash" lang="bash">func twoSum(_ numbers: [Int], _ target: Int) -> [Int] {
+    var i = 0, j = numbers.count - 1
+    <span class="hljs-keyword">while</span> i &#x3C; j {
+        <span class="hljs-built_in">let</span> sum = numbers[i] + numbers[j]
+        <span class="hljs-keyword">if</span> sum == target {
+            <span class="hljs-built_in">return</span> [i + 1, j + 1]
+        }<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> sum > target {
+            j -= 1
+        }<span class="hljs-keyword">else</span> {
+            i += 1
+        }
+    }
+    <span class="hljs-built_in">return</span> []
+}
+</code></pre><ol start="2">
+<li>如何合并两个有序的数组之后保持有？LeetCode第88题</li>
+</ol>
+<pre><code class="hljs bash" lang="bash">func merge(_ nums1: inout [Int], _ m: Int, _ nums2: [Int], _ n: Int) {
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> stride(from: n + m - 1, to: n - 1, by: -1) {
+        nums1[i] = nums1[i - n]
+    }
+    var i = 0, j = 0
+    <span class="hljs-keyword">while</span> i &#x3C; m &#x26;&#x26; j &#x3C; n {
+        <span class="hljs-keyword">if</span> nums1[n + i] > nums2[j] {
+            nums1[i + j] = nums2[j]
+            j += 1
+        }<span class="hljs-keyword">else</span> {
+            nums1[i + j] = nums1[n + i]
+            i += 1
+        }
+    }
+    <span class="hljs-keyword">while</span> i &#x3C; m {
+        nums1[i + j] = nums1[n + i]
+        i += 1
+    }
+    <span class="hljs-keyword">while</span> j &#x3C; n {
+        nums1[i + j] = nums2[j]
+        j += 1
+    }
+}
+</code></pre><h3  class="heading" id="heading-51" data-id="heading-51">43. 二叉树题：如何反转二叉树？如何验证两个二叉树是完全相等的？<span id="user-content-43"></span></h3>
+<ol>
+<li>如何翻转二叉树？LeetCode第226题</li>
+</ol>
+<pre><code class="hljs bash" lang="bash">func invertTree(_ root: TreeNode?) -> TreeNode? {
+    guard <span class="hljs-built_in">let</span> root = root <span class="hljs-keyword">else</span> { <span class="hljs-built_in">return</span> nil }
+    (root.left, root.right) = (root.right, root.left)
+    invertTree(root.left)
+    invertTree(root.right)
+    <span class="hljs-built_in">return</span> root
+}
+</code></pre><ol start="2">
+<li>如何验证两个二叉树是完全相等的？</li>
+</ol>
+<pre><code class="hljs bash" lang="bash">func isSameTree(_ p: TreeNode?, _ q: TreeNode?) -> Bool {
+    guard <span class="hljs-built_in">let</span> pNode = p ,<span class="hljs-built_in">let</span> qNode = q <span class="hljs-keyword">else</span> { <span class="hljs-built_in">return</span> q == nil &#x26;&#x26; p == nil }
+    <span class="hljs-built_in">return</span> pNode.val == qNode.val &#x26;&#x26; isSameTree(pNode.left, qNode.left) &#x26;&#x26; isSameTree(pNode.right, qNode.right)
+}
+</code></pre><h3  class="heading" id="heading-52" data-id="heading-52">参考</h3>
+<p><a target="_blank" href="https://juejin.cn/post/6844903492230840327" title="https://juejin.cn/post/6844903492230840327">iOS 模块详解—「Runloop 面试、工作」看我就 🐒 了 ^_^.</a></p>
+<p><a target="_blank" href="https://link.juejin.cn?target=https%3A%2F%2Fblog.ibireme.com%2F2015%2F05%2F18%2Frunloop%2F" title="https://blog.ibireme.com/2015/05/18/runloop/" ref="nofollow noopener noreferrer">深入理解RunLoop</a></p>
+<p><a target="_blank" href="https://link.juejin.cn?target=https%3A%2F%2Fwww.jianshu.com%2Fp%2Fca51c9d3575b" title="https://www.jianshu.com/p/ca51c9d3575b" ref="nofollow noopener noreferrer">离屏渲染优化详解：实例示范+性能测试</a></p>
+<p><a target="_blank" href="https://juejin.cn/post/6844903811786473479#heading-12" title="https://juejin.cn/post/6844903811786473479#heading-12">史上最强无痕埋点</a></p>
+<p><a target="_blank" href="https://juejin.cn/post/6844903809068564493#heading-3" title="https://juejin.cn/post/6844903809068564493#heading-3">扯一扯HTTPS单向认证、双向认证、抓包原理、反抓包策略</a></p>
+<p><a target="_blank" href="https://link.juejin.cn?target=https%3A%2F%2Fbestswifter.com%2Fios-lock%2F" title="https://bestswifter.com/ios-lock/" ref="nofollow noopener noreferrer">深入理解 iOS 开发中的锁</a></p>
+<p><a target="_blank" href="https://link.juejin.cn?target=https%3A%2F%2Fwww.zhihu.com%2Fquestion%2F66733477" title="https://www.zhihu.com/question/66733477" ref="nofollow noopener noreferrer">如何理解互斥锁、条件锁、读写锁以及自旋锁？</a></p>
+</div></div></article> <div class="article-end" data-v-539963b4 data-v-61fb5e44><div class="rank-entry-bottom" data-v-539963b4 data-v-61fb5e44><!----></div> <div class="tag-list-box" data-v-539963b4 data-v-61fb5e44><!----><!----><!----></div></div> <!----><!----><!----><!----><!----></div> <div id="sidebar-container" class="sidebar article-sidebar" data-v-4ed317c2 data-v-61fb5e44><div class="sidebar-block author-block author-block-container pure" data-v-7e7e812a data-v-1902877e data-v-4ed317c2><a href="https://juejin.cn/user/571401774831662/posts" target="_blank" rel="" class="jj-link user-item item" data-v-65b50b51 data-v-1902877e><div class="avatar jj-avatar avatar" data-v-03256cc6 data-v-1902877e><img loading="eager" src="assets/advanced/images/author-avatar.png" alt="avatar" class="lazy avatar-img immediate" data-v-5244ef91 data-v-03256cc6> </div> <div class="info-box" style="visibility:hidden;" data-v-65b50b51 data-v-1902877e><span to="[object Object]" blank="true" class="username" data-v-292f6e48 data-v-1902877e><span class="name" style="max-width:128px;" data-v-292f6e48>
+    李坤
+  </span> <span to="" blank="true" class="rank" data-v-23743940 data-v-292f6e48><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8AQMAAAAAMksxAAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAAA5JREFUKM9jGAWjAAcAAAIcAAE27nY6AAAAAElFTkSuQmCC" alt="创作等级LV.4" title="创作等级LV.4" class="lazy" style="aspect-ratio:NaN;" data-v-5244ef91 data-v-23743940></span> <!----> <!----> </span> <div title="iOS" class="position" data-v-65b50b51 data-v-1902877e>
+        iOS
+      </div> <div class="extra-container" data-v-65b50b51 data-v-1902877e><!----> </div></div></a> <div class="count-container" data-v-7e7e812a data-v-1902877e><a href="https://juejin.cn/user/571401774831662/posts" target="_blank" rel="" class="jj-link stat-item item" data-v-65b50b51 data-v-1902877e><div class="count" style="display:none;" data-v-65b50b51 data-v-1902877e>
+        34
+      </div> <div data-v-65b50b51 data-v-1902877e>文章</div></a> <a href="https://juejin.cn/user/571401774831662/posts" target="_blank" rel="" class="jj-link stat-item item" data-v-65b50b51 data-v-1902877e><div class="count" style="display:none;" data-v-65b50b51 data-v-1902877e>
+        101k
+      </div> <div data-v-65b50b51 data-v-1902877e>阅读</div></a> <a href="https://juejin.cn/user/571401774831662/followers" target="_blank" rel="" class="jj-link stat-item item" data-v-65b50b51 data-v-1902877e><div class="count" style="display:none;" data-v-65b50b51 data-v-1902877e>
+        226
+      </div> <div data-v-65b50b51 data-v-1902877e>粉丝</div></a></div> <div class="operate-btn hidden" style="position:relative;z-index:2;min-height:36px;" data-v-7e7e812a data-v-1902877e><!----><!----><!----></div> <!----></div> <div class="sticky-block-box" data-v-4ed317c2><nav class="article-catalog catalog-block" data-v-6239701c data-v-16ed86c3 data-v-4ed317c2><div class="catalog-title" data-v-6239701c><div data-v-6239701c>目录</div> <div class="direction" data-v-6239701c><div class="word" data-v-6239701c>收起</div> <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-rotate" data-v-6239701c data-v-6239701c><g id="&amp;#229;&amp;#177;&amp;#149;&amp;#229;&amp;#188;&amp;#128;" data-v-6239701c data-v-6239701c><path id="&amp;#232;&amp;#183;&amp;#175;&amp;#229;&amp;#190;&amp;#132;" fill-rule="evenodd" clip-rule="evenodd" d="M5.99854 7.93206L10.0644 3.86619C10.162 3.76856 10.3203 3.76856 10.418 3.86619L10.7715 4.21975C10.8691 4.31738 10.8691 4.47567 10.7715 4.5733L6.35209 8.99272C6.15683 9.18798 5.84025 9.18798 5.64498 8.99272L1.22557 4.5733C1.12794 4.47567 1.12794 4.31738 1.22557 4.21975L1.57912 3.86619C1.67675 3.76856 1.83504 3.76856 1.93267 3.86619L5.99854 7.93206Z" fill="#8A919F" data-v-6239701c data-v-6239701c></path></g></svg></div></div> <div class="catalog-body unfold" data-v-6239701c><ul class="catalog-list" style="margin-top:0px;" data-v-6239701c><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-0" title="目录" class="catalog-aTag d1-aTag-title">
+      目录
+    </a></div> <ul class="sub-list"><li class="item d2"><div class="a-container"><a href="#heading-1" title="iOS 基础题" class="catalog-aTag d2-aTag-title">
+      iOS 基础题
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-2" title="iOS实战题" class="catalog-aTag d2-aTag-title">
+      iOS实战题
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-3" title="网络题" class="catalog-aTag d2-aTag-title">
+      网络题
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-4" title="计算机系统题" class="catalog-aTag d2-aTag-title">
+      计算机系统题
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-5" title="设计模式题和架构 &amp; 设计题（由于水平有限，就不误人子弟了）" class="catalog-aTag d2-aTag-title">
+      设计模式题和架构 &amp; 设计题（由于水平有限，就不误人子弟了）
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-6" title="数据结构&amp;算法题" class="catalog-aTag d2-aTag-title">
+      数据结构&amp;算法题
+    </a></div> <!----></li></ul></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-7" title="1.分类和扩展有什么区别？可以分别用来做什么？分类有哪些局限性？分类的结构体里面有哪些成员？" class="catalog-aTag d1-aTag-title">
+      1.分类和扩展有什么区别？可以分别用来做什么？分类有哪些局限性？分类的结构体里面有哪些成员？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-8" title="2.讲一下atomic的实现机制；为什么不能保证绝对的线程安全（最好可以结合场景来说）？" class="catalog-aTag d1-aTag-title">
+      2.讲一下atomic的实现机制；为什么不能保证绝对的线程安全（最好可以结合场景来说）？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-9" title="3. 被weak修饰的对象在被释放的时候会发生什么？是如何实现的？知道sideTable么？里面的结构可以画出来么？" class="catalog-aTag d1-aTag-title">
+      3. 被weak修饰的对象在被释放的时候会发生什么？是如何实现的？知道sideTable么？里面的结构可以画出来么？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-10" title="4. 关联对象有什么应用，系统如何管理关联对象？其被释放的时候需要手动将所有的关联对象的指针置空么？" class="catalog-aTag d1-aTag-title">
+      4. 关联对象有什么应用，系统如何管理关联对象？其被释放的时候需要手动将所有的关联对象的指针置空么？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-11" title="5. KVO的底层实现？如何取消系统默认的KVO并手动触发（给KVO的触发设定条件：改变的值符合某个条件时再触发KVO）？" class="catalog-aTag d1-aTag-title">
+      5. KVO的底层实现？如何取消系统默认的KVO并手动触发（给KVO的触发设定条件：改变的值符合某个条件时再触发KVO）？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-12" title="6. Autoreleasepool所使用的数据结构是什么？AutoreleasePoolPage结构体了解么？" class="catalog-aTag d1-aTag-title">
+      6. Autoreleasepool所使用的数据结构是什么？AutoreleasePoolPage结构体了解么？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-13" title="7. 讲一下对象，类对象，元类，跟元类结构体的组成以及他们是如何相关联的？为什么对象方法没有保存的对象结构体里，而是保存在类对象的结构体里？" class="catalog-aTag d1-aTag-title">
+      7. 讲一下对象，类对象，元类，跟元类结构体的组成以及他们是如何相关联的？为什么对象方法没有保存的对象结构体里，而是保存在类对象的结构体里？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-14" title="8. class_ro_t和class_rw_t的区别？" class="catalog-aTag d1-aTag-title">
+      8. class_ro_t和class_rw_t的区别？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-15" title="9. iOS中内省的几个方法？class方法和objc_getClass方法有什么区别?" class="catalog-aTag d1-aTag-title">
+      9. iOS中内省的几个方法？class方法和objc_getClass方法有什么区别?
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-16" title="10. 在运行时创建类的方法objc_allocateClassPair的方法名尾部为什么是pair（成对的意思）？" class="catalog-aTag d1-aTag-title">
+      10. 在运行时创建类的方法objc_allocateClassPair的方法名尾部为什么是pair（成对的意思）？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-17" title="11. 一个int变量被__block修饰与否的区别？" class="catalog-aTag d1-aTag-title">
+      11. 一个int变量被__block修饰与否的区别？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-18" title="12. 为什么在block外部使用__weak修饰的同时需要在内部使用__strong修饰？" class="catalog-aTag d1-aTag-title">
+      12. 为什么在block外部使用__weak修饰的同时需要在内部使用__strong修饰？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-19" title="13. RunLoop的作用是什么？它的内部工作机制了解么？（最好结合线程和内存管理来说）" class="catalog-aTag d1-aTag-title">
+      13. RunLoop的作用是什么？它的内部工作机制了解么？（最好结合线程和内存管理来说）
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-20" title="14. 哪些场景可以触发离屏渲染？（知道多少说多少）" class="catalog-aTag d1-aTag-title">
+      14. 哪些场景可以触发离屏渲染？（知道多少说多少）
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-21" title="15.AppDelegate如何瘦身？" class="catalog-aTag d1-aTag-title">
+      15.AppDelegate如何瘦身？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-22" title="16. 反射是什么？可以举出几个应用场景么？（知道多少说多少）" class="catalog-aTag d1-aTag-title">
+      16. 反射是什么？可以举出几个应用场景么？（知道多少说多少）
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-23" title="17. 有哪些场景是NSOperation比GCD更容易实现的？（或是NSOperation优于GCD的几点，知道多少说多少）" class="catalog-aTag d1-aTag-title">
+      17. 有哪些场景是NSOperation比GCD更容易实现的？（或是NSOperation优于GCD的几点，知道多少说多少）
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-24" title="18. App启动优化策略？最好结合启动流程来说（main()函数的执行前后都分别说一下，知道多少说多少）" class="catalog-aTag d1-aTag-title">
+      18. App启动优化策略？最好结合启动流程来说（main()函数的执行前后都分别说一下，知道多少说多少）
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-25" title="19. App无痕埋点的思路了解么？你认为理想的无痕埋点系统应该具备哪些特点？（知道多少说多少））" class="catalog-aTag d1-aTag-title">
+      19. App无痕埋点的思路了解么？你认为理想的无痕埋点系统应该具备哪些特点？（知道多少说多少））
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-26" title="20. 你知道有哪些情况会导致app崩溃，分别可以用什么方法拦截并化解？（知道多少说多少））" class="catalog-aTag d1-aTag-title">
+      20. 你知道有哪些情况会导致app崩溃，分别可以用什么方法拦截并化解？（知道多少说多少））
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-27" title="21. 你知道有哪些情况会导致app卡顿，分别可以用什么方法来避免？（知道多少说多少））" class="catalog-aTag d1-aTag-title">
+      21. 你知道有哪些情况会导致app卡顿，分别可以用什么方法来避免？（知道多少说多少））
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-28" title="22. App网络层有哪些优化策略？" class="catalog-aTag d1-aTag-title">
+      22. App网络层有哪些优化策略？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-29" title="23. TCP为什么要三次握手，四次挥手？" class="catalog-aTag d1-aTag-title">
+      23. TCP为什么要三次握手，四次挥手？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-30" title="24. 对称加密和非对称加密的区别？分别有哪些算法的实现？" class="catalog-aTag d1-aTag-title">
+      24. 对称加密和非对称加密的区别？分别有哪些算法的实现？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-31" title="25. HTTPS的握手流程？为什么密钥的传递需要使用非对称加密？双向认证了解么？" class="catalog-aTag d1-aTag-title">
+      25. HTTPS的握手流程？为什么密钥的传递需要使用非对称加密？双向认证了解么？
+    </a></div> <ul class="sub-list"><li class="item d2"><div class="a-container"><a href="#heading-32" title="为什么密钥的传递需要使用非对称加密？" class="catalog-aTag d2-aTag-title">
+      为什么密钥的传递需要使用非对称加密？
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-33" title="双向认证了解么？（这里我真想说一句不了解）" class="catalog-aTag d2-aTag-title">
+      双向认证了解么？（这里我真想说一句不了解）
+    </a></div> <!----></li></ul></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-34" title="26. HTTPS是如何实现验证身份和验证完整性的？" class="catalog-aTag d1-aTag-title">
+      26. HTTPS是如何实现验证身份和验证完整性的？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-35" title="27. 如何用Charles抓HTTPS的包？其中原理和流程是什么？" class="catalog-aTag d1-aTag-title">
+      27. 如何用Charles抓HTTPS的包？其中原理和流程是什么？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-36" title="28. 什么是中间人攻击？如何避免？" class="catalog-aTag d1-aTag-title">
+      28. 什么是中间人攻击？如何避免？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-37" title="29. 了解编译的过程么？分为哪几个步骤？" class="catalog-aTag d1-aTag-title">
+      29. 了解编译的过程么？分为哪几个步骤？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-38" title="30. 静态链接了解么？静态库和动态库的区别？" class="catalog-aTag d1-aTag-title">
+      30. 静态链接了解么？静态库和动态库的区别？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-39" title="31. 内存的几大区域，各自的职能分别是什么？" class="catalog-aTag d1-aTag-title">
+      31. 内存的几大区域，各自的职能分别是什么？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-40" title="32. static和const有什么区别？" class="catalog-aTag d1-aTag-title">
+      32. static和const有什么区别？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-41" title="33. 了解内联函数么？" class="catalog-aTag d1-aTag-title">
+      33. 了解内联函数么？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-42" title="34. 什么时候会出现死锁？如何避免？" class="catalog-aTag d1-aTag-title">
+      34. 什么时候会出现死锁？如何避免？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-43" title="35. 说一说你对线程安全的理解？" class="catalog-aTag d1-aTag-title">
+      35. 说一说你对线程安全的理解？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-44" title="36. 列举你知道的线程同步策略？" class="catalog-aTag d1-aTag-title">
+      36. 列举你知道的线程同步策略？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-45" title="37. 有哪几种锁？各自的原理？它们之间的区别是什么？最好可以结合使用场景来说" class="catalog-aTag d1-aTag-title">
+      37. 有哪几种锁？各自的原理？它们之间的区别是什么？最好可以结合使用场景来说
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-46" title="38. 链表和数组的区别是什么？插入和查询的时间复杂度分别是多少？" class="catalog-aTag d1-aTag-title">
+      38. 链表和数组的区别是什么？插入和查询的时间复杂度分别是多少？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-47" title="39. 哈希表是如何实现的？如何解决地址冲突？" class="catalog-aTag d1-aTag-title">
+      39. 哈希表是如何实现的？如何解决地址冲突？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-48" title="40. 排序题：冒泡排序，选择排序，插入排序，快速排序（二路，三路）能写出那些？" class="catalog-aTag d1-aTag-title">
+      40. 排序题：冒泡排序，选择排序，插入排序，快速排序（二路，三路）能写出那些？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-49" title="41. 链表题：如何检测链表中是否有环？如何删除链表中等于某个值的所有节点？" class="catalog-aTag d1-aTag-title">
+      41. 链表题：如何检测链表中是否有环？如何删除链表中等于某个值的所有节点？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-50" title="42. 数组题：如何在有序数组中找出和等于给定值的两个元素？如何合并两个有序的数组之后保持有序？" class="catalog-aTag d1-aTag-title">
+      42. 数组题：如何在有序数组中找出和等于给定值的两个元素？如何合并两个有序的数组之后保持有序？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-51" title="43. 二叉树题：如何反转二叉树？如何验证两个二叉树是完全相等的？" class="catalog-aTag d1-aTag-title">
+      43. 二叉树题：如何反转二叉树？如何验证两个二叉树是完全相等的？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-52" title="参考" class="catalog-aTag d1-aTag-title">
+      参考
+    </a></div> <!----></li></ul></div></nav> <!----> <!----> <div class="adverts-list" data-v-0eca8145 data-v-4ed317c2></div> <!----> <!----></div> <!----></div> <!----> <!----> <div id="article-suspended-panel" data-v-539963b4 data-v-61fb5e44></div> <!----></div> <!----><!----><!----><!----><!----><!----><!----></main> <!----></div> <!----></div> <!----> <div class="global-component-box"><!----></div> <!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----> <!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----></div></div></div>
+  <style>
+/* 本地静态导出目录增强 */
+#article-root .heading{scroll-margin-top:96px}
+.sidebar .article-catalog{display:block!important}
+.sidebar .catalog-body{max-height:calc(100vh - 180px)!important}
+.sidebar .catalog-body .catalog-aTag{cursor:pointer}
+</style>
+<script>
+(function () {
+  var nav = document.querySelector('.sidebar .article-catalog');
+  if (!nav) return;
+  nav.classList.remove('none');
+  var body = nav.querySelector('.catalog-body');
+  var direction = nav.querySelector('.catalog-title .direction');
+  if (body && direction) {
+    direction.addEventListener('click', function () {
+      body.classList.toggle('unfold');
+      direction.querySelector('.word').textContent = body.classList.contains('unfold') ? '收起' : '展开';
+    });
+  }
+  nav.addEventListener('click', function (event) {
+    var link = event.target.closest('.catalog-aTag[href^="#"]');
+    if (!link) return;
+    event.preventDefault();
+    var target = document.getElementById(decodeURIComponent(link.getAttribute('href').slice(1)));
+    if (!target) return;
+    window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - 96, behavior: 'auto' });
+    history.replaceState(null, '', link.getAttribute('href'));
+  });
+  var links = Array.prototype.slice.call(nav.querySelectorAll('.catalog-aTag[href^="#"]'));
+  var targets = links.map(function (link) {
+    return document.getElementById(decodeURIComponent(link.getAttribute('href').slice(1)));
+  });
+  var current = null;
+  function sync() {
+    var next = targets.length ? targets[0] : null;
+    var offset = window.scrollY + 1;
+    for (var i = 0; i < targets.length; i++) {
+      if (targets[i] && targets[i].offsetTop <= offset) next = targets[i];
+    }
+    if (next === current) return;
+    current = next;
+    links.forEach(function (link, i) {
+      var item = link.closest('.item');
+      if (item) item.classList.toggle('active', targets[i] === current);
+    });
+    var active = nav.querySelector('.item.active');
+    if (active && body) {
+      var top = active.offsetTop - body.clientHeight / 2 + active.offsetHeight / 2;
+      body.scrollTop = Math.max(0, top);
+    }
+  }
+  window.addEventListener('scroll', sync, { passive: true });
+  window.addEventListener('resize', sync);
+  sync();
+})();
+</script>
+
+</body>
+</html>
