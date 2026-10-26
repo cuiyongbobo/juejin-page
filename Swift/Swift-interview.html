@@ -109,9 +109,9 @@ html{scroll-behavior:smooth}
 
 <h2 id="heading-3" data-id="heading-3">Swift 中什么是可选类型？</h2>
 <ul>
-<li>Swift中可选类型为了表示 一个变量 允许为 空(nil)的情况</li>
+<li>Swift 的可选类型用于表示一个值可能存在，也可能为 nil</li>
 <li>类型名称后 加 <code>?</code> 定义 可选项</li>
-<li>可<code>选项的本质</code>是 枚举类型 </li>
+<li>可选类型的本质是枚举 <code>Optional&lt;Wrapped&gt;</code> </li>
 </ul>
 <hr>
 
@@ -191,7 +191,7 @@ html{scroll-behavior:smooth}
 <hr>
 
 <h2 id="heading-11" data-id="heading-11">什么是属性观察器？</h2>
-<p>属性观察是指在当前类型内对特性属性进行监测,并作出响应,属性观察是 swift 中的特性,具有2种, <code>willset</code>和 <code>didset</code></p>
+<p>属性观察器用于在当前类型中对特定属性的变化进行响应。Swift 提供 <code>willSet</code> 和 <code>didSet</code> 两种属性观察器。</p>
 <ul>
 <li>
 <p>willSet 传递新值 newValue</p>
@@ -203,10 +203,10 @@ html{scroll-behavior:smooth}
 <p>在初始化器中对属性初始化时，不会触发观察器</p>
 </li>
 <li>
-<p>属性观察器 只能用在 存储属性 ，不可用在 计算属性</p>
+<p>属性观察器不能直接添加在计算属性上；子类可以通过重写继承的计算属性并添加观察器</p>
 </li>
 <li>
-<p>可以 为 <strong>非</strong> <code>lazy</code> （即延迟存储属性）的 <code>var</code> <strong>存储属性</strong> 设置 属性观察器</p>
+<p>可以为 <strong>非 lazy</strong>（即非延迟存储属性）的 <code>var</code> 存储属性设置属性观察器。</p>
 </li>
 </ul>
 
@@ -222,7 +222,7 @@ html{scroll-behavior:smooth}
 <ul>
 <li>
 <ul>
-<li>属性定义时设置初始值也不会出发 属性观察，原因是 </li>
+<li>属性定义时设置初始值也不会触发属性观察器，原因是 </li>
 </ul>
 </li>
 </ul>
@@ -240,10 +240,10 @@ html{scroll-behavior:smooth}
 </ul>
 
 <ul>
-<li><strong>属性观察器 只能用在 存储属性</strong> ，不可用在 计算属性</li>
+<li><strong>属性观察器不能直接添加在计算属性上；子类可以通过重写继承的计算属性并添加观察器</strong></li>
 </ul>
 
-<pre><code class="hljs language-swift" lang="swift"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Cicle</span> {
+<pre><code class="hljs language-swift" lang="swift"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Circle</span> {
     <span class="hljs-comment">/// 存储属性</span>
     <span class="hljs-keyword">var</span> radius :<span class="hljs-type">Double</span> {
         <span class="hljs-keyword">willSet</span> {
@@ -266,7 +266,7 @@ html{scroll-behavior:smooth}
      */</span>
 }
 
-<span class="hljs-keyword">var</span> circle <span class="hljs-operator">=</span> <span class="hljs-type">Cicle</span>.<span class="hljs-keyword">init</span>(radius: <span class="hljs-number">10.0</span>)
+<span class="hljs-keyword">var</span> circle <span class="hljs-operator">=</span> <span class="hljs-type">Circle</span>.<span class="hljs-keyword">init</span>(radius: <span class="hljs-number">10.0</span>)
 
 circle.radius <span class="hljs-operator">=</span> <span class="hljs-number">20.0</span>
 <span class="hljs-comment">/*
@@ -277,9 +277,9 @@ circle.radius <span class="hljs-operator">=</span> <span class="hljs-number">20.
 <span class="hljs-built_in">print</span>(<span class="hljs-string">"result == "</span>,circle.radius)
 <span class="hljs-comment">//result ==  20.0</span>
 </code></pre>
-<p>拓展：<br>
-●属性观察器，计算属性这两个功能，同样可以应用在全局变量/局部变量<br>
-●属性观察器，计算属性 不可以同时 应用在同一个类(不包括继承)的属性中</p>
+<p>扩展：<br>
+●全局变量和局部变量也可以使用计算属性或属性观察器，但要注意作用域和初始化规则<br>
+●同一个属性声明中不能同时使用属性观察器和计算属性；继承场景可以通过重写补充观察器</p>
 
 <h2 id="heading-12" data-id="heading-12">Swift 异常捕获</h2>
 <p>Swift 使用 <code>throws</code>、<code>try</code>、<code>do-catch</code> 处理错误。</p>
@@ -327,12 +327,12 @@ extension SomeProtocol {
 <hr>
 
 <h2 id="heading-16" data-id="heading-16">比较Swift 和OC中的初始化方法 (init) 有什么不同?</h2>
-<p>swift 的初始化方法,因为引入了<a href="https://link.juejin.cn?target=https%3A%2F%2Fwww.yuque.com%2Fjk-coder%2Frhv3ga%2Fwm9ufe" target="_blank" title="https://www.yuque.com/jk-coder/rhv3ga/wm9ufe" ref="nofollow noopener noreferrer"><strong>两段式初始化和安全检查</strong></a>因此更加严格和准确,</p>
-<p>swift初始化方法需要保证所有的非optional的成员变量都完成初始化,</p>
-<p>同时 swfit 新增了convenience和 required两个修饰初始化器的关键字</p>
+<p>Swift 的初始化流程因为引入了<a href="https://link.juejin.cn?target=https%3A%2F%2Fwww.yuque.com%2Fjk-coder%2Frhv3ga%2Fwm9ufe" target="_blank" title="https://www.yuque.com/jk-coder/rhv3ga/wm9ufe" ref="nofollow noopener noreferrer"><strong>两段式初始化和安全检查</strong></a>因此更严格，也更利于编译器做安全检查。</p>
+<p>Swift 初始化器必须保证所有非可选存储属性完成初始化。</p>
+<p>Swift 新增了 convenience 和 required 两个初始化器修饰关键字。</p>
 <ul>
-<li>convenience只提供一种方便的初始化器,必须通过一个指定初始化器来完成初始化</li>
-<li>required是强制子类重写父类中所修饰的初始化方法</li>
+<li>convenience 表示便利初始化器，是辅助初始化路径，最终必须委托到同一类的指定初始化器</li>
+<li>required 表示子类必须最终提供或继承该初始化器，不一定必须重写</li>
 </ul>
 <hr>
 <h2 id="heading-17" data-id="heading-17">Swift 和OC 中的自省 有什么区别?</h2>
@@ -343,7 +343,7 @@ extension SomeProtocol {
 <ul>
 <li>
 <ul>
-<li>自省在OC中就是判断某一对象是否属于某一个类的操作,有以下2中方式</li>
+<li>自省在OC中就是判断某一对象是否属于某一个类的操作,有以下两种方式</li>
 </ul>
 </li>
 </ul>
@@ -353,7 +353,7 @@ extension SomeProtocol {
 <ul>
 <li>
 <ul>
-<li><code>[obj iskinOfClass:[SomeClass class]]</code> : obj 必须是 SomeClass 的 对象或 其子类对象;return YES;</li>
+<li><code>[obj isKindOfClass:[SomeClass class]]</code> : obj 必须是 SomeClass 的 对象或 其子类对象;return YES;</li>
 <li><code>[obj isMemberOfClass:[SomeClass class]]</code> ： obj 必须是 SomeClass 的 对象;return YES;</li>
 </ul>
 </li>
@@ -381,7 +381,7 @@ extension SomeProtocol {
 <ul>
 <li>
 <ul>
-<li>需要创建一个 <code>Target-BriBridging-Header.h</code> (默认在OC项目中，会提示自动创建)的桥文件，在该文件中，导入需要调用的OC代码的头文件即可</li>
+<li>需要创建一个 <code>{targetName}-Bridging-Header.h</code> (默认在OC项目中，会提示自动创建)的桥文件，在该文件中，导入需要调用的OC代码的头文件即可</li>
 </ul>
 </li>
 </ul>
@@ -393,7 +393,7 @@ extension SomeProtocol {
 <ul>
 <li>
 <ul>
-<li>直接导入<code>Target-Swift.h</code>(该文件是Xcode自动创建) Swift如何需要被OC调用，需要使用 <code>@objc</code> 对方法或属性进行修饰</li>
+<li>直接导入<code>{targetName}-Swift.h</code>(该文件是Xcode自动创建) Swift 如果需要被 OC 调用，需要使用 <code>@objc</code> 对方法或属性进行修饰</li>
 </ul>
 </li>
 </ul>
@@ -411,9 +411,9 @@ extension SomeProtocol {
 <p>●使用@objcMembers 修饰类<br>
 ○代表 默认所有的 成员 都会 暴露给 OC(包括扩展中定义的成员)<br>
 ○最终 是否成功 暴露，还需要考虑 成员自身的 访问级别</p>
-<p>拓展<br>
+<p>扩展<br>
 ●为什么Swift 暴露给 OC 的类 要最终 继承 NSObject？<br>
-因为 OC 中的方法调用 是通过 Runtime 机制，需要通过 isa 指针 去完成 一些列消息的发送等， 而 只有继承自 NSObject 的类 才具有 isa 指针，才具备 Runtime 消息 发送的能力<br>
+因为 OC 中的方法调用 是通过 Runtime 机制，需要通过 isa 指针 去完成 一系列消息的发送等， 而 只有继承自 NSObject 的类 才具有 isa 指针，才具备 Runtime 消息 发送的能力<br>
 ●p.run() 底层是如何调用的？ 反过来，OC调用Swift 又是如何调用？<br>
 ○JKPerson 是 OC 的类，以及OC 中定义的初始化 和 run 方法<br>
 ○在Swift中 调用 JKPerson 对象的 run 方法 ，底层是如何调用的？</p>
@@ -421,11 +421,11 @@ extension SomeProtocol {
 <pre><code class="hljs language-less" lang="less"><span class="hljs-selector-tag">var</span> <span class="hljs-selector-tag">p</span> = <span class="hljs-selector-tag">JKPerson</span>(<span class="hljs-attribute">age</span>: <span class="hljs-number">10</span>,<span class="hljs-attribute">name</span>:<span class="hljs-string">"Jack"</span>)
 <span class="hljs-selector-tag">p</span><span class="hljs-selector-class">.run</span>()
 </code></pre>
-<p>答：走 Runtime 运行时机制， 反过来 OC 调用 Swift中的类 跟 问题一 一样，也是通过 Runtime 机制<br>
+<p>答：走 Runtime 运行时机制， 反过来 OC 调用 Swift中的类 跟 上一个问题 一样，也是通过 Runtime 机制<br>
 ●car.run() 底层是如何调用的？</p>
 <p><img src="assets/image-4.awebp"#?w=868&#x26;h=772&#x26;s=247246&#x26;e=png&#x26;b=ffffff" alt="swift" loading="lazy"></p>
 <p>答 : (虽然 Car 类 被暴露给 OC使用)在Swift中 car.run(),底层依然是 通过 类似 C++ 的虚表 机制 来调用的；</p>
-<p>拓展:<br>
+<p>扩展:<br>
 如果想要 Swift中的方法 调用 也使用 Runtime 机制，需要在方法名称前面 加上 dynamic关键字</p>
 <hr>
 
@@ -490,8 +490,8 @@ let stringVal: String = value()</code></pre>
 </code></pre>
 <hr>
 <h3 id="heading-22" data-id="heading-22">闭包是引用类型吗？</h3>
-<p>闭包和函数值在 Swift 中是引用类型。把闭包赋值给另一个变量时，复制的是闭包引用，两个变量指向同一个闭包。</p>
-<p>捕获列表在闭包创建时已经确定；再次复制闭包变量并不会重新复制一次捕获列表。</p>
+<p>Swift 中的闭包和函数值是引用类型。把闭包赋值给另一个变量时，复制的是闭包引用，两个变量指向同一个闭包。</p>
+<p>捕获列表在闭包创建时已经确定；复制闭包变量不会重新复制捕获列表。</p>
 <h3 id="heading-23" data-id="heading-23">swift 中的闭包结构是什么样子的?</h3>
 <pre><code class="hljs language-markdown" lang="markdown">{
 <span class="hljs-code">    (参数列表) -> 返回值类型 in 函数体代码
@@ -499,7 +499,7 @@ let stringVal: String = value()</code></pre>
 </span></code></pre>
 <h3 id="heading-24" data-id="heading-24">什么是尾随闭包</h3>
 <ul>
-<li>尾随闭包 是一个被 书写在 函数调用 括号 后面的 闭包表达式</li>
+<li>尾随闭包是写在函数调用括号后面的闭包表达式</li>
 </ul>
 <p>基本定义<br>
 ●Swift中可通过 func 定义一个函数，也可以通过 闭包表达式 定义一个函数</p>
@@ -512,7 +512,7 @@ let stringVal: String = value()</code></pre>
 <p>闭包表达式与定义函数的语法相对比，有区别如下：<br>
 1没有func<br>
 2没有函数名<br>
-3返回值类型添加了关键字in</p>
+3使用 in 分隔闭包签名和闭包体</p>
 <pre><code class="hljs language-kotlin" lang="kotlin">let fn1 = {
     (v1 : <span class="hljs-built_in">Int</span>,v2 : <span class="hljs-built_in">Int</span>) -> <span class="hljs-built_in">Int</span> <span class="hljs-keyword">in</span>
     <span class="hljs-keyword">return</span> v1 + v2
@@ -565,7 +565,7 @@ print(result1,result2) <span class="hljs-comment">// 15 16</span>
 <ul>
 <li>
 <ul>
-<li>尾随闭包 是一个被 书写在 函数调用 括号 后面的 闭包表达式</li>
+<li>尾随闭包是写在函数调用括号后面的闭包表达式</li>
 </ul>
 </li>
 </ul>
@@ -597,10 +597,10 @@ exec1{$0 + $1}
 </code></pre>
 <h3 id="heading-27" data-id="heading-27">什么是逃逸闭包</h3>
 <ul>
-<li>闭包有可能在<strong>函数结束后调用</strong>，闭包调用 逃离了函数的作用域，需要通过<code>@escaping</code> 声明</li>
+<li>闭包有可能在<strong>函数结束后调用</strong>，闭包调用超出了函数的作用域，需要通过<code>@escaping</code> 声明</li>
 </ul>
 <p>注意：逃逸闭包 不可以 捕获 inout 参数</p>
-<p>原因是: 逃逸闭包不确定 何时开始执行，有可能 在执行逃逸闭包时，可变参数已经被程序回收，造成野指针访问</p>
+<p>原因是: 逃逸闭包不确定 何时开始执行，有可能 在执行逃逸闭包时，inout 参数的生命周期只保证在函数调用期间有效；逃逸闭包可能在函数返回后执行，因此不能安全捕获 inout 参数</p>
 <h3 id="heading-28" data-id="heading-28">什么是自动闭包</h3>
 <p>自动闭包是一种自动创建的用来把作为实际参数传递给函数的表达式打包的闭包。</p>
 <p>它不接受任何实际参数，并且当它被调用时，它会返回内部打包的表达式的值。</p>
@@ -642,22 +642,18 @@ exec1{$0 + $1}
 </ul>
 <p><strong>计算属性(Computed Property)</strong></p>
 <ul>
-<li>本质就是方法(函数)</li>
-<li>不占用实例对象的内存</li>
+<li>通过 getter / setter 访问器描述取值和赋值逻辑</li>
+<li>本身通常不额外占用实例存储空间</li>
 <li>枚举、结构体、类都可以定义计算属性</li>
 </ul>
-<p>计算属性(Computed Property)<br>
-○本质就是方法(函数)<br>
-○不占用实例的内存<br>
-○枚举、结构体、类 都可以定义计算属性</p>
 <p>理解计算属性与存储属性：</p>
 <p>如果两个属性之间存在一定的逻辑关系，使用计算属性，原因如下:<br>
 ●如果都用存储属性的话，其逻辑对应关系可能有误<br>
 ●而使用计算属性，则可以准确的描述 这种逻辑关系<br>
-具体案例参考 下面的 Cicle 中的 radius(半径) 和 diameter(直径) 的逻辑关系</p>
-<p>同时因为计算属性不占用实例的内存，可以有效的节省实例的内存空间</p>
+具体案例参考 下面的 Circle 中的 radius(半径) 和 diameter(直径) 的逻辑关系</p>
+<p>计算属性本身通常不额外占用实例存储空间，但是否节省内存取决于具体场景和计算成本</p>
 <p>●set 传入的新值 默认叫做 newValue,也可以自定义</p>
-<pre><code class="hljs language-kotlin" lang="kotlin">struct Cicle {
+<pre><code class="hljs language-kotlin" lang="kotlin">struct Circle {
     <span class="hljs-comment">/// 存储属性</span>
     <span class="hljs-keyword">var</span> radius :<span class="hljs-built_in">Double</span>
     <span class="hljs-comment">/// 计算属性</span>
@@ -675,7 +671,7 @@ exec1{$0 + $1}
 <li>只读计算属性：只有 <code>get</code> , 没有 <code>set</code></li>
 </ul>
 
-<pre><code class="hljs language-swift" lang="swift"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Cicle</span> {
+<pre><code class="hljs language-swift" lang="swift"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Circle</span> {
     <span class="hljs-comment">/// 存储属性</span>
     <span class="hljs-keyword">var</span> radius :<span class="hljs-type">Double</span>
     <span class="hljs-comment">/// 计算属性</span>
@@ -691,12 +687,12 @@ exec1{$0 + $1}
     <span class="hljs-keyword">var</span> diameter: <span class="hljs-type">Double</span> {radius <span class="hljs-operator">*</span> <span class="hljs-number">2</span>}
 }
 
-<span class="hljs-keyword">var</span> cicle <span class="hljs-operator">=</span> <span class="hljs-type">Cicle</span>.<span class="hljs-keyword">init</span>(radius: <span class="hljs-number">12</span>)
+<span class="hljs-keyword">var</span> circle <span class="hljs-operator">=</span> <span class="hljs-type">Circle</span>.<span class="hljs-keyword">init</span>(radius: <span class="hljs-number">12</span>)
 
-<span class="hljs-built_in">print</span>(cicle.radius)<span class="hljs-comment">//12.0</span>
-<span class="hljs-built_in">print</span>(cicle.diameter)<span class="hljs-comment">//24.0</span>
+<span class="hljs-built_in">print</span>(circle.radius)<span class="hljs-comment">//12.0</span>
+<span class="hljs-built_in">print</span>(circle.diameter)<span class="hljs-comment">//24.0</span>
 
-<span class="hljs-comment">// cicle.diameter = 10.0 //Cannot assign to property: 'diameter' is a get-only property</span>
+<span class="hljs-comment">// circle.diameter = 10.0 //Cannot assign to property: 'diameter' is a get-only property</span>
 </code></pre>
 <ul>
 <li>定义计算属性只能用 var,不可以是 let</li>
@@ -717,42 +713,10 @@ exec1{$0 + $1}
 </ul>
 <p>注意点：</p>
 <ul>
-<li>lazy 属性 必须是 var </li>
+<li>lazy 属性必须声明为 var。</li>
+<li>let 属性必须在实例初始化完成前就有值。</li>
+<li>多个线程同时首次访问 lazy 属性时，无法保证只初始化一次，因此线程不安全。</li>
 </ul>
-
-<ul>
-<li>
-<ul>
-<li>因为，let 属性 必须在实例的初始化方法 完成之前 就拥有值</li>
-</ul>
-</li>
-</ul>
-
-<ul>
-<li>
-<p>如果多条线程同时第一次访问 lazy 属性，无法保证 属性 只被 初始化 一次 (即线程不是安全的)</p>
-</li>
-<li>
-<p>使用 <code>lazy</code> 可以定义一个 延迟存储属性，在第一次用到属性的时候才会进行初始化(类似 OC 中的懒加载)</p>
-</li>
-</ul>
-<p>注意点：</p>
-<ul>
-<li>lazy 属性 必须是 var </li>
-</ul>
-
-<ul>
-<li>
-<ul>
-<li>因为Swift 规定：let 属性 必须在实例的初始化方法 完成之前 就拥有值</li>
-</ul>
-</li>
-</ul>
-
-<ul>
-<li>如果多条线程同时第一次访问 lazy 属性，无法保证 属性 只被 初始化 一次 (即线程不是安全的)</li>
-</ul>
-
 <pre><code class="hljs language-swift" lang="swift"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Car</span> {
     <span class="hljs-keyword">init</span>() {
         <span class="hljs-built_in">print</span>(<span class="hljs-string">"car has init"</span>)
@@ -780,13 +744,13 @@ exec1{$0 + $1}
 p.go_out()<span class="hljs-comment">//  car has init ---->   car running</span>
 </code></pre>
 <ul>
-<li>当结构体 包含 一个延迟存储属性时，只有 var 才能访问延迟 存储属性</li>
+<li>当结构体包含 lazy 存储属性时，持有该结构体实例的变量必须是 var，否则访问 lazy 属性会触发 mutating getter 错误</li>
 </ul>
 
 <ul>
 <li>
 <ul>
-<li>因为延迟属性 初始化时 要改变 结构体的内存</li>
+<li>因为 lazy 属性首次访问时需要修改结构体的存储状态</li>
 </ul>
 </li>
 </ul>
@@ -813,7 +777,7 @@ p.go_out()<span class="hljs-comment">//  car has init ---->   car running</span>
 <hr>
 
 <h2 id="heading-32" data-id="heading-32">Swift 中如何定义单例模式</h2>
-<p>可以通过<code>类型属性+let+private</code> 来写单例; 代码如下如下:</p>
+<p>可以通过<code>类型属性+let+private</code> 来写单例; 代码如下:</p>
 <pre><code class="hljs language-csharp" lang="csharp"><span class="hljs-comment">// 方式一</span>
 <span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">SingleManager</span>{
     <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">let</span> shared = SingleManager()
@@ -835,9 +799,9 @@ p.go_out()<span class="hljs-comment">//  car has init ---->   car running</span>
 <hr>
 <h2 id="heading-33" data-id="heading-33">Swift 中 下标是什么？</h2>
 <ul>
-<li>使用<code>subscript</code> 可以给任意类型(枚举，结构体，类) 增加下标的功能</li>
+<li>使用<code>subscript</code> 可以给枚举、结构体、类增加下标功能</li>
 </ul>
-<p>subscript 的语法 类似于 实例方法、计算属性，本质就是方法(函数)</p>
+<p>subscript 的语法类似实例方法和计算属性，本质上是访问器逻辑</p>
 <pre><code class="hljs language-swift" lang="swift"><span class="hljs-keyword">func</span> <span class="hljs-title function_">xiabiaoTest</span>() {
     <span class="hljs-keyword">class</span> <span class="hljs-title class_">Point</span> {
         <span class="hljs-keyword">var</span> x <span class="hljs-operator">=</span> <span class="hljs-number">0.0</span>
@@ -866,7 +830,7 @@ p.go_out()<span class="hljs-comment">//  car has init ---->   car running</span>
     p[<span class="hljs-number">0</span>] <span class="hljs-operator">=</span> <span class="hljs-number">11.1</span> <span class="hljs-comment">// 调用subscript</span>
     p[<span class="hljs-number">1</span>] <span class="hljs-operator">=</span> <span class="hljs-number">22.2</span> <span class="hljs-comment">// 调用subscript</span>
     <span class="hljs-built_in">print</span>(p.x)<span class="hljs-comment">//11.1 不会调用 subscript</span>
-    <span class="hljs-built_in">print</span>(p.y)<span class="hljs-comment">//22/2 不会调用 subscript</span>
+    <span class="hljs-built_in">print</span>(p.y)<span class="hljs-comment">//22.2 不会调用 subscript</span>
     <span class="hljs-built_in">print</span>(p[<span class="hljs-number">0</span>])<span class="hljs-comment">//11.1 // 调用subscript</span>
     <span class="hljs-built_in">print</span>(p[<span class="hljs-number">1</span>])<span class="hljs-comment">//22.2 // 调用subscript</span>
 }
@@ -888,10 +852,10 @@ p.go_out()<span class="hljs-comment">//  car has init ---->   car running</span>
 <ul>
 <li>如果可选项包含值，属性、方法或者下标的调用成功；</li>
 <li>如果可选项是 nil ，属性、方法或者下标的调用会返回 nil 。</li>
-<li>多个查询可以链接在一起，如果链中任何一个节点是 nil ，那么整个链就会得体地失败。</li>
+<li>多个查询可以链接在一起；如果链中任何一个节点是 nil，整个链会以返回 nil 的方式失败。</li>
 </ul>
 <h3 id="heading-36" data-id="heading-36">可选链(Optional Chaining)</h3>
-<p>如果 可选项 不会nil ,调用 方法 ，下标，属性成功，结果会被包装成 可选项，反之调用失败，返回nil</p>
+<p>如果可选项不为 nil，调用方法、下标或属性会成功，结果会被包装成可选项；反之调用失败，返回 nil</p>
 <pre><code class="hljs language-swift" lang="swift"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Car</span> { <span class="hljs-keyword">var</span> price <span class="hljs-operator">=</span> <span class="hljs-number">0</span>}
 <span class="hljs-keyword">class</span> <span class="hljs-title class_">Dog</span> { <span class="hljs-keyword">var</span> weight <span class="hljs-operator">=</span> <span class="hljs-number">0</span>}
 <span class="hljs-keyword">class</span> <span class="hljs-title class_">Person</span> {
@@ -934,7 +898,7 @@ person<span class="hljs-operator">?</span>.name <span class="hljs-operator">=</s
 }
 </code></pre>
 <ul>
-<li>多个 <code>？</code> 可以连接在一起，其中任何一个节点 如果为 nil,那么整条链就会 调用失败</li>
+<li>多个 <code>?</code> 可以连接在一起，其中任何一个节点 如果为 nil,那么整条链就会 调用失败</li>
 </ul>
 
 <pre><code class="hljs language-csharp" lang="csharp"><span class="hljs-keyword">var</span> dog = person?.dog <span class="hljs-comment">// Dog?</span>
@@ -955,7 +919,7 @@ person<span class="hljs-operator">?</span>.name <span class="hljs-operator">=</s
 </code></pre>
 <hr>
 <h2 id="heading-38" data-id="heading-38">Swift中函数的柯里化</h2>
-<p>将一个 接受 多个参数的 函数，变成 只接受 一个参数的一系列 操作</p>
+<p>将一个接受多个参数的函数，转换成一系列每次只接受一个参数的函数调用</p>
 <p>示例</p>
 <pre><code class="hljs language-swift" lang="swift"><span class="hljs-keyword">func</span> <span class="hljs-title function_">add</span>(<span class="hljs-keyword">_</span> <span class="hljs-params">v1</span>: <span class="hljs-type">Int</span>,<span class="hljs-keyword">_</span> <span class="hljs-params">v2</span>: <span class="hljs-type">Int</span>) -> <span class="hljs-type">Int</span> {
     v1 <span class="hljs-operator">+</span> v2
@@ -970,7 +934,7 @@ person<span class="hljs-operator">?</span>.name <span class="hljs-operator">=</s
 }
 </code></pre>
 <ul>
-<li>伪柯里化</li>
+<li>部分应用</li>
 </ul>
 
 <pre><code class="hljs language-swift" lang="swift"><span class="hljs-keyword">func</span> <span class="hljs-title function_">currying_add</span>(<span class="hljs-keyword">_</span> <span class="hljs-params">v1</span>:<span class="hljs-type">Int</span>) -> (<span class="hljs-type">Int</span>) -> <span class="hljs-type">Int</span> {
@@ -980,7 +944,7 @@ person<span class="hljs-operator">?</span>.name <span class="hljs-operator">=</s
 <span class="hljs-comment">/*
  将任意一个 接受两个 参数的函数 柯里化
  */</span>
-<span class="hljs-keyword">func</span> <span class="hljs-title function_">curring_fun_tow_params1</span>(<span class="hljs-keyword">_</span> <span class="hljs-params">f1</span> :<span class="hljs-keyword">@escaping</span> (<span class="hljs-type">Int</span>,<span class="hljs-type">Int</span>) -> <span class="hljs-type">Int</span>, <span class="hljs-keyword">_</span> <span class="hljs-params">v1</span> :<span class="hljs-type">Int</span>) -> (<span class="hljs-type">Int</span>) -> <span class="hljs-type">Int</span> {
+<span class="hljs-keyword">func</span> <span class="hljs-title function_">currying_fun_two_params1</span>(<span class="hljs-keyword">_</span> <span class="hljs-params">f1</span> :<span class="hljs-keyword">@escaping</span> (<span class="hljs-type">Int</span>,<span class="hljs-type">Int</span>) -> <span class="hljs-type">Int</span>, <span class="hljs-keyword">_</span> <span class="hljs-params">v1</span> :<span class="hljs-type">Int</span>) -> (<span class="hljs-type">Int</span>) -> <span class="hljs-type">Int</span> {
 <span class="hljs-comment">//    return {</span>
 <span class="hljs-comment">//        f1($0,v1)</span>
 <span class="hljs-comment">//    }</span>
@@ -990,14 +954,14 @@ person<span class="hljs-operator">?</span>.name <span class="hljs-operator">=</s
 }
 
 <span class="hljs-built_in">print</span>(add(<span class="hljs-number">10</span>, <span class="hljs-number">20</span>)) <span class="hljs-comment">// 30</span>
-<span class="hljs-built_in">print</span>(currying_add(<span class="hljs-number">10</span>)(<span class="hljs-number">20</span>)) <span class="hljs-comment">// 30 // 30</span>
-<span class="hljs-built_in">print</span>(curring_fun_tow_params1(add, <span class="hljs-number">10</span>)(<span class="hljs-number">20</span>))
+<span class="hljs-built_in">print</span>(currying_add(<span class="hljs-number">10</span>)(<span class="hljs-number">20</span>)) <span class="hljs-comment">// 30</span>
+<span class="hljs-built_in">print</span>(currying_fun_two_params1(add, <span class="hljs-number">10</span>)(<span class="hljs-number">20</span>))
 </code></pre>
 <ul>
-<li>正宗柯里化</li>
+<li>真正的柯里化</li>
 </ul>
 
-<pre><code class="hljs language-less" lang="less"><span class="hljs-selector-tag">func</span> <span class="hljs-selector-tag">curring_fun_two_params2</span>&#x3C;<span class="hljs-selector-tag">A</span>,<span class="hljs-selector-tag">B</span>,<span class="hljs-selector-tag">C</span>>(_ <span class="hljs-attribute">f1</span>: <span class="hljs-variable">@escaping</span> (A,B) -> C) <span class="hljs-selector-tag">-</span>> (A) <span class="hljs-selector-tag">-</span>> ((B) -> C) {
+<pre><code class="hljs language-less" lang="less"><span class="hljs-selector-tag">func</span> <span class="hljs-selector-tag">currying_fun_two_params2</span>&#x3C;<span class="hljs-selector-tag">A</span>,<span class="hljs-selector-tag">B</span>,<span class="hljs-selector-tag">C</span>>(_ <span class="hljs-attribute">f1</span>: <span class="hljs-variable">@escaping</span> (A,B) -> C) <span class="hljs-selector-tag">-</span>> (A) <span class="hljs-selector-tag">-</span>> ((B) -> C) {
     <span class="hljs-comment">/*
      return {
          (a) in  // a = 3
@@ -1012,11 +976,11 @@ person<span class="hljs-operator">?</span>.name <span class="hljs-operator">=</s
     
 }
 
-<span class="hljs-selector-tag">let</span> <span class="hljs-selector-tag">result</span> = <span class="hljs-selector-tag">curring_fun_two_params2</span>(add)(<span class="hljs-number">3</span>)(<span class="hljs-number">5</span>)
+<span class="hljs-selector-tag">let</span> <span class="hljs-selector-tag">result</span> = <span class="hljs-selector-tag">currying_fun_two_params2</span>(add)(<span class="hljs-number">3</span>)(<span class="hljs-number">5</span>)
 <span class="hljs-selector-tag">print</span>(<span class="hljs-string">"result == "</span>,result) <span class="hljs-comment">//8</span>
 </code></pre>
 <ul>
-<li>柯里化拓展</li>
+<li>柯里化扩展</li>
 </ul>
 <pre><code class="hljs language-scss" lang="scss">
 <span class="hljs-comment">/*
@@ -1039,8 +1003,8 @@ person<span class="hljs-operator">?</span>.name <span class="hljs-operator">=</s
  */</span>
 
 
-<span class="hljs-comment">//func curring_fun_more_params&#x3C;A,B,C,D,E>(_ fn: @escaping (A,B,C,D) -> (E)) -> (A) -> ((B) -> ((C) -> ((D) -> E))) {</span>
-  func curring_fun_more_params&#x3C;<span class="hljs-selector-tag">A</span>,<span class="hljs-selector-tag">B</span>,C,D,E>(_ fn: @escaping (A,B,C,D) -> (E)) -> (A) -> (B) -> (C) -> (D) -> E {
+<span class="hljs-comment">//func currying_fun_more_params&#x3C;A,B,C,D,E>(_ fn: @escaping (A,B,C,D) -> (E)) -> (A) -> ((B) -> ((C) -> ((D) -> E))) {</span>
+  func currying_fun_more_params&#x3C;<span class="hljs-selector-tag">A</span>,<span class="hljs-selector-tag">B</span>,C,D,E>(_ fn: @escaping (A,B,C,D) -> (E)) -> (A) -> (B) -> (C) -> (D) -> E {
    <span class="hljs-comment">/*
     return {
         (a) in
@@ -1060,12 +1024,12 @@ person<span class="hljs-operator">?</span>.name <span class="hljs-operator">=</s
     {<span class="hljs-selector-tag">a</span> in { <span class="hljs-selector-tag">b</span> in { c in { d in <span class="hljs-built_in">fn</span>(a,b,c,d)}}}}
 }
 
-let resutl2 = <span class="hljs-built_in">curring_fun_more_params</span>(add2)(<span class="hljs-number">10</span>)(<span class="hljs-number">20</span>)(<span class="hljs-number">30</span>)(<span class="hljs-number">40</span>)
-<span class="hljs-built_in">print</span>(resutl2) <span class="hljs-comment">// 40</span>
+let result2 = <span class="hljs-built_in">currying_fun_more_params</span>(add2)(<span class="hljs-number">10</span>)(<span class="hljs-number">20</span>)(<span class="hljs-number">30</span>)(<span class="hljs-number">40</span>)
+<span class="hljs-built_in">print</span>(result2) <span class="hljs-comment">// 40</span>
 
-let resutl2_func = <span class="hljs-built_in">curring_fun_more_params</span>(add2)
-let resutl2_func_value = <span class="hljs-built_in">resutl2_func</span>(<span class="hljs-number">10</span>)(<span class="hljs-number">20</span>)(<span class="hljs-number">30</span>)(<span class="hljs-number">40</span>)
-<span class="hljs-built_in">print</span>(resutl2_func_value) <span class="hljs-comment">// 40</span>
+let result2_func = <span class="hljs-built_in">currying_fun_more_params</span>(add2)
+let result2_func_value = <span class="hljs-built_in">result2_func</span>(<span class="hljs-number">10</span>)(<span class="hljs-number">20</span>)(<span class="hljs-number">30</span>)(<span class="hljs-number">40</span>)
+<span class="hljs-built_in">print</span>(result2_func_value) <span class="hljs-comment">// 40</span>
 </code></pre></div></div></article> <div class="article-end" data-v-539963b4 data-v-61fb5e44><div class="rank-entry-bottom" data-v-539963b4 data-v-61fb5e44><!----></div> <div class="tag-list-box" data-v-539963b4 data-v-61fb5e44><!----><!----><!----></div></div> <!----><!----><!----><!----><!----></div> <div id="sidebar-container" class="sidebar article-sidebar" data-v-4ed317c2 data-v-61fb5e44><div class="sidebar-block author-block author-block-container pure" data-v-7e7e812a data-v-1902877e data-v-4ed317c2><a href="/user/4213782311876343/posts" target="_blank" rel="" class="jj-link user-item item" data-v-65b50b51 data-v-1902877e><div class="avatar jj-avatar avatar" data-v-03256cc6 data-v-1902877e><img loading="eager" src="assets/avatar.awebp"" alt="avatar" class="lazy avatar-img immediate" data-v-5244ef91 data-v-03256cc6> </div> <div class="info-box" style="visibility:hidden;" data-v-65b50b51 data-v-1902877e><span to="[object Object]" blank="true" class="username" data-v-292f6e48 data-v-1902877e><span class="name" style="max-width:128px;" data-v-292f6e48>
     会飞的金鱼
   </span> <span to="" blank="true" class="rank" data-v-23743940 data-v-292f6e48><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8AQMAAAAAMksxAAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAAA5JREFUKM9jGAWjAAcAAAIcAAE27nY6AAAAAElFTkSuQmCC" alt="创作等级LV.5" title="创作等级LV.5" class="lazy" style="aspect-ratio:NaN;" data-v-5244ef91 data-v-23743940></span> <!----> <!----> </span> <div title="IT" class="position" data-v-65b50b51 data-v-1902877e>
