@@ -436,7 +436,29 @@ static Manager *_sharedManager = nil;
 </blockquote>
 <p>// 推送过程如下图
 <img src="assets/image-1.awebp" alt="Alt text" loading="lazy"></p>
-<h3 id="heading-34" data-id="heading-34">14. RunLoop的基础知识</h3>
+<h3 id="heading-34" data-id="heading-34">14. RunLoop的基础知识</h3><h4 id="heading-68" data-id="heading-68">RunLoop 的作用是什么？内部工作机制了解么？</h4>
+<blockquote>
+<p><strong>一句话概括：</strong>RunLoop 是 iOS/OSX 里的 Event Loop 实现。它让线程在处理完当前任务后不直接退出，而是进入休眠，等待事件到来再被唤醒；同时把定时器、输入源、UI 刷新、手势、AutoreleasePool 等事件统一调度在合适的 Mode 中执行。</p>
+</blockquote>
+<p><strong>RunLoop 的主要作用：</strong></p>
+<ul>
+<li><strong>保持程序持续运行</strong>：主线程在应用启动时会创建并运行 RunLoop，使主线程可以一直接收事件而不是执行完启动流程就退出。</li>
+<li><strong>调度事件</strong>：处理触摸、手势识别、Timer、performSelector、网络回调、Source 等事件。</li>
+<li><strong>降低资源占用</strong>：没有事件时休眠线程，有事件时被唤醒，避免忙等。</li>
+<li><strong>驱动 UI 刷新</strong>：系统在主线程 RunLoop 中处理界面刷新和布局相关任务。</li>
+<li><strong>管理 AutoreleasePool</strong>：主线程 RunLoop 通过 Observer 在进入前创建 autorelease pool，并在即将休眠或退出时释放并重建。</li>
+<li><strong>线程保活与卡顿监控</strong>：常驻线程依赖 RunLoop；监控主线程 RunLoop 状态也可用于卡顿检测。</li>
+</ul>
+<p><strong>结合线程与内存管理看内部机制：</strong></p>
+<ul>
+<li>RunLoop 和线程是一一对应的；这种关系保存在全局字典中。主线程的 RunLoop 在程序启动时默认创建，子线程的 RunLoop 是懒加载，第一次获取时创建，线程结束时销毁。</li>
+<li>RunLoop 每次循环会通知 Observer 即将进入，然后按当前 Mode 找到可处理的 Timer、Source 或 Observer 回调；处理完成后进入休眠，被 mach port 或 timer 唤醒后继续下一轮。</li>
+<li>RunLoop Mode 决定同一时刻哪些 Source/Timer 可以被处理。因此滚动过程中 default mode 的 Timer 可能暂停，这也是 <code>NSTimer</code> 常见问题的根源。</li>
+<li>主线程 RunLoop 会注册两个 autorelease pool Observer：一个在即将进入 RunLoop 时 <code>push</code>，另一个在即将休眠和即将退出时 <code>pop</code>，随后再重新 <code>push</code>。这解释了 autorelease 对象的生命周期和 RunLoop 的关系。</li>
+</ul>
+<p><strong>内部执行流程可参考下图：</strong></p>
+<figure><img alt="RunLoop 内部执行流程" src="assets/advanced/images/advanced-image-2.png" loading="lazy"><figcaption>RunLoop 内部执行流程</figcaption></figure>
+
 <ul>
 <li>RunLoop模式有哪些？</li>
 </ul>
@@ -566,6 +588,7 @@ value 是 weak 指针地址组成的数组。
 <span class="hljs-bullet">3.</span> 对于主线程来说，runloop在程序一启动就默认创建好了。
 <span class="hljs-bullet">4.</span> 对于子线程来说， runloop是懒加载的，只有当我们使用的时候才会创建，所以在子线程用定时器要注意：确保子线程的runloop被开启，不然定时器不会回调。
 </code></pre>
+<p><strong>关联：</strong>更完整的 RunLoop 作用、内部执行流程和 AutoreleasePool 机制，可继续看 <a href="#heading-68">第 14 题的扩展回答</a>。</p>
 <h3 id="heading-43" data-id="heading-43">21. 如何手动触发一个 value 的 KVO</h3>
 <p>键值观察通知依赖于 NSObject 的两个方法: willChangeValueForKey: 和 didChangeValueForKey: 。在一个被观察属性发生改变之前， willChangeValueForKey: 一定会被调用，这就
 会记录旧的值。而当改变发生后， didChangeValueForKey: 会被调用，继而 observeValueForKey:ofObject:change:context: 也会被调用。如果可以手动实现这些调用，就可以实现“手动触发”了。</p>
@@ -609,49 +632,119 @@ value 是 weak 指针地址组成的数组。
 <p>（2）如果没有找到，那么这个时候会查看accessInstanceVariablesDirectly方法的返回值，如果返回的是NO（也就是不允许直接访问成员变量），那么会调用valueForUndefinedKey:方法，并抛出异常“NSUnknownKeyException”；</p>
 <p>（3）如果accessInstanceVariablesDirectly方法返回的是YES，也就是说可以访问其成员变量，那么就会按照顺序依次查找 _key、_isKey、key、isKey这四个成员变量，如果找到了，就直接取值；如果依然没有找到成员变量，那么会调用valueForUndefinedKey方法，并抛出异常“NSUnknownKeyException”。</p>
 <h3 id="heading-47" data-id="heading-47">22. ViewController 生命周期</h3>
-<pre><code class="hljs language-objectivec" lang="objectivec">按照执行顺序排列：
-<span class="hljs-number">1.</span> initWithCoder：通过nib文件初始化时触发。
-<span class="hljs-number">2.</span> awakeFromNib：nib文件被加载的时候，会发生一个awakeFromNib的消息到nib文件中的每个对象。
-<span class="hljs-number">3.</span> loadView：开始加载视图控制器自带的view。
-<span class="hljs-number">4.</span> viewDidLoad：视图控制器的view被加载完成。
-<span class="hljs-number">5.</span> viewWillAppear：视图控制器的view将要显示在window上。
-<span class="hljs-number">6.</span> updateViewConstraints：视图控制器的view开始更新AutoLayout约束。
-<span class="hljs-number">7.</span> viewWillLayoutSubviews：视图控制器的view将要更新内容视图的位置。
-<span class="hljs-number">8.</span> viewDidLayoutSubviews：视图控制器的view已经更新视图的位置。
-<span class="hljs-number">9.</span> viewDidAppear：视图控制器的view已经展示到window上。
-<span class="hljs-number">10.</span> viewWillDisappear：视图控制器的view将要从window上消失。
-<span class="hljs-number">11.</span> viewDidDisappear：视图控制器的view已经从window上消失。
-</code></pre>
-<h3 id="heading-48" data-id="heading-48">23. 网络协议</h3>
+<pre><code class="hljs language-objectivec" lang="objectivec"><span class="hljs-number">1.</span> 总述
+ViewController 的生命周期大致分三个阶段：初始化、view 加载、显示与布局。
+
+<span class="hljs-number">2.</span> 初始化阶段
+通过 nib 或 storyboard 创建时，先走 initWithCoder:，nib 加载后走 awakeFromNib。
+
+<span class="hljs-number">3.</span> view 加载阶段
+第一次访问 view 时走 loadView 创建 view，加载完成后走 viewDidLoad。这里适合做一次性初始化，通常只调用一次。
+
+<span class="hljs-number">4.</span> 显示阶段
+先走 viewWillAppear:，表示 view 即将显示。
+
+<span class="hljs-number">5.</span> 布局阶段
+然后进入布局：updateViewConstraints 更新约束，viewWillLayoutSubviews 和 viewDidLayoutSubviews 完成子视图布局。
+
+<span class="hljs-number">6.</span> 显示完成
+布局完成后走 viewDidAppear:，表示 view 已经显示到 window 上。
+
+<span class="hljs-number">7.</span> 消失阶段
+消失时走 viewWillDisappear: 和 viewDidDisappear:，适合保存状态、停止动画和清理资源。
+
+<span class="hljs-number">8.</span> 注意事项
+viewDidLoad 通常只调用一次，而 appear/disappear 和布局相关方法可能多次调用；纯代码创建不会走 initWithCoder 和 awakeFromNib。
+</code></pre><h3 id="heading-48" data-id="heading-48">23. 网络协议</h3>
 <ul>
 <li>TCP三次握手和四次挥手？</li>
 </ul>
-<p><strong>三次握手</strong></p>
+<p><strong>三次握手（面试口述版）</strong></p>
+<figure class="tcp-three-way-handshake" style="margin:22px 0;padding:18px;border:1px solid #e4e7ed;border-radius:8px;background:#ffffff;">
+  <svg viewBox="0 0 640 350" role="img" aria-labelledby="tcp3-title tcp3-desc" style="display:block;width:100%;height:auto;overflow:visible;">
+    <title id="tcp3-title">TCP 三次握手流程图</title>
+    <desc id="tcp3-desc">客户端和服务端通过 SYN、SYN+ACK、ACK 三个报文完成 TCP 连接建立，并分别进入对应状态。</desc>
+    <defs>
+      <marker id="arrow-right" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#0269c8"></path>
+      </marker>
+      <marker id="arrow-left" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#16a34a"></path>
+      </marker>
+    </defs>
+    <rect x="78" y="20" width="112" height="36" rx="6" fill="#f2f7ff" stroke="#0269c8"></rect>
+    <text x="134" y="43" text-anchor="middle" font-size="16" font-weight="600" fill="#252933">客户端</text>
+    <rect x="450" y="20" width="112" height="36" rx="6" fill="#f2fff8" stroke="#16a34a"></rect>
+    <text x="506" y="43" text-anchor="middle" font-size="16" font-weight="600" fill="#252933">服务端</text>
+    <line x1="134" y1="58" x2="134" y2="326" stroke="#9ca3af" stroke-width="2" stroke-dasharray="8 6"></line>
+    <line x1="506" y1="58" x2="506" y2="326" stroke="#9ca3af" stroke-width="2" stroke-dasharray="8 6"></line>
+    <line x1="134" y1="118" x2="506" y2="118" stroke="#0269c8" stroke-width="3" marker-end="url(#arrow-right)"></line>
+    <text x="320" y="103" text-anchor="middle" font-size="15" font-weight="600" fill="#0269c8">① SYN, seq = x</text>
+    <text x="134" y="143" text-anchor="middle" font-size="13" fill="#64748b">SYN_SENT</text>
+    <line x1="506" y1="193" x2="134" y2="193" stroke="#16a34a" stroke-width="3" marker-end="url(#arrow-left)"></line>
+    <text x="320" y="178" text-anchor="middle" font-size="15" font-weight="600" fill="#16a34a">② SYN + ACK, seq = y, ack = x + 1</text>
+    <text x="506" y="218" text-anchor="middle" font-size="13" fill="#64748b">SYN_RCVD</text>
+    <line x1="134" y1="268" x2="506" y2="268" stroke="#0269c8" stroke-width="3" marker-end="url(#arrow-right)"></line>
+    <text x="320" y="253" text-anchor="middle" font-size="15" font-weight="600" fill="#0269c8">③ ACK, ack = y + 1</text>
+    <text x="134" y="293" text-anchor="middle" font-size="13" font-weight="600" fill="#0f766e">ESTABLISHED</text>
+    <text x="506" y="293" text-anchor="middle" font-size="13" font-weight="600" fill="#0f766e">ESTABLISHED</text>
+    <text x="320" y="330" text-anchor="middle" font-size="13" fill="#64748b">双方收发能力确认完成，TCP 连接建立</text>
+  </svg>
+  <figcaption style="margin-top:12px;font-size:14px;line-height:1.6;color:#64748b;text-align:center;">TCP 三次握手流程图：报文与状态均与上方口述答案一一对应。</figcaption>
+</figure>
 <blockquote>
-<p>**1.**客户端向服务端发起请求连接，首先发送SYN报文，SYN=1，seq=x,并且客户端进入SYN_SENT状态
-**2.**服务端收到请求连接，服务端向客户端进行回复，并发送响应报文，SYN=1，seq=y,ACK=1,ack=x+1,并且服务端进入到SYN_RCVD状态
-**3.**客户端收到确认报文后，向服务端发送确认报文，ACK=1，ack=y+1，此时客户端进入到ESTABLISHED，服务端收到用户端发送过来的确认报文后，也进入到ESTABLISHED状态，此时链接创建成功</p>
+<p>三次握手是 TCP 建立连接的过程。</p>
+<p>第一次，客户端向服务端发送 <code>SYN</code> 报文，带上自己的初始序列号 <code>x</code>，然后进入 <code>SYN_SENT</code> 状态，相当于告诉服务端：“我想和你建立连接。”</p>
+<p>第二次，服务端收到后回复 <code>SYN + ACK</code>，确认号是 <code>x+1</code>，表示“你的请求我收到了”；同时带上自己的初始序列号 <code>y</code>，然后进入 <code>SYN_RCVD</code> 状态，相当于告诉客户端：“我也准备好了。”</p>
+<p>第三次，客户端再回一个 <code>ACK</code>，确认号是 <code>y+1</code>。这时客户端进入 <code>ESTABLISHED</code>，服务端收到这个确认后也进入 <code>ESTABLISHED</code>，连接就正式建立完成了。</p>
+<p>之所以必须是三次，主要有两个原因：一是让双方都确认自己和对方的发送、接收能力是正常的；二是防止网络中早已失效的旧 <code>SYN</code> 报文又到达服务端，让服务端误以为客户端要新建连接，从而白白占用资源。所以最后的 <code>ACK</code> 是必不可少的。</p>
 </blockquote>
-<pre><code class="hljs language-objectivec" lang="objectivec">- 哎！
-- 嗯
-- 给你
-</code></pre>
-<p><strong>为什么需要三次握手：</strong>
-为了防止已失效的连接请求报文段突然又传送到了服务端，因而产生错误。假设这是一个早已失效的报文段，但server收到此失效的连接请求报文段后，就误认为是client再次发出的一个新的连接请求。于是就向client发出确认报文段，同意建立连接。假设不采用“三次握手”，那么只要server发出确认，新的连接就建立了。由于现在client并没有发出建立连接的请求，因此不会理睬server的确认，也不会向server发送数据。但server却以为新的运输连接已经建立，并一直等待client发来数据。这样，server的很多资源就白白浪费掉了。</p>
-<p><strong>四次挥手</strong></p>
+<p><strong>四次挥手（面试口述版）</strong></p>
+<figure class="tcp-four-way-handshake" style="margin:22px 0;padding:18px;border:1px solid #e4e7ed;border-radius:8px;background:#ffffff;">
+  <svg viewBox="0 0 640 500" role="img" aria-labelledby="tcp4-title tcp4-desc" style="display:block;width:100%;height:auto;overflow:visible;">
+    <title id="tcp4-title">TCP 四次挥手流程图</title>
+    <desc id="tcp4-desc">客户端和服务端通过 FIN、ACK、FIN、ACK 四个报文完成 TCP 连接断开，并分别进入对应状态。</desc>
+    <defs>
+      <marker id="tcp4-arrow-right" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#0269c8"></path>
+      </marker>
+      <marker id="tcp4-arrow-left" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#16a34a"></path>
+      </marker>
+    </defs>
+    <rect x="78" y="20" width="112" height="36" rx="6" fill="#f2f7ff" stroke="#0269c8"></rect>
+    <text x="134" y="43" text-anchor="middle" font-size="16" font-weight="600" fill="#252933">客户端</text>
+    <rect x="450" y="20" width="112" height="36" rx="6" fill="#f2fff8" stroke="#16a34a"></rect>
+    <text x="506" y="43" text-anchor="middle" font-size="16" font-weight="600" fill="#252933">服务端</text>
+    <line x1="134" y1="58" x2="134" y2="450" stroke="#9ca3af" stroke-width="2" stroke-dasharray="8 6"></line>
+    <line x1="506" y1="58" x2="506" y2="450" stroke="#9ca3af" stroke-width="2" stroke-dasharray="8 6"></line>
+    <line x1="134" y1="118" x2="506" y2="118" stroke="#0269c8" stroke-width="3" marker-end="url(#tcp4-arrow-right)"></line>
+    <text x="320" y="103" text-anchor="middle" font-size="15" font-weight="600" fill="#0269c8">① FIN</text>
+    <text x="134" y="143" text-anchor="middle" font-size="13" fill="#64748b">FIN_WAIT_1</text>
+    <line x1="506" y1="192" x2="134" y2="192" stroke="#16a34a" stroke-width="3" marker-end="url(#tcp4-arrow-left)"></line>
+    <text x="320" y="177" text-anchor="middle" font-size="15" font-weight="600" fill="#16a34a">② ACK</text>
+    <text x="134" y="217" text-anchor="middle" font-size="13" fill="#64748b">FIN_WAIT_2</text>
+    <text x="506" y="217" text-anchor="middle" font-size="13" fill="#64748b">CLOSE_WAIT</text>
+    <text x="320" y="239" text-anchor="middle" font-size="13" fill="#64748b">服务端可继续发送剩余数据</text>
+    <line x1="506" y1="282" x2="134" y2="282" stroke="#16a34a" stroke-width="3" marker-end="url(#tcp4-arrow-left)"></line>
+    <text x="320" y="267" text-anchor="middle" font-size="15" font-weight="600" fill="#16a34a">③ FIN</text>
+    <text x="506" y="307" text-anchor="middle" font-size="13" fill="#64748b">LAST_ACK</text>
+    <line x1="134" y1="356" x2="506" y2="356" stroke="#0269c8" stroke-width="3" marker-end="url(#tcp4-arrow-right)"></line>
+    <text x="320" y="341" text-anchor="middle" font-size="15" font-weight="600" fill="#0269c8">④ ACK</text>
+    <text x="134" y="381" text-anchor="middle" font-size="13" font-weight="600" fill="#0f766e">TIME_WAIT → CLOSED</text>
+    <text x="506" y="381" text-anchor="middle" font-size="13" font-weight="600" fill="#0f766e">CLOSED</text>
+    <text x="320" y="430" text-anchor="middle" font-size="13" fill="#64748b">TIME_WAIT 等待后客户端关闭，服务端收到 ACK 后立即关闭</text>
+  </svg>
+  <figcaption style="margin-top:12px;font-size:14px;line-height:1.6;color:#64748b;text-align:center;">TCP 四次挥手流程图：报文与状态均与上方口述答案一一对应。</figcaption>
+</figure>
 <blockquote>
-<p>**1.**客户端向服务端发起关闭连接，并停止发送数据
-**2.**服务端收到关闭连接的请求时，向客户端发送回应，我知道了，然后停止接收数据
-**3.**当服务端发送数据结束之后，向客户端发起关闭链接，并停止发送数据
-**4.**客户端收到关闭链接的请求时，向服务端发送回应，我知道了，然后停止接收数据</p>
+<p>四次挥手是 TCP 断开连接的过程。</p>
+<p>第一次，客户端向服务端发送 <code>FIN</code> 报文，表示“我没有数据要发了，想关闭连接”，然后进入 <code>FIN_WAIT_1</code> 状态。</p>
+<p>第二次，服务端收到后先回一个 <code>ACK</code>，表示“我知道你要关了”，此时客户端进入 <code>FIN_WAIT_2</code>，服务端进入 <code>CLOSE_WAIT</code>。但这时服务端可能还有数据没发完，所以它不会立刻关闭，而是先把剩下的数据继续发给客户端。</p>
+<p>第三次，等服务端数据发送完了，它再向客户端发送 <code>FIN</code>，表示“我这边也没有数据要发了，可以关闭了”，然后进入 <code>LAST_ACK</code> 状态。</p>
+<p>第四次，客户端收到 <code>FIN</code> 后再回一个 <code>ACK</code>，并进入 <code>TIME_WAIT</code>，等待一段时间后才真正关闭；服务端收到这个 <code>ACK</code> 后就关闭连接。</p>
+<p>之所以需要四次，是因为 TCP 是全双工通信，客户端不再发送数据，不代表服务端也没有数据要发。所以服务端收到 <code>FIN</code> 后，要先把 <code>ACK</code> 发回去，等自己数据发完后再单独发 <code>FIN</code>。因此中间的 <code>ACK</code> 和 <code>FIN</code> 通常会分成两次发送，这就形成了四次挥手。</p>
 </blockquote>
-<pre><code class="hljs language-objectivec" lang="objectivec">- 哎！
-- 嗯
-- 关了
-- 好的
-</code></pre>
-<p><strong>为什么需要四次挥手：</strong>
-因为TCP是全双工通信的，在接收到客户端的关闭请求时，还可能在向客户端发送着数据，因此不能再回应关闭链接的请求时，同时发送关闭链接的请求</p>
 <h4 id="heading-49" data-id="heading-49">引申</h4>
 <ol>
 <li>
@@ -686,12 +779,12 @@ value 是 weak 指针地址组成的数组。
 </ul>
 <p><strong>HTTPS</strong></p>
 <ul>
-<li>使用 HTTPS 时，需要保证服务端配置了正确的安全证书</li>
-<li>客户端发送请求到服务器</li>
-<li>服务端返回公钥和证书到客户端</li>
-<li>客户端验证证书后生成随机数 / premaster secret，并用服务器公钥加密后发送给服务器。</li>
-<li>服务器用私钥解密得到随机数；双方基于随机数派生对称会话密钥，后续数据使用会话密钥加解密。TLS 1.3 的握手细节与旧 RSA 交换不同。</li>
-<li>客户端使用协商出的对称会话密钥解密数据并解析呈现；不能把随机数本身称为私钥。</li>
+<li>使用 HTTPS 时，需要保证服务端配置了正确的安全证书。</li>
+<li>客户端向服务器发送请求。</li>
+<li>服务端将<strong>包含公钥的证书</strong>返回给客户端（公钥在证书里，并非单独返回一把公钥）。</li>
+<li>客户端验证证书后生成 <strong>premaster secret</strong>（一个随机值），并用服务器公钥加密后发送给服务器。</li>
+<li>服务器用<strong>与证书公钥对应的私钥</strong>解密，得到 premaster secret；之后，<strong>客户端和服务器各自</strong>拿<strong>客户端随机数、服务器随机数、premaster secret</strong>这三样材料，用同样的算法算出同一个对称会话密钥，后续数据就用它加解密。注意：premaster secret 是随机值，不是私钥；客户端随机数与 premaster secret 是两个不同的随机值；会话密钥由双方各自派生，不在网络上传输。TLS 1.3 的握手细节与旧版 RSA 密钥交换不同，已不再采用“用服务器公钥加密 premaster secret”这种方式。</li>
+<li>客户端使用协商出的对称会话密钥解密数据并解析呈现。</li>
 </ul>
 <h4 id="heading-51" data-id="heading-51">HTTP协议中GET和POST的区别</h4>
 <ul>
@@ -789,11 +882,16 @@ value 是 weak 指针地址组成的数组。
 <ul>
 <li>
 <p>你以为完了？ 错了，大概率面试官会问你，*** 上面这段代码放在子线程中 是什么样子的？为什么？**</p>
-<p>—performSelector:withObject:afterDelay: 会在当前线程创建 NSTimer 并加入当前 RunLoop。子线程必须拥有正在运行的 RunLoop，否则不会触发。</p>
+<p><strong class="qa-fixed">结论：</strong>子线程的 RunLoop 默认没有在跑（未运行）。你需要手动获取它（这会触发懒加载创建）并调用 run 等方法让它跑起来，它才有可能进入“休眠”状态来等待事件。如果它根本没跑，你添加到它上面的 Timer 或 performSelector 自然永远不会被处理。</p>
 </li>
 </ul>
-<pre><code class="hljs language-objectivec" lang="objectivec">[[<span class="hljs-built_in">NSRunLoop</span> currentRunLoop] run];
+<pre><code class="hljs language-objectivec" lang="objc">[[<span class="hljs-built_in">NSRunLoop</span> currentRunLoop] run];
 </code></pre>
+<ul>
+<li>
+<p><strong class="qa-fixed">结论：run 与 runMode:beforeDate: 的区别：</strong>这两者的本质区别是可控性。<code>run</code> 内部是无限循环，一旦调用就无法用标志位让它优雅停止，苹果文档明确警告不要用它做可终止的循环；而 <code>runMode:beforeDate:</code> 只运行一次，返回后把控制权交还给你，配合 <code>while</code> 和外部标志位才能安全退出。所以实际开发中，子线程需要 RunLoop 时，我永远用 <code>while (标志位 &&amp; [runLoop runMode:... beforeDate:distantFuture])</code> 的结构，而不是直接调 <code>run</code>，因为后者会让线程变成脱缰野马，难以回收。</p>
+</li>
+</ul>
 <pre><code class="hljs language-objectivec" lang="objectivec"><span class="hljs-comment">// 完整调用</span>
  <span class="hljs-built_in">dispatch_queue_t</span> queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, <span class="hljs-number">0</span>);
     <span class="hljs-built_in">dispatch_async</span>(queue, ^{
@@ -844,10 +942,26 @@ dispatch_resume(_timer);
 <ul>
 <li>例如利用NSProxy这个专门做消息转发的虚类去优化循环引用（这里也经常会被问到。具体方案我不说， 自行百度，切记，如果兄弟你不知道这个玩意，  建议你看看，面试的时候被问到的概率还是挺大的。）</li>
 </ul>
-<h3 id="heading-56" data-id="heading-56">25. 为什么 AFN3.0 中需要设置 operationQueue.maxConcurrentOperationCount = 1？AFN2.0 为什么不需要？</h3>
+<h5>NSTimer 循环引用 — 面试精简话术</h5>
+<p><strong>一句话点题：</strong><code>scheduledTimerWithTimeInterval:target:</code> 会强引用 <code>target</code>；如果 <code>self</code> 又强引用 <code>timer</code>，就形成 <code>self ↔ timer</code> 的 retain cycle，两边都释放不掉。</p>
+<p><strong>关键误区（面试加分点）：</strong>把 <code>timer</code> 属性改成 <code>weak</code> <strong>不能</strong>解决。因为 <code>RunLoop → timer → target(self)</code> 这条强引用链还在，<code>self</code> 引用计数始终 ≥ 1，<code>dealloc</code> 永远不执行，也就没机会 <code>invalidate</code>，形成死锁。</p>
+<p><strong>三种解法：</strong></p>
+<ol>
+<li><strong>NSProxy 弱代理（经典方案）</strong>：继承 <code>NSProxy</code> 做中间人，弱引用 <code>self</code>，把 timer 的 target 换成代理。引用链变成 <code>RunLoop → timer → proxy ⇢(weak) self</code>，循环被打断。<code>NSProxy</code> 是专门做消息转发的根类，比 <code>NSObject</code> 代理走转发路径更直接高效。</li>
+<li><strong>Block 版 API（iOS 10+，现代方案）</strong>：<code>scheduledTimerWithTimeInterval:repeats:block:</code>，block 内用 <code>__weak self</code> 弱捕获。</li>
+<li><strong>主动 invalidate</strong>：在合适的生命周期（如 <code>viewWillDisappear</code>）调用 <code>[timer invalidate]; timer = nil;</code>，让 RunLoop 释放 timer，进而释放 self。</li>
+</ol>
+<p><strong>收尾一句：</strong>本质是打破 <code>timer</code> 对 <code>self</code> 的强引用——要么换弱代理/弱捕获，要么主动 <code>invalidate</code>；只改属性 <code>weak</code> 是无效的。</p><h3 id="heading-56" data-id="heading-56">25. 为什么 AFN3.0 中需要设置 operationQueue.maxConcurrentOperationCount = 1？AFN2.0 为什么不需要？</h3>
 <ul>
 <li>功能不一样， 2.x是基于NSURLConnection的，其内部通过常驻线程处理异步回调。 3.0 是基于NSURLSession其内部是需要串行的鉴于一些多线程数据访问的安全性考虑， 设置这个达到串行回调的效果。</li>
 </ul>
+<h5>面试口述精简版</h5>
+<blockquote>
+<p>AFN 3.0 里设置 <code>operationQueue.maxConcurrentOperationCount = 1</code>，<strong>不是让网络请求串行</strong>，而是把这个 queue 作为 <code>NSURLSession</code> 的 <code>delegateQueue</code>，让 <strong>session delegate 回调和 completion 处理串行执行</strong>。请求本身仍然是并发的。这样做主要是为了数据安全和回调顺序：AFN 内部维护 task 和 delegate 的映射字典，本身有锁保护；并发回调会争锁、切换线程，还可能让同一个 task 的 <code>didReceiveData</code> 和 <code>didComplete</code> 乱序，所以干脆串行化回调通道，更安全也更高效。</p>
+<p>AFN 2.0 不需要这个设置，是因为 2.0 的 <code>operationQueue</code> 是用来<strong>管理和发起并发请求</strong>的，不能设为 1；它的回调靠的是<strong>常驻线程 + RunLoop</strong>。<code>NSURLConnection</code> 的回调依赖发起请求线程的 RunLoop，所以 AFN 用 <code>dispatch_once</code> 创建一条全局单例线程，并往 RunLoop 里加一个 <code>NSMachPort</code> 防止 RunLoop 退出，从而保活线程，让所有请求回调都在这条线程上排队处理。</p>
+<p>这条常驻线程 <strong>AFN 自己不会主动退出</strong>，生命周期基本跟 App 进程一致，App 被杀才结束。理论上可以通过 <code>CFRunLoopStop</code> 或 <code>[thread cancel]</code> 让它退出，但 AFN 正常流程不会调用；一旦停了，后续网络回调就没地方投递了。</p>
+<p>一句话总结：<strong>2.0 是“保活一条线程，用 RunLoop 串行回调”；3.0 是“指定一个串行 delegateQueue，用队列串行回调”，用队列机制替代了常驻线程。</strong></p>
+</blockquote>
 <h4 id="heading-57" data-id="heading-57">AFNetworking 2.0 和3.0 的区别？</h4>
 <ul>
 <li>AFN3.0 移除了所有 NSURLConnection 请求 API</li>
@@ -920,6 +1034,20 @@ dispatch_resume(_timer);
 <li>push就是压栈操作，</li>
 <li>pop就是出栈操作同时对其中的对象发送 release 消息进行释放</li>
 </ul>
+<h4 id="heading-67" data-id="heading-67">AutoreleasePool 所使用的数据结构是什么？AutoreleasePoolPage 结构体了解么？</h4>
+<ul>
+<li>AutoreleasePool 是由多个 <code>AutoreleasePoolPage</code> 以双向链表的形式连接起来的。</li>
+<li>AutoreleasePool 的基本原理：在每个自动释放池创建时，会在当前的 <code>AutoreleasePoolPage</code> 中设置一个标记位；在此期间，当对象调用 <code>autorelease</code> 时，会把对象添加到 <code>AutoreleasePoolPage</code> 中。若当前页添加满了，会初始化一个新页，用双向链表连接起来，并把新初始化的这一页设置为 <code>hotPage</code>。当自动释放池 <code>pop</code> 时，从最下面依次往上出栈，调用每个对象的 <code>release</code> 方法，直到遇到标记位。</li>
+</ul>
+<pre><code class="hljs language-objectivec" lang="objectivec"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AutoreleasePoolPage</span> <span class="hljs-symbol">&#x7B;</span></span> 
+    magic_t <span class="hljs-keyword">const</span> magic;
+    <span class="hljs-type">id</span> *next; <span class="hljs-comment">// 下一个存放autorelease对象的地址</span>
+    pthread_t <span class="hljs-keyword">const</span> thread; <span class="hljs-comment">// AutoreleasePoolPage所在的线程</span>
+    AutoreleasePoolPage * <span class="hljs-keyword">const</span> parent; <span class="hljs-comment">// 父节点</span>
+    AutoreleasePoolPage *child; <span class="hljs-comment">// 子节点</span>
+    uint32_t <span class="hljs-keyword">const</span> depth; <span class="hljs-comment">// 深度，也可以理解为当前page在链表中的位置</span>
+    uint32_t hiwat;
+<span class="hljs-class">&#x7D;</span></code></pre>
 <h3 id="heading-66" data-id="heading-66">27. iOS 界面渲染机制？</h3>
 <ul>
 <li>先简单解释一下渲染机制</li>
@@ -1166,7 +1294,7 @@ GPU会根据生成的前后帧缓存数据，根据实际情况进行合成，�
         69k
       </div> <div data-v-65b50b51 data-v-1902877e>阅读</div></a> <a href="/user/2348212570038446/followers" target="_blank" rel="" class="jj-link stat-item item" data-v-65b50b51 data-v-1902877e><div class="count" style="display:none;" data-v-65b50b51 data-v-1902877e>
         320
-      </div> <div data-v-65b50b51 data-v-1902877e>粉丝</div></a></div> <div class="operate-btn hidden" style="position:relative;z-index:2;min-height:36px;" data-v-7e7e812a data-v-1902877e><!----><!----><!----></div> <!----></div> <div class="sticky-block-box" data-v-4ed317c2><nav class="article-catalog catalog-block" id="right-toc" data-v-6239701c data-v-16ed86c3 data-v-4ed317c2><div class="catalog-title" data-v-6239701c><div data-v-6239701c>目录</div> <div class="direction" data-v-6239701c><div class="word" data-v-6239701c>收起</div> <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-rotate" data-v-6239701c data-v-6239701c><g id="&amp;#229;&amp;#177;&amp;#149;&amp;#229;&amp;#188;&amp;#128;" data-v-6239701c data-v-6239701c><path id="&amp;#232;&amp;#183;&amp;#175;&amp;#229;&amp;#190;&amp;#132;" fill-rule="evenodd" clip-rule="evenodd" d="M5.99854 7.93206L10.0644 3.86619C10.162 3.76856 10.3203 3.76856 10.418 3.86619L10.7715 4.21975C10.8691 4.31738 10.8691 4.47567 10.7715 4.5733L6.35209 8.99272C6.15683 9.18798 5.84025 9.18798 5.64498 8.99272L1.22557 4.5733C1.12794 4.47567 1.12794 4.31738 1.22557 4.21975L1.57912 3.86619C1.67675 3.76856 1.83504 3.76856 1.93267 3.86619L5.99854 7.93206Z" fill="#8A919F" data-v-6239701c data-v-6239701c></path></g></svg></div></div> <div class="catalog-body unfold" data-v-6239701c data-v-16ed86c3 data-v-4ed317c2><ul class="catalog-list" style="margin-top:0px;" data-v-6239701c><li class="item d1"><div class="a-container"><a href="#heading-0" title="iOS面试题" class="catalog-aTag d1-aTag-title">iOS面试题</a></div> <!----></li><li class="item d1"><div class="a-container"><a href="#heading-1" title="更新日志" class="catalog-aTag d1-aTag-title">更新日志</a></div> <!----></li><li class="item d1"><div class="a-container"><a href="#heading-2" title="一、硬技术篇" class="catalog-aTag d1-aTag-title">一、硬技术篇</a></div> <ul class="sub-list"><li class="item d2"><div class="a-container"><a href="#heading-3" title="1.对象方法和类方法的区别？" class="catalog-aTag d2-aTag-title">1.对象方法和类方法的区别？</a></div> <ul class="sub-list"><li class="item d3"><div class="a-container"><a href="#heading-4" title="引伸1. 如果在类方法中调用self 会有什么问题？" class="catalog-aTag d3-aTag-title">引伸1. 如果在类方法中调用self 会有什么问题？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-5" title="引申2. 讲一下对象，类对象，元类，跟元类结构体的组成以及他们是如何相关联的？" class="catalog-aTag d3-aTag-title">引申2. 讲一下对象，类对象，元类，跟元类结构体的组成以及他们是如何相关联的？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-6" title="引申3. 为什么对象方法中没有保存对象结构体里面，而是保存在类对象的结构体里面？" class="catalog-aTag d3-aTag-title">引申3. 为什么对象方法中没有保存对象结构体里面，而是保存在类对象的结构体里面？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-7" title="引申4. 类方法存在哪里？ 为什么要有元类的存在？" class="catalog-aTag d3-aTag-title">引申4. 类方法存在哪里？ 为什么要有元类的存在？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-8" title="引申5. 什么是野指针？" class="catalog-aTag d3-aTag-title">引申5. 什么是野指针？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-9" title="引申6. 如何检测野指针？" class="catalog-aTag d3-aTag-title">引申6. 如何检测野指针？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-10" title="引申7. 导致Crash的原因有哪些？" class="catalog-aTag d3-aTag-title">引申7. 导致Crash的原因有哪些？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-11" title="引申8. 不使用第三方，如何知道已经上线的App崩溃问题， 具体到哪一个类的哪一个方法的？" class="catalog-aTag d3-aTag-title">引申8. 不使用第三方，如何知道已经上线的App崩溃问题， 具体到哪一个类的哪一个方法的？</a></div> <!----></li></ul></li><li class="item d2"><div class="a-container"><a href="#heading-12" title="iOS中内省的几个方法？" class="catalog-aTag d2-aTag-title">iOS中内省的几个方法？</a></div> <ul class="sub-list"><li class="item d3"><div class="a-container"><a href="#heading-13" title="引申 2. ==、 isEqualToString、isEqual区别？" class="catalog-aTag d3-aTag-title">引申 2. ==、 isEqualToString、isEqual区别？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-14" title="引申 3. class方法和object_getClass方法有什么区别?" class="catalog-aTag d3-aTag-title">引申 3. class方法和object_getClass方法有什么区别?</a></div> <!----></li></ul></li><li class="item d2"><div class="a-container"><a href="#heading-15" title="3.深拷贝和浅拷贝" class="catalog-aTag d2-aTag-title">3.深拷贝和浅拷贝</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-16" title="4.NSString类型为什么要用copy修饰 ？" class="catalog-aTag d2-aTag-title">4.NSString类型为什么要用copy修饰 ？</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-17" title="5.iOS中block 捕获外部局部变量实际上发生了什么？__block 中又做了什么？" class="catalog-aTag d2-aTag-title">5.iOS中block 捕获外部局部变量实际上发生了什么？__block 中又做了什么？</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-18" title="6.iOS Block为什么用copy修饰？" class="catalog-aTag d2-aTag-title">6.iOS Block为什么用copy修饰？</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-19" title="7. 为什么分类中不能创建完整的属性 Property（runtime 关联对象除外）？" class="catalog-aTag d2-aTag-title">7. 为什么分类中不能创建完整的属性 Property（runtime 关联对象除外）？</a></div> <ul class="sub-list"><li class="item d3"><div class="a-container"><a href="#heading-20" title="引伸：关联对象的原理？" class="catalog-aTag d3-aTag-title">引伸：关联对象的原理？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-21" title="引伸：分类可以添加那些内容？" class="catalog-aTag d3-aTag-title">引伸：分类可以添加那些内容？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-22" title="引伸：Category 的实现原理？" class="catalog-aTag d3-aTag-title">引伸：Category 的实现原理？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-23" title="引申 使用runtime Associate方法关联的对象，需要在主对象dealloc的时候释放么？" class="catalog-aTag d3-aTag-title">引申 使用runtime Associate方法关联的对象，需要在主对象dealloc的时候释放么？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-24" title="引申 能否向编译后得到的类增加实例变量？能否向运行时创建的类添加实例变量？" class="catalog-aTag d3-aTag-title">引申 能否向编译后得到的类增加实例变量？能否向运行时创建的类添加实例变量？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-25" title="引申 主类和分类实现同名 foo 方法，主类方法会被覆盖吗？如果想只执行主类方法，如何处理？" class="catalog-aTag d3-aTag-title">引申 主类和分类实现同名 foo 方法，主类方法会被覆盖吗？如果想只执行主类方法，如何处理？</a></div> <!----></li></ul></li><li class="item d2"><div class="a-container"><a href="#heading-26" title="8. load 和 initialize 的调用情况，以及子类的调用顺序问题？" class="catalog-aTag d2-aTag-title">8. load 和 initialize 的调用情况，以及子类的调用顺序问题？</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-27" title="9. 什么是线程安全？" class="catalog-aTag d2-aTag-title">9. 什么是线程安全？</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-28" title="10. 你接触到的项目，哪些场景运用到了线程安全？" class="catalog-aTag d2-aTag-title">10. 你接触到的项目，哪些场景运用到了线程安全？</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-29" title="11. 你实现过单例模式么？ 你能用几种实现方案？" class="catalog-aTag d2-aTag-title">11. 你实现过单例模式么？ 你能用几种实现方案？</a></div> <ul class="sub-list"><li class="item d3"><div class="a-container"><a href="#heading-30" title="引申1. 单例是怎么销毁的？" class="catalog-aTag d3-aTag-title">引申1. 单例是怎么销毁的？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-31" title="引申2. 不使用dispatch_once 如何 实现单例" class="catalog-aTag d3-aTag-title">引申2. 不使用dispatch_once 如何 实现单例</a></div> <!----></li></ul></li><li class="item d2"><div class="a-container"><a href="#heading-32" title="12. 项目开发中，你用单例都做了什么？" class="catalog-aTag d2-aTag-title">12. 项目开发中，你用单例都做了什么？</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-33" title="13.APNS的基本原理" class="catalog-aTag d2-aTag-title">13.APNS的基本原理</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-34" title="14. RunLoop的基础知识" class="catalog-aTag d2-aTag-title">14. RunLoop的基础知识</a></div> <ul class="sub-list"><li class="item d3"><div class="a-container"><a href="#heading-35" title="如何保证一个线程常驻（常驻线程）" class="catalog-aTag d3-aTag-title">如何保证一个线程常驻（常驻线程）</a></div> <!----></li></ul></li><li class="item d2"><div class="a-container"><a href="#heading-36" title="15. weak属性？" class="catalog-aTag d2-aTag-title">15. weak属性？</a></div> <ul class="sub-list"><li class="item d3"><div class="a-container"><a href="#heading-37" title="延伸" class="catalog-aTag d3-aTag-title">延伸</a></div> <!----></li></ul></li><li class="item d2"><div class="a-container"><a href="#heading-38" title="16.UIView和CALayer是什么关系?" class="catalog-aTag d2-aTag-title">16.UIView和CALayer是什么关系?</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-39" title="17. @synthesize 和 @dynamic 分别有什么作用" class="catalog-aTag d2-aTag-title">17. @synthesize 和 @dynamic 分别有什么作用</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-40" title="18. static 有什么作用?" class="catalog-aTag d2-aTag-title">18. static 有什么作用?</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-41" title="19. objc 在向一个对象发送消息时，发生了什么？" class="catalog-aTag d2-aTag-title">19. objc 在向一个对象发送消息时，发生了什么？</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-42" title="20. RunLoop 是做什么的？它和线程有什么关系？主线程默认开启了吗？子线程呢？" class="catalog-aTag d2-aTag-title">20. RunLoop 是做什么的？它和线程有什么关系？主线程默认开启了吗？子线程呢？</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-43" title="21. 如何手动触发一个 value 的 KVO" class="catalog-aTag d2-aTag-title">21. 如何手动触发一个 value 的 KVO</a></div> <ul class="sub-list"><li class="item d3"><div class="a-container"><a href="#heading-44" title="引申 0 如何给系统KVO设置筛选条件？" class="catalog-aTag d3-aTag-title">引申 0 如何给系统KVO设置筛选条件？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-45" title="引申 1.通过KVC修改属性会触发KVO么？直接修改成员变量呢 ？" class="catalog-aTag d3-aTag-title">引申 1.通过KVC修改属性会触发KVO么？直接修改成员变量呢 ？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-46" title="引申 kvc的底层实现？" class="catalog-aTag d3-aTag-title">引申 kvc的底层实现？</a></div> <!----></li></ul></li><li class="item d2"><div class="a-container"><a href="#heading-47" title="22. ViewController 生命周期" class="catalog-aTag d2-aTag-title">22. ViewController 生命周期</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-48" title="23. 网络协议" class="catalog-aTag d2-aTag-title">23. 网络协议</a></div> <ul class="sub-list"><li class="item d3"><div class="a-container"><a href="#heading-49" title="引申" class="catalog-aTag d3-aTag-title">引申</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-50" title="HTTP和HTTPS的建立连接的过程？" class="catalog-aTag d3-aTag-title">HTTP和HTTPS的建立连接的过程？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-51" title="HTTP协议中GET和POST的区别" class="catalog-aTag d3-aTag-title">HTTP协议中GET和POST的区别</a></div> <!----></li></ul></li><li class="item d2"><div class="a-container"><a href="#heading-52" title="24. 有没有使用过 performSelector?" class="catalog-aTag d2-aTag-title">24. 有没有使用过 performSelector?</a></div> <ul class="sub-list"><li class="item d3"><div class="a-container"><a href="#heading-53" title="引申 NSTimer在子线程执行？" class="catalog-aTag d3-aTag-title">引申 NSTimer在子线程执行？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-54" title="引申 为什么说NSTimer不准确？" class="catalog-aTag d3-aTag-title">引申 为什么说NSTimer不准确？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-55" title="引申： NStimer的循环引用？" class="catalog-aTag d3-aTag-title">引申： NStimer的循环引用？</a></div> <!----></li></ul></li><li class="item d2"><div class="a-container"><a href="#heading-56" title="25. 为什么 AFN3.0 中需要设置 operationQueue.maxConcurrentOperationCount = 1？AFN2.0 为什么不需要？" class="catalog-aTag d2-aTag-title">25. 为什么 AFN3.0 中需要设置 operationQueue.maxConcurrentOperationCount = 1？AFN2.0 为什么不需要？</a></div> <ul class="sub-list"><li class="item d3"><div class="a-container"><a href="#heading-57" title="AFNetworking 2.0 和3.0 的区别？" class="catalog-aTag d3-aTag-title">AFNetworking 2.0 和3.0 的区别？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-58" title="2.x版本常驻线程的分析" class="catalog-aTag d3-aTag-title">2.x版本常驻线程的分析</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-59" title="3.x 版本不再常驻线程的分析？" class="catalog-aTag d3-aTag-title">3.x 版本不再常驻线程的分析？</a></div> <!----></li></ul></li><li class="item d2"><div class="a-container"><a href="#heading-60" title="26. autoreleasePool 在何时被释放？" class="catalog-aTag d2-aTag-title">26. autoreleasePool 在何时被释放？</a></div> <ul class="sub-list"><li class="item d3"><div class="a-container"><a href="#heading-61" title="子线程中的autorelease变量什么时候释放？" class="catalog-aTag d3-aTag-title">子线程中的autorelease变量什么时候释放？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-62" title="autoreleasepool是如何实现的？" class="catalog-aTag d3-aTag-title">autoreleasepool是如何实现的？</a></div> <!----></li></ul></li><li class="item d2"><div class="a-container"><a href="#heading-66" title="27. iOS 界面渲染机制？" class="catalog-aTag d2-aTag-title">27. iOS 界面渲染机制？</a></div> <ul class="sub-list"><li class="item d3"><div class="a-container"><a href="#heading-63" title="程序卡顿的原因？" class="catalog-aTag d3-aTag-title">程序卡顿的原因？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-64" title="卡顿检测的方法" class="catalog-aTag d3-aTag-title">卡顿检测的方法</a></div> <!----></li></ul></li><li class="item d2"><div class="a-container"><a href="#heading-65" title="28. 事件响应链和事件传递" class="catalog-aTag d2-aTag-title">28. 事件响应链和事件传递</a></div> <!----></li></ul></li></ul></div></nav> <!----> <!----> <div class="adverts-list" data-v-0eca8145 data-v-4ed317c2></div> <!----> <!----></div> <!----></div> <!----> <!----> <div id="article-suspended-panel" data-v-539963b4 data-v-61fb5e44></div> <!----></div> <!----><!----><!----><!----><!----><!----><!----></main> <!----></div> <!----></div> <!----> <div class="global-component-box"><!----></div> <!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----> <!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----></div></div></div>
+      </div> <div data-v-65b50b51 data-v-1902877e>粉丝</div></a></div> <div class="operate-btn hidden" style="position:relative;z-index:2;min-height:36px;" data-v-7e7e812a data-v-1902877e><!----><!----><!----></div> <!----></div> <div class="sticky-block-box" data-v-4ed317c2><nav class="article-catalog catalog-block" id="right-toc" data-v-6239701c data-v-16ed86c3 data-v-4ed317c2><div class="catalog-title" data-v-6239701c><div data-v-6239701c>目录</div> <div class="direction" data-v-6239701c><div class="word" data-v-6239701c>收起</div> <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-rotate" data-v-6239701c data-v-6239701c><g id="&amp;#229;&amp;#177;&amp;#149;&amp;#229;&amp;#188;&amp;#128;" data-v-6239701c data-v-6239701c><path id="&amp;#232;&amp;#183;&amp;#175;&amp;#229;&amp;#190;&amp;#132;" fill-rule="evenodd" clip-rule="evenodd" d="M5.99854 7.93206L10.0644 3.86619C10.162 3.76856 10.3203 3.76856 10.418 3.86619L10.7715 4.21975C10.8691 4.31738 10.8691 4.47567 10.7715 4.5733L6.35209 8.99272C6.15683 9.18798 5.84025 9.18798 5.64498 8.99272L1.22557 4.5733C1.12794 4.47567 1.12794 4.31738 1.22557 4.21975L1.57912 3.86619C1.67675 3.76856 1.83504 3.76856 1.93267 3.86619L5.99854 7.93206Z" fill="#8A919F" data-v-6239701c data-v-6239701c></path></g></svg></div></div> <div class="catalog-body unfold" data-v-6239701c data-v-16ed86c3 data-v-4ed317c2><ul class="catalog-list" style="margin-top:0px;" data-v-6239701c><li class="item d1"><div class="a-container"><a href="#heading-0" title="iOS面试题" class="catalog-aTag d1-aTag-title">iOS面试题</a></div> <!----></li><li class="item d1"><div class="a-container"><a href="#heading-1" title="更新日志" class="catalog-aTag d1-aTag-title">更新日志</a></div> <!----></li><li class="item d1"><div class="a-container"><a href="#heading-2" title="一、硬技术篇" class="catalog-aTag d1-aTag-title">一、硬技术篇</a></div> <ul class="sub-list"><li class="item d2"><div class="a-container"><a href="#heading-3" title="1.对象方法和类方法的区别？" class="catalog-aTag d2-aTag-title">1.对象方法和类方法的区别？</a></div> <ul class="sub-list"><li class="item d3"><div class="a-container"><a href="#heading-4" title="引伸1. 如果在类方法中调用self 会有什么问题？" class="catalog-aTag d3-aTag-title">引伸1. 如果在类方法中调用self 会有什么问题？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-5" title="引申2. 讲一下对象，类对象，元类，跟元类结构体的组成以及他们是如何相关联的？" class="catalog-aTag d3-aTag-title">引申2. 讲一下对象，类对象，元类，跟元类结构体的组成以及他们是如何相关联的？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-6" title="引申3. 为什么对象方法中没有保存对象结构体里面，而是保存在类对象的结构体里面？" class="catalog-aTag d3-aTag-title">引申3. 为什么对象方法中没有保存对象结构体里面，而是保存在类对象的结构体里面？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-7" title="引申4. 类方法存在哪里？ 为什么要有元类的存在？" class="catalog-aTag d3-aTag-title">引申4. 类方法存在哪里？ 为什么要有元类的存在？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-8" title="引申5. 什么是野指针？" class="catalog-aTag d3-aTag-title">引申5. 什么是野指针？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-9" title="引申6. 如何检测野指针？" class="catalog-aTag d3-aTag-title">引申6. 如何检测野指针？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-10" title="引申7. 导致Crash的原因有哪些？" class="catalog-aTag d3-aTag-title">引申7. 导致Crash的原因有哪些？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-11" title="引申8. 不使用第三方，如何知道已经上线的App崩溃问题， 具体到哪一个类的哪一个方法的？" class="catalog-aTag d3-aTag-title">引申8. 不使用第三方，如何知道已经上线的App崩溃问题， 具体到哪一个类的哪一个方法的？</a></div> <!----></li></ul></li><li class="item d2"><div class="a-container"><a href="#heading-12" title="iOS中内省的几个方法？" class="catalog-aTag d2-aTag-title">iOS中内省的几个方法？</a></div> <ul class="sub-list"><li class="item d3"><div class="a-container"><a href="#heading-13" title="引申 2. ==、 isEqualToString、isEqual区别？" class="catalog-aTag d3-aTag-title">引申 2. ==、 isEqualToString、isEqual区别？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-14" title="引申 3. class方法和object_getClass方法有什么区别?" class="catalog-aTag d3-aTag-title">引申 3. class方法和object_getClass方法有什么区别?</a></div> <!----></li></ul></li><li class="item d2"><div class="a-container"><a href="#heading-15" title="3.深拷贝和浅拷贝" class="catalog-aTag d2-aTag-title">3.深拷贝和浅拷贝</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-16" title="4.NSString类型为什么要用copy修饰 ？" class="catalog-aTag d2-aTag-title">4.NSString类型为什么要用copy修饰 ？</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-17" title="5.iOS中block 捕获外部局部变量实际上发生了什么？__block 中又做了什么？" class="catalog-aTag d2-aTag-title">5.iOS中block 捕获外部局部变量实际上发生了什么？__block 中又做了什么？</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-18" title="6.iOS Block为什么用copy修饰？" class="catalog-aTag d2-aTag-title">6.iOS Block为什么用copy修饰？</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-19" title="7. 为什么分类中不能创建完整的属性 Property（runtime 关联对象除外）？" class="catalog-aTag d2-aTag-title">7. 为什么分类中不能创建完整的属性 Property（runtime 关联对象除外）？</a></div> <ul class="sub-list"><li class="item d3"><div class="a-container"><a href="#heading-20" title="引伸：关联对象的原理？" class="catalog-aTag d3-aTag-title">引伸：关联对象的原理？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-21" title="引伸：分类可以添加那些内容？" class="catalog-aTag d3-aTag-title">引伸：分类可以添加那些内容？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-22" title="引伸：Category 的实现原理？" class="catalog-aTag d3-aTag-title">引伸：Category 的实现原理？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-23" title="引申 使用runtime Associate方法关联的对象，需要在主对象dealloc的时候释放么？" class="catalog-aTag d3-aTag-title">引申 使用runtime Associate方法关联的对象，需要在主对象dealloc的时候释放么？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-24" title="引申 能否向编译后得到的类增加实例变量？能否向运行时创建的类添加实例变量？" class="catalog-aTag d3-aTag-title">引申 能否向编译后得到的类增加实例变量？能否向运行时创建的类添加实例变量？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-25" title="引申 主类和分类实现同名 foo 方法，主类方法会被覆盖吗？如果想只执行主类方法，如何处理？" class="catalog-aTag d3-aTag-title">引申 主类和分类实现同名 foo 方法，主类方法会被覆盖吗？如果想只执行主类方法，如何处理？</a></div> <!----></li></ul></li><li class="item d2"><div class="a-container"><a href="#heading-26" title="8. load 和 initialize 的调用情况，以及子类的调用顺序问题？" class="catalog-aTag d2-aTag-title">8. load 和 initialize 的调用情况，以及子类的调用顺序问题？</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-27" title="9. 什么是线程安全？" class="catalog-aTag d2-aTag-title">9. 什么是线程安全？</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-28" title="10. 你接触到的项目，哪些场景运用到了线程安全？" class="catalog-aTag d2-aTag-title">10. 你接触到的项目，哪些场景运用到了线程安全？</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-29" title="11. 你实现过单例模式么？ 你能用几种实现方案？" class="catalog-aTag d2-aTag-title">11. 你实现过单例模式么？ 你能用几种实现方案？</a></div> <ul class="sub-list"><li class="item d3"><div class="a-container"><a href="#heading-30" title="引申1. 单例是怎么销毁的？" class="catalog-aTag d3-aTag-title">引申1. 单例是怎么销毁的？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-31" title="引申2. 不使用dispatch_once 如何 实现单例" class="catalog-aTag d3-aTag-title">引申2. 不使用dispatch_once 如何 实现单例</a></div> <!----></li></ul></li><li class="item d2"><div class="a-container"><a href="#heading-32" title="12. 项目开发中，你用单例都做了什么？" class="catalog-aTag d2-aTag-title">12. 项目开发中，你用单例都做了什么？</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-33" title="13.APNS的基本原理" class="catalog-aTag d2-aTag-title">13.APNS的基本原理</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-34" title="14. RunLoop的基础知识" class="catalog-aTag d2-aTag-title">14. RunLoop的基础知识</a></div> <ul class="sub-list"><li class="item d3"><div class="a-container"><a href="#heading-68" title="RunLoop 的作用是什么？内部工作机制了解么？" class="catalog-aTag d3-aTag-title">RunLoop 的作用是什么？内部工作机制了解么？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-35" title="如何保证一个线程常驻（常驻线程）" class="catalog-aTag d3-aTag-title">如何保证一个线程常驻（常驻线程）</a></div> <!----></li></ul></li><li class="item d2"><div class="a-container"><a href="#heading-36" title="15. weak属性？" class="catalog-aTag d2-aTag-title">15. weak属性？</a></div> <ul class="sub-list"><li class="item d3"><div class="a-container"><a href="#heading-37" title="延伸" class="catalog-aTag d3-aTag-title">延伸</a></div> <!----></li></ul></li><li class="item d2"><div class="a-container"><a href="#heading-38" title="16.UIView和CALayer是什么关系?" class="catalog-aTag d2-aTag-title">16.UIView和CALayer是什么关系?</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-39" title="17. @synthesize 和 @dynamic 分别有什么作用" class="catalog-aTag d2-aTag-title">17. @synthesize 和 @dynamic 分别有什么作用</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-40" title="18. static 有什么作用?" class="catalog-aTag d2-aTag-title">18. static 有什么作用?</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-41" title="19. objc 在向一个对象发送消息时，发生了什么？" class="catalog-aTag d2-aTag-title">19. objc 在向一个对象发送消息时，发生了什么？</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-42" title="20. RunLoop 是做什么的？它和线程有什么关系？主线程默认开启了吗？子线程呢？" class="catalog-aTag d2-aTag-title">20. RunLoop 是做什么的？它和线程有什么关系？主线程默认开启了吗？子线程呢？</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-43" title="21. 如何手动触发一个 value 的 KVO" class="catalog-aTag d2-aTag-title">21. 如何手动触发一个 value 的 KVO</a></div> <ul class="sub-list"><li class="item d3"><div class="a-container"><a href="#heading-44" title="引申 0 如何给系统KVO设置筛选条件？" class="catalog-aTag d3-aTag-title">引申 0 如何给系统KVO设置筛选条件？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-45" title="引申 1.通过KVC修改属性会触发KVO么？直接修改成员变量呢 ？" class="catalog-aTag d3-aTag-title">引申 1.通过KVC修改属性会触发KVO么？直接修改成员变量呢 ？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-46" title="引申 kvc的底层实现？" class="catalog-aTag d3-aTag-title">引申 kvc的底层实现？</a></div> <!----></li></ul></li><li class="item d2"><div class="a-container"><a href="#heading-47" title="22. ViewController 生命周期" class="catalog-aTag d2-aTag-title">22. ViewController 生命周期</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-48" title="23. 网络协议" class="catalog-aTag d2-aTag-title">23. 网络协议</a></div> <ul class="sub-list"><li class="item d3"><div class="a-container"><a href="#heading-49" title="引申" class="catalog-aTag d3-aTag-title">引申</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-50" title="HTTP和HTTPS的建立连接的过程？" class="catalog-aTag d3-aTag-title">HTTP和HTTPS的建立连接的过程？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-51" title="HTTP协议中GET和POST的区别" class="catalog-aTag d3-aTag-title">HTTP协议中GET和POST的区别</a></div> <!----></li></ul></li><li class="item d2"><div class="a-container"><a href="#heading-52" title="24. 有没有使用过 performSelector?" class="catalog-aTag d2-aTag-title">24. 有没有使用过 performSelector?</a></div> <ul class="sub-list"><li class="item d3"><div class="a-container"><a href="#heading-53" title="引申 NSTimer在子线程执行？" class="catalog-aTag d3-aTag-title">引申 NSTimer在子线程执行？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-54" title="引申 为什么说NSTimer不准确？" class="catalog-aTag d3-aTag-title">引申 为什么说NSTimer不准确？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-55" title="引申： NStimer的循环引用？" class="catalog-aTag d3-aTag-title">引申： NStimer的循环引用？</a></div> <!----></li></ul></li><li class="item d2"><div class="a-container"><a href="#heading-56" title="25. 为什么 AFN3.0 中需要设置 operationQueue.maxConcurrentOperationCount = 1？AFN2.0 为什么不需要？" class="catalog-aTag d2-aTag-title">25. 为什么 AFN3.0 中需要设置 operationQueue.maxConcurrentOperationCount = 1？AFN2.0 为什么不需要？</a></div> <ul class="sub-list"><li class="item d3"><div class="a-container"><a href="#heading-57" title="AFNetworking 2.0 和3.0 的区别？" class="catalog-aTag d3-aTag-title">AFNetworking 2.0 和3.0 的区别？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-58" title="2.x版本常驻线程的分析" class="catalog-aTag d3-aTag-title">2.x版本常驻线程的分析</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-59" title="3.x 版本不再常驻线程的分析？" class="catalog-aTag d3-aTag-title">3.x 版本不再常驻线程的分析？</a></div> <!----></li></ul></li><li class="item d2"><div class="a-container"><a href="#heading-60" title="26. autoreleasePool 在何时被释放？" class="catalog-aTag d2-aTag-title">26. autoreleasePool 在何时被释放？</a></div> <ul class="sub-list"><li class="item d3"><div class="a-container"><a href="#heading-61" title="子线程中的autorelease变量什么时候释放？" class="catalog-aTag d3-aTag-title">子线程中的autorelease变量什么时候释放？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-62" title="autoreleasepool是如何实现的？" class="catalog-aTag d3-aTag-title">autoreleasepool是如何实现的？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-67" title="AutoreleasePool 所使用的数据结构是什么？AutoreleasePoolPage 结构体了解么？" class="catalog-aTag d3-aTag-title">AutoreleasePool 所使用的数据结构是什么？AutoreleasePoolPage 结构体了解么？</a></div> <!----></li></ul></li><li class="item d2"><div class="a-container"><a href="#heading-66" title="27. iOS 界面渲染机制？" class="catalog-aTag d2-aTag-title">27. iOS 界面渲染机制？</a></div> <ul class="sub-list"><li class="item d3"><div class="a-container"><a href="#heading-63" title="程序卡顿的原因？" class="catalog-aTag d3-aTag-title">程序卡顿的原因？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-64" title="卡顿检测的方法" class="catalog-aTag d3-aTag-title">卡顿检测的方法</a></div> <!----></li></ul></li><li class="item d2"><div class="a-container"><a href="#heading-65" title="28. 事件响应链和事件传递" class="catalog-aTag d2-aTag-title">28. 事件响应链和事件传递</a></div> <!----></li></ul></li></ul></div></nav> <!----> <!----> <div class="adverts-list" data-v-0eca8145 data-v-4ed317c2></div> <!----> <!----></div> <!----></div> <!----> <!----> <div id="article-suspended-panel" data-v-539963b4 data-v-61fb5e44></div> <!----></div> <!----><!----><!----><!----><!----><!----><!----></main> <!----></div> <!----></div> <!----> <div class="global-component-box"><!----></div> <!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----> <!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----></div></div></div>
   <style id="right-toc-style">
   #article-root h1,
   #article-root h2,
