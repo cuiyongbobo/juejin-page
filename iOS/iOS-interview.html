@@ -9,6 +9,46 @@
   .qa-correction-box li{margin:8px 0!important}
   .qa-correction-box code{background:#e6f4ec!important;color:#0f6635!important}
   .qa-note{display:block;margin-top:6px;padding:8px 10px;border-left:3px solid #15a15a;background:#f4fbf7;color:#38565f}
+  .qa-summary-box{margin:28px 0;padding:18px 20px;border:1px solid #c6dbf7;border-left:5px solid #1e80ff;border-radius:6px;background:#f4f8ff;color:#21313b}
+  .qa-summary-box h4{margin-top:0!important;margin-bottom:12px!important;font-size:19px!important;color:#184b97!important}
+  .qa-summary-box h5{margin:18px 0 8px!important;font-size:16px!important;color:#184b97!important}
+  .qa-summary-box blockquote{margin:14px 0!important;padding:10px 14px!important;border-left:4px solid #1e80ff!important;background:#eaf2ff!important;color:#27425f!important}
+  .qa-summary-box table{display:table!important;width:100%!important;max-width:100%!important;margin:14px 0!important;border:1px solid #d8e7ff!important}
+  .qa-summary-box th{background:#eaf2ff!important;color:#184b97!important}
+  .qa-summary-box th,.qa-summary-box td{border:1px solid #d8e7ff!important}
+  .q28-answer-layout{margin:24px 0}
+  .qa-answer-card{margin:0 0 26px;padding:18px 20px;border:1px solid #d9e4f3;border-left:5px solid #1e80ff;border-radius:10px;background:#fff;color:#21313b;box-shadow:0 3px 14px rgba(30,128,255,.06)}
+  .qa-answer-card .answer-card-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding-bottom:12px;border-bottom:1px solid #e4eaf5}
+  .qa-answer-card .answer-card-tag{display:inline-flex;align-items:center;height:24px;padding:0 10px;border-radius:999px;background:#e8f2ff;color:#184b97;font-size:13px;font-weight:700;letter-spacing:.02em}
+  .qa-answer-card .answer-card-head h4{margin:0!important;font-size:19px!important;color:#184b97!important}
+  .qa-answer-card .answer-section{margin:18px 0 0;padding:15px 16px;border:1px solid #e6edf8;border-radius:8px;background:#fbfdff}
+  .qa-answer-card .answer-section-last{margin-bottom:0}
+  .qa-answer-card .answer-section h4{margin:0 0 10px!important;font-size:16px!important;color:#184b97!important}
+  .qa-answer-card .answer-bridge{padding:10px 12px;border-left:3px solid #8db8ff;background:#f5f9ff;color:#27425f}
+  .qa-answer-card .answer-concept-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:0!important;padding:0!important;list-style:none!important}
+  .qa-answer-card .answer-concept-list li{padding:10px 12px;border:1px solid #dfe9f8;border-radius:7px;background:#fff}
+  .q28-image-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}
+  .q28-image-grid img{width:100%;height:auto;border:1px solid #dfe9f8;border-radius:6px;background:#fff}
+  .qa-answer-card .answer-flow{counter-reset:q28-flow;margin:0!important;padding-left:28px!important}
+  .qa-answer-card .answer-flow li{position:relative;margin:8px 0!important;padding:8px 10px 8px 12px;border-radius:6px;background:#fff;box-shadow:inset 3px 0 0 #b9d5ff}
+  .qa-answer-card pre{margin:12px 0 0!important}
+  .qa-followup-box{margin:26px 0 20px;padding:18px 20px;border:1px solid #b8dcc8;border-left:5px solid #15a15a;border-radius:10px;background:#f4fbf7;color:#21313b}
+  .qa-followup-box h4{margin:0 0 12px!important;font-size:18px!important;color:#0d6a3c!important}
+  .qa-followup-box ul{padding-left:22px!important}
+  .qa-followup-box li{margin:8px 0!important}
+  .qa-followup-box pre{margin:12px 0 0!important}
+  .rendering-mechanism{margin:18px 0 24px;padding:2px 0 2px 18px;border-left:3px solid #b9d5ff}
+  .rendering-mechanism h5{margin:0 0 10px!important;color:#184b97!important}
+  .rendering-process{margin:0!important;padding-left:22px!important}
+  .rendering-process li{margin:9px 0!important;line-height:1.75}
+  .rendering-duty-list{margin:0!important;padding:0!important;list-style:none!important}
+  .rendering-duty-list li{display:grid;grid-template-columns:150px minmax(0,1fr);gap:10px;padding:10px 0;border-bottom:1px dashed #dfe9f8;line-height:1.72}
+  .rendering-duty-list li:last-child{border-bottom:0}
+  .rendering-duty-list strong{color:#184b97}
+  .rendering-duty-list .duty-desc{display:block}
+  .rendering-mechanism p{line-height:1.75}
+  @media (max-width:760px){.rendering-mechanism{padding-left:0;border-left:0}.rendering-duty-list li{grid-template-columns:1fr;gap:3px}}
+  @media (max-width:760px){.qa-answer-card{padding:14px}.qa-answer-card .answer-concept-list,.q28-image-grid{grid-template-columns:1fr}.qa-answer-card .answer-section{padding:12px}}
   .qa-note strong{color:#0d6a3c}
   .qa-fixed{color:#0d6a3c;font-weight:700}
 </style></head>
@@ -46,6 +86,8 @@
 <li>2020年08月17日 更新了第23条的新的引申，关于NSTimer循环引用的根本原因， 以及优化方案</li>
 <li>2026年10月23日 本地答案勘误优化：修正原文中 21 个明确错误或较大误导点，并补充 8 个需要限定前提的答案。</li>
 <li>2026年10月26日 修正剩余错别字、不通顺表述和技术语义冲突，并统一题号。</li>
+<li>2026年10月28日 补充第 28 题：hitTest 倒序遍历与事件传递阶段的关系总结。</li>
+<li>2026年10月28日 补充第 28 题：hitTest 四个定制场景总结（穿透、拦截、扩区、超出父 bounds）。</li>
 </ul>
 <section class="qa-correction-box">
   <h2>答案勘误摘要（2026-10-23）</h2>
@@ -265,7 +307,7 @@
 </ul>
 <h3 id="heading-27" data-id="heading-27">9. 什么是线程安全？</h3>
 <ul>
-<li>线程安全指多个线程并发访问同一份共享数据时，仍能保持数据一致性、不变量和可见性；它保护的是状态，不是“一段代码”本身。</li>
+<li>多个线程同时或交替去读写同一份会被修改的数据时，程序结果仍然是对的，不会丢数据、不会读到脏数据，也不会出现状态错乱。它保护的是共享状态，不是某一段代码本身。</li>
 </ul>
 <h3 id="heading-28" data-id="heading-28">10. 你接触到的项目，哪些场景运用到了线程安全？</h3>
 <p>答： 举例说明，12306 同一列火车的车票， 同一时间段多人抢票！
@@ -990,15 +1032,15 @@ dispatch_resume(_timer);
 </ul>
 <h3 id="heading-60" data-id="heading-60">26. autoreleasePool 在何时被释放？</h3>
 <ul>
-<li><strong class="qa-fixed">勘误：</strong>ARC 会按所有权规则插入 <code>release</code> / <code>autorelease</code>，并不是所有新对象都会 autorelease。局部临时对象可在作用域结束时立即释放；<code>@autoreleasepool</code> 主要用于控制临时对象生命周期和避免瞬时内存峰值。</li>
+<li>ARC中所有的新生对象都是 自动加autorelese的， @atuorelesepool 大部分时候解决了瞬时内存暴增的问题 。</li>
 <li>MRC中的情况 关键词变了NSAutoreleasePool。</li>
 </ul>
 <pre><code class="hljs language-objectivec" lang="objectivec"><span class="hljs-comment">//来自Apple文档，见参考</span>
 <span class="hljs-built_in">NSArray</span> *urls = &#x3C;# An array of file URLs #>;
-<span class="hljs-keyword">for</span> (<span class="hljs-built_in">NSURL</span> *url <span class="hljs-keyword">in</span> urls) {
-  <span class="hljs-keyword">@autoreleasepool</span> {
+<span class="hljs-keyword">for</span> (<span class="hljs-built_in">NSURL</span> *url <span class="hljs-keyword">in</span> urls) { 
+  <span class="hljs-keyword">@autoreleasepool</span> { 
 		<span class="hljs-built_in">NSError</span> *error;
-		<span class="hljs-built_in">NSString</span> *fileContents = [<span class="hljs-built_in">NSString</span> stringWithContentsOfURL:url encoding:<span class="hljs-built_in">NSUTF8StringEncoding</span> error:&#x26;error];
+		<span class="hljs-built_in">NSString</span> *fileContents = [<span class="hljs-built_in">NSString</span> stringWithContentsOfURL:urlencoding:<span class="hljs-built_in">NSUTF8StringEncoding</span> error:&#x26;error]; 
 }
 
 <span class="hljs-comment">// 如果循环次数非常多，而且循环体里面的对象都是临时创建使用的，就可以用@autoreleasepool 包起来，让每次循环结束时，可以及时释放临时对象的内存</span>
@@ -1012,19 +1054,19 @@ dispatch_resume(_timer);
 <span class="hljs-built_in">NSString</span>* str = [[[<span class="hljs-built_in">NSString</span> alloc] initWithString:<span class="hljs-string">@"666"</span>] autorelease];
 [pool drain];
 
-<span class="hljs-comment">// 其作用域为 init 与 drain 之间</span>
+<span class="hljs-comment">// 其作用于为drain 和 init 之间</span>
 </code></pre>
 <ul>
-<li><strong>回归正题@autoreleasepool 什么时候释放？</strong>
+<li><strong>回归正题@autoReleasePool什么时间释放?</strong>
 <ul>
-<li>显式 <code>@autoreleasepool</code> 的对象在块结束时 drain；主线程 RunLoop 的 autorelease pool 会随循环周期释放，但不能推广到所有对象、所有线程和所有场景。</li>
+<li>一个被autoreleasepool包裹生成得对象，都会在其创建生成之后自动添加autorelease， 然后被autorelease对象得释放时机 就是在当前runloop循环结束的时候自动释放的</li>
 <li>参考链接：<a href="https://link.juejin.cn?target=http%3A%2F%2Fblog.sunnyxx.com%2F2014%2F10%2F15%2Fbehind-autorelease%2F" target="_blank" title="http://blog.sunnyxx.com/2014/10/15/behind-autorelease/" ref="nofollow noopener noreferrer">blog.sunnyxx.com/2014/10/15/…</a></li>
 </ul>
 </li>
 </ul>
 <h4 id="heading-61" data-id="heading-61">子线程中的autorelease变量什么时候释放？</h4>
 <ul>
-<li>释放时机取决于线程模型：GCD 队列通常有围绕 block 的 autorelease pool；<code>NSThread</code> 有入口/结束相关处理；裸 pthread 或长生命周期线程应显式使用 <code>@autoreleasepool</code>。</li>
+<li>子线程中会默认包裹一个autoreleasepool的，  释放时机是当前线程退出的时候。</li>
 </ul>
 <h4 id="heading-62" data-id="heading-62">autoreleasepool是如何实现的？</h4>
 <ul>
@@ -1048,41 +1090,26 @@ dispatch_resume(_timer);
     uint32_t <span class="hljs-keyword">const</span> depth; <span class="hljs-comment">// 深度，也可以理解为当前page在链表中的位置</span>
     uint32_t hiwat;
 <span class="hljs-class">&#x7D;</span></code></pre>
-<h3 id="heading-66" data-id="heading-66">27. iOS 界面渲染机制？</h3>
+<h3 id="heading-66" data-id="heading-66">27. iOS 界面渲染机制？</h3><h4>一、iOS 界面渲染机制口述版：</h4>
+<p>iOS 渲染不是 Core Animation 自己把像素画到屏幕上。我们改 UIView 的 frame、颜色、透明度，底层其实是在改 CALayer。完整流程分四段：</p>
+<p>第一段是 <strong>App 进程 / CPU 阶段</strong>。UI 更新后，RunLoop 里 Core Animation 会做一次事务提交，主要包括：</p>
 <ul>
-<li>先简单解释一下渲染机制</li>
+<li><strong>Layout</strong>：计算视图和图层 frame，布局子视图；</li>
+<li><strong>Display</strong>：必要时调用 <code>drawRect:</code>，用 Core Graphics 生成 bitmap，图片解码、文本排版也可能在这里发生；</li>
+<li><strong>Prepare</strong>：准备图层属性、图片、纹理等资源；</li>
+<li><strong>Commit</strong>：把图层树和属性打包，通过 IPC 和共享内存提交给 Render Server。</li>
 </ul>
-<p>首先iOS渲染视图的核心是Core Animation，其渲染层次通常描述为：<strong>模型树 -> 呈现树 -> 渲染树</strong></p>
-<ul>
-<li>
-<p>一共三个阶段</p>
-</li>
-<li>
-<p>CPU阶段（进行Frame布局，准备视图和图层之间的层级关系）</p>
-</li>
-<li>
-<p>GPU/渲染服务阶段（OpenGL ES 或 Metal）， （渲染服务把上面提供的图层上色，生成各种帧）</p>
-</li>
-<li>
-<p>GPU 阶段（合成帧缓冲并输出到屏幕）</p>
-</li>
-<li>
-<p>稍微详细说明</p>
-</li>
-<li>
-<p>首先一个视图由CPU进行Frame布局，准备视图和图层的层级关系。</p>
-</li>
-<li>
-<p>CPU 会将处理视图和图层的层级关系打包，通过IPC（进程间的通信）通道提交给渲染服务（OpenGL和GPU）</p>
-</li>
-<li>
-<p>渲染服务首先将图层交给OpenGL进行纹理生成和着色，生成前后帧缓存，再根据硬件的刷新帧率，一般以设备的VSync信号和CADisplayLink（类似一个刷新UI专用的定时器）为标准，进行前后帧缓存的切换</p>
-</li>
-<li>
-<p>最后，将最终 要显示在画面上的后帧缓存交给GPU，进行采集图片和形状，运行变换， 应用纹理混合，最终显示在屏幕上。</p>
-</li>
-</ul>
-<h4 id="heading-63" data-id="heading-63">程序卡顿的原因？</h4>
+<p>注意：App 进程不负责最终屏幕合成，提交的是图层树和属性，不是 UIView 本身。</p>
+<p>第二段是 <strong>Render Server 阶段</strong>。iOS 上 Render Server 通常在 <code>backboardd</code> 进程里。它拿到图层树后反序列化，维护渲染树，按层级、变换、透明度、裁剪、混合模式组织合成，再用 Metal 或 OpenGL ES 编码 GPU 命令，并生成管理帧缓冲，配合显示系统做双缓冲或三缓冲切换。</p>
+<p>第三段是 <strong>GPU 阶段</strong>。GPU 执行纹理采样、图层变换、裁剪与混合，最终合成到帧缓冲。</p>
+<p>第四段是 <strong>显示阶段</strong>。显示控制器按 VSync 信号扫描帧缓冲输出到屏幕。</p>
+<p>三棵树要记住：<strong>模型树</strong>存目标值；<strong>呈现树</strong>近似反映当前显示值，动画时 Core Animation 体系会在模型树和呈现树之间插值；<strong>渲染树</strong>是 Render Server 内部合成用的，App 不能直接操作。</p>
+<p>两个易错点：<code>CADisplayLink</code> 是基于 VSync 的 App 侧定时器，不负责切帧；Metal/OpenGL ES 是提交 GPU 命令的图形 API，不是“渲染服务交给 OpenGL，再交给 GPU”这么三段。常见卡顿就是主线程布局绘制太重、图片解码、离屏渲染、图层太多导致 GPU 合成压力大。</p>
+<blockquote>
+<p><strong>如果面试官只要一句话：</strong><br>App 进程用 Core Animation 组织并提交图层树，Render Server 负责合成，GPU 执行图形命令，显示系统按 VSync 把帧缓冲输出到屏幕。</p>
+</blockquote>
+<h4>二、程序卡顿的原因</h4>
+<h5 id="heading-63" data-id="heading-63">程序卡顿的原因？</h5>
 <ul>
 <li>正常渲染流程</li>
 <li>CPU 计算完成后交给 GPU，在 VSync 到来时将内容渲染到屏幕上</li>
@@ -1090,31 +1117,52 @@ dispatch_resume(_timer);
 <li>CPU计算时间正常或者慢，GPU 渲染时间过长。VSync 到来时由于没有绘制完成，CPU 开始计算下一帧，当下一帧正常绘制完成后，把当前没有绘制完成的帧丢弃， 显示了下一帧，于是这样就造成了卡顿。
 <strong>需要注意的是：Vsync时间间隔是固定的， 比如 60Hz 屏幕约每 16.67ms 触发一次 VSync，类似定时器</strong></li>
 </ul>
+<h5>相关面试题</h5>
 <p><strong>这里会出现一个面试题！！！</strong>
 题目如下：</p>
 <ul>
 <li>从第一次打开App到完全开始展现出UI，中间发生了什么？ 或者App是怎么渲染某一个View的？</li>
 <li>回答就是上面的稍微详细说明，如果要求更详细， 可以继续深究一下。</li>
 </ul>
-<p>在科普一下
-<em><strong>1.Core Animation</strong></em>
-Core Animation 在 RunLoop 中注册了一个 Observer，监听了 BeforeWaiting 和 Exit 事件。这个 Observer 的优先级是 2000000，低于常见的其他 Observer。当一个触摸事件到来时，RunLoop 被唤醒，App 中的代码会执行一些操作，比如创建和调整视图层级、设置 UIView 的 frame、修改 CALayer 的透明度、为视图添加一个动画；这些操作最终都会被 CALayer 捕获，并通过 CATransaction 提交到一个中间状态去（CATransaction 的文档略有提到这些内容，但并不完整）。当上面所有操作结束后，RunLoop 即将进入休眠（或者退出）时，关注该事件的 Observer 都会得到通知。这时 CA 注册的那个 Observer 就会在回调中，把所有的中间状态合并提交到 GPU 去显示；如果此处有动画，CA 会通过 DisplayLink 等机制多次触发相关流程。</p>
-<p><em><strong>2.CPU渲染职能</strong></em></p>
-<ul>
-<li><strong>布局计算</strong>：如果视图层级过于复杂，当试图呈现或者修改的时候，计算图层帧率就会消耗一部分时间，</li>
-<li><strong>视图懒加载</strong>： iOS只会当视图控制器的视图显示到屏幕上才会加载它，这对内存使用和程序启动时间很有好处，但是当呈现到屏幕之前，按下按钮导致的许多工作都不会被及时响应。比如，控制器从数据库中获取数据， 或者视图从一个xib加载，或者涉及 I/O 图片加载都会比 CPU 正常操作慢得多。</li>
-<li><strong>解压图片</strong>：PNG或者JPEG压缩之后的图片文件会比同质量的位图小得多。但是在图片绘制到屏幕上之前，必须把它解码成完整的位图尺寸(通常等同于图片宽 x 长 x 4个字节)。为了节省内存，iOS通常直到真正绘制的时候才去解码图片。根据你加载图片的方式，第一次对 图层内容赋值的时候(直接或者间接使用 UIImageView )或者把它绘制到 Core Graphics中，都需要对它解压，这样的话，对于一个较大的图片，都会占用一定的时间。</li>
-<li><strong>Core Graphics绘制</strong>：如果对视图实现了drawRect:或drawLayer:inContext:方法，或者 CALayerDelegate 的 方法，那么在绘制任何内容之前都会产生一个巨大的性能开销。为了支持对图层内容的任意绘制，Core Animation必须创建一个内存中等大小的寄宿图片。然后一旦绘制结束之后， 必须把图片数据通过IPC传到渲染服务器。在此基础上，Core Graphics绘制就会变得十分缓慢，所以在一个对性能十分挑剔的场景下这样做十分不好。</li>
-<li><strong>图层打包</strong>：当图层被成功打包，发送到渲染服务器之后，CPU仍然要做如下工作:为了显示 屏幕上的图层，Core Animation必须对渲染树中的每个可见图层通过 OpenGL/Metal 循环转换成纹理或三角形数据。由于GPU并不知晓Core Animation图层的任何结构，所以必须 要由CPU做这些事情。这里CPU涉及的工作和图层个数成正比，所以如果在你的层 级关系中有太多的图层，就会导致 CPU 每一帧的渲染，即使这些事情不是你的应用 程序可控的。</li>
-</ul>
-<p><em><strong>3.GPU渲染职能</strong></em>
-GPU会根据生成的前后帧缓存数据，根据实际情况进行合成，其中造成<strong>GPU渲染负担</strong>的一般是：<strong>离屏渲染，图层混合，延迟加载。</strong></p>
+<h4>三、渲染机制补充</h4>
+<section class="rendering-mechanism" id="rendering-mechanism-core-animation">
+  <h5>1. Core Animation</h5>
+  <ol class="rendering-process">
+    <li>Core Animation 在 RunLoop 中注册了一个 Observer，监听了 BeforeWaiting 和 Exit 事件。</li>
+    <li>这个 Observer 的优先级是 2000000，低于常见的其他 Observer。</li>
+    <li>当一个触摸事件到来时，RunLoop 被唤醒，App 中的代码会执行一些操作，比如创建和调整视图层级、设置 UIView 的 frame、修改 CALayer 的透明度、为视图添加一个动画；</li>
+    <li>这些操作最终都会被 CALayer 捕获，并通过 CATransaction 提交到一个中间状态去（CATransaction 的文档略有提到这些内容，但并不完整）。</li>
+    <li>当上面所有操作结束后，RunLoop 即将进入休眠（或者退出）时，关注该事件的 Observer 都会得到通知。</li>
+    <li>这时 CA 注册的那个 Observer 就会在回调中，把所有的中间状态合并提交到 GPU 去显示；如果此处有动画，CA 会通过 DisplayLink 等机制多次触发相关流程。</li>
+  </ol>
+</section>
+
+<section class="rendering-mechanism" id="rendering-mechanism-cpu">
+  <h5>2. CPU渲染职能</h5>
+  <ul class="rendering-duty-list">
+    <li><strong>布局计算</strong><span class="duty-desc">：如果视图层级过于复杂，当试图呈现或者修改的时候，计算图层帧率就会消耗一部分时间，</span></li>
+    <li><strong>视图懒加载</strong><span class="duty-desc">： iOS只会当视图控制器的视图显示到屏幕上才会加载它，这对内存使用和程序启动时间很有好处，但是当呈现到屏幕之前，按下按钮导致的许多工作都不会被及时响应。比如，控制器从数据库中获取数据， 或者视图从一个xib加载，或者涉及 I/O 图片加载都会比 CPU 正常操作慢得多。</span></li>
+    <li><strong>解压图片</strong><span class="duty-desc">：PNG或者JPEG压缩之后的图片文件会比同质量的位图小得多。但是在图片绘制到屏幕上之前，必须把它解码成完整的位图尺寸(通常等同于图片宽 x 长 x 4个字节)。为了节省内存，iOS通常直到真正绘制的时候才去解码图片。根据你加载图片的方式，第一次对 图层内容赋值的时候(直接或者间接使用 UIImageView )或者把它绘制到 Core Graphics中，都需要对它解压，这样的话，对于一个较大的图片，都会占用一定的时间。</span></li>
+    <li><strong>Core Graphics绘制</strong><span class="duty-desc">：如果对视图实现了drawRect:或drawLayer:inContext:方法，或者 CALayerDelegate 的 方法，那么在绘制任何内容之前都会产生一个巨大的性能开销。为了支持对图层内容的任意绘制，Core Animation必须创建一个内存中等大小的寄宿图片。然后一旦绘制结束之后， 必须把图片数据通过IPC传到渲染服务器。在此基础上，Core Graphics绘制就会变得十分缓慢，所以在一个对性能十分挑剔的场景下这样做十分不好。</span></li>
+    <li><strong>图层打包</strong><span class="duty-desc">：当图层被成功打包，发送到渲染服务器之后，CPU仍然要做如下工作:为了显示 屏幕上的图层，Core Animation必须对渲染树中的每个可见图层通过 OpenGL/Metal 循环转换成纹理或三角形数据。由于GPU并不知晓Core Animation图层的任何结构，所以必须 要由CPU做这些事情。这里CPU涉及的工作和图层个数成正比，所以如果在你的层 级关系中有太多的图层，就会导致 CPU 每一帧的渲染，即使这些事情不是你的应用 程序可控的。</span></li>
+  </ul>
+</section>
+
+<section class="rendering-mechanism" id="rendering-mechanism-gpu">
+  <h5>3. GPU渲染职能</h5>
+  <p>GPU会根据生成的前后帧缓存数据，根据实际情况进行合成，其中造成<strong>GPU渲染负担</strong>的一般是：<strong>离屏渲染，图层混合，延迟加载。</strong></p>
+</section>
+
+<h4>四、UIImageView 渲染延伸</h4>
+<h5>相关面试题</h5>
 <p><strong>这里又会出现一个面试题！！！</strong>
 一个UIImageView添加到视图上以后，内部如何渲染到手机上的？</p>
 <p>图片显示分为三个步骤： <strong>加载、解码、渲染</strong>、
 通常，我们程序员的操作只是加载，至于解码和渲染是由UIKit内部进行的。
 例如：UIImageView显示在屏幕上的时候需要UIImage对象进行数据源的赋值。而UIImage持有的数据是未解码的压缩数据，当赋值的时候，图像数据会被解码变成RGB颜色数据，最终渲染到屏幕上。</p>
 <hr>
+<h4>五、UITableView 优化延伸</h4>
+<h5>1. 滚动卡顿原因</h5>
 <p><strong>看完上面的又来问题了！</strong>
 关于UITableView优化的问题？（真他妈子子孙孙无穷尽也~）
 先说造成 UITableView 滚动卡顿的原因有哪些？</p>
@@ -1133,8 +1181,9 @@ GPU会根据生成的前后帧缓存数据，根据实际情况进行合成，�
 <li>-renderInContext: 方法</li>
 </ul>
 <hr>
+<h5>2. 优化方案</h5>
 <p><strong>在说关于UITableView的优化问题！</strong></p>
-<p>基础的</p>
+<h6>基础的</h6>
 <ul>
 <li>重用机制（缓存池）</li>
 <li>少用有透明度的View</li>
@@ -1144,146 +1193,347 @@ GPU会根据生成的前后帧缓存数据，根据实际情况进行合成，�
 <li>减少离屏渲染操作（圆角、阴影啥的）</li>
 </ul>
 <hr>
+<h6>解释一下为什么减少离屏渲染操作？</h6>
 <ul>
-<li>
-<p>**** 解释一下为什么减少离屏渲染操作？****</p>
-</li>
-<li>
-<p>需要创建新的缓冲区</p>
-</li>
-<li>
-<p>整个过程需要多次切换上下文环境， 显示从当前的屏幕切换到离屏，等待离屏渲染结束后，将离屏缓冲区的渲染结果显示到屏幕上， 又要将上下文环境从离屏切换到当前屏幕，</p>
-</li>
-<li>
-<p><strong><strong>哪些操作会触发离屏渲染？</strong></strong></p>
-</li>
-<li>
-<p>光栅化 layer.shouldRasterize = YES（会引入离屏/缓存；适合稳定的复用内容，频繁变化时可能更慢）</p>
-</li>
-<li>
-<p>遮罩layer.mask</p>
-</li>
-<li>
-<p>圆角/裁切 layer.masksToBounds + cornerRadius：现代 iOS 上是否离屏渲染取决于内容、背景、裁剪和优化路径，不是无条件触发</p>
-</li>
-<li>
-<p>阴影layer.shadowXXX</p>
-</li>
+<li>需要创建新的缓冲区</li>
+<li>整个过程需要多次切换上下文环境， 显示从当前的屏幕切换到离屏，等待离屏渲染结束后，将离屏缓冲区的渲染结果显示到屏幕上， 又要将上下文环境从离屏切换到当前屏幕，</li>
 </ul>
-<p>进阶的</p>
+<h6>哪些操作会触发离屏渲染？</h6>
+<ul>
+<li>光栅化 layer.shouldRasterize = YES（会引入离屏/缓存；适合稳定的复用内容，频繁变化时可能更慢）</li>
+<li>遮罩layer.mask</li>
+<li>圆角/裁切 layer.masksToBounds + cornerRadius：现代 iOS 上是否离屏渲染取决于内容、背景、裁剪和优化路径，不是无条件触发</li>
+<li>阴影layer.shadowXXX</li>
+</ul>
+<h6>进阶的</h6>
 <ul>
 <li>缓存cell的高度（提前计算好cell的高度，缓存进当前的模型里面）</li>
 <li>异步绘制</li>
 <li>滑动的时候，按需加载</li>
 </ul>
-<p>高阶的</p>
+<h6>高阶的</h6>
 <ul>
 <li>你想不到 竟然不推荐用UILabel。哈哈哈~  至于为什么 看下面的链接吧</li>
 </ul>
 <p>至于上面的那些基础的，涉及到渲染级别的自己说的时候悠着点，面试官如果想搞你的话，考一考你最上面的那些，CPU 和 GPU，以及 OpenGL/Metal 相关，再考一下进程通信 IPC，以及VSync信号啥的， 这些东西太鸡儿高深了，没点匠心 这东西还真搞不了，要想研究可以看看YYKit的作者写的一篇关于页面流畅的文章：<a href="https://link.juejin.cn?target=https%3A%2F%2Fblog.ibireme.com%2F2015%2F11%2F12%2Fsmooth_user_interfaces_for_ios%2F" target="_blank" title="https://blog.ibireme.com/2015/11/12/smooth_user_interfaces_for_ios/" ref="nofollow noopener noreferrer">blog.ibireme.com/2015/11/12/…</a></p>
-<h4 id="heading-64" data-id="heading-64">卡顿检测的方法</h4>
+<h4>六、卡顿检测的方法</h4>
+<h5 id="heading-64" data-id="heading-64">卡顿检测的方法</h5>
 <ul>
 <li>卡顿就是主线程阻塞的时间问题，可以添加Observer到主线程Runloop中，通过监听Runloop状态切换的耗时，以达到监听卡顿的目的</li>
 </ul>
+<h6>列表卡顿检测：CFRunLoopObserver 示例</h6>
+<p>先给一个可落地的最小实现：</p>
+<ul>
+<li><strong>beforeSources 到 beforeWaiting 的差值</strong>，近似表示主 RunLoop 这一轮处理任务用了多久。</li>
+<li><strong>observer 必须挂在 CFRunLoopGetMain() 上，并加到 commonModes</strong>，这样列表滚动时的 UITrackingRunLoopMode 也能被观察。</li>
+<li><strong>repeat: true 表示持续监听</strong>；主 RunLoop 睡着时不会回调，不需要额外开一条线程去轮询。</li>
+<li><strong>回调里只做轻量操作</strong>：取时间、算差值、打日志这类；格式化、落盘、上报应交给后台队列。</li>
+<li><strong>它只能判断“主线程是否被占住”</strong>；如果瓶颈在 GPU 或渲染提交后的合成阶段，还需要配合 Instruments / CADisplayLink 看掉帧。</li>
+<li><strong>页面退出、抽样结束或 App 进后台时调用 stop()</strong>，避免长期挂着监控。</li>
+</ul>
+<p>一句话收尾：<strong>列表卡顿不是统一配方，先分清主线程 CPU、图片 IO/解码、GPU 渲染哪一段超预算；再处理复用、行高、降采样、层级和离屏渲染。</strong></p>
+<h6>代码示例</h6>
+<pre><code class="hljs language-text" lang="text">开启 shouldRasterize：
+layer tree ─► GPU 渲染成位图 ─► 离屏缓冲区 ─► 缓存 ─► 合成到屏幕</code></pre>
+<pre><code class="hljs language-text" lang="text">第一次：离屏渲染 + 建缓存，成本高
+后续：直接用缓存位图，可能更便宜
+内容变化：缓存失效，又要重新离屏渲染</code></pre>
+<pre><code class="hljs language-swift" lang="swift">final class MainThreadStallMonitor {
+    private var observer: CFRunLoopObserver?
+    private var startTime: CFTimeInterval?
+    private let threshold: CFTimeInterval
+
+    init(threshold: CFTimeInterval = 0.05) {
+        self.threshold = threshold
+    }
+
+    func start() {
+        let activities: CFRunLoopActivity = [
+            .beforeSources,
+            .beforeWaiting
+        ]
+
+        let observer = CFRunLoopObserverCreateWithHandler(
+            kCFAllocatorDefault,
+            activities.rawValue,
+            true, // repeat
+            0
+        ) { [weak self] _, activity in
+            guard let self else { return }
+            let now = CACurrentMediaTime()
+
+            if activity.contains(.beforeSources) {
+                self.startTime = now
+            }
+
+            if activity.contains(.beforeWaiting) {
+                defer { self.startTime = nil }
+                guard let start = self.startTime else { return }
+
+                let elapsed = now - start
+                if elapsed &gt; self.threshold {
+                    print("Main thread stall: \(elapsed * 1000) ms")
+                }
+            }
+        }
+
+        self.observer = observer
+        CFRunLoopAddObserver(
+            CFRunLoopGetMain(),
+            observer,
+            CFRunLoopMode.commonModes
+        )
+    }
+
+    func stop() {
+        if let observer {
+            CFRunLoopRemoveObserver(
+                CFRunLoopGetMain(),
+                observer,
+                CFRunLoopMode.commonModes
+            )
+        }
+        observer = nil
+        startTime = nil
+    }
+}</code></pre>
+<h6>边界 / 追问</h6>
+<ol>
+<li><strong>先确认复用和注册没问题</strong>：identifier 复用 cell，不要每次新建视图。</li>
+<li><strong>把每帧的重复工作拿掉</strong>：行高、布局、约束、格式化数据尽量缓存或提前算。</li>
+<li><strong>图片别在主线程“现解现画”</strong>：后台队列解码，并按显示尺寸降采样，不要把原图直接给列表。</li>
+<li><strong>减少渲染压力</strong>：层级别太深、透明区域别太大；阴影给 shadowPath；滚动中的 cell 慎用 masksToBounds、模糊和 shouldRasterize。</li>
+<li><strong>数据刷新别太碎</strong>：能用批量更新就别频繁 reload；滑动手势里不要同步创建复杂 UI。</li>
+<li><strong>最后用数据回归验证</strong>：看 FPS / hitch、主线程耗时和 GPU 指标是否真的下降。</li>
+</ol>
 <hr>
 <h3 id="heading-65" data-id="heading-65">28. 事件响应链和事件传递</h3>
-<p>既然都是图形绘制了，那就再研究一下<strong>事件响应链&#x26;原理</strong></p>
-<p>传统的问法来了：<strong>UIView和CALayer的区别？</strong>
-通常我们这样回答：<strong>UIView可以响应用户事件，而CALayer不能处理事件</strong></p>
-<hr>
-<p>回答这个之前， 先回顾一下另外一个经典面试题：<strong>事件响应链和事件传递？</strong></p>
-<p><strong>基本概念：</strong></p>
-<ul>
-<li>
-<p>响应链由多个 UIResponder 对象组成，通常从第一响应者一直到 UIApplication。</p>
-</li>
-<li>
-<p>事件传递是获取响应链后，将事件由第一响应者向 UIApplication 传递的过程。</p>
-</li>
-<li>
-<p><img src="assets/image-2.awebp" alt="enter image description here" loading="lazy"></p>
-</li>
-<li>
-<p><img src="assets/image-3.awebp" alt="enter image description here" loading="lazy"></p>
-</li>
-<li>
-<p><strong>事件的分发和传递</strong></p>
-</li>
-<li>
-<p>当程序中发生触摸事件之后，系统会将事件添加到UIApplication管理的一个队列当中</p>
-</li>
-<li>
-<p>UIApplication将处于任务队列最前端的事件向下分发 即UIWindow</p>
-</li>
-<li>
-<p>UIWindow将事件向下分发，即UIView或者UIViewController</p>
-</li>
-<li>
-<p>UIView首先看自己能否处理这个事件，触摸点是否在自己身上，alpha 是否大于 0.01，userInteractionEnabled 是否为 YES，hidden 是否为 NO，如果这些都满足，那么继续寻找其子视图</p>
-</li>
-<li>
-<p>遍历子控件，重复上面步骤</p>
-</li>
-<li>
-<p>如果没有找到，那么自己就是该事件的处理者</p>
-</li>
-<li>
-<p>如果自己不能处理，那么就不做任何处理  即视为没有合适的View能接收处理当前事件，则该事件会被废弃。</p>
-</li>
-<li>
-<p>*** 怎么寻找当前触摸的是哪一个View?***
-下面是两个方法</p>
-</li>
-</ul>
-<pre><code class="hljs language-objc" lang="objc"><span class="hljs-comment">// 此方法返回的View是本次点击事件需要的最佳View</span>
-- (<span class="hljs-built_in">UIView</span> *)hitTest:(<span class="hljs-built_in">CGPoint</span>)point withEvent:(<span class="hljs-built_in">UIEvent</span> *)event
+<div class="q28-answer-layout">
+<section class="qa-answer-card q28-primary-answer" aria-labelledby="q28-primary-answer-title">
+  <div class="answer-card-head">
+    <span class="answer-card-tag">主线答案</span>
+    <h4 id="q28-primary-answer-title">事件响应链和事件传递</h4>
+  </div>
 
-<span class="hljs-comment">// 判断一个点是否落在范围内</span>
-- (<span class="hljs-type">BOOL</span>)pointInside:(<span class="hljs-built_in">CGPoint</span>)point withEvent:(<span class="hljs-built_in">UIEvent</span> *)event
-</code></pre>
-<p>事件传递给控件之后， 就会调用hitTest:withEvent方法去寻找更合适的View，如果当前View存在子控件，则在子控件继续调用hitTest:withEvent方法判断是否是合适的View， 如果还不是就一直遍历寻找， 如果子视图均未命中，则返回自身；如果当前视图不能接收事件，则返回 nil。</p>
-<pre><code class="hljs language-objc" lang="objc"><span class="hljs-comment">// 示例：自定义 BaseView 可以重写 hitTest:withEvent:</span>
-- (<span class="hljs-built_in">UIView</span> *)hitTest:(<span class="hljs-built_in">CGPoint</span>)point withEvent:(<span class="hljs-built_in">UIEvent</span> *)event {
-   <span class="hljs-comment">// 1.判断当前控件能否接收事件</span>
-   <span class="hljs-keyword">if</span> (<span class="hljs-keyword">self</span>.userInteractionEnabled == <span class="hljs-literal">NO</span> || <span class="hljs-keyword">self</span>.hidden == <span class="hljs-literal">YES</span> || <span class="hljs-keyword">self</span>.alpha &#x3C;= <span class="hljs-number">0.01</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>;
-   <span class="hljs-comment">// 2. 判断点在不在当前控件</span>
-   <span class="hljs-keyword">if</span> ([<span class="hljs-keyword">self</span> pointInside:point withEvent:event] == <span class="hljs-literal">NO</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>;
-   <span class="hljs-comment">// 3.从后往前遍历自己的子控件</span>
-   <span class="hljs-built_in">NSInteger</span> count = <span class="hljs-keyword">self</span>.subviews.count;
-   <span class="hljs-keyword">for</span> (<span class="hljs-built_in">NSInteger</span> i = count - <span class="hljs-number">1</span>; i >= <span class="hljs-number">0</span>; i--) {
-      <span class="hljs-built_in">UIView</span> *childView = <span class="hljs-keyword">self</span>.subviews[i];
-       <span class="hljs-comment">// 把当前控件上的坐标系转换成子控件上的坐标系</span>
-	  <span class="hljs-built_in">CGPoint</span> childP = [<span class="hljs-keyword">self</span> convertPoint:point toView:childView];
-      <span class="hljs-built_in">UIView</span> *fitView = [childView hitTest:childP withEvent:event];
-       <span class="hljs-keyword">if</span> (fitView) { <span class="hljs-comment">// 寻找到最合适的view</span>
-           <span class="hljs-keyword">return</span> fitView;
-       }
-   }
-   <span class="hljs-comment">// 循环结束,表示没有比自己更合适的view</span>
-   <span class="hljs-keyword">return</span> <span class="hljs-keyword">self</span>;
+  <section class="answer-section">
+    <h4>1. 先看传统问法</h4>
+    <p>既然都是图形绘制了，那就再研究一下<strong>事件响应链&#x26;原理</strong></p>
+    <p>传统的问法来了：<strong>UIView和CALayer的区别？</strong><br>通常我们这样回答：<strong>UIView可以响应用户事件，而CALayer不能处理事件</strong></p>
+    <p class="answer-bridge">回答这个之前， 先回顾一下另外一个经典面试题：<strong>事件响应链和事件传递？</strong></p>
+  </section>
 
-}
+  <section class="answer-section">
+    <h4>2. 基本概念</h4>
+    <ul class="answer-concept-list">
+      <li><strong>响应链：</strong>响应链由多个 UIResponder 对象组成，通常从第一响应者一直到 UIApplication。</li>
+      <li><strong>事件传递：</strong>事件传递是获取响应链后，将事件由第一响应者向 UIApplication 传递的过程。</li>
+    </ul>
+    <div class="q28-image-grid">
+      <img src="assets/image-2.awebp" alt="事件响应链示意图" loading="lazy">
+      <img src="assets/image-3.awebp" alt="事件传递示意图" loading="lazy">
+    </div>
+  </section>
+
+  <section class="answer-section">
+    <h4>3. 事件的分发和传递</h4>
+    <ol class="answer-flow">
+      <li>当程序中发生触摸事件之后，系统会将事件添加到UIApplication管理的一个队列当中。</li>
+      <li>UIApplication将处于任务队列最前端的事件向下分发，即UIWindow。</li>
+      <li>UIWindow将事件向下分发，即UIView或者UIViewController。</li>
+      <li>UIView首先看自己能否处理这个事件：触摸点是否在自己身上，alpha 是否大于 0.01，userInteractionEnabled 是否为 YES，hidden 是否为 NO。如果这些都满足，那么继续寻找其子视图。</li>
+      <li>遍历子控件，重复上面步骤。</li>
+      <li>如果没有找到，那么自己就是该事件的处理者。</li>
+      <li>如果自己不能处理，那么就不做任何处理。即视为没有合适的View能接收处理当前事件，则该事件会被废弃。</li>
+    </ol>
+  </section>
+
+  <section class="answer-section">
+    <h4>4. 怎么寻找当前触摸的是哪一个 View?</h4>
+    <p>下面是两个方法</p>
+    <pre><code class="hljs language-objc" lang="objc">// 此方法返回的View是本次点击事件需要的最佳View
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
+
+// 判断一个点是否落在范围内
+- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
 </code></pre>
-<ul>
-<li><strong>判断触摸点是否在视图内？</strong></li>
-</ul>
-<pre><code class="hljs language-objc" lang="objc">- (<span class="hljs-type">BOOL</span>)pointInside:(<span class="hljs-built_in">CGPoint</span>)point withEvent:(<span class="hljs-built_in">UIEvent</span> *)event
-</code></pre>
-<ul>
-<li><strong>tableView 添加 tap 手势后，点击 cell 时哪个事件会被响应？为什么？</strong></li>
-<li><strong class="qa-fixed">勘误：</strong>UIGestureRecognizer 不属于 UIResponder 响应者链的“最顶端”。手势识别成功后，默认 <code>cancelsTouchesInView = YES</code> 会取消视图的 touches；具体行为取决于 recognizer、delegate、touch type 和视图控件。可通过 delegate 让特定触摸不参与手势。</li>
-<li></li>
-</ul>
-<pre><code class="hljs language-objectivec" lang="objectivec">-(<span class="hljs-type">BOOL</span>)gestureRecognizer:(<span class="hljs-built_in">UIGestureRecognizer</span> *)gestureRecognizer shouldReceiveTouch:(<span class="hljs-built_in">UITouch</span> *)touch
-{
-    <span class="hljs-keyword">if</span>([touch.view isKindOfClass:[XXXXcell <span class="hljs-keyword">class</span>]])
-    {
-        <span class="hljs-keyword">return</span> <span class="hljs-literal">NO</span>;
+    <p class="answer-bridge">事件传递给控件之后， 就会调用hitTest:withEvent方法去寻找更合适的View。如果当前View存在子控件，则在子控件继续调用hitTest:withEvent方法判断是否是合适的View；如果还不是就一直遍历寻找；如果子视图均未命中，则返回自身；如果当前视图不能接收事件，则返回 nil。</p>
+  </section>
+
+  <section class="answer-section">
+    <h4>5. hitTest 查找流程示例</h4>
+    <pre><code class="hljs language-objc" lang="objc">// 示例：自定义 BaseView 可以重写 hitTest:withEvent:
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+    // 1.判断当前控件能否接收事件
+    if (self.userInteractionEnabled == NO || self.hidden == YES || self.alpha <= 0.01) return nil;
+
+    // 2. 判断点在不在当前控件
+    if ([self pointInside:point withEvent:event] == NO) return nil;
+
+    // 3.从后往前遍历自己的子控件
+    NSInteger count = self.subviews.count;
+    for (NSInteger i = count - 1; i >= 0; i--) {
+        UIView *childView = self.subviews[i];
+
+        // 把当前控件上的坐标系转换成子控件上的坐标系
+        CGPoint childP = [self convertPoint:point toView:childView];
+        UIView *fitView = [childView hitTest:childP withEvent:event];
+        if (fitView) { // 寻找到最合适的view
+            return fitView;
+        }
     }
-    <span class="hljs-keyword">return</span> <span class="hljs-literal">YES</span>;
-}
 
+    // 循环结束,表示没有比自己更合适的view
+    return self;
+}
 </code></pre>
+  </section>
+
+  <section class="answer-section answer-section-last">
+    <h4>6. 判断触摸点是否在视图内</h4>
+    <pre><code class="hljs language-objc" lang="objc">- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
+</code></pre>
+  </section>
+</section>
+
+<section id="q28-hit-test-summary" class="qa-summary-box">
+  <h4>倒序遍历子控件与事件传递是否矛盾</h4>
+  <h5>一、30 秒结论版（开口先说这句）</h5>
+  <blockquote>
+    <p>不矛盾。因为「倒序遍历子控件」发生在 <strong>hitTest 找 target 阶段</strong>，而大家直觉里的「事件传递顺序」其实是 <strong>找到 target 之后的响应者链阶段</strong>。这是两个阶段、两个方向、两个目的，时间上还有先后。</p>
+  </blockquote>
+  <p><strong>记忆锚点：</strong>倒序管「同层谁优先」，父到子管「递归往哪走」，响应者链管「没人处理怎么办」。</p>
+  <h5>二、展开：一次触摸的两个阶段</h5>
+  <table>
+    <thead>
+      <tr>
+        <th>阶段</th>
+        <th>目的</th>
+        <th>方向</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>① hitTest 命中测试</td>
+        <td>找出最合适的 view（target）</td>
+        <td>父 → 子递归；同层兄弟<strong>倒序</strong>（上层优先）</td>
+      </tr>
+      <tr>
+        <td>② 响应者链</td>
+        <td>target 不处理时找兜底处理者</td>
+        <td>子 → 父（superview → VC → window → App）</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>关键点：<strong>找到 target 后，事件是直接投递给 target 的，不是逐层从父传到子。</strong>所谓「子到父上抛」只发生在 target 不处理的时候，是兜底机制，发生在 ① 之后。</p>
+  <h5>三、收尾金句（说完停住，等追问）</h5>
+  <blockquote>
+    <p>所以倒序遍历不是和事件传递矛盾，而是<strong>和渲染顺序对齐</strong>——hitTest 解决「找谁」，响应者链解决「没人管怎么办」，方向相反但阶段不同。</p>
+  </blockquote>
+</section>
+<section id="q28-hit-test-four-scenes" class="qa-summary-box">
+  <h4>hitTest 四个定制场景（面试精简版）</h4>
+  <h5>总纲（开口先说）</h5>
+  <blockquote>
+    <p>四个场景都基于同一套 <code>hitTest</code> 三步逻辑：<strong>先判断自身能否响应，再判断触摸点是否命中，最后倒序询问子视图。</strong>定制时只有两个入口：<strong>重写 <code>pointInside</code> 是改「命中范围」，重写 <code>hitTest</code> 是改「命中后的接收者」。</strong></p>
+  </blockquote>
+
+  <h5>1. 事件穿透——命中自己就放弃</h5>
+  <pre><code class="hljs language-objc" lang="objc">- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+    UIView *v = [super hitTest:point withEvent:event];
+    return v == self ? nil : v;   // 命中自己→nil，交给下层
+}</code></pre>
+  <p><strong>坑：</strong>只穿自己；子视图命中的话穿透不生效。</p>
+
+  <h5>2. 事件拦截——命中自己就独占</h5>
+  <pre><code class="hljs language-objc" lang="objc">- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+    if ([self pointInside:point withEvent:event]) return self;
+    return nil;
+}</code></pre>
+  <p><strong>坑：</strong><code>pointInside</code> 仍要判，否则吞掉 bounds 外的点。</p>
+
+  <h5>3. 扩大点击区域——只改 pointInside</h5>
+  <pre><code class="hljs language-objc" lang="objc">- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
+    return CGRectContainsPoint(CGRectInset(self.bounds, -10, -10), point);
+}</code></pre>
+  <p><strong>坑：</strong><code>point</code> 是相对 self 的坐标，别转窗口坐标。</p>
+
+  <h5>4. 超出父 bounds 的子视图可点（高频）</h5>
+  <h5>一句话总结</h5>
+  <blockquote>
+    <p>子视图超出父视图 bounds 后，触摸点在父视图看来是“点在外面”；父视图 <code>pointInside</code> 返回 NO 并提前 <code>return nil</code>，不再遍历子视图，所以子视图 <code>hitTest</code> 没机会执行，点击自然无效。</p>
+  </blockquote>
+
+  <p><strong>根因：</strong>子视图超出父 bounds → 父 <code>pointInside</code> 返回 NO → 父 hitTest 返回 nil → <strong>子视图 hitTest 根本没被调用</strong>。</p>
+  <p><strong>方案 A：父视图改 <code>pointInside</code></strong></p>
+  <pre><code class="hljs language-objc" lang="objc">- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
+    if ([super pointInside:point withEvent:event]) return YES;
+    for (UIView *sub in self.subviews) {
+        if ([sub pointInside:[self convertPoint:point toView:sub] withEvent:event]) return YES;
+    }
+    return NO;
+}</code></pre>
+  <p><strong>方案 B：父视图改 <code>hitTest</code>，跳过自身判定直接问子视图</strong></p>
+  <pre><code class="hljs language-objc" lang="objc">- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+    if (self.userInteractionEnabled == NO || self.hidden || self.alpha <= 0.01) return nil;
+    for (UIView *sub in self.subviews.reverseObjectEnumerator) {
+        UIView *v = [sub hitTest:[self convertPoint:point toView:sub] withEvent:event];
+        if (v) return v;
+    }
+    return [super hitTest:point withEvent:event];  // 兜底，别直接 return nil
+}</code></pre>
+  <p><strong>坑：</strong>方案 B 最后若直接 <code>return nil</code>，父视图自己会失去点击响应。</p>
+
+  <h5>总表（背这张）</h5>
+  <table>
+    <thead>
+      <tr>
+        <th>场景</th>
+        <th>改哪个方法</th>
+        <th>核心一句</th>
+        <th>坑</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>穿透</td><td><code>hitTest</code></td><td>命中自己返回 nil</td><td>只穿自己</td></tr>
+      <tr><td>拦截</td><td><code>hitTest</code></td><td>命中自己返回 self</td><td>仍要判 pointInside</td></tr>
+      <tr><td>扩区</td><td><code>pointInside</code></td><td><code>CGRectInset(bounds,-10,-10)</code></td><td>坐标系别转错</td></tr>
+      <tr><td>超 bounds</td><td><code>pointInside</code> 或 <code>hitTest</code></td><td>别让父视图提前 return nil</td><td>方案 B 要 super 兜底</td></tr>
+    </tbody>
+  </table>
+
+  <h5>收尾金句</h5>
+  <blockquote>
+    <p>四个场景不是四套写法，而是<strong>一套三步逻辑的四种取舍</strong>。超出 bounds 失效的唯一根因是「父视图提前 return nil」——记住这一点，四个场景都能现场推出来。</p>
+  </blockquote>
+</section>
+
+<section class="qa-followup-box" id="q28-gesture-followup" aria-labelledby="q28-gesture-followup-title">
+  <h4 id="q28-gesture-followup-title">延伸追问</h4>
+  <ul>
+    <li><strong>tableView 添加 tap 手势后，点击 cell 时哪个事件会被响应？为什么？</strong></li>
+    <li><strong class="qa-fixed">勘误：</strong>UIGestureRecognizer 不属于 UIResponder 响应者链的“最顶端”。手势识别成功后，默认 <code>cancelsTouchesInView = YES</code> 会取消视图的 touches；具体行为取决于 recognizer、delegate、touch type 和视图控件。可通过 delegate 让特定触摸不参与手势。</li>
+  </ul>
+  <pre><code class="hljs language-objectivec" lang="objectivec">- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    if ([touch.view isKindOfClass:[XXXXcell class]]) {
+        return NO;
+    }
+    return YES;
+}
+</code></pre>
+
+  <h5>简短总结</h5>
+  <ul>
+    <li><strong>默认情况</strong>：在 <code>UITableView</code> 上加 <code>UITapGestureRecognizer</code> 后点击 Cell，<strong>手势会响应，<code>didSelectRowAtIndexPath</code> 不触发</strong>。原因是手势识别成功后，默认 <code>cancelsTouchesInView = YES</code>，会取消传递给视图的 touches。</li>
+    <li><strong>勘误</strong>：<code>UIGestureRecognizer</code> 不属于 <code>UIResponder</code> 响应者链“最顶端”，它只是观察触摸并影响事件传递；具体行为取决于 recognizer、delegate、touch type 和控件。</li>
+    <li><strong>想让两者都响应</strong>：设置 <code>tapGesture.cancelsTouchesInView = NO</code>。</li>
+    <li><strong>想点击 Cell 只走 Cell 选择、不触发手势</strong>：实现 <code>gestureRecognizer:shouldReceiveTouch:</code>，当 <code>touch.view</code> 是 Cell 时返回 <code>NO</code>。</li>
+  </ul>
+  <blockquote>
+    <p>一句话：<strong>默认手势“吃掉”Cell 点击；可通过 <code>cancelsTouchesInView</code> 或 delegate 精准控制。</strong></p>
+  </blockquote>
+</section>
+
+</div>
 <p>下一篇在这里 <a href="https://juejin.im/post/6854573212169142285" target="_blank" title="https://juejin.im/post/6854573212169142285">juejin.im/post/685457…</a></p></div></div></article> <div class="article-end" data-v-539963b4 data-v-61fb5e44><div class="rank-entry-bottom" data-v-539963b4 data-v-61fb5e44><!----></div> <div class="tag-list-box" data-v-539963b4 data-v-61fb5e44><!----><!----><!----></div></div> <!----><!----><!----><!----><!----></div> <div id="sidebar-container" class="sidebar article-sidebar" data-v-4ed317c2 data-v-61fb5e44><div class="sidebar-block author-block author-block-container pure" data-v-7e7e812a data-v-1902877e data-v-4ed317c2><a href="/user/2348212570038446/posts" target="_blank" rel="" class="jj-link user-item item" data-v-65b50b51 data-v-1902877e><div class="avatar jj-avatar avatar" data-v-03256cc6 data-v-1902877e><img loading="eager" src="assets/avatar.jpg" alt="avatar" class="lazy avatar-img immediate" data-v-5244ef91 data-v-03256cc6> </div> <div class="info-box" style="visibility:hidden;" data-v-65b50b51 data-v-1902877e><span to="[object Object]" blank="true" class="username" data-v-292f6e48 data-v-1902877e><span class="name" style="max-width:128px;" data-v-292f6e48>
     执笔续春秋
   </span> <span to="" blank="true" class="rank" data-v-23743940 data-v-292f6e48><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8AQMAAAAAMksxAAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAAA5JREFUKM9jGAWjAAcAAAIcAAE27nY6AAAAAElFTkSuQmCC" alt="创作等级LV.4" title="创作等级LV.4" class="lazy" style="aspect-ratio:NaN;" data-v-5244ef91 data-v-23743940></span> <!----> <!----> </span> <div title="iOS @A Ridiculous Coder" class="position" data-v-65b50b51 data-v-1902877e>
@@ -1294,7 +1544,7 @@ GPU会根据生成的前后帧缓存数据，根据实际情况进行合成，�
         69k
       </div> <div data-v-65b50b51 data-v-1902877e>阅读</div></a> <a href="/user/2348212570038446/followers" target="_blank" rel="" class="jj-link stat-item item" data-v-65b50b51 data-v-1902877e><div class="count" style="display:none;" data-v-65b50b51 data-v-1902877e>
         320
-      </div> <div data-v-65b50b51 data-v-1902877e>粉丝</div></a></div> <div class="operate-btn hidden" style="position:relative;z-index:2;min-height:36px;" data-v-7e7e812a data-v-1902877e><!----><!----><!----></div> <!----></div> <div class="sticky-block-box" data-v-4ed317c2><nav class="article-catalog catalog-block" id="right-toc" data-v-6239701c data-v-16ed86c3 data-v-4ed317c2><div class="catalog-title" data-v-6239701c><div data-v-6239701c>目录</div> <div class="direction" data-v-6239701c><div class="word" data-v-6239701c>收起</div> <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-rotate" data-v-6239701c data-v-6239701c><g id="&amp;#229;&amp;#177;&amp;#149;&amp;#229;&amp;#188;&amp;#128;" data-v-6239701c data-v-6239701c><path id="&amp;#232;&amp;#183;&amp;#175;&amp;#229;&amp;#190;&amp;#132;" fill-rule="evenodd" clip-rule="evenodd" d="M5.99854 7.93206L10.0644 3.86619C10.162 3.76856 10.3203 3.76856 10.418 3.86619L10.7715 4.21975C10.8691 4.31738 10.8691 4.47567 10.7715 4.5733L6.35209 8.99272C6.15683 9.18798 5.84025 9.18798 5.64498 8.99272L1.22557 4.5733C1.12794 4.47567 1.12794 4.31738 1.22557 4.21975L1.57912 3.86619C1.67675 3.76856 1.83504 3.76856 1.93267 3.86619L5.99854 7.93206Z" fill="#8A919F" data-v-6239701c data-v-6239701c></path></g></svg></div></div> <div class="catalog-body unfold" data-v-6239701c data-v-16ed86c3 data-v-4ed317c2><ul class="catalog-list" style="margin-top:0px;" data-v-6239701c><li class="item d1"><div class="a-container"><a href="#heading-0" title="iOS面试题" class="catalog-aTag d1-aTag-title">iOS面试题</a></div> <!----></li><li class="item d1"><div class="a-container"><a href="#heading-1" title="更新日志" class="catalog-aTag d1-aTag-title">更新日志</a></div> <!----></li><li class="item d1"><div class="a-container"><a href="#heading-2" title="一、硬技术篇" class="catalog-aTag d1-aTag-title">一、硬技术篇</a></div> <ul class="sub-list"><li class="item d2"><div class="a-container"><a href="#heading-3" title="1.对象方法和类方法的区别？" class="catalog-aTag d2-aTag-title">1.对象方法和类方法的区别？</a></div> <ul class="sub-list"><li class="item d3"><div class="a-container"><a href="#heading-4" title="引伸1. 如果在类方法中调用self 会有什么问题？" class="catalog-aTag d3-aTag-title">引伸1. 如果在类方法中调用self 会有什么问题？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-5" title="引申2. 讲一下对象，类对象，元类，跟元类结构体的组成以及他们是如何相关联的？" class="catalog-aTag d3-aTag-title">引申2. 讲一下对象，类对象，元类，跟元类结构体的组成以及他们是如何相关联的？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-6" title="引申3. 为什么对象方法中没有保存对象结构体里面，而是保存在类对象的结构体里面？" class="catalog-aTag d3-aTag-title">引申3. 为什么对象方法中没有保存对象结构体里面，而是保存在类对象的结构体里面？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-7" title="引申4. 类方法存在哪里？ 为什么要有元类的存在？" class="catalog-aTag d3-aTag-title">引申4. 类方法存在哪里？ 为什么要有元类的存在？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-8" title="引申5. 什么是野指针？" class="catalog-aTag d3-aTag-title">引申5. 什么是野指针？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-9" title="引申6. 如何检测野指针？" class="catalog-aTag d3-aTag-title">引申6. 如何检测野指针？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-10" title="引申7. 导致Crash的原因有哪些？" class="catalog-aTag d3-aTag-title">引申7. 导致Crash的原因有哪些？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-11" title="引申8. 不使用第三方，如何知道已经上线的App崩溃问题， 具体到哪一个类的哪一个方法的？" class="catalog-aTag d3-aTag-title">引申8. 不使用第三方，如何知道已经上线的App崩溃问题， 具体到哪一个类的哪一个方法的？</a></div> <!----></li></ul></li><li class="item d2"><div class="a-container"><a href="#heading-12" title="iOS中内省的几个方法？" class="catalog-aTag d2-aTag-title">iOS中内省的几个方法？</a></div> <ul class="sub-list"><li class="item d3"><div class="a-container"><a href="#heading-13" title="引申 2. ==、 isEqualToString、isEqual区别？" class="catalog-aTag d3-aTag-title">引申 2. ==、 isEqualToString、isEqual区别？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-14" title="引申 3. class方法和object_getClass方法有什么区别?" class="catalog-aTag d3-aTag-title">引申 3. class方法和object_getClass方法有什么区别?</a></div> <!----></li></ul></li><li class="item d2"><div class="a-container"><a href="#heading-15" title="3.深拷贝和浅拷贝" class="catalog-aTag d2-aTag-title">3.深拷贝和浅拷贝</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-16" title="4.NSString类型为什么要用copy修饰 ？" class="catalog-aTag d2-aTag-title">4.NSString类型为什么要用copy修饰 ？</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-17" title="5.iOS中block 捕获外部局部变量实际上发生了什么？__block 中又做了什么？" class="catalog-aTag d2-aTag-title">5.iOS中block 捕获外部局部变量实际上发生了什么？__block 中又做了什么？</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-18" title="6.iOS Block为什么用copy修饰？" class="catalog-aTag d2-aTag-title">6.iOS Block为什么用copy修饰？</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-19" title="7. 为什么分类中不能创建完整的属性 Property（runtime 关联对象除外）？" class="catalog-aTag d2-aTag-title">7. 为什么分类中不能创建完整的属性 Property（runtime 关联对象除外）？</a></div> <ul class="sub-list"><li class="item d3"><div class="a-container"><a href="#heading-20" title="引伸：关联对象的原理？" class="catalog-aTag d3-aTag-title">引伸：关联对象的原理？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-21" title="引伸：分类可以添加那些内容？" class="catalog-aTag d3-aTag-title">引伸：分类可以添加那些内容？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-22" title="引伸：Category 的实现原理？" class="catalog-aTag d3-aTag-title">引伸：Category 的实现原理？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-23" title="引申 使用runtime Associate方法关联的对象，需要在主对象dealloc的时候释放么？" class="catalog-aTag d3-aTag-title">引申 使用runtime Associate方法关联的对象，需要在主对象dealloc的时候释放么？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-24" title="引申 能否向编译后得到的类增加实例变量？能否向运行时创建的类添加实例变量？" class="catalog-aTag d3-aTag-title">引申 能否向编译后得到的类增加实例变量？能否向运行时创建的类添加实例变量？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-25" title="引申 主类和分类实现同名 foo 方法，主类方法会被覆盖吗？如果想只执行主类方法，如何处理？" class="catalog-aTag d3-aTag-title">引申 主类和分类实现同名 foo 方法，主类方法会被覆盖吗？如果想只执行主类方法，如何处理？</a></div> <!----></li></ul></li><li class="item d2"><div class="a-container"><a href="#heading-26" title="8. load 和 initialize 的调用情况，以及子类的调用顺序问题？" class="catalog-aTag d2-aTag-title">8. load 和 initialize 的调用情况，以及子类的调用顺序问题？</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-27" title="9. 什么是线程安全？" class="catalog-aTag d2-aTag-title">9. 什么是线程安全？</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-28" title="10. 你接触到的项目，哪些场景运用到了线程安全？" class="catalog-aTag d2-aTag-title">10. 你接触到的项目，哪些场景运用到了线程安全？</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-29" title="11. 你实现过单例模式么？ 你能用几种实现方案？" class="catalog-aTag d2-aTag-title">11. 你实现过单例模式么？ 你能用几种实现方案？</a></div> <ul class="sub-list"><li class="item d3"><div class="a-container"><a href="#heading-30" title="引申1. 单例是怎么销毁的？" class="catalog-aTag d3-aTag-title">引申1. 单例是怎么销毁的？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-31" title="引申2. 不使用dispatch_once 如何 实现单例" class="catalog-aTag d3-aTag-title">引申2. 不使用dispatch_once 如何 实现单例</a></div> <!----></li></ul></li><li class="item d2"><div class="a-container"><a href="#heading-32" title="12. 项目开发中，你用单例都做了什么？" class="catalog-aTag d2-aTag-title">12. 项目开发中，你用单例都做了什么？</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-33" title="13.APNS的基本原理" class="catalog-aTag d2-aTag-title">13.APNS的基本原理</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-34" title="14. RunLoop的基础知识" class="catalog-aTag d2-aTag-title">14. RunLoop的基础知识</a></div> <ul class="sub-list"><li class="item d3"><div class="a-container"><a href="#heading-68" title="RunLoop 的作用是什么？内部工作机制了解么？" class="catalog-aTag d3-aTag-title">RunLoop 的作用是什么？内部工作机制了解么？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-35" title="如何保证一个线程常驻（常驻线程）" class="catalog-aTag d3-aTag-title">如何保证一个线程常驻（常驻线程）</a></div> <!----></li></ul></li><li class="item d2"><div class="a-container"><a href="#heading-36" title="15. weak属性？" class="catalog-aTag d2-aTag-title">15. weak属性？</a></div> <ul class="sub-list"><li class="item d3"><div class="a-container"><a href="#heading-37" title="延伸" class="catalog-aTag d3-aTag-title">延伸</a></div> <!----></li></ul></li><li class="item d2"><div class="a-container"><a href="#heading-38" title="16.UIView和CALayer是什么关系?" class="catalog-aTag d2-aTag-title">16.UIView和CALayer是什么关系?</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-39" title="17. @synthesize 和 @dynamic 分别有什么作用" class="catalog-aTag d2-aTag-title">17. @synthesize 和 @dynamic 分别有什么作用</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-40" title="18. static 有什么作用?" class="catalog-aTag d2-aTag-title">18. static 有什么作用?</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-41" title="19. objc 在向一个对象发送消息时，发生了什么？" class="catalog-aTag d2-aTag-title">19. objc 在向一个对象发送消息时，发生了什么？</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-42" title="20. RunLoop 是做什么的？它和线程有什么关系？主线程默认开启了吗？子线程呢？" class="catalog-aTag d2-aTag-title">20. RunLoop 是做什么的？它和线程有什么关系？主线程默认开启了吗？子线程呢？</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-43" title="21. 如何手动触发一个 value 的 KVO" class="catalog-aTag d2-aTag-title">21. 如何手动触发一个 value 的 KVO</a></div> <ul class="sub-list"><li class="item d3"><div class="a-container"><a href="#heading-44" title="引申 0 如何给系统KVO设置筛选条件？" class="catalog-aTag d3-aTag-title">引申 0 如何给系统KVO设置筛选条件？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-45" title="引申 1.通过KVC修改属性会触发KVO么？直接修改成员变量呢 ？" class="catalog-aTag d3-aTag-title">引申 1.通过KVC修改属性会触发KVO么？直接修改成员变量呢 ？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-46" title="引申 kvc的底层实现？" class="catalog-aTag d3-aTag-title">引申 kvc的底层实现？</a></div> <!----></li></ul></li><li class="item d2"><div class="a-container"><a href="#heading-47" title="22. ViewController 生命周期" class="catalog-aTag d2-aTag-title">22. ViewController 生命周期</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-48" title="23. 网络协议" class="catalog-aTag d2-aTag-title">23. 网络协议</a></div> <ul class="sub-list"><li class="item d3"><div class="a-container"><a href="#heading-49" title="引申" class="catalog-aTag d3-aTag-title">引申</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-50" title="HTTP和HTTPS的建立连接的过程？" class="catalog-aTag d3-aTag-title">HTTP和HTTPS的建立连接的过程？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-51" title="HTTP协议中GET和POST的区别" class="catalog-aTag d3-aTag-title">HTTP协议中GET和POST的区别</a></div> <!----></li></ul></li><li class="item d2"><div class="a-container"><a href="#heading-52" title="24. 有没有使用过 performSelector?" class="catalog-aTag d2-aTag-title">24. 有没有使用过 performSelector?</a></div> <ul class="sub-list"><li class="item d3"><div class="a-container"><a href="#heading-53" title="引申 NSTimer在子线程执行？" class="catalog-aTag d3-aTag-title">引申 NSTimer在子线程执行？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-54" title="引申 为什么说NSTimer不准确？" class="catalog-aTag d3-aTag-title">引申 为什么说NSTimer不准确？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-55" title="引申： NStimer的循环引用？" class="catalog-aTag d3-aTag-title">引申： NStimer的循环引用？</a></div> <!----></li></ul></li><li class="item d2"><div class="a-container"><a href="#heading-56" title="25. 为什么 AFN3.0 中需要设置 operationQueue.maxConcurrentOperationCount = 1？AFN2.0 为什么不需要？" class="catalog-aTag d2-aTag-title">25. 为什么 AFN3.0 中需要设置 operationQueue.maxConcurrentOperationCount = 1？AFN2.0 为什么不需要？</a></div> <ul class="sub-list"><li class="item d3"><div class="a-container"><a href="#heading-57" title="AFNetworking 2.0 和3.0 的区别？" class="catalog-aTag d3-aTag-title">AFNetworking 2.0 和3.0 的区别？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-58" title="2.x版本常驻线程的分析" class="catalog-aTag d3-aTag-title">2.x版本常驻线程的分析</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-59" title="3.x 版本不再常驻线程的分析？" class="catalog-aTag d3-aTag-title">3.x 版本不再常驻线程的分析？</a></div> <!----></li></ul></li><li class="item d2"><div class="a-container"><a href="#heading-60" title="26. autoreleasePool 在何时被释放？" class="catalog-aTag d2-aTag-title">26. autoreleasePool 在何时被释放？</a></div> <ul class="sub-list"><li class="item d3"><div class="a-container"><a href="#heading-61" title="子线程中的autorelease变量什么时候释放？" class="catalog-aTag d3-aTag-title">子线程中的autorelease变量什么时候释放？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-62" title="autoreleasepool是如何实现的？" class="catalog-aTag d3-aTag-title">autoreleasepool是如何实现的？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-67" title="AutoreleasePool 所使用的数据结构是什么？AutoreleasePoolPage 结构体了解么？" class="catalog-aTag d3-aTag-title">AutoreleasePool 所使用的数据结构是什么？AutoreleasePoolPage 结构体了解么？</a></div> <!----></li></ul></li><li class="item d2"><div class="a-container"><a href="#heading-66" title="27. iOS 界面渲染机制？" class="catalog-aTag d2-aTag-title">27. iOS 界面渲染机制？</a></div> <ul class="sub-list"><li class="item d3"><div class="a-container"><a href="#heading-63" title="程序卡顿的原因？" class="catalog-aTag d3-aTag-title">程序卡顿的原因？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-64" title="卡顿检测的方法" class="catalog-aTag d3-aTag-title">卡顿检测的方法</a></div> <!----></li></ul></li><li class="item d2"><div class="a-container"><a href="#heading-65" title="28. 事件响应链和事件传递" class="catalog-aTag d2-aTag-title">28. 事件响应链和事件传递</a></div> <!----></li></ul></li></ul></div></nav> <!----> <!----> <div class="adverts-list" data-v-0eca8145 data-v-4ed317c2></div> <!----> <!----></div> <!----></div> <!----> <!----> <div id="article-suspended-panel" data-v-539963b4 data-v-61fb5e44></div> <!----></div> <!----><!----><!----><!----><!----><!----><!----></main> <!----></div> <!----></div> <!----> <div class="global-component-box"><!----></div> <!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----> <!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----></div></div></div>
+      </div> <div data-v-65b50b51 data-v-1902877e>粉丝</div></a></div> <div class="operate-btn hidden" style="position:relative;z-index:2;min-height:36px;" data-v-7e7e812a data-v-1902877e><!----><!----><!----></div> <!----></div> <div class="sticky-block-box" data-v-4ed317c2><nav class="article-catalog catalog-block" id="right-toc" data-v-6239701c data-v-16ed86c3 data-v-4ed317c2><div class="catalog-title" data-v-6239701c><div data-v-6239701c>目录</div> <div class="direction" data-v-6239701c><div class="word" data-v-6239701c>收起</div> <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-rotate" data-v-6239701c data-v-6239701c><g id="&amp;#229;&amp;#177;&amp;#149;&amp;#229;&amp;#188;&amp;#128;" data-v-6239701c data-v-6239701c><path id="&amp;#232;&amp;#183;&amp;#175;&amp;#229;&amp;#190;&amp;#132;" fill-rule="evenodd" clip-rule="evenodd" d="M5.99854 7.93206L10.0644 3.86619C10.162 3.76856 10.3203 3.76856 10.418 3.86619L10.7715 4.21975C10.8691 4.31738 10.8691 4.47567 10.7715 4.5733L6.35209 8.99272C6.15683 9.18798 5.84025 9.18798 5.64498 8.99272L1.22557 4.5733C1.12794 4.47567 1.12794 4.31738 1.22557 4.21975L1.57912 3.86619C1.67675 3.76856 1.83504 3.76856 1.93267 3.86619L5.99854 7.93206Z" fill="#8A919F" data-v-6239701c data-v-6239701c></path></g></svg></div></div> <div class="catalog-body unfold" data-v-6239701c data-v-16ed86c3 data-v-4ed317c2><ul class="catalog-list" style="margin-top:0px;" data-v-6239701c><li class="item d1"><div class="a-container"><a href="#heading-0" title="iOS面试题" class="catalog-aTag d1-aTag-title">iOS面试题</a></div> <!----></li><li class="item d1"><div class="a-container"><a href="#heading-1" title="更新日志" class="catalog-aTag d1-aTag-title">更新日志</a></div> <!----></li><li class="item d1"><div class="a-container"><a href="#heading-2" title="一、硬技术篇" class="catalog-aTag d1-aTag-title">一、硬技术篇</a></div> <ul class="sub-list"><li class="item d2"><div class="a-container"><a href="#heading-3" title="1.对象方法和类方法的区别？" class="catalog-aTag d2-aTag-title">1.对象方法和类方法的区别？</a></div> <ul class="sub-list"><li class="item d3"><div class="a-container"><a href="#heading-4" title="引伸1. 如果在类方法中调用self 会有什么问题？" class="catalog-aTag d3-aTag-title">引伸1. 如果在类方法中调用self 会有什么问题？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-5" title="引申2. 讲一下对象，类对象，元类，跟元类结构体的组成以及他们是如何相关联的？" class="catalog-aTag d3-aTag-title">引申2. 讲一下对象，类对象，元类，跟元类结构体的组成以及他们是如何相关联的？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-6" title="引申3. 为什么对象方法中没有保存对象结构体里面，而是保存在类对象的结构体里面？" class="catalog-aTag d3-aTag-title">引申3. 为什么对象方法中没有保存对象结构体里面，而是保存在类对象的结构体里面？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-7" title="引申4. 类方法存在哪里？ 为什么要有元类的存在？" class="catalog-aTag d3-aTag-title">引申4. 类方法存在哪里？ 为什么要有元类的存在？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-8" title="引申5. 什么是野指针？" class="catalog-aTag d3-aTag-title">引申5. 什么是野指针？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-9" title="引申6. 如何检测野指针？" class="catalog-aTag d3-aTag-title">引申6. 如何检测野指针？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-10" title="引申7. 导致Crash的原因有哪些？" class="catalog-aTag d3-aTag-title">引申7. 导致Crash的原因有哪些？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-11" title="引申8. 不使用第三方，如何知道已经上线的App崩溃问题， 具体到哪一个类的哪一个方法的？" class="catalog-aTag d3-aTag-title">引申8. 不使用第三方，如何知道已经上线的App崩溃问题， 具体到哪一个类的哪一个方法的？</a></div> <!----></li></ul></li><li class="item d2"><div class="a-container"><a href="#heading-12" title="iOS中内省的几个方法？" class="catalog-aTag d2-aTag-title">iOS中内省的几个方法？</a></div> <ul class="sub-list"><li class="item d3"><div class="a-container"><a href="#heading-13" title="引申 2. ==、 isEqualToString、isEqual区别？" class="catalog-aTag d3-aTag-title">引申 2. ==、 isEqualToString、isEqual区别？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-14" title="引申 3. class方法和object_getClass方法有什么区别?" class="catalog-aTag d3-aTag-title">引申 3. class方法和object_getClass方法有什么区别?</a></div> <!----></li></ul></li><li class="item d2"><div class="a-container"><a href="#heading-15" title="3.深拷贝和浅拷贝" class="catalog-aTag d2-aTag-title">3.深拷贝和浅拷贝</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-16" title="4.NSString类型为什么要用copy修饰 ？" class="catalog-aTag d2-aTag-title">4.NSString类型为什么要用copy修饰 ？</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-17" title="5.iOS中block 捕获外部局部变量实际上发生了什么？__block 中又做了什么？" class="catalog-aTag d2-aTag-title">5.iOS中block 捕获外部局部变量实际上发生了什么？__block 中又做了什么？</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-18" title="6.iOS Block为什么用copy修饰？" class="catalog-aTag d2-aTag-title">6.iOS Block为什么用copy修饰？</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-19" title="7. 为什么分类中不能创建完整的属性 Property（runtime 关联对象除外）？" class="catalog-aTag d2-aTag-title">7. 为什么分类中不能创建完整的属性 Property（runtime 关联对象除外）？</a></div> <ul class="sub-list"><li class="item d3"><div class="a-container"><a href="#heading-20" title="引伸：关联对象的原理？" class="catalog-aTag d3-aTag-title">引伸：关联对象的原理？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-21" title="引伸：分类可以添加那些内容？" class="catalog-aTag d3-aTag-title">引伸：分类可以添加那些内容？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-22" title="引伸：Category 的实现原理？" class="catalog-aTag d3-aTag-title">引伸：Category 的实现原理？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-23" title="引申 使用runtime Associate方法关联的对象，需要在主对象dealloc的时候释放么？" class="catalog-aTag d3-aTag-title">引申 使用runtime Associate方法关联的对象，需要在主对象dealloc的时候释放么？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-24" title="引申 能否向编译后得到的类增加实例变量？能否向运行时创建的类添加实例变量？" class="catalog-aTag d3-aTag-title">引申 能否向编译后得到的类增加实例变量？能否向运行时创建的类添加实例变量？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-25" title="引申 主类和分类实现同名 foo 方法，主类方法会被覆盖吗？如果想只执行主类方法，如何处理？" class="catalog-aTag d3-aTag-title">引申 主类和分类实现同名 foo 方法，主类方法会被覆盖吗？如果想只执行主类方法，如何处理？</a></div> <!----></li></ul></li><li class="item d2"><div class="a-container"><a href="#heading-26" title="8. load 和 initialize 的调用情况，以及子类的调用顺序问题？" class="catalog-aTag d2-aTag-title">8. load 和 initialize 的调用情况，以及子类的调用顺序问题？</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-27" title="9. 什么是线程安全？" class="catalog-aTag d2-aTag-title">9. 什么是线程安全？</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-28" title="10. 你接触到的项目，哪些场景运用到了线程安全？" class="catalog-aTag d2-aTag-title">10. 你接触到的项目，哪些场景运用到了线程安全？</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-29" title="11. 你实现过单例模式么？ 你能用几种实现方案？" class="catalog-aTag d2-aTag-title">11. 你实现过单例模式么？ 你能用几种实现方案？</a></div> <ul class="sub-list"><li class="item d3"><div class="a-container"><a href="#heading-30" title="引申1. 单例是怎么销毁的？" class="catalog-aTag d3-aTag-title">引申1. 单例是怎么销毁的？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-31" title="引申2. 不使用dispatch_once 如何 实现单例" class="catalog-aTag d3-aTag-title">引申2. 不使用dispatch_once 如何 实现单例</a></div> <!----></li></ul></li><li class="item d2"><div class="a-container"><a href="#heading-32" title="12. 项目开发中，你用单例都做了什么？" class="catalog-aTag d2-aTag-title">12. 项目开发中，你用单例都做了什么？</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-33" title="13.APNS的基本原理" class="catalog-aTag d2-aTag-title">13.APNS的基本原理</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-34" title="14. RunLoop的基础知识" class="catalog-aTag d2-aTag-title">14. RunLoop的基础知识</a></div> <ul class="sub-list"><li class="item d3"><div class="a-container"><a href="#heading-68" title="RunLoop 的作用是什么？内部工作机制了解么？" class="catalog-aTag d3-aTag-title">RunLoop 的作用是什么？内部工作机制了解么？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-35" title="如何保证一个线程常驻（常驻线程）" class="catalog-aTag d3-aTag-title">如何保证一个线程常驻（常驻线程）</a></div> <!----></li></ul></li><li class="item d2"><div class="a-container"><a href="#heading-36" title="15. weak属性？" class="catalog-aTag d2-aTag-title">15. weak属性？</a></div> <ul class="sub-list"><li class="item d3"><div class="a-container"><a href="#heading-37" title="延伸" class="catalog-aTag d3-aTag-title">延伸</a></div> <!----></li></ul></li><li class="item d2"><div class="a-container"><a href="#heading-38" title="16.UIView和CALayer是什么关系?" class="catalog-aTag d2-aTag-title">16.UIView和CALayer是什么关系?</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-39" title="17. @synthesize 和 @dynamic 分别有什么作用" class="catalog-aTag d2-aTag-title">17. @synthesize 和 @dynamic 分别有什么作用</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-40" title="18. static 有什么作用?" class="catalog-aTag d2-aTag-title">18. static 有什么作用?</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-41" title="19. objc 在向一个对象发送消息时，发生了什么？" class="catalog-aTag d2-aTag-title">19. objc 在向一个对象发送消息时，发生了什么？</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-42" title="20. RunLoop 是做什么的？它和线程有什么关系？主线程默认开启了吗？子线程呢？" class="catalog-aTag d2-aTag-title">20. RunLoop 是做什么的？它和线程有什么关系？主线程默认开启了吗？子线程呢？</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-43" title="21. 如何手动触发一个 value 的 KVO" class="catalog-aTag d2-aTag-title">21. 如何手动触发一个 value 的 KVO</a></div> <ul class="sub-list"><li class="item d3"><div class="a-container"><a href="#heading-44" title="引申 0 如何给系统KVO设置筛选条件？" class="catalog-aTag d3-aTag-title">引申 0 如何给系统KVO设置筛选条件？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-45" title="引申 1.通过KVC修改属性会触发KVO么？直接修改成员变量呢 ？" class="catalog-aTag d3-aTag-title">引申 1.通过KVC修改属性会触发KVO么？直接修改成员变量呢 ？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-46" title="引申 kvc的底层实现？" class="catalog-aTag d3-aTag-title">引申 kvc的底层实现？</a></div> <!----></li></ul></li><li class="item d2"><div class="a-container"><a href="#heading-47" title="22. ViewController 生命周期" class="catalog-aTag d2-aTag-title">22. ViewController 生命周期</a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-48" title="23. 网络协议" class="catalog-aTag d2-aTag-title">23. 网络协议</a></div> <ul class="sub-list"><li class="item d3"><div class="a-container"><a href="#heading-49" title="引申" class="catalog-aTag d3-aTag-title">引申</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-50" title="HTTP和HTTPS的建立连接的过程？" class="catalog-aTag d3-aTag-title">HTTP和HTTPS的建立连接的过程？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-51" title="HTTP协议中GET和POST的区别" class="catalog-aTag d3-aTag-title">HTTP协议中GET和POST的区别</a></div> <!----></li></ul></li><li class="item d2"><div class="a-container"><a href="#heading-52" title="24. 有没有使用过 performSelector?" class="catalog-aTag d2-aTag-title">24. 有没有使用过 performSelector?</a></div> <ul class="sub-list"><li class="item d3"><div class="a-container"><a href="#heading-53" title="引申 NSTimer在子线程执行？" class="catalog-aTag d3-aTag-title">引申 NSTimer在子线程执行？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-54" title="引申 为什么说NSTimer不准确？" class="catalog-aTag d3-aTag-title">引申 为什么说NSTimer不准确？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-55" title="引申： NStimer的循环引用？" class="catalog-aTag d3-aTag-title">引申： NStimer的循环引用？</a></div> <!----></li></ul></li><li class="item d2"><div class="a-container"><a href="#heading-56" title="25. 为什么 AFN3.0 中需要设置 operationQueue.maxConcurrentOperationCount = 1？AFN2.0 为什么不需要？" class="catalog-aTag d2-aTag-title">25. 为什么 AFN3.0 中需要设置 operationQueue.maxConcurrentOperationCount = 1？AFN2.0 为什么不需要？</a></div> <ul class="sub-list"><li class="item d3"><div class="a-container"><a href="#heading-57" title="AFNetworking 2.0 和3.0 的区别？" class="catalog-aTag d3-aTag-title">AFNetworking 2.0 和3.0 的区别？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-58" title="2.x版本常驻线程的分析" class="catalog-aTag d3-aTag-title">2.x版本常驻线程的分析</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-59" title="3.x 版本不再常驻线程的分析？" class="catalog-aTag d3-aTag-title">3.x 版本不再常驻线程的分析？</a></div> <!----></li></ul></li><li class="item d2"><div class="a-container"><a href="#heading-60" title="26. autoreleasePool 在何时被释放？" class="catalog-aTag d2-aTag-title">26. autoreleasePool 在何时被释放？</a></div> <ul class="sub-list"><li class="item d3"><div class="a-container"><a href="#heading-61" title="子线程中的autorelease变量什么时候释放？" class="catalog-aTag d3-aTag-title">子线程中的autorelease变量什么时候释放？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-62" title="autoreleasepool是如何实现的？" class="catalog-aTag d3-aTag-title">autoreleasepool是如何实现的？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-67" title="AutoreleasePool 所使用的数据结构是什么？AutoreleasePoolPage 结构体了解么？" class="catalog-aTag d3-aTag-title">AutoreleasePool 所使用的数据结构是什么？AutoreleasePoolPage 结构体了解么？</a></div> <!----></li></ul></li><li class="item d2"><div class="a-container"><a href="#heading-66" title="27. iOS 界面渲染机制？" class="catalog-aTag d2-aTag-title">27. iOS 界面渲染机制？</a></div> <ul class="sub-list"><li class="item d3"><div class="a-container"><a href="#heading-63" title="程序卡顿的原因？" class="catalog-aTag d3-aTag-title">程序卡顿的原因？</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#heading-64" title="卡顿检测的方法" class="catalog-aTag d3-aTag-title">卡顿检测的方法</a></div> <!----></li></ul></li><li class="item d2"><div class="a-container"><a href="#heading-65" title="28. 事件响应链和事件传递" class="catalog-aTag d2-aTag-title">28. 事件响应链和事件传递</a></div> <ul class="sub-list"><li class="item d3"><div class="a-container"><a href="#q28-hit-test-summary" title="倒序遍历子控件与事件传递是否矛盾" class="catalog-aTag d3-aTag-title">倒序遍历子控件与事件传递是否矛盾</a></div> <!----></li><li class="item d3"><div class="a-container"><a href="#q28-hit-test-four-scenes" title="hitTest 四个定制场景（面试精简版）" class="catalog-aTag d3-aTag-title">hitTest 四个定制场景（面试精简版）</a></div> <!----></li></ul></li></ul></div></nav> <!----> <!----> <div class="adverts-list" data-v-0eca8145 data-v-4ed317c2></div> <!----> <!----></div> <!----></div> <!----> <!----> <div id="article-suspended-panel" data-v-539963b4 data-v-61fb5e44></div> <!----></div> <!----><!----><!----><!----><!----><!----><!----></main> <!----></div> <!----></div> <!----> <div class="global-component-box"><!----></div> <!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----> <!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----></div></div></div>
   <style id="right-toc-style">
   #article-root h1,
   #article-root h2,
