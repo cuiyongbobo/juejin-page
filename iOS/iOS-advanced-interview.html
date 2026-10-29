@@ -33,65 +33,65 @@
                   </span> <!----></div></div> <div style="flex:1;" data-v-61fb5e44></div> <!----> <!----></div> <!----> <!----> <!----> <!----> <div id="article-root" itemprop="articleBody" class="main" data-v-61fb5e44><div class="article-viewer markdown-body cache legacy"><style>.markdown-body{word-break:break-word;line-height:1.75;font-weight:400;font-size:16px;overflow-x:hidden;color:#252933}.markdown-body h1,.markdown-body h2,.markdown-body h3,.markdown-body h4,.markdown-body h5,.markdown-body h6{line-height:1.5;margin-top:35px;margin-bottom:10px;padding-bottom:5px}.markdown-body h1{font-size:24px;line-height:38px;margin-bottom:5px}.markdown-body h2{font-size:22px;line-height:34px;padding-bottom:12px;border-bottom:1px solid #ececec}.markdown-body h3{font-size:20px;line-height:28px}.markdown-body h4{font-size:18px;line-height:26px}.markdown-body h5{font-size:17px;line-height:24px}.markdown-body h6{font-size:16px;line-height:24px}.markdown-body p{line-height:inherit;margin-top:22px;margin-bottom:22px}.markdown-body img{max-width:100%}.markdown-body hr{border:none;border-top:1px solid #ddd;margin-top:32px;margin-bottom:32px}.markdown-body code{word-break:break-word;border-radius:2px;overflow-x:auto;background-color:#fff5f5;color:#ff502c;font-size:.87em;padding:.065em .4em}.markdown-body code,.markdown-body pre{font-family:Menlo,Monaco,Consolas,Courier New,monospace}.markdown-body pre{overflow:auto;position:relative;line-height:1.75}.markdown-body pre>code{font-size:12px;padding:15px 12px;margin:0;word-break:normal;display:block;overflow-x:auto;color:#333;background:#f8f8f8}.markdown-body a{text-decoration:none;color:#0269c8;border-bottom:1px solid #d1e9ff}.markdown-body a:active,.markdown-body a:hover{color:#275b8c}.markdown-body table{display:inline-block!important;font-size:12px;width:auto;max-width:100%;overflow:auto;border:1px solid #f6f6f6}.markdown-body thead{background:#f6f6f6;color:#000;text-align:left}.markdown-body tr:nth-child(2n){background-color:#fcfcfc}.markdown-body td,.markdown-body th{padding:12px 7px;line-height:24px}.markdown-body td{min-width:120px}.markdown-body blockquote{color:#666;padding:1px 23px;margin:22px 0;border-left:4px solid #cbcbcb;background-color:#f8f8f8}.markdown-body blockquote:after{display:block;content:""}.markdown-body blockquote>p{margin:10px 0}.markdown-body ol,.markdown-body ul{padding-left:28px}.markdown-body ol li,.markdown-body ul li{margin-bottom:0;list-style:inherit}.markdown-body ol li .task-list-item,.markdown-body ul li .task-list-item{list-style:none}.markdown-body ol li .task-list-item ol,.markdown-body ol li .task-list-item ul,.markdown-body ul li .task-list-item ol,.markdown-body ul li .task-list-item ul{margin-top:0}.markdown-body ol ol,.markdown-body ol ul,.markdown-body ul ol,.markdown-body ul ul{margin-top:3px}.markdown-body ol li{padding-left:6px}.markdown-body .contains-task-list{padding-left:0}.markdown-body .task-list-item{list-style:none}@media (max-width:720px){.markdown-body h1{font-size:24px}.markdown-body h2{font-size:20px}.markdown-body h3{font-size:18px}}</style><style data-highlight data-highlight-key="juejin"></style><p>最近准备复习一下面试题，看到了<a target="_blank" href="https://juejin.cn/user/3562073402387006" title="https://juejin.cn/user/3562073402387006">J_Knight_</a>在18年的<a target="_blank" href="https://juejin.cn/post/6844903645243260941" title="https://juejin.cn/post/6844903645243260941">出一套 iOS 高级面试题</a>尝试着回答一下题目，由于水平有限，如有错误的地方，请大家多多指教。</p>
 <h3  class="heading" id="heading-0" data-id="heading-0">目录</h3>
 <h4  class="heading" id="heading-1" data-id="heading-1">iOS 基础题</h4>
-<p><a href="#1.1" title="#1.1">1. 分类和扩展有什么区别？可以分别用来做什么？分类有哪些局限性？分类的结构体里面有哪些成员？</a></p>
-<p><a href="#1.2" title="#1.2">2.讲一下atomic的实现机制；为什么不能保证绝对的线程安全（最好可以结合场景来说）？</a></p>
-<p><a href="#1.3" title="#1.3">3. 被weak修饰的对象在被释放的时候会发生什么？是如何实现的？知道sideTable么？里面的结构可以画出来么？</a></p>
-<p><a href="#1.4" title="#1.4">4. 关联对象有什么应用，系统如何管理关联对象？其被释放的时候需要手动将所有的关联对象的指针置空么？</a></p>
-<p><a href="#1.5" title="#1.5">5. KVO的底层实现？如何取消系统默认的KVO并手动触发（给KVO的触发设定条件：改变的值符合某个条件时再触发KVO）？</a></p>
-<p><a href="#1.6" title="#1.6">6. Autoreleasepool所使用的数据结构是什么？AutoreleasePoolPage结构体了解么？</a></p>
-<p><a href="#1.7" title="#1.7">7. 讲一下对象，类对象，元类，跟元类结构体的组成以及他们是如何相关联的？为什么对象方法没有保存的对象结构体里，而是保存在类对象的结构体里？</a></p>
-<p><a href="#1.8" title="#1.8">8. class_ro_t和class_rw_t的区别？</a></p>
-<p><a href="#1.9" title="#1.9">9. iOS中内省的几个方法？class方法和objc_getClass方法有什么区别?</a></p>
-<p><a href="#1.10" title="#1.10">10. 在运行时创建类的方法objc_allocateClassPair的方法名尾部为什么是pair（成对的意思）？</a></p>
-<p><a href="#1.11" title="#1.11">11. 一个int变量被__block修饰与否的区别？</a></p>
-<p><a href="#1.12" title="#1.12">12. 为什么在block外部使用__weak修饰的同时需要在内部使用__strong修饰？</a></p>
-<p><a href="#1.13" title="#1.13">13. RunLoop的作用是什么？它的内部工作机制了解么？（最好结合线程和内存管理来说）</a></p>
-<p><a href="#1.14" title="#1.14">14. 哪些场景可以触发离屏渲染？（知道多少说多少）</a></p>
+<p><a href="#heading-7" title="#heading-7">1. 分类和扩展有什么区别？可以分别用来做什么？分类有哪些局限性？分类的结构体里面有哪些成员？</a></p>
+<p><a href="#heading-8" title="#heading-8">2.讲一下atomic的实现机制；为什么不能保证绝对的线程安全（最好可以结合场景来说）？</a></p>
+<p><a href="#heading-9" title="#heading-9">3. 被weak修饰的对象在被释放的时候会发生什么？是如何实现的？知道sideTable么？里面的结构可以画出来么？</a></p>
+<p><a href="#heading-10" title="#heading-10">4. 关联对象有什么应用，系统如何管理关联对象？其被释放的时候需要手动将所有的关联对象的指针置空么？</a></p>
+<p><a href="#heading-11" title="#heading-11">5. KVO的底层实现？如何取消系统默认的KVO并手动触发（给KVO的触发设定条件：改变的值符合某个条件时再触发KVO）？</a></p>
+<p><a href="#heading-12" title="#heading-12">6. Autoreleasepool所使用的数据结构是什么？AutoreleasePoolPage结构体了解么？</a></p>
+<p><a href="#heading-13" title="#heading-13">7. 讲一下对象，类对象，元类，跟元类结构体的组成以及他们是如何相关联的？为什么对象方法没有保存的对象结构体里，而是保存在类对象的结构体里？</a></p>
+<p><a href="#heading-14" title="#heading-14">8. class_ro_t和class_rw_t的区别？</a></p>
+<p><a href="#heading-15" title="#heading-15">9. iOS中内省的几个方法？class方法和objc_getClass方法有什么区别?</a></p>
+<p><a href="#heading-16" title="#heading-16">10. 在运行时创建类的方法objc_allocateClassPair的方法名尾部为什么是pair（成对的意思）？</a></p>
+<p><a href="#heading-17" title="#heading-17">11. 一个int变量被__block修饰与否的区别？</a></p>
+<p><a href="#heading-18" title="#heading-18">12. 为什么在block外部使用__weak修饰的同时需要在内部使用__strong修饰？</a></p>
+<p><a href="#heading-19" title="#heading-19">13. RunLoop的作用是什么？它的内部工作机制了解么？（最好结合线程和内存管理来说）</a></p>
+<p><a href="#heading-20" title="#heading-20">14. 哪些场景可以触发离屏渲染？（知道多少说多少）</a></p>
 <h4  class="heading" id="heading-2" data-id="heading-2">iOS实战题</h4>
-<p><a href="#15" title="#15">15. AppDelegate如何瘦身？</a></p>
-<p><a href="#16" title="#16">16. 反射是什么？可以举出几个应用场景么？（知道多少说多少）</a></p>
-<p><a href="#17" title="#17">17. 有哪些场景是NSOperation比GCD更容易实现的？（或是NSOperation优于GCD的几点，知道多少说多少）</a></p>
-<p><a href="#18" title="#18">18. App 启动优化策略？最好结合启动流程来说（main()函数的执行前后都分别说一下，知道多少说多少）</a></p>
-<p><a href="#19" title="#19">19. App 无痕埋点的思路了解么？你认为理想的无痕埋点系统应该具备哪些特点？（知道多少说多少）</a></p>
-<p><a href="#20" title="#20">20. 你知道有哪些情况会导致app崩溃，分别可以用什么方法拦截并化解？（知道多少说多少）</a></p>
-<p><a href="#21" title="#21">21. 你知道有哪些情况会导致app卡顿，分别可以用什么方法来避免？（知道多少说多少）</a></p>
+<p><a href="#heading-21" title="#heading-21">15. AppDelegate如何瘦身？</a></p>
+<p><a href="#heading-22" title="#heading-22">16. 反射是什么？可以举出几个应用场景么？（知道多少说多少）</a></p>
+<p><a href="#heading-23" title="#heading-23">17. 有哪些场景是NSOperation比GCD更容易实现的？（或是NSOperation优于GCD的几点，知道多少说多少）</a></p>
+<p><a href="#heading-24" title="#heading-24">18. App 启动优化策略？最好结合启动流程来说（main()函数的执行前后都分别说一下，知道多少说多少）</a></p>
+<p><a href="#heading-25" title="#heading-25">19. App 无痕埋点的思路了解么？你认为理想的无痕埋点系统应该具备哪些特点？（知道多少说多少）</a></p>
+<p><a href="#heading-26" title="#heading-26">20. 你知道有哪些情况会导致app崩溃，分别可以用什么方法拦截并化解？（知道多少说多少）</a></p>
+<p><a href="#heading-27" title="#heading-27">21. 你知道有哪些情况会导致app卡顿，分别可以用什么方法来避免？（知道多少说多少）</a></p>
 <h4  class="heading" id="heading-3" data-id="heading-3">网络题</h4>
-<p><a href="#22" title="#22">22. App 网络层有哪些优化策略？</a></p>
-<p><a href="#23" title="#23">23. TCP为什么要三次握手，四次挥手？</a></p>
-<p><a href="#24" title="#24">24. 对称加密和非对称加密的区别？分别有哪些算法的实现？</a></p>
-<p><a href="#25" title="#25">25. HTTPS的握手流程？为什么密钥的传递需要使用非对称加密？双向认证了解么？</a></p>
-<p><a href="#26" title="#26">26. HTTPS是如何实现验证身份和验证完整性的？</a></p>
-<p><a href="#27" title="#27">27. 如何用Charles抓HTTPS的包？其中原理和流程是什么？</a></p>
-<p><a href="#28" title="#28">28. 什么是中间人攻击？如何避免？</a></p>
+<p><a href="#heading-28" title="#heading-28">22. App 网络层有哪些优化策略？</a></p>
+<p><a href="#heading-29" title="#heading-29">23. TCP为什么要三次握手，四次挥手？</a></p>
+<p><a href="#heading-30" title="#heading-30">24. 对称加密和非对称加密的区别？分别有哪些算法的实现？</a></p>
+<p><a href="#heading-31" title="#heading-31">25. HTTPS的握手流程？为什么密钥的传递需要使用非对称加密？双向认证了解么？</a></p>
+<p><a href="#heading-32" title="#heading-32">26. HTTPS是如何实现验证身份和验证完整性的？</a></p>
+<p><a href="#heading-33" title="#heading-33">27. 如何用Charles抓HTTPS的包？其中原理和流程是什么？</a></p>
+<p><a href="#heading-34" title="#heading-34">28. 什么是中间人攻击？如何避免？</a></p>
 <h4  class="heading" id="heading-4" data-id="heading-4">计算机系统题</h4>
-<p><a href="#29" title="#29">29. 了解编译的过程么？分为哪几个步骤？</a></p>
-<p><a href="#30" title="#30">30. 静态链接了解么？静态库和动态库的区别？</a></p>
-<p><a href="#31" title="#31">31. 内存的几大区域，各自的职能分别是什么？</a></p>
-<p><a href="#32" title="#32">32. static和const有什么区别？</a></p>
-<p><a href="#33" title="#33">33. 了解内联函数么？</a></p>
-<p><a href="#34" title="#34">34. 什么时候会出现死锁？如何避免？</a></p>
-<p><a href="#35" title="#35">35. 说一说你对线程安全的理解？</a></p>
-<p><a href="#36" title="#36">36. 列举你知道的线程同步策略？</a></p>
-<p><a href="#37" title="#37">37. 有哪几种锁？各自的原理？它们之间的区别是什么？最好可以结合使用场景来说</a></p>
+<p><a href="#heading-35" title="#heading-35">29. 了解编译的过程么？分为哪几个步骤？</a></p>
+<p><a href="#heading-36" title="#heading-36">30. 静态链接了解么？静态库和动态库的区别？</a></p>
+<p><a href="#heading-37" title="#heading-37">31. 内存的几大区域，各自的职能分别是什么？</a></p>
+<p><a href="#heading-38" title="#heading-38">32. static和const有什么区别？</a></p>
+<p><a href="#heading-39" title="#heading-39">33. 了解内联函数么？</a></p>
+<p><a href="#heading-40" title="#heading-40">34. 什么时候会出现死锁？如何避免？</a></p>
+<p><a href="#heading-41" title="#heading-41">35. 说一说你对线程安全的理解？</a></p>
+<p><a href="#heading-42" title="#heading-42">36. 列举你知道的线程同步策略？</a></p>
+<p><a href="#heading-43" title="#heading-43">37. 有哪几种锁？各自的原理？它们之间的区别是什么？最好可以结合使用场景来说</a></p>
 <h4  class="heading" id="heading-5" data-id="heading-5">设计模式题和架构 &#x26; 设计题（由于水平有限，就不误人子弟了）</h4>
 <h4  class="heading" id="heading-6" data-id="heading-6">数据结构&#x26;算法题</h4>
-<p><a href="#38" title="#38">38. 链表和数组的区别是什么？插入和查询的时间复杂度分别是多少？</a></p>
-<p><a href="#39" title="#39">39. 哈希表是如何实现的？如何解决地址冲突？</a></p>
-<p><a href="#40" title="#40">40. 排序题：冒泡排序，选择排序，插入排序，快速排序（二路，三路）能写出那些？</a></p>
-<p><a href="#41" title="#41">41. 链表题：如何检测链表中是否有环？如何删除链表中等于某个值的所有节点？</a></p>
-<p><a href="#42" title="#42">42. 数组题：如何在有序数组中找出和等于给定值的两个元素？如何合并两个有序的数组之后保持有序？</a></p>
-<p><a href="#43" title="#43">43. 二叉树题：如何反转二叉树？如何验证两个二叉树是完全相等的？</a></p>
+<p><a href="#heading-44" title="#heading-44">38. 链表和数组的区别是什么？插入和查询的时间复杂度分别是多少？</a></p>
+<p><a href="#heading-45" title="#heading-45">39. 哈希表是如何实现的？如何解决地址冲突？</a></p>
+<p><a href="#heading-46" title="#heading-46">40. 排序题：冒泡排序，选择排序，插入排序，快速排序（二路，三路）能写出那些？</a></p>
+<p><a href="#heading-47" title="#heading-47">41. 链表题：如何检测链表中是否有环？如何删除链表中等于某个值的所有节点？</a></p>
+<p><a href="#heading-48" title="#heading-48">42. 数组题：如何在有序数组中找出和等于给定值的两个元素？如何合并两个有序的数组之后保持有序？</a></p>
+<p><a href="#heading-49" title="#heading-49">43. 二叉树题：如何反转二叉树？如何验证两个二叉树是完全相等的？</a></p>
 <h3  class="heading" id="heading-7" data-id="heading-7">1.分类和扩展有什么区别？可以分别用来做什么？分类有哪些局限性？分类的结构体里面有哪些成员？<span></span></h3>
 <ol>
 <li>分类主要用来为某个类添加方法，属性，协议（我一般用来为系统的类扩展方法或者把某个复杂的类的按照功能拆到不同的文件里）</li>
-<li>扩展主要用来为某个类原来没有的成员变量、属性、方法。注：方法只是声明（我一般用扩展来声明私有属性，或者把.h的只读属性重写成可读写的）</li>
+<li>类扩展主要用来给某个类添加原来没有的成员变量、属性和方法。注：方法只是声明（我一般用扩展来声明私有属性，或者把.h的只读属性重写成可读写的）</li>
 </ol>
 <p>分类和扩展的区别：</p>
 <ol>
 <li>分类是在运行时把分类信息合并到类信息中，而扩展是在编译时，就把信息合并到类中的</li>
 <li>分类声明的属性，只会生成getter/setter方法的声明，不会自动生成成员变量和getter/setter方法的实现，而扩展会</li>
-<li>分类不可用为类添加实例变量，而扩展可以</li>
-<li>分类可以为类添加方法的实现，而扩展只能声明方法，而不能实现</li>
+<li>分类不能为类添加实例变量，而类扩展可以</li>
+<li>分类可以给类添加方法实现，而类扩展只能声明私有方法、属性和实例变量，方法实现要写在主类的 @implementation 中</li>
 </ol>
 <p>分类的局限性：</p>
 <ol>
@@ -129,7 +129,8 @@ atomic是property的修饰词之一，表示是原子性的，使用方式为<co
 </li>
 <li>
 <p>weak是如何实现的？<br>
-runTime会把对weak修饰的对象放到一个全局的哈希表中，用weak修饰的对象的内存地址为key，weak指针为值，在对象进行销毁时，用通过自身地址去哈希表中查找到所有指向此对象的weak指针，并把所有的weak指针置位nil</p>
+runTime会把对weak修饰的对象放到一个全局的哈希表中，用 weak 指向的对象内存地址作为 key，value 是所有指向该对象的 weak 指针地址组，<br>
+当对象释放时，runtime 会通过该对象自身的内存地址在哈希表中找到对应的 weak 指针数组，遍历该数组，并将其中每个 weak 指针置为 nil</p>
 </li>
 <li>
 <p>sideTable的结构</p>
@@ -142,13 +143,23 @@ runTime会把对weak修饰的对象放到一个全局的哈希表中，用weak�
 };
 </code></pre><h3  class="heading" id="heading-10" data-id="heading-10">4. 关联对象有什么应用，系统如何管理关联对象？其被释放的时候需要手动将所有的关联对象的指针置空么？<span></span></h3>
 <ol>
-<li>关联对象有什么应用？
+<li>关联对象有什么应用？<br>
 一般用于在分类中给类添加实例变量</li>
 <li>系统如何管理关联对象？<br>
-首先系统中有一个全局<code>AssociationsManager</code>,里面有个<code>AssociationsHashMap</code>哈希表，哈希表中的key是对象的内存地址，value是<code>ObjectAssociationMap</code>,也是一个哈希表，其中key是我们设置关联对象所设置的key，value是<code>ObjcAssociation</code>,里面存放着关联对象设置的值和内存管理的策略。
-已<code>void objc_setAssociatedObject(id object, const void * key,id value, objc_AssociationPolicy policy)</code>为例，首先会通过<code>AssociationsManager</code>获取<code>AssociationsHashMap</code>，然后以<code>object</code>的内存地址为key，从<code>AssociationsHashMap</code>中取出<code>ObjectAssociationMap</code>，若没有，则新创建一个<code>ObjectAssociationMap</code>，然后通过key获取旧值，以及通过key和policy生成新值<code>ObjcAssociation(policy, new_value)</code>，把新值存放到<code>ObjectAssociationMap</code>中，若新值不为nil，并且内存管理策略为<code>retain</code>，则会对新值进行一次<code>retain</code>，若新值为nil，则会删除旧值，若旧值不为空并且内存管理的策略是<code>retain</code>，则对旧值进行一次<code>release</code></li>
-<li>其被释放的时候需要手动将所有的关联对象的指针置空么？
-注：对这个问题我的理解是：当对象被释放时，需要手动移除该对象所设置的关联对象吗？
+首先系统中有一个全局<code>AssociationsManager</code>,里面有个<code>AssociationsHashMap</code>哈希表，<br>
+哈希表中的key是对象的内存地址，value是<code>ObjectAssociationMap</code>,也是一个哈希表，<br>
+其中key是我们设置关联对象所设置的key，value是<code>ObjcAssociation</code>,里面存放着关联对象设置的值和内存管理的策略。<br>
+已<code>void objc_setAssociatedObject(id object, const void * key,id value, objc_AssociationPolicy policy)</code>为例，<br>
+首先会通过<code>AssociationsManager</code>获取<code>AssociationsHashMap</code>，<br>
+然后以<code>object</code>的内存地址为key，从<code>AssociationsHashMap</code>中取出<code>ObjectAssociationMap</code>，<br>
+若没有，则新创建一个<code>ObjectAssociationMap</code>，<br>
+然后通过key获取旧值，以及通过key和policy生成新值<code>ObjcAssociation(policy, new_value)</code>，<br>
+把新值存放到<code>ObjectAssociationMap</code>中，<br>
+若新值不为nil，并且内存管理策略为<code>retain</code>，则会对新值进行一次<code>retain</code>，<br>
+若新值为nil，则会删除旧值，<br>
+若旧值不为空并且内存管理的策略是<code>retain</code>，则对旧值进行一次<code>release</code></li>
+<li>其被释放的时候需要手动将所有的关联对象的指针置空么？<br>
+注：对这个问题我的理解是：当对象被释放时，需要手动移除该对象所设置的关联对象吗？<br>
 不需要，因为在对象的dealloc中，若发现对象有关联对象时，会调用<code>_object_remove_assocations</code>方法来移除所有的关联对象，并根据内存策略，来判断是否需要对关联对象的值进行release</li>
 </ol>
 <h3  class="heading" id="heading-11" data-id="heading-11">5. KVO的底层实现？如何取消系统默认的KVO并手动触发（给KVO的触发设定条件：改变的值符合某个条件时再触发KVO）？<span></span></h3>
@@ -195,8 +206,8 @@ runTime会把对weak修饰的对象放到一个全局的哈希表中，用weak�
     }
 }
 </code></pre><h3  class="heading" id="heading-12" data-id="heading-12">6. Autoreleasepool所使用的数据结构是什么？AutoreleasePoolPage结构体了解么？<span></span></h3>
-<p>Autoreleasepool是由多个AutoreleasePoolPage以双向链表的形式连接起来的，
-Autoreleasepool的基本原理：在每个自动释放池创建的时候，会在当前的AutoreleasePoolPage中设置一个标记位，在此期间，当有对象调用autorelsease时，会把对象添加到AutoreleasePoolPage中，若当前页添加满了，会初始化一个新页，然后用双向量表链接起来，并把新初始化的这一页设置为hotPage,当自动释放池pop时，从最下面依次往上pop，调用每个对象的release方法，直到遇到标志位。
+<p>Autoreleasepool是由多个<code>AutoreleasePoolPage</code>以双向链表的形式连接起来的，
+Autoreleasepool的基本原理：在每个自动释放池创建的时候，会在当前的<code>AutoreleasePoolPage</code>中设置一个标记位，在此期间，当有对象调用 <code>autorelease</code> 时，会把该对象的指针（即对象内存地址）添加到当前 <code>AutoreleasePoolPage</code> 中；若当前页已满，则初始化新页，并通过双向链表连接，同时把新页设为 <code>hotPage</code>。当自动释放池 <code>pop</code> 时，会从当前栈顶开始依次 <code>pop</code> ，对每个指针指向的对象调用 <code>release</code>，直到遇到边界标记（<code>POOL_BOUNDARY</code> / 哨兵）为止。
 AutoreleasePoolPage结构如下</p>
 <pre><code class="hljs bash" lang="bash">class AutoreleasePoolPage {
     magic_t const magic;
@@ -210,7 +221,7 @@ AutoreleasePoolPage结构如下</p>
 </code></pre><h3  class="heading" id="heading-13" data-id="heading-13">7. 讲一下对象，类对象，元类，跟元类结构体的组成以及他们是如何相关联的？为什么对象方法没有保存的对象结构体里，而是保存在类对象的结构体里？<span></span></h3>
 <ol>
 <li>讲一下对象，类对象，元类，跟元类结构体的组成以及他们是如何相关联的？<br>
-对象的结构体里存放着isa和成员变量，isa指向类对象。
+对象的结构体里存放着isa和成员变量的值，isa指向类对象。
 类对象的isa指向元类，元类的isa指向NSObject的元类。
 类对象和元类的结构体有isa、superclass、cache、bits，bits里存放着class_rw_t的指针。
 放一张经典的图
@@ -234,7 +245,7 @@ class_ro_t存储于class_rw_t结构体中，是不可改变的。保存着类的
 <p>iOS中内省的几个方法？</p>
 <ul>
 <li>isMemberOfClass //对象是否是某个类型的对象</li>
-<li>isKindOfClass //对象是否是某个类型或某个类型子类的对象</li>
+<li>isKindOfClass //判断对象是否为指定类或其子类的实例。</li>
 <li>isSubclassOfClass //某个类对象是否是另一个类型的子类</li>
 <li>isAncestorOfObject //某个类对象是否是另一个类型的父类</li>
 <li>respondsToSelector //是否能响应某个方法</li>
@@ -269,7 +280,62 @@ __Block_byref_age_0 *__forwarding; //指向自己
 };
 // age = 20;会被编译成下面这样
 (age.__forwarding->age) = 20;
-</code></pre><h3  class="heading" id="heading-18" data-id="heading-18">12. 为什么在block外部使用__weak修饰的同时需要在内部使用__strong修饰？</h3>
+</code></pre>
+<p>Block 捕获变量的本质：值拷贝 + const 限定，与 <code>__block</code> 的 byref 包装</p>
+  <h5>一、不加 <code>__block</code>：本质是值拷贝</h5>
+  <p>Block 捕获外部局部变量，本质是<strong>值拷贝</strong>。编译器会把 Block 用到的外部局部变量作为<strong>成员变量</strong>追加到 Block 结构体里，初始化时传入的是变量当时的值，并且这个成员变量被 <code>const</code> 限定。所以：</p>
+  <ul>
+    <li>Block 捕获普通<strong>非静态局部变量</strong>时<strong>按值复制</strong>，Block 内是捕获时的<strong>值副本</strong>；外部变量本身之后再赋值，Block 内仍是旧值。</li>
+    <li>该捕获值通常作为 Block 结构体中的 <code>const</code> 成员，Block 内<strong>不能直接修改</strong>，否则编译报错（<code>__block</code> 等例外）。</li>
+  </ul>
+<pre><code class="hljs objectivec" lang="objectivec"><span class="hljs-built_in">int</span> age = <span class="hljs-number">10</span>;
+
+<span class="hljs-built_in">void</span> (^block)(<span class="hljs-built_in">void</span>) = ^{
+    <span class="hljs-comment">// age 的值被复制为 Block 结构体中的 const 成员</span>
+    <span class="hljs-comment">// （更准确地说：Block 内捕获的 age 是 const 的）</span>
+    NSLog(<span class="hljs-string">@"age = %d"</span>, age);
+
+    <span class="hljs-comment">// age = 30; // 编译报错：Block 内不能修改捕获的 const 变量</span>
+};
+
+age = <span class="hljs-number">20</span>;   <span class="hljs-comment">// 外部给原变量 age 重新赋值，不影响 Block 内已复制的值</span>
+block();    <span class="hljs-comment">// 仍然打印 10：Block 内拿到的是捕获时的值副本</span>
+</code></pre>
+  <h5>二、对象类型：捕获的是指针的值（对象地址）</h5>
+  <p>对于对象类型，捕获的是<strong>指针的值</strong>，也就是对象地址。这个指针成员同样被 <code>const</code> 限定，所以<strong>可以通过它修改对象内部属性</strong>（对象在堆上），但<strong>不能给这个指针重新赋值</strong>指向别的对象。原理和基本类型一致：<strong>值拷贝 + const 限定</strong>。</p>
+<pre><code class="hljs objectivec" lang="objectivec">NSMutableArray *list = [NSMutableArray array];
+<span class="hljs-built_in">void</span> (^block)(<span class="hljs-built_in">void</span>) = ^{
+    [list addObject:<span class="hljs-string">@"A"</span>];        <span class="hljs-comment">// 可以：const 指针仍能操作堆上对象</span>
+    <span class="hljs-comment">// list = [NSMutableArray array]; // 不可以：指针成员是 const，不能重新指向</span>
+};
+</code></pre>
+  <h5>三、加上 <code>__block</code>：包装成 <code>__block_byref_xxx</code>，靠 <code>__forwarding</code> 指向同一份变量</h5>
+  <p>加上 <code>__block</code> 后，编译器不再直接拷贝值，而是生成一个 <code>__block_byref_xxx</code> 结构体来包装原变量，Block 里存的是<strong>指向这个结构体的指针</strong>。关键在 <code>__forwarding</code>：Block 在栈上时访问栈上的结构体；当 Block 被拷贝到堆时，这个结构体也会被拷到堆，<code>__forwarding</code> 会指向堆上的新地址，栈上旧结构体的 <code>__forwarding</code> 也被调整为指向堆上那份。这样无论从哪边访问，最终都落到堆上<strong>同一份变量</strong>，修改才能生效。</p>
+<pre><code class="hljs objectivec" lang="objectivec"><span class="hljs-keyword">__block</span> <span class="hljs-built_in">int</span> age = <span class="hljs-number">10</span>;
+<span class="hljs-built_in">void</span> (^block)(<span class="hljs-built_in">void</span>) = ^{
+    age = <span class="hljs-number">30</span>;   <span class="hljs-comment">// 编译为 (age.__forwarding-&gt;age) = 30;</span>
+};
+age = <span class="hljs-number">20</span>;
+block = [block <span class="hljs-built_in">copy</span>];  <span class="hljs-comment">// Block 与 byref 结构体一起上堆，__forwarding 改指堆上那份</span>
+block();
+NSLog(<span class="hljs-string">@"%d"</span>, age);   <span class="hljs-comment">// 30：栈上、堆上访问的都是同一份变量</span>
+</code></pre>
+  <h5>四、对比一览</h5>
+  <table>
+    <thead>
+      <tr><th>对比维度</th><th>不加 <code>__block</code></th><th>加 <code>__block</code></th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Block 结构体里存的</td><td>变量的值（作为 <code>const</code> 成员）</td><td>指向 <code>__block_byref_xxx</code> 结构体的指针</td></tr>
+      <tr><td>外部变量后续变化</td><td>感知不到，Block 里仍是捕获时的值副本</td><td>同一份变量，外部与 Block 内的修改互相可见</td></tr>
+      <tr><td>Block 内能否赋值</td><td>不能，编译报错</td><td>能，经 <code>__forwarding</code> 写到同一份内存</td></tr>
+      <tr><td>变量生命周期</td><td>与 Block 无关，只是值拷贝</td><td>与 Block 绑定：Block 拷贝到堆时变量一起上堆</td></tr>
+      <tr><td>对象类型</td><td>拷贝指针值：可改对象属性，不可改指针指向</td><td>指针放在 byref 结构体中且不被 <code>const</code> 限定：可重新指向别的对象</td></tr>
+    </tbody>
+  </table>
+  <h5>五、一句话总结</h5>
+  <blockquote><p>普通捕获是<strong>值拷贝</strong>，成员被 <code>const</code> 限定，所以只读、是<strong>值副本</strong>；<code>__block</code> 是把变量<strong>包装成结构体</strong>，让变量生命周期和 Block 绑定，Block 上堆时变量跟着上堆，并通过 <code>__forwarding</code> 保证访问指向正确的那一份，从而实现可修改。</p></blockquote>
+<h3  class="heading" id="heading-18" data-id="heading-18">12. 为什么在block外部使用__weak修饰的同时需要在内部使用__strong修饰？</h3>
 <p>用__weak修饰之后block不会对该对象进行retain，只是持有了weak指针，在block执行之前或执行的过程时，随时都有可能被释放，将weak指针置位nil，产生一些未知的错误。在内部用__strong修饰，会在block执行时，对该对象进行一次retain，保证在执行时若该指针不指向nil，则在执行过程中不会指向nil。但有可能在执行执行之前已经为nil了</p>
 <h3  class="heading" id="heading-19" data-id="heading-19">13. RunLoop的作用是什么？它的内部工作机制了解么？（最好结合线程和内存管理来说）</h3>
 <ol>
@@ -297,14 +363,85 @@ __Block_byref_age_0 *__forwarding; //指向自己
 <li>RunLoop的内部逻辑（下图来自于YY大神的博客）</li>
 </ol>
 <p></p><figure><img alt="RunLoop_1" src="assets/advanced/images/advanced-image-2.png" loading="lazy"><figcaption></figcaption></figure><p></p>
+<p>结合线程与内存管理看 RunLoop 的内部机制</p>
+  <h5>一、RunLoop 与线程：一一对应，按需创建、随线程销毁</h5>
+  <ul>
+    <li>RunLoop 和线程是<strong>一一对应</strong>的，这层映射关系保存在<strong>全局字典</strong>中（以线程为 key、RunLoop 为 value）；一个线程最多只有一个 RunLoop，RunLoop 也不能跨线程共享。</li>
+    <li><strong>主线程</strong>的 RunLoop 在程序启动时（<code>UIApplicationMain</code>）<strong>默认创建</strong>并自动运行，这正是主线程执行完 <code>main</code> 里的代码后不会退出、能持续响应事件的原因。</li>
+    <li><strong>子线程</strong>的 RunLoop 是<strong>懒加载</strong>的：第一次调用 <code>[NSRunLoop currentRunLoop]</code> 时才创建，<strong>线程结束时销毁</strong>。所以子线程要保活，必须在 RunLoop 里先添加 Source 或 Timer，再调用 <code>run</code>，否则它会因为「无事可做」直接返回。</li>
+  </ul>
+  <h5>二、一次循环做了什么：通知 Observer → 处理事件 → 休眠 → 被唤醒</h5>
+  <ul>
+    <li>RunLoop 每次循环会先<strong>通知 Observer</strong> 即将进入（<code>kCFRunLoopEntry</code>），随后依次通知即将处理 Timer、即将处理 Source0、即将休眠（<code>kCFRunLoopBeforeWaiting</code>）、已被唤醒（<code>kCFRunLoopAfterWaiting</code>）、即将退出（<code>kCFRunLoopExit</code>）。</li>
+    <li>接着<strong>按当前 Mode</strong> 找到可处理的 <code>Timer</code>、<code>Source0</code>（如 touch 事件、<code>performSelector:onThread:</code>）或 <code>Observer</code> 回调并执行；<code>Source1</code> 基于 mach port，收到消息时可以直接把 RunLoop 唤醒。</li>
+    <li>处理完成后如果没有事件可做，就调用 <code>mach_msg()</code> <strong>进入休眠</strong>，把 CPU 让给其他线程；被 mach port 消息、timer 到点或外部 <code>CFRunLoopWakeUp</code> 唤醒后，继续下一轮循环。</li>
+    <li>这套「有事立刻处理、没事休眠让出 CPU」的机制，既是 RunLoop <strong>保持线程存活又不空耗资源</strong>的关键，也是<strong>卡顿监控</strong>（统计 BeforeWaiting 与 AfterWaiting 之间的耗时）能落地的原因。</li>
+  </ul>
+  <h5>三、Mode 决定同一时刻哪些 Source/Timer 能被处理</h5>
+  <p>RunLoop 每次只能运行在一个 Mode 下，<strong>只有当前 Mode 中的 Source / Timer / Observer 才会被处理</strong>；要切换 Mode 必须退出当前循环，再用新的 Mode 重新进入。</p>
+  <table>
+    <thead>
+      <tr><th>Mode</th><th>什么时候生效</th><th>说明</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>NSDefaultRunLoopMode</code></td><td>App 空闲、界面没有滚动</td><td>默认 Mode，普通 Timer、Source 一般加在这里</td></tr>
+      <tr><td><code>UITrackingRunLoopMode</code></td><td>滚动 ScrollView / TableView 期间</td><td>滚动时只处理该 Mode 下的 Source / Timer</td></tr>
+      <tr><td><code>NSRunLoopCommonModes</code></td><td>需要滚动时也照常触发</td><td>不是真正的 Mode，而是一组被标记为 common 的 Mode 集合，加入其中的 Source / Timer 在这些 Mode 下都会运行</td></tr>
+    </tbody>
+  </table>
+  <p>所以<strong>滚动过程中 <code>NSDefaultRunLoopMode</code> 下的 <code>NSTimer</code> 可能暂停</strong>（Mode 已切到 <code>UITrackingRunLoopMode</code>），这正是「滑动列表时定时器不走、倒计时卡住」这类 <code>NSTimer</code> 常见问题的根源；解决办法是把 Timer 加入 <code>NSRunLoopCommonModes</code>，或改用 <code>CADisplayLink</code> / GCD timer。</p>
+  <h5>四、与内存管理的关系：主线程注册的两个 autorelease pool Observer</h5>
+  <ul>
+    <li>主线程的 RunLoop 会注册<strong>两个 autoreleasepool 相关的 Observer</strong>。</li>
+    <li><strong>第一个</strong>监听<strong>即将进入 RunLoop</strong>（<code>kCFRunLoopEntry</code>）：回调里执行 <code>_objc_autoreleasePoolPush()</code>，<strong>push 创建一个自动释放池</strong>。</li>
+    <li><strong>第二个</strong>同时监听<strong>即将休眠</strong>（<code>kCFRunLoopBeforeWaiting</code>）和<strong>即将退出</strong>（<code>kCFRunLoopExit</code>）：在即将休眠时先 <code>pop</code> 释放旧的自动释放池，<strong>随后再重新 push</strong> 一个新的；在即将退出时执行 <code>pop</code> 释放自动释放池。</li>
+    <li>这就解释了 <code>autorelease</code> 对象的生命周期与 RunLoop 的关系：<strong>autorelease 对象并不是等到程序退出才释放，而是在当前这一次 RunLoop 迭代结束（即将休眠）时被 drain</strong>。因此一次循环里产生大量临时对象时，可以用 <code>@autoreleasepool {}</code> 手动缩小作用域，避免内存峰值过高。</li>
+  </ul>
+  <h5>五、如何保证一个线程常驻（常驻线程）</h5>
+  <ul>
+    <li><strong>线程为什么会退出</strong>：线程的入口方法（如 <code>play</code>）执行完，线程就结束了。想让线程<strong>常驻（保活）</strong>，就要让它的 RunLoop 一直跑；但 RunLoop 的 <code>run</code> 在没有任何 Source / Timer 时会<strong>立即返回</strong>，所以必须先「给它找点事做」。</li>
+    <li><strong>加 Port 的作用</strong>：<code>addPort:forMode:</code> 相当于给 RunLoop 添加一个 <strong>Source1</strong>（基于 mach port）。RunLoop 有了要监听的源、又不会被无故触发，线程就停留在<strong>「休眠但不退出」</strong>的状态，这是常驻线程的标准做法；相比加 Timer，它不会周期性醒来空耗资源。</li>
+    <li><strong>代码位置要注意</strong>：<code>addPort</code> 和 <code>run</code> 必须写在<strong>目标线程内部</strong>（即 <code>play</code> 方法里），因为 <code>[NSRunLoop currentRunLoop]</code> 取的是<strong>当前线程</strong>的 RunLoop，在主线程调用保活的就是主线程。题中片段是示意写法，实际这两行应放进线程入口方法。</li>
+    <li><strong>之后如何派发任务</strong>：<code>performSelector:onThread:withObject:waitUntilDone:</code> 会把任务包装成 Source0 丢给目标线程的 RunLoop，RunLoop 被唤醒处理完又继续休眠，从而实现<strong>「线程常驻 + 按需执行任务」</strong>的模型，常用于单条后台线程长期处理任务的场景。</li>
+    <li><strong>如何退出</strong>：常驻线程不会自己释放，不再需要时要移除 Port / 用 <code>CFRunLoopStop</code> 停掉 RunLoop，让线程自然结束，否则就是线程泄漏。</li>
+  </ul>
+<pre><code class="hljs objectivec" lang="objectivec"><span class="hljs-comment">// 先创建一个线程用于测试</span>
+<span class="hljs-built_in">NSThread</span> *thread = [[<span class="hljs-built_in">NSThread</span> alloc] initWithTarget:<span class="hljs-built_in">self</span> selector:<span class="hljs-built_in">@selector</span>(play) object:<span class="hljs-built_in">nil</span>];
+[thread start];
+
+<span class="hljs-comment">// 保证线程永远不死（写在 play 方法里）：给它的 RunLoop 加一个 Port（Source1），再 run</span>
+[[<span class="hljs-built_in">NSRunLoop</span> currentRunLoop] addPort:[<span class="hljs-built_in">NSPort</span> port] forMode:<span class="hljs-built_in">NSDefaultRunLoopMode</span>];
+[[<span class="hljs-built_in">NSRunLoop</span> currentRunLoop] run];
+
+<span class="hljs-comment">// 在合适的地方处理线程的事件：把任务丢到常驻线程的 RunLoop 上执行</span>
+[<span class="hljs-built_in">self</span> performSelector:<span class="hljs-built_in">@selector</span>(test) onThread:thread withObject:<span class="hljs-built_in">nil</span> waitUntilDone:<span class="hljs-built_in">NO</span>];
+</code></pre>
+  <h5>六、一句话总结</h5>
+  <blockquote><p>RunLoop 与线程<strong>一一对应</strong>并存于全局字典中（主线程默认创建、子线程懒加载、线程结束即销毁）；每次循环<strong>通知 Observer</strong>、按<strong>当前 Mode</strong> 处理 Timer / Source / Observer，没事就<strong>休眠</strong>、被 mach port 或 timer <strong>唤醒</strong>；Mode 决定了滚动时 <code>NSTimer</code> 会暂停；主线程那两个 autoreleasepool Observer 在 <code>Entry</code> 时 push、在 <code>BeforeWaiting</code> / <code>Exit</code> 时 pop 并重新 push，这就是 <code>autorelease</code> 对象生命周期与 RunLoop 绑定的原因；想让线程<strong>常驻</strong>，就在该线程里给 RunLoop 加一个 Port（Source1）再 <code>run</code>，之后用 <code>performSelector:onThread:</code> 把任务派发过去。</p></blockquote>
 <h3  class="heading" id="heading-20" data-id="heading-20">14. 哪些场景可以触发离屏渲染？（知道多少说多少）</h3>
 <ol>
-<li>添加遮罩mask</li>
-<li>添加阴影shadow</li>
-<li>设置圆角并且设置masksToBounds为true</li>
-<li>设置allowsGroupOpacity为true并且layer.opacity小于1.0和有子layer或者背景不为空</li>
-<li>开启光栅化shouldRasterize=true</li>
+<li>添加遮罩<code>mask</code></li>
+<li>添加阴影<code>shadow</code></li>
+<li>设置圆角并且设置<code>masksToBounds</code>为<code>true</code></li>
+<li>设置<code>allowsGroupOpacity</code>为<code>true</code>并且<code>layer.opacity</code>小于<code>1.0</code>和有子<code>layer</code>或者背景不为空</li>
+<li>开启光栅化<code>shouldRasterize=true</code></li>
 </ol>
+<p>为什么要减少离屏渲染操作？</p>
+<p>一、需要创建新的缓冲区</p>
+<p>正常绘制是直接画到当前屏幕对应的帧缓冲区上。一旦触发离屏渲染，GPU 不能继续往这块缓冲区里画，必须<strong>额外创建一块新的离屏缓冲区</strong>，先把内容渲染到这块新缓冲区里。这块缓冲区要单独分配内存，渲染完成后再把结果合成回屏幕，本身就是一份额外开销。</p>
+<p>二、整个过程需要多次切换上下文环境</p>
+<p>GPU 的上下文环境一次只能指向一块渲染目标。离屏渲染时，显示不能一直停在当前屏幕上，上下文要来回切换，大致是下面几步：</p>
+<ol>
+<li>把上下文从<strong>当前屏幕</strong>切换到<strong>离屏缓冲区</strong>；</li>
+<li><strong>等待</strong>离屏渲染结束；</li>
+<li>将离屏缓冲区的渲染结果<strong>显示到屏幕上</strong>；</li>
+<li>再把上下文环境从<strong>离屏切换回当前屏幕</strong>，后面的绘制才能继续。</li>
+</ol>
+<p>这一来一回的切换，加上中间的等待，会打断 GPU 原本连续的渲染。列表里如果大量圆角、阴影、mask 都走到离屏，切换和等待就会叠在一起，拖慢这一帧的渲染，造成卡顿。所以能直接在当前屏幕上完成的绘制，就尽量不要触发离屏渲染。</p>
+<p>三、一句话总结</p>
+<blockquote>
+<p>离屏渲染贵在两处：要<strong>新建一块缓冲区</strong>，并且上下文要<strong>从当前屏幕切到离屏、等渲染结束、把结果显示到屏幕上、再切回当前屏幕</strong>。切换次数一多，帧耗时就会上去。</p>
+</blockquote>
 <h3  class="heading" id="heading-21" data-id="heading-21">15.AppDelegate如何瘦身？<span id="user-content-15"></span></h3>
 <ol>
 <li>AppDelegate为什么会那么臃肿？
@@ -378,8 +515,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 <blockquote>
 <p>反射是指计算机程序在运行时（runtime）可以访问、检测和修改它本身状态或行为的一种能力。用比喻来说，反射就是程序在运行的时候能够“观察”并且修改自己的行为。</p>
 </blockquote>
-<p>在OC中，反射是指程序在运行时，获取和修改类的信息。
-2. 应用场景</p>
+<p>在OC中，反射是指程序在运行时，获取和修改类的信息。</p>
+<ol start="2">
+<li>应用场景
 <ul>
 <li>JSON与模型之间的相互转换</li>
 <li>Method Swizzling</li>
@@ -387,6 +525,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 <li>实现NSCoding的自动归档和自动解档</li>
 <li>探索系统某些类的具体实现</li>
 </ul>
+</li>
+</ol>
 <h3  class="heading" id="heading-23" data-id="heading-23">17. 有哪些场景是NSOperation比GCD更容易实现的？（或是NSOperation优于GCD的几点，知道多少说多少）<span id="user-content-17"></span></h3>
 <ol>
 <li>NSOperation可以设置依赖</li>
@@ -448,14 +588,120 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 <li>除0</li>
 </ol>
 <p>1-9都可以利用Runtime进行拦截，然后进行一些逻辑处理，防止crash</p>
-<h3  class="heading" id="heading-27" data-id="heading-27">21. 你知道有哪些情况会导致app卡顿，分别可以用什么方法来避免？（知道多少说多少））<span id="user-content-21"></span></h3>
+<h3  class="heading" id="heading-27" data-id="heading-27">21. 你知道有哪些情况会导致app卡顿，分别可以用什么方法来避免？（知道多少说多少）<span id="user-content-21"></span></h3>
 <ol>
-<li>主线程中进化IO或其他耗时操作，解决：把耗时操作放到子线程中操作</li>
-<li>GCD并发队列短时间内创建大量任务，解决：使用线程池</li>
-<li>文本计算，解决：把计算放在子线程中避免阻塞主线程</li>
-<li>大量图像的绘制，解决：在子线程中对图片进行解码之后再展示</li>
-<li>高清图片的展示，解法：可在子线程中进行下采样处理之后再展示</li>
+<li>主线程中进行 IO 或其他耗时操作。解决：把耗时操作放到子线程，主线程只做 UI 赋值和提交。</li>
+<li>GCD 并发队列短时间内提交大量任务，线程数上去之后上下文切换会反过来拖住主线程。解决：限制并发，用有上限的线程池，或设置 <code>NSOperationQueue</code> 的 <code>maxConcurrentOperationCount</code>。</li>
+<li>文本计算（尺寸、排版）。解决：放到子线程算完并缓存，避免在 <code>cellForRow</code> 里现算。</li>
+<li>大量图像的绘制。解决：在子线程把图片解码成位图之后，再回到主线程展示。</li>
+<li>高清大图直接上屏。解决：按控件的显示尺寸，在子线程做下采样后再展示。</li>
 </ol>
+<p>上面五条主要是主线程或 CPU 被占住。卡顿还可以出在 GPU 合成和列表滚动上。面试里按「先看这一帧卡在哪一段，再对症处理」来答。</p>
+<h5>一、卡顿是怎么来的：某一帧没赶上 VSync</h5>
+<p>正常一帧是 CPU 算完布局、绘制和图层提交，GPU 合成进帧缓冲，显示系统在下一次 VSync 到来时把这一帧扫到屏幕上。VSync 间隔是固定的，60Hz 屏幕大约每 16.67ms 一次；刷新率更高时，这一帧的预算更短。</p>
+<p>CPU 算得慢，或者 GPU 合成超时，VSync 到来时这一帧还没准备好，当前没画完的帧就会被丢掉，屏幕改显后面已经画完的那一帧。用户看到的就是掉帧。避免卡顿，就是让 CPU 和 GPU 都在这一帧的预算里做完。</p>
+<h5>二、CPU 侧：主线程上的布局、IO、文本、解码和绘制</h5>
+<p>对应上面第 1、3、4、5 条。界面提交发生在主线程 RunLoop 里，下面这些工作堆在主线程，会直接吃掉这一帧：</p>
+<ul>
+<li><strong>布局计算</strong>：层级太深、约束太多，每次展示或修改都要重算 frame。解决：压平层级；列表行高提前算好，缓存在模型上。</li>
+<li><strong>视图懒加载和 IO</strong>：控制器第一次出现时才读数据库、加载 xib、读图片，这些都比普通指令慢得多。解决：IO 放子线程；列表里尽量少用 xib 建 cell。</li>
+<li><strong>文本排版</strong>：<code>UILabel</code>、<code>CATextLayer</code> 的尺寸和绘制不便宜。解决：子线程算好宽高并缓存，滚动中不要反复排版同一段文字。</li>
+<li><strong>图片解码</strong>：PNG、JPEG 画到屏幕前必须解成位图，大约是宽 × 高 × 4 字节。<code>UIImage</code> 手里通常还是压缩数据，系统为了省内存，往往拖到真正绘制时才解码，这次解码经常落在主线程。图片上屏是加载、解码、渲染三步，业务代码往往只做了加载。解决：子线程先解码成位图，再回主线程赋给 <code>UIImageView</code>。</li>
+<li><strong>高清图</strong>：按原图像素解码，内存和时间都远超控件实际显示尺寸。解决：按显示尺寸下采样，只解出屏幕上用得到的那一档。</li>
+<li><strong>Core Graphics 绘制</strong>：实现了 <code>drawRect:</code> 或 <code>drawLayer:inContext:</code> 时，Core Animation 要先分配一块寄宿图，画完再经 IPC 交给渲染服务。滚动路径上避免每帧都走 <code>drawRect:</code>；必须自绘时放到子线程异步绘制，画完再切回主线程提交。</li>
+<li><strong>图层打包</strong>：图层树提交之后，CPU 仍要把每个可见图层转成 GPU 能画的纹理和三角形，工作量和图层数量成正比。解决：去掉不必要的子视图和子图层。</li>
+</ul>
+<h5>三、线程太多，也会把主线程挤掉</h5>
+<p>对应第 2 条。GCD 全局并发队列本身就有线程池，但短时间丢进大量会阻塞的任务时，系统可能继续开线程。线程一多，切换和每条线程的栈内存会占住 CPU，主线程抢不到时间片，界面一样卡。解决不是再开一个没有上限的并发队列，而是把并发数管住：串行队列、<code>NSOperationQueue</code> 的 <code>maxConcurrentOperationCount</code>，或用信号量做有上限的线程池。</p>
+<h5>四、GPU 侧：离屏渲染、混合和图层过多</h5>
+<p>CPU 按时交卷，GPU 仍可能超时。合成压力通常来自离屏渲染、大面积半透明混合，以及图层太多。</p>
+<ul>
+<li><strong>离屏渲染</strong>：mask、阴影、需要裁切的圆角、<code>shouldRasterize</code> 会让 GPU 先画到一块屏幕外的缓冲区，再合成回来。上下文要来回切换，列表里一多就掉帧。哪些场景会触发、为什么贵，见 <a href="#heading-20">第 14 题</a>。阴影带上 <code>shadowPath</code>；滚动中的 cell 慎用 <code>masksToBounds</code>、模糊和 <code>shouldRasterize</code>。只给纯色背景加圆角、不裁子图层时，现代系统不一定走离屏，不要说成「有圆角就一定离屏」。</li>
+<li><strong>混合和过度绘制</strong>：大面积半透明会让 GPU 把多层颜色叠在一起。能用不透明背景就用不透明，减少重叠的透明区域。</li>
+<li><strong>光栅化要看内容稳不稳</strong>：<code>shouldRasterize = YES</code> 会把图层渲成位图并缓存。静止、反复出现的复杂内容可能更便宜；滚动中内容一直变，缓存不断失效，反而更慢。</li>
+</ul>
+<h5>五、列表滚动时怎么避免</h5>
+<p>列表是这道题最常被追问的场景。先分清超预算的是主线程 CPU、图片 IO / 解码，还是 GPU 合成，再对症。</p>
+<ul>
+<li><strong>复用</strong>：cell 按 identifier 进缓存池。滑出屏幕的视图不要在滑动手势里同步新建。</li>
+<li><strong>行高</strong>：高度提前算好，缓存在当前模型里。预估高度可以让第一次布局少算一些 cell；估得不准会跳动，最终高度仍要以真实布局为准。</li>
+<li><strong>按需加载</strong>：滑得很快时先显示占位，即将进入屏幕或停稳后再加载图片和解码。</li>
+<li><strong>刷新别太碎</strong>：能批量更新就不要频繁 <code>reloadData</code>。</li>
+<li><strong>图片</strong>：后台解码，并按显示尺寸降采样，不要把原图直接塞进列表。</li>
+</ul>
+<h5>六、卡顿检测的方法</h5>
+<p>主线程卡顿就是这一轮 RunLoop 被堵住太久。给主线程 RunLoop 加一个 Observer，量状态切换耗了多久，就能把卡顿记下来。</p>
+<ul>
+<li><strong>量哪一段</strong>：<code>beforeSources</code> 到 <code>beforeWaiting</code> 的差值，近似这一轮处理任务用了多久。超过阈值就记一次卡顿。下面示例默认 50ms，大约是 60Hz 下三帧，可按刷新率再收紧。</li>
+<li><strong>挂在哪</strong>：Observer 必须加到 <code>CFRunLoopGetMain()</code>，Mode 用 <code>commonModes</code>。这样列表滚动时的 <code>UITrackingRunLoopMode</code> 也能被观察到，不会只在静止时才报警。</li>
+<li><strong>不用另开线程轮询</strong>：<code>repeat</code> 设为持续监听。主 RunLoop 睡着时不会回调。</li>
+<li><strong>回调里只做轻活</strong>：取时间、算差值、打一条日志。格式化、落盘、上报交给后台队列，否则监控本身就会把主线程拖卡。</li>
+<li><strong>它看不出 GPU</strong>：这段时间只说明主线程被占住。瓶颈在渲染提交之后的合成阶段时，要配合 Instruments 或 <code>CADisplayLink</code> 看掉帧、FPS、hitch。</li>
+<li><strong>用完要停</strong>：页面退出、抽样结束或 App 进后台时调用 <code>stop()</code>，把 Observer 从主 RunLoop 拿掉，避免一直挂着。</li>
+</ul>
+<pre><code class="hljs language-swift" lang="swift">final class MainThreadStallMonitor {
+    private var observer: CFRunLoopObserver?
+    private var startTime: CFTimeInterval?
+    private let threshold: CFTimeInterval
+
+    init(threshold: CFTimeInterval = 0.05) {
+        self.threshold = threshold
+    }
+
+    func start() {
+        let activities: CFRunLoopActivity = [
+            .beforeSources,
+            .beforeWaiting
+        ]
+
+        let observer = CFRunLoopObserverCreateWithHandler(
+            kCFAllocatorDefault,
+            activities.rawValue,
+            true, // repeat
+            0
+        ) { [weak self] _, activity in
+            guard let self else { return }
+            let now = CACurrentMediaTime()
+
+            if activity.contains(.beforeSources) {
+                self.startTime = now
+            }
+
+            if activity.contains(.beforeWaiting) {
+                defer { self.startTime = nil }
+                guard let start = self.startTime else { return }
+
+                let elapsed = now - start
+                if elapsed &gt; self.threshold {
+                    print("Main thread stall: \(elapsed * 1000) ms")
+                }
+            }
+        }
+
+        self.observer = observer
+        CFRunLoopAddObserver(
+            CFRunLoopGetMain(),
+            observer,
+            CFRunLoopMode.commonModes
+        )
+    }
+
+    func stop() {
+        if let observer {
+            CFRunLoopRemoveObserver(
+                CFRunLoopGetMain(),
+                observer,
+                CFRunLoopMode.commonModes
+            )
+        }
+        observer = nil
+        startTime = nil
+    }
+}</code></pre>
+<h5>七、一句话总结</h5>
+<blockquote>
+<p>卡顿就是某一帧没赶上 VSync。CPU 侧不要把 IO、文本排版、图片解码、<code>drawRect:</code> 和过深布局堆在主线程，大图按下采样后的尺寸解码，并发任务要限流；GPU 侧减少离屏渲染、半透明混合和图层数量；列表再配合复用、缓存行高和滑动时按需加载。主线程卡没卡，用 RunLoop Observer 量 <code>beforeSources</code> 到 <code>beforeWaiting</code>；GPU 掉帧看 Instruments 或 <code>CADisplayLink</code>。先分清是主线程 CPU、图片 IO / 解码，还是 GPU 渲染超了预算，再选对应的办法。</p>
+</blockquote>
 <h3  class="heading" id="heading-28" data-id="heading-28">22. App网络层有哪些优化策略？<span id="user-content-22"></span></h3>
 <ol>
 <li>优化DNS解析和缓存</li>
@@ -940,8 +1186,8 @@ extension ListNode {
       19. App无痕埋点的思路了解么？你认为理想的无痕埋点系统应该具备哪些特点？（知道多少说多少））
     </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-26" title="20. 你知道有哪些情况会导致app崩溃，分别可以用什么方法拦截并化解？（知道多少说多少））" class="catalog-aTag d1-aTag-title">
       20. 你知道有哪些情况会导致app崩溃，分别可以用什么方法拦截并化解？（知道多少说多少））
-    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-27" title="21. 你知道有哪些情况会导致app卡顿，分别可以用什么方法来避免？（知道多少说多少））" class="catalog-aTag d1-aTag-title">
-      21. 你知道有哪些情况会导致app卡顿，分别可以用什么方法来避免？（知道多少说多少））
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-27" title="21. 你知道有哪些情况会导致app卡顿，分别可以用什么方法来避免？（知道多少说多少）" class="catalog-aTag d1-aTag-title">
+      21. 你知道有哪些情况会导致app卡顿，分别可以用什么方法来避免？（知道多少说多少）
     </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-28" title="22. App网络层有哪些优化策略？" class="catalog-aTag d1-aTag-title">
       22. App网络层有哪些优化策略？
     </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-29" title="23. TCP为什么要三次握手，四次挥手？" class="catalog-aTag d1-aTag-title">
@@ -999,6 +1245,11 @@ extension ListNode {
 .sidebar .article-catalog{display:block!important}
 .sidebar .catalog-body{max-height:calc(100vh - 180px)!important}
 .sidebar .catalog-body .catalog-aTag{cursor:pointer}
+
+/* 正文表格沿用页面灰底样式，避免长类名在单元格里被拆开 */
+#article-root .markdown-body table{display:table!important;width:100%!important}
+#article-root .markdown-body td,#article-root .markdown-body th{min-width:0!important}
+#article-root .markdown-body td code,#article-root .markdown-body th code{word-break:normal}
 </style>
 <script>
 (function () {
