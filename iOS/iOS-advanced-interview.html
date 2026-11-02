@@ -34,53 +34,71 @@
 <h3  class="heading" id="heading-0" data-id="heading-0">目录</h3>
 <h4  class="heading" id="heading-1" data-id="heading-1">iOS 基础题</h4>
 <p><a href="#heading-7" title="#heading-7">1. 分类和扩展有什么区别？可以分别用来做什么？分类有哪些局限性？分类的结构体里面有哪些成员？</a></p>
-<p><a href="#heading-8" title="#heading-8">2.讲一下atomic的实现机制；为什么不能保证绝对的线程安全（最好可以结合场景来说）？</a></p>
-<p><a href="#heading-9" title="#heading-9">3. 被weak修饰的对象在被释放的时候会发生什么？是如何实现的？知道sideTable么？里面的结构可以画出来么？</a></p>
-<p><a href="#heading-10" title="#heading-10">4. 关联对象有什么应用，系统如何管理关联对象？其被释放的时候需要手动将所有的关联对象的指针置空么？</a></p>
-<p><a href="#heading-11" title="#heading-11">5. KVO的底层实现？如何取消系统默认的KVO并手动触发（给KVO的触发设定条件：改变的值符合某个条件时再触发KVO）？</a></p>
-<p><a href="#heading-12" title="#heading-12">6. Autoreleasepool所使用的数据结构是什么？AutoreleasePoolPage结构体了解么？</a></p>
-<p><a href="#heading-13" title="#heading-13">7. 讲一下对象，类对象，元类，跟元类结构体的组成以及他们是如何相关联的？为什么对象方法没有保存的对象结构体里，而是保存在类对象的结构体里？</a></p>
-<p><a href="#heading-14" title="#heading-14">8. class_ro_t和class_rw_t的区别？</a></p>
-<p><a href="#heading-15" title="#heading-15">9. iOS中内省的几个方法？class方法和objc_getClass方法有什么区别?</a></p>
-<p><a href="#heading-16" title="#heading-16">10. 在运行时创建类的方法objc_allocateClassPair的方法名尾部为什么是pair（成对的意思）？</a></p>
-<p><a href="#heading-17" title="#heading-17">11. 一个int变量被__block修饰与否的区别？</a></p>
-<p><a href="#heading-18" title="#heading-18">12. 为什么在block外部使用__weak修饰的同时需要在内部使用__strong修饰？</a></p>
-<p><a href="#heading-19" title="#heading-19">13. RunLoop的作用是什么？它的内部工作机制了解么？（最好结合线程和内存管理来说）</a></p>
-<p><a href="#heading-20" title="#heading-20">14. 哪些场景可以触发离屏渲染？（知道多少说多少）</a></p>
+<p><a href="#heading-60" title="#heading-60">2. @synthesize 和 @dynamic 分别有什么作用？</a></p>
+<p><a href="#heading-61" title="#heading-61">3. 深拷贝和浅拷贝有什么区别？</a></p>
+<p><a href="#heading-62" title="#heading-62">4. NSString 为什么要用 copy 修饰？</a></p>
+<p><a href="#heading-8" title="#heading-8">5.讲一下atomic的实现机制；为什么不能保证绝对的线程安全（最好可以结合场景来说）？</a></p>
+<p><a href="#heading-9" title="#heading-9">6. 被weak修饰的对象在被释放的时候会发生什么？是如何实现的？知道sideTable么？里面的结构可以画出来么？</a></p>
+<p><a href="#heading-63" title="#heading-63">7. 什么是野指针？如何检测？</a></p>
+<p><a href="#heading-10" title="#heading-10">8. 关联对象有什么应用，系统如何管理关联对象？其被释放的时候需要手动将所有的关联对象的指针置空么？</a></p>
+<p><a href="#heading-11" title="#heading-11">9. KVO的底层实现？如何取消系统默认的KVO并手动触发（给KVO的触发设定条件：改变的值符合某个条件时再触发KVO）？</a></p>
+<p><a href="#heading-64" title="#heading-64">10. KVC 的底层实现？通过 KVC 修改属性会触发 KVO 么？直接改成员变量呢？</a></p>
+<p><a href="#heading-12" title="#heading-12">11. Autoreleasepool所使用的数据结构是什么？AutoreleasePoolPage结构体了解么？</a></p>
+<p><a href="#heading-65" title="#heading-65">12. 对象方法和类方法有什么区别？类方法里的 self 是什么？类方法存在哪里，为什么要有元类？</a></p>
+<p><a href="#heading-13" title="#heading-13">13. 讲一下对象，类对象，元类，跟元类结构体的组成以及他们是如何相关联的？为什么对象方法没有保存的对象结构体里，而是保存在类对象的结构体里？</a></p>
+<p><a href="#heading-14" title="#heading-14">14. class_ro_t和class_rw_t的区别？</a></p>
+<p><a href="#heading-15" title="#heading-15">15. iOS中内省的几个方法？class方法和objc_getClass方法有什么区别?</a></p>
+<p><a href="#heading-66" title="#heading-66">16. ==、isEqual:、isEqualToString: 有什么区别？</a></p>
+<p><a href="#heading-67" title="#heading-67">17. objc 向一个对象发送消息时，发生了什么？</a></p>
+<p><a href="#heading-16" title="#heading-16">18. 在运行时创建类的方法objc_allocateClassPair的方法名尾部为什么是pair（成对的意思）？</a></p>
+<p><a href="#heading-68" title="#heading-68">19. +load 和 +initialize 的调用时机，以及父子类、分类的调用顺序？</a></p>
+<p><a href="#heading-17" title="#heading-17">20. 一个int变量被__block修饰与否的区别？</a></p>
+<p><a href="#heading-18" title="#heading-18">21. 为什么在block外部使用__weak修饰的同时需要在内部使用__strong修饰？</a></p>
+<p><a href="#heading-69" title="#heading-69">22. Block 为什么用 copy 修饰？</a></p>
+<p><a href="#heading-19" title="#heading-19">23. RunLoop的作用是什么？它的内部工作机制了解么？（最好结合线程和内存管理来说）</a></p>
+<p><a href="#heading-70" title="#heading-70">24. 有没有用过 performSelector:？NSTimer 在子线程怎么跑，为什么不准，循环引用怎么断？</a></p>
+<p><a href="#heading-71" title="#heading-71">25. ViewController 的生命周期是怎样的？</a></p>
+<p><a href="#heading-20" title="#heading-20">26. 哪些场景可以触发离屏渲染？（知道多少说多少）</a></p>
 <h4  class="heading" id="heading-2" data-id="heading-2">iOS实战题</h4>
-<p><a href="#heading-21" title="#heading-21">15. AppDelegate如何瘦身？</a></p>
-<p><a href="#heading-22" title="#heading-22">16. 反射是什么？可以举出几个应用场景么？（知道多少说多少）</a></p>
-<p><a href="#heading-23" title="#heading-23">17. 有哪些场景是NSOperation比GCD更容易实现的？（或是NSOperation优于GCD的几点，知道多少说多少）</a></p>
-<p><a href="#heading-24" title="#heading-24">18. App 启动优化策略？最好结合启动流程来说（main()函数的执行前后都分别说一下，知道多少说多少）</a></p>
-<p><a href="#heading-25" title="#heading-25">19. App 无痕埋点的思路了解么？你认为理想的无痕埋点系统应该具备哪些特点？（知道多少说多少）</a></p>
-<p><a href="#heading-26" title="#heading-26">20. 你知道有哪些情况会导致app崩溃，分别可以用什么方法拦截并化解？（知道多少说多少）</a></p>
-<p><a href="#heading-27" title="#heading-27">21. 你知道有哪些情况会导致app卡顿，分别可以用什么方法来避免？（知道多少说多少）</a></p>
+<p><a href="#heading-21" title="#heading-21">27. AppDelegate如何瘦身？</a></p>
+<p><a href="#heading-72" title="#heading-72">28. APNS 的基本原理是什么？</a></p>
+<p><a href="#heading-22" title="#heading-22">29. 反射是什么？可以举出几个应用场景么？（知道多少说多少）</a></p>
+<p><a href="#heading-23" title="#heading-23">30. 有哪些场景是NSOperation比GCD更容易实现的？（或是NSOperation优于GCD的几点，知道多少说多少）</a></p>
+<p><a href="#heading-73" title="#heading-73">31. 为什么 AFN 3.0 要把 operationQueue.maxConcurrentOperationCount 设为 1？2.0 为什么不需要？</a></p>
+<p><a href="#heading-24" title="#heading-24">32. App 启动优化策略？最好结合启动流程来说（main()函数的执行前后都分别说一下，知道多少说多少）</a></p>
+<p><a href="#heading-25" title="#heading-25">33. App 无痕埋点的思路了解么？你认为理想的无痕埋点系统应该具备哪些特点？（知道多少说多少）</a></p>
+<p><a href="#heading-26" title="#heading-26">34. 你知道有哪些情况会导致app崩溃，分别可以用什么方法拦截并化解？（知道多少说多少）</a></p>
+<p><a href="#heading-74" title="#heading-74">35. 不使用第三方，如何把已经上线的崩溃定位到具体类和方法？</a></p>
+<p><a href="#heading-27" title="#heading-27">36. 你知道有哪些情况会导致app卡顿，分别可以用什么方法来避免？（知道多少说多少）</a></p>
 <h4  class="heading" id="heading-3" data-id="heading-3">网络题</h4>
-<p><a href="#heading-28" title="#heading-28">22. App 网络层有哪些优化策略？</a></p>
-<p><a href="#heading-29" title="#heading-29">23. TCP为什么要三次握手，四次挥手？</a></p>
-<p><a href="#heading-30" title="#heading-30">24. 对称加密和非对称加密的区别？分别有哪些算法的实现？</a></p>
-<p><a href="#heading-31" title="#heading-31">25. HTTPS的握手流程？为什么密钥的传递需要使用非对称加密？双向认证了解么？</a></p>
-<p><a href="#heading-32" title="#heading-32">26. HTTPS是如何实现验证身份和验证完整性的？</a></p>
-<p><a href="#heading-33" title="#heading-33">27. 如何用Charles抓HTTPS的包？其中原理和流程是什么？</a></p>
-<p><a href="#heading-34" title="#heading-34">28. 什么是中间人攻击？如何避免？</a></p>
+<p><a href="#heading-28" title="#heading-28">37. App 网络层有哪些优化策略？</a></p>
+<p><a href="#heading-29" title="#heading-29">38. TCP为什么要三次握手，四次挥手？</a></p>
+<p><a href="#heading-75" title="#heading-75">39. HTTP 里 GET 和 POST 有什么区别？</a></p>
+<p><a href="#heading-30" title="#heading-30">40. 对称加密和非对称加密的区别？分别有哪些算法的实现？</a></p>
+<p><a href="#heading-31" title="#heading-31">41. HTTPS的握手流程？为什么密钥的传递需要使用非对称加密？双向认证了解么？</a></p>
+<p><a href="#heading-34" title="#heading-34">42. HTTPS是如何实现验证身份和验证完整性的？</a></p>
+<p><a href="#heading-35" title="#heading-35">43. 如何用Charles抓HTTPS的包？其中原理和流程是什么？</a></p>
+<p><a href="#heading-36" title="#heading-36">44. 什么是中间人攻击？如何避免？</a></p>
 <h4  class="heading" id="heading-4" data-id="heading-4">计算机系统题</h4>
-<p><a href="#heading-35" title="#heading-35">29. 了解编译的过程么？分为哪几个步骤？</a></p>
-<p><a href="#heading-36" title="#heading-36">30. 静态链接了解么？静态库和动态库的区别？</a></p>
-<p><a href="#heading-37" title="#heading-37">31. 内存的几大区域，各自的职能分别是什么？</a></p>
-<p><a href="#heading-38" title="#heading-38">32. static和const有什么区别？</a></p>
-<p><a href="#heading-39" title="#heading-39">33. 了解内联函数么？</a></p>
-<p><a href="#heading-40" title="#heading-40">34. 什么时候会出现死锁？如何避免？</a></p>
-<p><a href="#heading-41" title="#heading-41">35. 说一说你对线程安全的理解？</a></p>
-<p><a href="#heading-42" title="#heading-42">36. 列举你知道的线程同步策略？</a></p>
-<p><a href="#heading-43" title="#heading-43">37. 有哪几种锁？各自的原理？它们之间的区别是什么？最好可以结合使用场景来说</a></p>
+<p><a href="#heading-37" title="#heading-37">45. 了解编译的过程么？分为哪几个步骤？</a></p>
+<p><a href="#heading-38" title="#heading-38">46. 静态链接了解么？静态库和动态库的区别？</a></p>
+<p><a href="#heading-39" title="#heading-39">47. 内存的几大区域，各自的职能分别是什么？</a></p>
+<p><a href="#heading-40" title="#heading-40">48. static和const有什么区别？</a></p>
+<p><a href="#heading-41" title="#heading-41">49. 了解内联函数么？</a></p>
+<p><a href="#heading-42" title="#heading-42">50. 什么时候会出现死锁？如何避免？</a></p>
+<p><a href="#heading-43" title="#heading-43">51. 说一说你对线程安全的理解？</a></p>
+<p><a href="#heading-44" title="#heading-44">52. 列举你知道的线程同步策略？</a></p>
+<p><a href="#heading-45" title="#heading-45">53. 有哪几种锁？各自的原理？它们之间的区别是什么？最好可以结合使用场景来说</a></p>
 <h4  class="heading" id="heading-5" data-id="heading-5">设计模式题和架构 &#x26; 设计题（由于水平有限，就不误人子弟了）</h4>
+<p><a href="#heading-76" title="#heading-76">54. 单例有几种写法？怎么销毁？不用 dispatch_once 怎么写？项目里单例用来做什么？</a></p>
+<p><a href="#heading-53" title="#heading-53">55. 事件响应链和事件传递</a></p>
 <h4  class="heading" id="heading-6" data-id="heading-6">数据结构&#x26;算法题</h4>
-<p><a href="#heading-44" title="#heading-44">38. 链表和数组的区别是什么？插入和查询的时间复杂度分别是多少？</a></p>
-<p><a href="#heading-45" title="#heading-45">39. 哈希表是如何实现的？如何解决地址冲突？</a></p>
-<p><a href="#heading-46" title="#heading-46">40. 排序题：冒泡排序，选择排序，插入排序，快速排序（二路，三路）能写出那些？</a></p>
-<p><a href="#heading-47" title="#heading-47">41. 链表题：如何检测链表中是否有环？如何删除链表中等于某个值的所有节点？</a></p>
-<p><a href="#heading-48" title="#heading-48">42. 数组题：如何在有序数组中找出和等于给定值的两个元素？如何合并两个有序的数组之后保持有序？</a></p>
-<p><a href="#heading-49" title="#heading-49">43. 二叉树题：如何反转二叉树？如何验证两个二叉树是完全相等的？</a></p>
+<p><a href="#heading-46" title="#heading-46">56. 链表和数组的区别是什么？插入和查询的时间复杂度分别是多少？</a></p>
+<p><a href="#heading-47" title="#heading-47">57. 哈希表是如何实现的？如何解决地址冲突？</a></p>
+<p><a href="#heading-48" title="#heading-48">58. 排序题：冒泡排序，选择排序，插入排序，快速排序（二路，三路）能写出那些？</a></p>
+<p><a href="#heading-49" title="#heading-49">59. 链表题：如何检测链表中是否有环？如何删除链表中等于某个值的所有节点？</a></p>
+<p><a href="#heading-50" title="#heading-50">60. 数组题：如何在有序数组中找出和等于给定值的两个元素？如何合并两个有序的数组之后保持有序？</a></p>
+<p><a href="#heading-51" title="#heading-51">61. 二叉树题：如何反转二叉树？如何验证两个二叉树是完全相等的？</a></p>
 <h3  class="heading" id="heading-7" data-id="heading-7">1.分类和扩展有什么区别？可以分别用来做什么？分类有哪些局限性？分类的结构体里面有哪些成员？<span></span></h3>
 <ol>
 <li>分类主要用来为某个类添加方法，属性，协议（我一般用来为系统的类扩展方法或者把某个复杂的类的按照功能拆到不同的文件里）</li>
@@ -110,7 +128,60 @@
     // 此属性不一定真正的存在
     struct property_list_t *_classProperties;//类属性列表
 };
-</code></pre><h3  class="heading" id="heading-8" data-id="heading-8">2.讲一下atomic的实现机制；为什么不能保证绝对的线程安全（最好可以结合场景来说）？<span></span></h3>
+</code></pre><h3  class="heading" id="heading-60" data-id="heading-60">2. @synthesize 和 @dynamic 分别有什么作用？<span id="user-content-2"></span></h3>
+<p>这两个关键字都是在告诉编译器：属性的存取方法要不要由编译器生成。<code>@property</code> 只负责声明 getter/setter。现代 Clang 在你没写存取方法时会自动合成，等价于写了 <code>@synthesize prop = _prop;</code>，所以平时可以不手写 <code>@synthesize</code>。</p>
+<h4 class="heading" id="heading-60-syn" data-id="heading-60-syn">@synthesize：编译器生成存取方法和成员变量</h4>
+<ul>
+<li>没实现 getter/setter 时，编译器生成 <code>_prop</code> 成员变量，以及对应的存取方法。内存语义（<code>strong</code> / <code>copy</code> / <code>weak</code> / <code>assign</code>）写在生成的方法里。</li>
+<li>只实现了其中一个时，另一个仍会自动生成，成员变量也会有。</li>
+<li>getter 和 setter 都自己实现了，编译器就不再生成成员变量。还想用 <code>_prop</code>，需要显式写 <code>@synthesize prop = _prop;</code>。</li>
+<li>也可以改成员变量名：<code>@synthesize prop = prop;</code>。协议里的属性在实现类中有时也要显式 synthesize。</li>
+</ul>
+<h4 class="heading" id="heading-60-dyn" data-id="heading-60-dyn">@dynamic：编译期不生成，运行时再给实现</h4>
+<p><code>@dynamic</code> 告诉编译器不要合成存取方法，也不要警告「没有实现」。实现可以来自：</p>
+<ul>
+<li>你稍后手写的 getter/setter；</li>
+<li><code>resolveInstanceMethod:</code> 里 <code>class_addMethod</code> 动态补上；</li>
+<li>消息转发到别的对象。Core Data 的 <code>NSManagedObject</code> 就是典型，属性访问最终进到 <code>primitiveValueForKey:</code> 那一套。</li>
+</ul>
+<p>如果标记了 <code>@dynamic</code> 却始终没有实现，编译能过，运行到 <code>obj.prop</code> 或 <code>obj.prop = x</code> 才会 <code>unrecognized selector</code>。这和「编译期绑定」相反：存取方法留到运行时才确定。</p>
+<blockquote><p>一句话：<code>@synthesize</code> 让编译器把 getter/setter 和成员变量生成出来；<code>@dynamic</code> 让编译器什么都不生成，实现推迟到运行时。两个都没写时，现在的编译器默认按 synthesize 处理。</p></blockquote>
+
+<h3  class="heading" id="heading-61" data-id="heading-61">3. 深拷贝和浅拷贝有什么区别？<span id="user-content-3"></span></h3>
+<p>浅拷贝和深拷贝的差别不在「有没有新指针」，而在<strong>新对象里装的东西还是不是原来那一份</strong>。浅拷贝可以有一个新容器，但元素仍是原来的对象；深拷贝要连元素一起复制。集合再套集合时，只复制一层还是每一层都复制，要单独说。</p>
+<h4 class="heading" id="heading-61-rule" data-id="heading-61-rule">copy 和 mutableCopy 先分清</h4>
+<ul>
+<li><code>copy</code> 希望得到不可变对象，<code>mutableCopy</code> 得到可变对象。这是可变性，不是深浅。</li>
+<li>不可变对象的 <code>copy</code> 经常直接返回自己（引用计数 +1）。内容不可能被改，没必要再分配一份。所以 <code>[immutableString copy] == immutableString</code> 往往为真。</li>
+<li>可变对象的 <code>copy</code> 会做出一份新的不可变副本，之后改原来的可变对象，不影响这份副本。</li>
+<li>对 <code>NSArray</code> / <code>NSDictionary</code> / <code>NSSet</code>，<code>copy</code> 和 <code>mutableCopy</code> 默认都只复制容器，元素仍是同一批指针。这是浅拷贝。</li>
+</ul>
+<h4 class="heading" id="heading-61-deep" data-id="heading-61-deep">怎样才算深拷贝</h4>
+<ul>
+<li>一层深拷贝：<code>[[NSArray alloc] initWithArray:array copyItems:YES]</code>，对每个元素发 <code>copy</code>。元素如果自己又是数组，里面那层还是共享的。</li>
+<li>多层深拷贝：元素也实现 <code>NSCoding</code> 时，用 <code>NSKeyedArchiver</code> 归档再解档；或者自己按结构递归复制。</li>
+<li>自定义类要想被 <code>copy</code>，需要实现 <code>NSCopying</code>。只复制指针字段就是浅的，字段再 <code>copy</code> 才往深处走。</li>
+</ul>
+<blockquote><p>一句话：浅拷贝共享内部对象，深拷贝连内部一起复制。<code>mutableCopy</code> 只保证容器可变，不保证元素也被复制。</p></blockquote>
+
+<h3  class="heading" id="heading-62" data-id="heading-62">4. NSString 为什么要用 copy 修饰？<span id="user-content-4"></span></h3>
+<p><code>NSString</code> 本身不可变，用 <code>copy</code> 不是为了「字符串会变」，而是为了挡住外面塞进来的 <code>NSMutableString</code>。</p>
+<pre><code class="hljs objectivec" lang="objectivec"><span class="hljs-keyword">@property</span> (nonatomic, copy) <span class="hljs-built_in">NSString</span> *name;
+
+<span class="hljs-built_in">NSMutableString</span> *text = [<span class="hljs-string">@"hello"</span> mutableCopy];
+person.name = text;   <span class="hljs-comment">// copy：属性里是一份不可变副本</span>
+[text appendString:<span class="hljs-string">@"!"</span>];
+<span class="hljs-comment">// person.name 仍是 @"hello"。如果属性是 strong，这里会变成 @"hello!"</span>
+</code></pre>
+<ul>
+<li>赋进来的本来就是不可变 <code>NSString</code> 时，<code>copy</code> 通常返回原对象，和 <code>strong</code> 一样，只是 retain。</li>
+<li>赋进来的动态类型是 <code>NSMutableString</code> 时，<code>copy</code> 生成新的不可变字符串。之后别人再改那份可变字符串，属性值不动。</li>
+<li><code>NSArray</code>、<code>NSDictionary</code> 属性同样用 <code>copy</code>，理由一样：挡住 <code>NSMutableArray</code> 之类的后续修改。这只隔离容器本身，元素是否深拷贝见上一题。</li>
+<li>属性类型如果就是 <code>NSMutableString</code>，不要写 <code>copy</code>。<code>copy</code> 得到的是不可变 <code>NSString</code>，再当可变字符串去 <code>appendString:</code> 会崩。这种属性用 <code>strong</code>，调用方自己保证不要把内部对象交出去。</li>
+</ul>
+<blockquote><p>一句话：<code>copy</code> 是在 setter 里做一次不可变快照，防止外部用可变子类把属性值改掉。来源已经不可变时，它和 <code>strong</code> 没有行为差别。</p></blockquote>
+
+<h3  class="heading" id="heading-8" data-id="heading-8">5.讲一下atomic的实现机制；为什么不能保证绝对的线程安全（最好可以结合场景来说）？<span></span></h3>
 <ol>
 <li>atomic的实现机制<br>
 atomic是property的修饰词之一，表示是原子性的，使用方式为<code>@property(atomic)int age;</code>,此时编译器会自动生成getter/setter方法，最终会调用<code>objc_getProperty</code>和<code>objc_setProperty</code>方法来进行存取属性。若此时属性用<code>atomic</code>修饰的话，在这两个方法内部使用<code>os_unfair_lock</code>来进行加锁，来保证读写的原子性。锁都在PropertyLocks中保存着（在iOS平台会初始化8个，mac平台64个），在用之前，会把锁都初始化好，在需要用到时，用对象的地址加上成员变量的偏移量为key，去PropertyLocks中去取。因此存取时用的是同一个锁，所以atomic能保证属性的存取时是线程安全的。注：由于锁是有限的，不用对象，不同属性的读取用的也可能是同一个锁</li>
@@ -121,7 +192,7 @@ atomic是property的修饰词之一，表示是原子性的，使用方式为<co
 </ol>
 </li>
 </ol>
-<h3  class="heading" id="heading-9" data-id="heading-9">3. 被weak修饰的对象在被释放的时候会发生什么？是如何实现的？知道sideTable么？里面的结构可以画出来么？<span></span></h3>
+<h3  class="heading" id="heading-9" data-id="heading-9">6. 被weak修饰的对象在被释放的时候会发生什么？是如何实现的？知道sideTable么？里面的结构可以画出来么？<span></span></h3>
 <ol>
 <li>
 <p>被weak修饰的对象在被释放的时候会发生什么？<br>
@@ -141,7 +212,24 @@ runTime会把对weak修饰的对象放到一个全局的哈希表中，用 weak 
     RefcountMap refcnts;//引用计数器的值
     weak_table_t weak_table;//存放weak指针的哈希表
 };
-</code></pre><h3  class="heading" id="heading-10" data-id="heading-10">4. 关联对象有什么应用，系统如何管理关联对象？其被释放的时候需要手动将所有的关联对象的指针置空么？<span></span></h3>
+</code></pre><h3  class="heading" id="heading-63" data-id="heading-63">7. 什么是野指针？如何检测？<span id="user-content-7"></span></h3>
+<p>野指针是还留在手里、但指向的对象已经释放（或那块内存已经不再是这个对象）的指针。它不是 <code>nil</code>。<code>nil</code> 发消息在 Objective-C 里是安全的空操作；野指针发消息会落到一块无效内存上，常见结果是 <code>EXC_BAD_ACCESS</code>，而且崩溃点经常不在真正释放的那一行。</p>
+<h4 class="heading" id="heading-63-cause" data-id="heading-63-cause">哪些写法会留下野指针</h4>
+<ul>
+<li>对象用 <code>assign</code> 或 <code>unsafe_unretained</code> 持有。对象释放后指针不会被置空。MRC 里 <code>assign</code> 修饰对象、少写了一次 release 之后又多访问，也是同一类问题。</li>
+<li><code>weak</code> 不会变成野指针。释放时 runtime 会把登记过的 weak 指针置为 <code>nil</code>，这套表在 sideTable 里，见 weak 那一题。</li>
+<li>关联对象没有 <code>weak</code> 策略。用 <code>assign</code> 语义去关联一个会被释放的对象，宿主还在、被关联对象已经没了，再取出来就是野指针。</li>
+</ul>
+<h4 class="heading" id="heading-63-detect" data-id="heading-63-detect">怎么检测</h4>
+<ul>
+<li><strong>Zombie Objects</strong>：Scheme 里打开 Enable Zombie Objects（环境变量 <code>NSZombieEnabled</code>）。对象本该释放时被换成 <code>_NSZombie_</code>，再给它发消息会打印「向已释放的某类发了某个 selector」，而不是随机跳飞。它故意不真正 free，所以只适合调试，线上不能开。</li>
+<li><strong>Address Sanitizer</strong>：给堆分配加红区，越界和 use-after-free 会在访问那一刻停住，并带上分配栈和释放栈。</li>
+<li><strong>Guard Malloc</strong>：一对象一页，释放后的页设成不可访问，野指针一碰就崩在现场。很慢，只用来复现疑难问题。</li>
+<li>用 <code>%p</code> 打印指针值本身通常不会解引用对象；真正危险的是再向这个地址发消息或访问成员。</li>
+</ul>
+<blockquote><p>一句话：野指针是「人没了，地址还在」。对象属性用 <code>weak</code> 而不是 <code>assign</code>；调试用 Zombie 看是谁被提前释放，用 ASan 把现场钉死。</p></blockquote>
+
+<h3  class="heading" id="heading-10" data-id="heading-10">8. 关联对象有什么应用，系统如何管理关联对象？其被释放的时候需要手动将所有的关联对象的指针置空么？<span></span></h3>
 <ol>
 <li>关联对象有什么应用？<br>
 一般用于在分类中给类添加实例变量</li>
@@ -162,7 +250,7 @@ runTime会把对weak修饰的对象放到一个全局的哈希表中，用 weak 
 注：对这个问题我的理解是：当对象被释放时，需要手动移除该对象所设置的关联对象吗？<br>
 不需要，因为在对象的dealloc中，若发现对象有关联对象时，会调用<code>_object_remove_assocations</code>方法来移除所有的关联对象，并根据内存策略，来判断是否需要对关联对象的值进行release</li>
 </ol>
-<h3  class="heading" id="heading-11" data-id="heading-11">5. KVO的底层实现？如何取消系统默认的KVO并手动触发（给KVO的触发设定条件：改变的值符合某个条件时再触发KVO）？<span></span></h3>
+<h3  class="heading" id="heading-11" data-id="heading-11">9. KVO的底层实现？如何取消系统默认的KVO并手动触发（给KVO的触发设定条件：改变的值符合某个条件时再触发KVO）？<span></span></h3>
 <ol>
 <li>
 <p>KVO的底层实现？</p>
@@ -205,7 +293,24 @@ runTime会把对weak修饰的对象放到一个全局的哈希表中，用 weak 
         _age = age;
     }
 }
-</code></pre><h3  class="heading" id="heading-12" data-id="heading-12">6. Autoreleasepool所使用的数据结构是什么？AutoreleasePoolPage结构体了解么？<span></span></h3>
+</code></pre><h3  class="heading" id="heading-64" data-id="heading-64">10. KVC 的底层实现？通过 KVC 修改属性会触发 KVO 么？直接改成员变量呢？<span id="user-content-10"></span></h3>
+<p>KVC 是按名字访问属性：<code>setValue:forKey:</code> 和 <code>valueForKey:</code>。名字不是编译期绑定的，<code>NSObject</code> 会按固定顺序搜索存取方法，找不到再考虑成员变量。</p>
+<h4 class="heading" id="heading-64-set" data-id="heading-64-set">setValue:forKey: 的搜索顺序</h4>
+<ol>
+<li>找 <code>set&lt;Key&gt;:</code>，再找 <code>_set&lt;Key&gt;:</code>。找到就调用，参数传进去。</li>
+<li>两个都没有，看 <code>+accessInstanceVariablesDirectly</code>。默认是 <code>YES</code>。返回 <code>NO</code> 就走 <code>setValue:forUndefinedKey:</code>，默认抛 <code>NSUnknownKeyException</code>。</li>
+<li>允许直接访问成员变量时，按 <code>_&lt;key&gt;</code>、<code>_is&lt;Key&gt;</code>、<code>&lt;key&gt;</code>、<code>is&lt;Key&gt;</code> 的顺序找实例变量，找到就写入。</li>
+<li>成员变量也没有，同样进入 <code>setValue:forUndefinedKey:</code>。</li>
+</ol>
+<p>取值 <code>valueForKey:</code> 的顺序是：<code>get&lt;Key&gt;</code>、<code>&lt;key&gt;</code>、<code>is&lt;Key&gt;</code>，然后在允许访问成员变量时找 <code>_&lt;key&gt;</code>、<code>_is&lt;Key&gt;</code>、<code>&lt;key&gt;</code>、<code>is&lt;Key&gt;</code>，再没有就 <code>valueForUndefinedKey:</code>。给非对象标量设 <code>nil</code> 会进 <code>setNilValueForKey:</code>，默认也是抛异常。</p>
+<h4 class="heading" id="heading-64-kvo" data-id="heading-64-kvo">会不会触发 KVO</h4>
+<ul>
+<li><strong>通过 KVC 改，会触发。</strong> 找到了 setter，就走 setter，自动 KVO 由 setter 上的 <code>willChangeValueForKey:</code> / <code>didChangeValueForKey:</code> 发出。没找到 setter、KVC 自己写成员变量时，<code>NSObject</code> 的实现会把这次写入包在 <code>willChange</code> / <code>didChange</code> 里，观察者一样能收到。所以「只有成员变量、没有属性」只要 <code>accessInstanceVariablesDirectly</code> 为 <code>YES</code>，<code>setValue:forKey:</code> 仍然会通知 KVO。</li>
+<li><strong>你自己写 <code>_age = 1</code>，不会触发。</strong> 这是普通赋值，没有人帮你发通知。要通知就改走 setter，或者自己调用 <code>willChangeValueForKey:</code> 和 <code>didChangeValueForKey:</code>。手动 KVO 的写法见 KVO 那一题。</li>
+</ul>
+<blockquote><p>一句话：KVC 先找 setter，没有才按顺序写成员变量，并且自己会发 KVO；绕过 KVC、直接改成员变量则不会。</p></blockquote>
+
+<h3  class="heading" id="heading-12" data-id="heading-12">11. Autoreleasepool所使用的数据结构是什么？AutoreleasePoolPage结构体了解么？<span></span></h3>
 <p>Autoreleasepool是由多个<code>AutoreleasePoolPage</code>以双向链表的形式连接起来的，
 Autoreleasepool的基本原理：在每个自动释放池创建的时候，会在当前的<code>AutoreleasePoolPage</code>中设置一个标记位，在此期间，当有对象调用 <code>autorelease</code> 时，会把该对象的指针（即对象内存地址）添加到当前 <code>AutoreleasePoolPage</code> 中；若当前页已满，则初始化新页，并通过双向链表连接，同时把新页设为 <code>hotPage</code>。当自动释放池 <code>pop</code> 时，会从当前栈顶开始依次 <code>pop</code> ，对每个指针指向的对象调用 <code>release</code>，直到遇到边界标记（<code>POOL_BOUNDARY</code> / 哨兵）为止。
 AutoreleasePoolPage结构如下</p>
@@ -218,7 +323,20 @@ AutoreleasePoolPage结构如下</p>
     uint32_t const depth;//深度,也可以理解为当前page在链表中的位置
     uint32_t hiwat;
 }
-</code></pre><h3  class="heading" id="heading-13" data-id="heading-13">7. 讲一下对象，类对象，元类，跟元类结构体的组成以及他们是如何相关联的？为什么对象方法没有保存的对象结构体里，而是保存在类对象的结构体里？<span></span></h3>
+</code></pre><h3  class="heading" id="heading-65" data-id="heading-65">12. 对象方法和类方法有什么区别？类方法里的 self 是什么？类方法存在哪里，为什么要有元类？<span id="user-content-12"></span></h3>
+<p>实例方法存在<strong>类对象</strong>的方法列表里，类方法存在<strong>元类</strong>的方法列表里。两条查找路径不共用一张表，所以两边可以起同一个名字，调用时不会撞车。</p>
+<h4 class="heading" id="heading-65-diff" data-id="heading-65-diff">能做什么，不能做什么</h4>
+<ul>
+<li>实例方法里的 <code>self</code> 是实例，可以访问成员变量，也可以通过 <code>[self class]</code> 或类名去调类方法。</li>
+<li>类方法里的 <code>self</code> 是类对象（<code>Class</code>），不是实例。可以用它调别的类方法，例如 <code>[self alloc]</code>；不能用它调实例方法，也没有成员变量可读。</li>
+<li>实例方法里写 <code>[self classMethod]</code> 不会去元类里找。消息是发给实例的，只查类对象的实例方法列表。要调类方法得写成 <code>[[self class] classMethod]</code>。</li>
+</ul>
+<h4 class="heading" id="heading-65-why" data-id="heading-65-why">类方法为什么要放在元类里</h4>
+<p>类对象自己也是对象。给它发消息时，runtime 同样顺着 isa 去找「这个对象的类」，再到那张方法列表里查 selector。类对象的 isa 指向元类，所以类方法就放在元类里。没有元类的话，类方法没有地方可放，<code>+alloc</code> 这类消息也无从查找。</p>
+<p>根元类（<code>NSObject</code> 的元类）的 isa 指向自己，它的 superclass 指向 <code>NSObject</code> 类对象。因此类方法沿着元类继承链找不到时，会落到 <code>NSObject</code> 的实例方法上。对象、类对象、元类的 isa 和结构体组成，见 <a href="#heading-13">对象、类对象、元类</a> 那一题。</p>
+<blockquote><p>一句话：实例方法属于类，类方法属于元类。类方法里的 <code>self</code> 是类对象，只能当类来用。</p></blockquote>
+
+<h3  class="heading" id="heading-13" data-id="heading-13">13. 讲一下对象，类对象，元类，跟元类结构体的组成以及他们是如何相关联的？为什么对象方法没有保存的对象结构体里，而是保存在类对象的结构体里？<span></span></h3>
 <ol>
 <li>讲一下对象，类对象，元类，跟元类结构体的组成以及他们是如何相关联的？<br>
 对象的结构体里存放着isa和成员变量的值，isa指向类对象。
@@ -229,10 +347,10 @@ AutoreleasePoolPage结构如下</p>
 <li>为什么对象方法没有保存的对象结构体里，而是保存在类对象的结构体里？<br>
 方法是每个对象互相可以共用的，如果每个对象都存储一份方法列表太浪费内存，由于对象的isa是指向类对象的，当调用的时候，直接去类对象中查找就行了。可以节约很多内存空间的</li>
 </ol>
-<h3  class="heading" id="heading-14" data-id="heading-14">8. class_ro_t和class_rw_t的区别？</h3>
+<h3  class="heading" id="heading-14" data-id="heading-14">14. class_ro_t和class_rw_t的区别？</h3>
 <p>class_rw_t提供了运行时对类拓展的能力，而class_ro_t存储的大多是类在编译时就已经确定的信息。二者都存有类的方法、属性（成员变量）、协议等信息，不过存储它们的列表实现方式不同。简单的说class_rw_t存储列表使用的二维数组，class_ro_t使用的一维数组。
 class_ro_t存储于class_rw_t结构体中，是不可改变的。保存着类的在编译时就已经确定的信息。而运行时修改类的方法，属性，协议等都存储于class_rw_t中</p>
-<h3  class="heading" id="heading-15" data-id="heading-15">9. iOS中内省的几个方法？class方法和objc_getClass方法有什么区别?</h3>
+<h3  class="heading" id="heading-15" data-id="heading-15">15. iOS中内省的几个方法？class方法和objc_getClass方法有什么区别?</h3>
 <ol>
 <li>什么是内省？</li>
 </ol>
@@ -257,7 +375,45 @@ class_ro_t存储于class_rw_t结构体中，是不可改变的。保存着类的
 实例class方法就直接返回object_getClass(self),类class方法直接返回self，而object_getClass(类对象)，则返回的是元类</p>
 </li>
 </ol>
-<h3  class="heading" id="heading-16" data-id="heading-16">10. 在运行时创建类的方法objc_allocateClassPair的方法名尾部为什么是pair（成对的意思）？</h3>
+<h3  class="heading" id="heading-66" data-id="heading-66">16. ==、isEqual:、isEqualToString: 有什么区别？<span id="user-content-16"></span></h3>
+<p>三个都在问「是不是同一个」，比的层次不一样。</p>
+<table>
+  <thead>
+    <tr><th></th><th>比什么</th><th>什么时候用</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><code>==</code></td><td>两个指针的值，也就是地址是否相同</td><td>判断是不是同一个对象；和 <code>nil</code> 比较</td></tr>
+    <tr><td><code>isEqual:</code></td><td>业务上算不算相等。<code>NSObject</code> 的默认实现就是 <code>==</code>，<code>NSString</code>、<code>NSArray</code>、<code>NSNumber</code> 等各自按内容重写</td><td>比较两个对象的值。类型可以不同，内部会先看类型是否可比</td></tr>
+    <tr><td><code>isEqualToString:</code></td><td>两个字符串的字符内容</td><td>已经确定两边都是字符串时。少一次类型分支，也避免把别的类型送进来</td></tr>
+  </tbody>
+</table>
+<ul>
+<li>内容相同的两个 <code>NSString</code>，<code>==</code> 可能为假（不是同一个对象），<code>isEqual:</code> 和 <code>isEqualToString:</code> 为真。常量字符串有时会被合并成同一个对象，<code>==</code> 碰巧为真，不能依赖这一点。</li>
+<li>重写了 <code>isEqual:</code> 就必须重写 <code>hash</code>，保证相等的对象哈希相同，否则放进 <code>NSSet</code> / <code>NSDictionary</code> 会找不到。</li>
+<li>给 <code>nil</code> 发 <code>isEqual:</code> 或 <code>isEqualToString:</code> 得到的是 <code>NO</code> / <code>nil</code>，不会崩。<code>isEqualToString:</code> 的接收者应当是 <code>NSString</code>，不要拿到一个任意 <code>id</code> 就调用它。</li>
+</ul>
+<blockquote><p>一句话：<code>==</code> 比地址，<code>isEqual:</code> 比对象定义的相等，<code>isEqualToString:</code> 只比字符串内容。</p></blockquote>
+
+<h3  class="heading" id="heading-67" data-id="heading-67">17. objc 向一个对象发送消息时，发生了什么？<span id="user-content-17"></span></h3>
+<p>向对象发消息，编译器会收成一次 <code>objc_msgSend(receiver, selector, ...)</code>。具体调哪个函数指针，要到运行时才查出来。</p>
+<ol>
+<li><strong>receiver 是 nil</strong>：直接返回。对象返回值是 <code>nil</code>，整数返回值是 0，不会崩。不要指望 nil 接收者去执行你的方法。</li>
+<li><strong>查缓存</strong>：用 receiver 的 isa 找到类，先查这个类的方法缓存。命中就把 IMP 取出来调用。</li>
+<li><strong>查方法列表</strong>：缓存没有，就扫当前类的方法列表；还没有就顺着 superclass 继续，每一级都先看缓存再看列表，直到根类。</li>
+<li><strong>找到了</strong>：调用 IMP，并把 selector 到 IMP 的映射写进这个类的缓存。</li>
+<li><strong>整条链都没有</strong>，进入三次补救，失败才崩：
+  <ul>
+    <li>动态解析：<code>+resolveInstanceMethod:</code> 或 <code>+resolveClassMethod:</code>。这里可以用 <code>class_addMethod</code> 把实现补上，然后 runtime 再查一次。</li>
+    <li>快速转发：<code>-forwardingTargetForSelector:</code> 返回另一个对象，消息原样交给它，开销最小。</li>
+    <li>完整转发：<code>-methodSignatureForSelector:</code> 先给出签名，再用 <code>NSInvocation</code> 进入 <code>-forwardInvocation:</code>。这里可以改目标、改参数，或转给别的对象。</li>
+  </ul>
+</li>
+<li>三步都没接住，就到 <code>-doesNotRecognizeSelector:</code>，抛 <code>unrecognized selector sent to instance</code>。</li>
+</ol>
+<p>类方法走同一套流程，只是 receiver 是类对象，从元类开始查。这也是元类要存在的原因，见 <a href="#heading-65">对象方法和类方法</a>。</p>
+<blockquote><p>一句话：发消息就是 <code>objc_msgSend</code> 按 isa 查缓存和方法列表；找不到时依次是动态解析、快速转发、完整转发，最后才崩。</p></blockquote>
+
+<h3  class="heading" id="heading-16" data-id="heading-16">18. 在运行时创建类的方法objc_allocateClassPair的方法名尾部为什么是pair（成对的意思）？</h3>
 <p>因为此方法会创建一个类对象以及元类，正好组成一队</p>
 <pre><code class="hljs bash" lang="bash">Class objc_allocateClassPair(Class superclass, const char *name, 
                              size_t extraBytes){
@@ -269,7 +425,27 @@ class_ro_t存储于class_rw_t结构体中，是不可改变的。保存着类的
     objc_initializeClassPair_internal(superclass, name, cls, meta);
     <span class="hljs-built_in">return</span> cls;
 }
-</code></pre><h3  class="heading" id="heading-17" data-id="heading-17">11. 一个int变量被__block修饰与否的区别？</h3>
+</code></pre><h3  class="heading" id="heading-68" data-id="heading-68">19. +load 和 +initialize 的调用时机，以及父子类、分类的调用顺序？<span id="user-content-19"></span></h3>
+<p><code>+load</code> 和 <code>+initialize</code> 都会在类投入使用的过程中被调用，但调用者、时机和继承行为都不一样。业务初始化不要放进 <code>+load</code>。</p>
+<table>
+  <thead>
+    <tr><th></th><th><code>+load</code></th><th><code>+initialize</code></th></tr>
+  </thead>
+  <tbody>
+    <tr><td>时机</td><td>镜像加载、类和分类被 runtime 接进来时，通常在 <code>main</code> 之前</td><td>这个类第一次收到消息之前</td></tr>
+    <tr><td>怎么调用</td><td>直接拿方法地址调用，不走 <code>objc_msgSend</code></td><td>走消息发送</td></tr>
+    <tr><td>没实现时</td><td>跳过，不会因为继承去调父类的那一份</td><td>会继承父类实现。父类方法体可能再跑一次，但 <code>self</code> 是子类</td></tr>
+    <tr><td>分类</td><td>类和每个分类的 <code>+load</code> <strong>都会</strong>执行</td><td>消息发送只能命中一个实现，分类里的 <code>+initialize</code> 会盖住类里的</td></tr>
+    <tr><td>顺序</td><td>先父类再子类；一个类自己的 <code>+load</code> 先于它的分类。<code>+load</code> 全部走完才轮到分类</td><td>先保证父类初始化完，再初始化子类</td></tr>
+  </tbody>
+</table>
+<h4 class="heading" id="heading-68-load" data-id="heading-68-load">+load 不要依赖「谁先编译」</h4>
+<p>同一个镜像里，没有父子关系的类谁先 <code>+load</code>，跟链接顺序有关，不能当成业务规则。分类的 <code>+load</code> 也是每个都调用，不是「后编译的覆盖先编译的」——那是普通实例方法的查找顺序，不是 <code>+load</code>。这里也不适合做锁、网络或依赖别的类已经 <code>+initialize</code> 完的事情，容易和 dyld 的加载过程卡在一起。启动阶段会跑到 <code>+load</code>，和启动耗时的关系见启动优化那一题。</p>
+<h4 class="heading" id="heading-68-init" data-id="heading-68-init">+initialize 里先看 self</h4>
+<p>子类没实现 <code>+initialize</code> 时，父类的实现会被用来初始化子类，方法里的 <code>self</code> 是子类。每个类仍然只初始化一次，但父类这份代码会进来多次。只想在父类自己初始化时做事，要判断 <code>self == [TheClass class]</code>。</p>
+<blockquote><p>一句话：<code>+load</code> 是加载时按函数指针点名，类和分类各跑各的；<code>+initialize</code> 是第一次收消息时走消息机制，会继承，分类可以盖住类。</p></blockquote>
+
+<h3  class="heading" id="heading-17" data-id="heading-17">20. 一个int变量被__block修饰与否的区别？</h3>
 <p>int变量被__block修饰之后会被包装成一个对象,如<code>__block int age</code>会被包装成下面这样</p>
 <pre><code class="hljs bash" lang="bash">struct __Block_byref_age_0 {
   void *__isa;
@@ -335,9 +511,19 @@ NSLog(<span class="hljs-string">@"%d"</span>, age);   <span class="hljs-comment"
   </table>
   <h5>五、一句话总结</h5>
   <blockquote><p>普通捕获是<strong>值拷贝</strong>，成员被 <code>const</code> 限定，所以只读、是<strong>值副本</strong>；<code>__block</code> 是把变量<strong>包装成结构体</strong>，让变量生命周期和 Block 绑定，Block 上堆时变量跟着上堆，并通过 <code>__forwarding</code> 保证访问指向正确的那一份，从而实现可修改。</p></blockquote>
-<h3  class="heading" id="heading-18" data-id="heading-18">12. 为什么在block外部使用__weak修饰的同时需要在内部使用__strong修饰？</h3>
+<h3  class="heading" id="heading-18" data-id="heading-18">21. 为什么在block外部使用__weak修饰的同时需要在内部使用__strong修饰？</h3>
 <p>用__weak修饰之后block不会对该对象进行retain，只是持有了weak指针，在block执行之前或执行的过程时，随时都有可能被释放，将weak指针置位nil，产生一些未知的错误。在内部用__strong修饰，会在block执行时，对该对象进行一次retain，保证在执行时若该指针不指向nil，则在执行过程中不会指向nil。但有可能在执行执行之前已经为nil了</p>
-<h3  class="heading" id="heading-19" data-id="heading-19">13. RunLoop的作用是什么？它的内部工作机制了解么？（最好结合线程和内存管理来说）</h3>
+<h3  class="heading" id="heading-69" data-id="heading-69">22. Block 为什么用 copy 修饰？<span id="user-content-22"></span></h3>
+<p>Block 是对象。捕获了自动变量的 Block 字面量一开始在栈上，跟着当前栈帧走。栈帧结束之后如果还有人拿着这个指针，就是悬空指针。属性用 <code>copy</code>，是为了在持有它的时候把栈 Block 拷到堆上。</p>
+<ul>
+<li><strong>MRC</strong>：<code>retain</code> 栈 Block 不会把它搬到堆上，属性必须写 <code>copy</code>。已经在堆上的 Block 再 <code>copy</code>，就是 retain。</li>
+<li><strong>ARC</strong>：把栈 Block 赋给 <code>strong</code> 或 <code>copy</code> 属性时，编译器都会插入拷贝到堆的操作，两者效果通常一样。<code>copy</code> 仍然是文档和习惯上的写法，读代码的人能看出「这个 Block 要活过当前作用域」。<code>assign</code> 不会拷贝，返回之后再调用就会野。</li>
+<li>没有捕获自动变量的 Block 放在全局区，<code>copy</code> 等于 retain，不发生拷贝。</li>
+<li><code>copy</code> 解决的是 Block 自己的存储位置。它和 <code>__block</code>、<code>__weak</code> / <code>__strong</code> 不是一回事：后两题分别在说捕获的变量怎么改、以及 Block 和对象谁持有谁。</li>
+</ul>
+<blockquote><p>一句话：栈上的 Block 不能当成员长期留着，<code>copy</code> 把它放到堆上。ARC 下 <code>strong</code> 也会做这件事，属性仍写成 <code>copy</code>。</p></blockquote>
+
+<h3  class="heading" id="heading-19" data-id="heading-19">23. RunLoop的作用是什么？它的内部工作机制了解么？（最好结合线程和内存管理来说）</h3>
 <ol>
 <li>什么是RunLoop
 一般来讲，一个线程一次只能执行一个任务，执行完成后线程就会退出。如果我们需要一个机制，让线程能随时处理事件但并不退出。这种模型通常被称作 Event Loop。 Event Loop 在很多系统和框架里都有实现，比如 Node.js 的事件处理，比如 Windows 程序的消息循环，再比如 OSX/iOS 里的 RunLoop。实现这种模型的关键点在于：如何管理事件/消息，如何让线程在没有处理消息时休眠以避免资源占用、在有消息到来时立刻被唤醒。</li>
@@ -418,7 +604,73 @@ NSLog(<span class="hljs-string">@"%d"</span>, age);   <span class="hljs-comment"
 </code></pre>
   <h5>六、一句话总结</h5>
   <blockquote><p>RunLoop 与线程<strong>一一对应</strong>并存于全局字典中（主线程默认创建、子线程懒加载、线程结束即销毁）；每次循环<strong>通知 Observer</strong>、按<strong>当前 Mode</strong> 处理 Timer / Source / Observer，没事就<strong>休眠</strong>、被 mach port 或 timer <strong>唤醒</strong>；Mode 决定了滚动时 <code>NSTimer</code> 会暂停；主线程那两个 autoreleasepool Observer 在 <code>Entry</code> 时 push、在 <code>BeforeWaiting</code> / <code>Exit</code> 时 pop 并重新 push，这就是 <code>autorelease</code> 对象生命周期与 RunLoop 绑定的原因；想让线程<strong>常驻</strong>，就在该线程里给 RunLoop 加一个 Port（Source1）再 <code>run</code>，之后用 <code>performSelector:onThread:</code> 把任务派发过去。</p></blockquote>
-<h3  class="heading" id="heading-20" data-id="heading-20">14. 哪些场景可以触发离屏渲染？（知道多少说多少）</h3>
+<h3  class="heading" id="heading-70" data-id="heading-70">24. 有没有用过 performSelector:？NSTimer 在子线程怎么跑，为什么不准，循环引用怎么断？<span id="user-content-24"></span></h3>
+<h4 class="heading" id="heading-70-ps" data-id="heading-70-ps">performSelector: 在做什么</h4>
+<p><code>performSelector:</code> 就是按 SEL 发一条消息，查找过程与普通方括号调用相同，见 <a href="#heading-67">消息发送</a>。面试里真正要展开的是它和 RunLoop 绑在一起的那几个变体：</p>
+<ul>
+<li><code>performSelector:withObject:afterDelay:</code> 会在<strong>当前线程</strong>的 RunLoop 上登记一个定时器，模式是 <code>NSDefaultRunLoopMode</code>。当前线程没有跑 RunLoop，延迟调用永远不会发生。它会 retain target，直到触发或被 <code>cancelPreviousPerformRequestsWithTarget:</code> 取消。</li>
+<li><code>performSelector:onThread:withObject:waitUntilDone:</code> 把调用丢到目标线程的 RunLoop。<code>waitUntilDone:YES</code> 且目标就是当前线程时，会自己等自己，造成死锁。</li>
+</ul>
+<h4 class="heading" id="heading-70-thread" data-id="heading-70-thread">NSTimer 在子线程</h4>
+<p><code>scheduledTimerWithTimeInterval:...</code> 把定时器加到<strong>当前线程当前 RunLoop</strong> 的 default mode。子线程默认没有在跑 RunLoop，所以只创建定时器不会回调。要跑起来，得自己把定时器加进这个线程的 RunLoop，再让 RunLoop 转起来：</p>
+<pre><code class="hljs objectivec" lang="objectivec">[<span class="hljs-built_in">NSThread</span> detachNewThreadSelector:<span class="hljs-keyword">@selector</span>(start) toTarget:self withObject:<span class="hljs-literal">nil</span>];
+
+- (<span class="hljs-type">void</span>)start {
+    <span class="hljs-keyword">@autoreleasepool</span> {
+        <span class="hljs-built_in">NSTimer</span> *timer = [<span class="hljs-built_in">NSTimer</span> timerWithTimeInterval:<span class="hljs-number">1</span>
+                                                     target:self
+                                                   selector:<span class="hljs-keyword">@selector</span>(tick)
+                                                   userInfo:<span class="hljs-literal">nil</span>
+                                                    repeats:<span class="hljs-literal">YES</span>];
+        [[<span class="hljs-built_in">NSRunLoop</span> currentRunLoop] addTimer:timer forMode:<span class="hljs-built_in">NSRunLoopCommonModes</span>];
+        [[<span class="hljs-built_in">NSRunLoop</span> currentRunLoop] run];
+    }
+}
+</code></pre>
+<p><code>run</code> 不会自己返回。线程要能停下来，需要用可退出的 RunLoop 模式（<code>runMode:beforeDate:</code> 循环），并在合适的时候 <code>invalidate</code>。滑动列表时 default mode 的定时器会暂停，这是 RunLoop Mode 的问题，见 <a href="#heading-19">RunLoop</a> 那一题。</p>
+<h4 class="heading" id="heading-70-accuracy" data-id="heading-70-accuracy">为什么说 NSTimer 不准</h4>
+<ul>
+<li>它不是实时定时器。RunLoop 忙着处理别的 source 时，到点的定时器要等这一轮有空才被检查，所以会推迟。</li>
+<li>加在 default mode 上时，一旦切到 <code>UITrackingRunLoopMode</code>（滚动），它根本不会被看，看起来像「停了很久又跳一下」。</li>
+<li><code>tolerance</code> 允许系统为了省电把触发点再往后挪。周期定时器还可能积压：一次迟到不会用后面的回调补齐中间错过的次数。</li>
+</ul>
+<p>跟屏幕刷新对齐用 <code>CADisplayLink</code>。要更稳的间隔可以用 GCD timer，它也不保证硬实时，只是不依赖某个 RunLoop Mode。</p>
+<h4 class="heading" id="heading-70-cycle" data-id="heading-70-cycle">循环引用</h4>
+<p><code>scheduledTimerWithTimeInterval:target:selector:userInfo:repeats:</code> 会强引用 target。RunLoop 又强引用这个 timer。如果 <code>self</code> 再用强属性留着 timer，环是 <code>self → timer → self</code>。就算把属性改成 <code>weak</code>，timer 仍然强引用 <code>self</code>，RunLoop 强引用 timer，<code>self</code> 还是走不到 <code>dealloc</code>，自然也写不出「在 dealloc 里 invalidate」。</p>
+<p>断开的办法：</p>
+<ol>
+<li><strong>弱代理</strong>：用一个 <code>NSProxy</code> 子类当 target，内部 weak 指向 <code>self</code>，消息转发给 <code>self</code>。环变成 RunLoop → timer → proxy ⇢ self。</li>
+<li><strong>Block API</strong>（iOS 10+）：<code>scheduledTimerWithTimeInterval:repeats:block:</code>，block 里捕获 <code>__weak self</code>。</li>
+<li><strong>主动 invalidate</strong>：在确定不再需要的时候调用，例如 <code>viewWillDisappear</code>，不要押在 <code>dealloc</code> 上。repeats 为 <code>NO</code> 的一次性定时器触发后会自己失效。</li>
+</ol>
+<blockquote><p>一句话：延迟执行和 NSTimer 都挂在某条线程的 RunLoop 上；不准是因为要等 RunLoop 有空、还看 Mode。循环引用的根子是 timer 强引用 target，把属性改成 weak 拆不掉。</p></blockquote>
+
+<h3  class="heading" id="heading-71" data-id="heading-71">25. ViewController 的生命周期是怎样的？<span id="user-content-25"></span></h3>
+<p>控制器的生命周期按「创建 → 加载 view → 出现和布局 → 消失」来说。出现和布局会反复发生，<code>viewDidLoad</code> 在 view 留在内存里时只走一次。</p>
+<h4 class="heading" id="heading-71-create" data-id="heading-71-create">创建和加载</h4>
+<ul>
+<li>纯代码一般是 <code>init</code> / <code>initWithNibName:bundle:</code>。从 storyboard / xib 解出来走 <code>initWithCoder:</code>，对象从 nib 唤醒后再走 <code>awakeFromNib</code>。纯代码不会走 <code>initWithCoder:</code>。</li>
+<li>第一次访问 <code>self.view</code> 且 view 还是 nil：<code>loadView</code> 负责把 view 造出来（自己建，或从 nib 加载）。不要在重写的 <code>loadView</code> 里再读 <code>self.view</code>。</li>
+<li>view 加载完调用 <code>viewDidLoad</code>。一次性的初始化放这里。内存警告把 view 卸掉之后再次加载，<code>viewDidLoad</code> 会再来一次；平时它就是一次。</li>
+</ul>
+<h4 class="heading" id="heading-71-appear" data-id="heading-71-appear">出现、布局、消失</h4>
+<p>一次正常出现的常见顺序是：</p>
+<ol>
+<li><code>viewWillAppear:</code></li>
+<li><code>updateViewConstraints</code>（用了 Auto Layout 时）</li>
+<li><code>viewWillLayoutSubviews</code></li>
+<li><code>viewDidLayoutSubviews</code></li>
+<li><code>viewDidAppear:</code></li>
+</ol>
+<p>离开时是 <code>viewWillDisappear:</code> 然后 <code>viewDidDisappear:</code>。push 下一个控制器时，两边的 appear / disappear 会交错：当前控制器先 <code>viewWillDisappear:</code>，新控制器 <code>viewWillAppear:</code>，新控制器布局，然后当前控制器 <code>viewDidDisappear:</code>，新控制器 <code>viewDidAppear:</code>。旋转、滚到不同尺寸、被键盘顶起来，都可能再次进入 layout，不一定伴随 appear。</p>
+<ul>
+<li><code>viewWillAppear:</code> 做每次出现都要刷新的事；<code>viewDidAppear:</code> 再开动画或开始采集，此时 view 已经在 window 上。</li>
+<li><code>viewWillDisappear:</code> 停定时器、收键盘、结束编辑。不要假设 <code>dealloc</code> 紧跟在 disappear 后面——控制器还在导航栈里，或者被别处强引用时，view 消失了对象还在。</li>
+<li>自己用 <code>addChildViewController:</code> 嵌入时，要调用 <code>beginAppearanceTransition:animated:</code> / <code>endAppearanceTransition</code>（或让容器正确转发），否则子控制器收不到成对的 appear / disappear。</li>
+</ul>
+<blockquote><p>一句话：<code>viewDidLoad</code> 跟着 view 的加载走，通常一次；appear、disappear 和 layout 跟着显示走，会反复调用。</p></blockquote>
+
+<h3  class="heading" id="heading-20" data-id="heading-20">26. 哪些场景可以触发离屏渲染？（知道多少说多少）</h3>
 <ol>
 <li>添加遮罩<code>mask</code></li>
 <li>添加阴影<code>shadow</code></li>
@@ -442,7 +694,7 @@ NSLog(<span class="hljs-string">@"%d"</span>, age);   <span class="hljs-comment"
 <blockquote>
 <p>离屏渲染贵在两处：要<strong>新建一块缓冲区</strong>，并且上下文要<strong>从当前屏幕切到离屏、等渲染结束、把结果显示到屏幕上、再切回当前屏幕</strong>。切换次数一多，帧耗时就会上去。</p>
 </blockquote>
-<h3  class="heading" id="heading-21" data-id="heading-21">15.AppDelegate如何瘦身？<span id="user-content-15"></span></h3>
+<h3  class="heading" id="heading-21" data-id="heading-21">27.AppDelegate如何瘦身？<span id="user-content-27"></span></h3>
 <ol>
 <li>AppDelegate为什么会那么臃肿？
 AppDelegate是一个项目的入口，承担了太多的功能，如初始化根控制器，管理应用的状态，管理推送，和其他APP交互，初始化第三方SDK，获取权限等等</li>
@@ -508,7 +760,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 <li>无需更改APPdelegate就可以很容易的添加新的命令</li>
 <li>每个命令可以很容易的被单独测试</li>
 </ul>
-<h3  class="heading" id="heading-22" data-id="heading-22">16. 反射是什么？可以举出几个应用场景么？（知道多少说多少）<span id="user-content-16"></span></h3>
+<h3  class="heading" id="heading-72" data-id="heading-72">28. APNS 的基本原理是什么？<span id="user-content-28"></span></h3>
+<p>APNs 是苹果的推送服务。业务服务器不直接连设备，而是把通知交给 APNs，由系统和设备之间已经建立的连接送下去。</p>
+<h4 class="heading" id="heading-72-reg" data-id="heading-72-reg">注册</h4>
+<ol>
+<li>App 用 <code>UNUserNotificationCenter</code> 申请通知权限。</li>
+<li>调用 <code>registerForRemoteNotifications</code>。系统去和 APNs 通信。</li>
+<li>成功后回调 <code>application:didRegisterForRemoteNotificationsWithDeviceToken:</code>。这个 device token 标识「这台设备上的这个 App」，不是 IDFV，也不是硬件序列号，并且会变。</li>
+<li>App 把 token 交给自己的业务服务器，和用户绑在一起。token 更新了要重新上传。</li>
+</ol>
+<h4 class="heading" id="heading-72-push" data-id="heading-72-push">下发</h4>
+<ol>
+<li>业务服务器用 token 鉴权（基于 key 的 JWT，或证书）访问 APNs 的 HTTP/2 接口，带上 device token、topic（一般是 bundle id）和 payload。</li>
+<li>APNs 找到对应设备，把通知送过去。设备上的系统和 APNs 维持连接，这不是 App 自己拉的长连接。</li>
+<li>前台由 <code>userNotificationCenter:willPresentNotification:</code> 决定要不要展示；用户点击走 <code>didReceiveNotificationResponse:</code>。带 <code>content-available</code> 的静默推送进 <code>application:didReceiveRemoteNotification:fetchCompletionHandler:</code>，系统会限制它的频率，不能当成可靠的实时通道。</li>
+</ol>
+<p>App 删掉之后，这条通知不会再交给一个已经不存在的应用。APNs 之后会用 410 Unregistered 这类错误告诉业务服务器这个 token 失效了，服务器应当把它删掉。用户关掉通知权限时，alert 不会展示；这和 token 还在不在不是同一件事。</p>
+<blockquote><p>一句话：设备向 APNs 注册拿到 token，业务服务器拿 token 把消息交给 APNs，APNs 再送到设备。token 会变、会失效，服务器不能当永久地址存。</p></blockquote>
+
+<h3  class="heading" id="heading-22" data-id="heading-22">29. 反射是什么？可以举出几个应用场景么？（知道多少说多少）<span id="user-content-29"></span></h3>
 <ol>
 <li>什么是反射</li>
 </ol>
@@ -527,7 +797,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 </ul>
 </li>
 </ol>
-<h3  class="heading" id="heading-23" data-id="heading-23">17. 有哪些场景是NSOperation比GCD更容易实现的？（或是NSOperation优于GCD的几点，知道多少说多少）<span id="user-content-17"></span></h3>
+<h3  class="heading" id="heading-23" data-id="heading-23">30. 有哪些场景是NSOperation比GCD更容易实现的？（或是NSOperation优于GCD的几点，知道多少说多少）<span id="user-content-30"></span></h3>
 <ol>
 <li>NSOperation可以设置依赖</li>
 <li>NSOperation可以进行暂停，继续等操作</li>
@@ -535,7 +805,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 <li>NSOperationQueue可以取消队列里的所有操作</li>
 <li>NSOperationQueue很方便的设置最大并发数</li>
 </ol>
-<h3  class="heading" id="heading-24" data-id="heading-24">18. App启动优化策略？最好结合启动流程来说（main()函数的执行前后都分别说一下，知道多少说多少）<span id="user-content-18"></span></h3>
+<h3  class="heading" id="heading-73" data-id="heading-73">31. 为什么 AFN 3.0 要把 operationQueue.maxConcurrentOperationCount 设为 1？2.0 为什么不需要？<span id="user-content-31"></span></h3>
+<p>这个 <code>1</code> 不是「同一时间只允许一个网络请求」。请求本身仍然并发。它限制的是 <strong>session 回调这条队列</strong>。</p>
+<h4 class="heading" id="heading-73-v3" data-id="heading-73-v3">3.0：delegateQueue 设成串行</h4>
+<p>AFNetworking 3.0 基于 <code>NSURLSession</code>。创建 session 时把一只 <code>NSOperationQueue</code> 传给 <code>delegateQueue</code>，session 的代理方法和 completion 处理都丢到这只队列上。队列的 <code>maxConcurrentOperationCount = 1</code>，这些回调就串行执行。</p>
+<p>要串行，是因为 AFN 内部有 task 和 delegate 的对应关系。并发回调会抢这张表，同一个 task 的 <code>didReceiveData</code> 和 <code>didCompleteWithError</code> 也可能交错。请求的收发由 <code>NSURLSession</code> 自己并发去做，不靠这只队列来限流。这和 <a href="#heading-23">NSOperation 相比 GCD</a> 里「能直接限制并发数」是同一类队列能力，但这里用并发数 1 是为了把回调收成一条队。</p>
+<h4 class="heading" id="heading-73-v2" data-id="heading-73-v2">2.0：一条常驻线程已经是串行的</h4>
+<p>2.x 基于 <code>NSURLConnection</code>。connection 的回调出现在启动它的那条线程的 RunLoop 上，所以 AFN 用 <code>dispatch_once</code> 养了一条全局线程，RunLoop 里加一个 <code>NSMachPort</code> 防止没有 source 时直接退出。所有 connection 的回调都在这一条线程上排队，天然串行，不需要再把某只队列的并发数收成 1。</p>
+<p>2.x 里那只 <code>operationQueue</code> 是用来<strong>并发发出请求</strong>的，设成 1 会把请求也收成串行，和 3.0 这只队列不是一个角色。3.0 删掉了 <code>NSURLConnection</code> 的 API，用 session 的 delegateQueue 取代了那条常驻线程。线程跟着进程走，AFN 正常路径不会去停它；3.0 不再需要这条线程。</p>
+<blockquote><p>一句话：2.0 用一条 RunLoop 线程把回调串行化；3.0 用 <code>NSURLSession</code> 的 delegateQueue，把并发数设为 1 来达到同样的串行回调。两边都不是在限制请求本身的并发。</p></blockquote>
+
+<h3  class="heading" id="heading-24" data-id="heading-24">32. App启动优化策略？最好结合启动流程来说（main()函数的执行前后都分别说一下，知道多少说多少）<span id="user-content-32"></span></h3>
 <ol>
 <li>iOS的启动流程
 <ol>
@@ -559,7 +839,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 </ol>
 </li>
 </ol>
-<h3  class="heading" id="heading-25" data-id="heading-25">19. App无痕埋点的思路了解么？你认为理想的无痕埋点系统应该具备哪些特点？（知道多少说多少））<span id="user-content-19"></span></h3>
+<h3  class="heading" id="heading-25" data-id="heading-25">33. App无痕埋点的思路了解么？你认为理想的无痕埋点系统应该具备哪些特点？（知道多少说多少））<span id="user-content-33"></span></h3>
 <p>App无痕埋点的思路是利用AOP来拦截用户的操作并进行标记记录然后进行上传</p>
 <p>我认为理想的无痕埋点系统应该具备以下特点</p>
 <ol>
@@ -570,7 +850,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 <li>需要某些机制能够提供业务数据</li>
 <li>在合适的时机去上传数据</li>
 </ol>
-<h3  class="heading" id="heading-26" data-id="heading-26">20. 你知道有哪些情况会导致app崩溃，分别可以用什么方法拦截并化解？（知道多少说多少））<span id="user-content-20"></span></h3>
+<h3  class="heading" id="heading-26" data-id="heading-26">34. 你知道有哪些情况会导致app崩溃，分别可以用什么方法拦截并化解？（知道多少说多少））<span id="user-content-34"></span></h3>
 <ol>
 <li>unrecognized selector sent to instance 方法找不到</li>
 <li>数组越界，插入空值</li>
@@ -588,7 +868,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 <li>除0</li>
 </ol>
 <p>1-9都可以利用Runtime进行拦截，然后进行一些逻辑处理，防止crash</p>
-<h3  class="heading" id="heading-27" data-id="heading-27">21. 你知道有哪些情况会导致app卡顿，分别可以用什么方法来避免？（知道多少说多少）<span id="user-content-21"></span></h3>
+<h3  class="heading" id="heading-74" data-id="heading-74">35. 不使用第三方，如何把已经上线的崩溃定位到具体类和方法？<span id="user-content-35"></span></h3>
+<p>不引入崩溃收集 SDK，也可以自己把崩溃现场留下来。分两截：进程里把现场写到磁盘，下次启动再上传；服务端用对应版本的 dSYM 把地址翻成类名和方法名。崩溃回调里不要发网络请求，进程随时会被杀掉。</p>
+<h4 class="heading" id="heading-74-catch" data-id="heading-74-catch">能接到哪些崩溃</h4>
+<ul>
+<li><code>NSSetUncaughtExceptionHandler</code> 只接 <code>NSException</code>（例如 <code>unrecognized selector</code>、数组越界）。回调里可以读 <code>name</code>、<code>reason</code>、<code>callStackSymbols</code>、<code>callStackReturnAddresses</code>。把它写进文件，不要在这里做 Objective-C 堆上的复杂分配或发起请求。</li>
+<li><code>EXC_BAD_ACCESS</code> 这类是信号（<code>SIGSEGV</code>、<code>SIGBUS</code>、<code>SIGABRT</code>），不走上面的 handler。需要 signal 或 Mach 异常端口，在处理函数里只用异步信号安全的调用（例如 <code>backtrace</code> 加 <code>write</code>）把地址记下来。这里再碰 Objective-C runtime 本身就不安全。</li>
+<li>下次冷启动时发现有未上报的崩溃文件，再走普通网络上传。</li>
+</ul>
+<h4 class="heading" id="heading-74-sym" data-id="heading-74-sym">怎么对应到类和方法</h4>
+<ul>
+<li>Debug、没剥离符号时，<code>callStackSymbols</code> 里往往已经有类名和方法名。</li>
+<li>Release 会 strip。日志里多半只剩地址。符号化需要三样东西对得上：这次构建的 <strong>dSYM</strong>、二进制的 <strong>UUID</strong>（和 dSYM 里的 UUID 一致）、以及崩溃时各个镜像的<strong>加载地址</strong>（用来算 slide）。服务端用 <code>atos -o App.dSYM/Contents/Resources/DWARF/App -arch arm64 -l &lt;loadAddress&gt; &lt;address&gt;</code>，或 <code>symbolicatecrash</code>，把地址换回方法。</li>
+<li>UUID 对不上就不能拿另一天的包去解。每个上架版本的 dSYM 都要留下来，和版本号、build 号放在一起。</li>
+</ul>
+<blockquote><p>一句话：异常用 <code>NSSetUncaughtExceptionHandler</code>，野指针一类要用信号处理器，现场先落盘；Release 的地址靠同版本 dSYM 在服务端翻成方法名。</p></blockquote>
+
+<h3  class="heading" id="heading-27" data-id="heading-27">36. 你知道有哪些情况会导致app卡顿，分别可以用什么方法来避免？（知道多少说多少）<span id="user-content-36"></span></h3>
 <ol>
 <li>主线程中进行 IO 或其他耗时操作。解决：把耗时操作放到子线程，主线程只做 UI 赋值和提交。</li>
 <li>GCD 并发队列短时间内提交大量任务，线程数上去之后上下文切换会反过来拖住主线程。解决：限制并发，用有上限的线程池，或设置 <code>NSOperationQueue</code> 的 <code>maxConcurrentOperationCount</code>。</li>
@@ -616,7 +912,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 <h5>四、GPU 侧：离屏渲染、混合和图层过多</h5>
 <p>CPU 按时交卷，GPU 仍可能超时。合成压力通常来自离屏渲染、大面积半透明混合，以及图层太多。</p>
 <ul>
-<li><strong>离屏渲染</strong>：mask、阴影、需要裁切的圆角、<code>shouldRasterize</code> 会让 GPU 先画到一块屏幕外的缓冲区，再合成回来。上下文要来回切换，列表里一多就掉帧。哪些场景会触发、为什么贵，见 <a href="#heading-20">第 14 题</a>。阴影带上 <code>shadowPath</code>；滚动中的 cell 慎用 <code>masksToBounds</code>、模糊和 <code>shouldRasterize</code>。只给纯色背景加圆角、不裁子图层时，现代系统不一定走离屏，不要说成「有圆角就一定离屏」。</li>
+<li><strong>离屏渲染</strong>：mask、阴影、需要裁切的圆角、<code>shouldRasterize</code> 会让 GPU 先画到一块屏幕外的缓冲区，再合成回来。上下文要来回切换，列表里一多就掉帧。哪些场景会触发、为什么贵，见 <a href="#heading-20">第 26 题</a>。阴影带上 <code>shadowPath</code>；滚动中的 cell 慎用 <code>masksToBounds</code>、模糊和 <code>shouldRasterize</code>。只给纯色背景加圆角、不裁子图层时，现代系统不一定走离屏，不要说成「有圆角就一定离屏」。</li>
 <li><strong>混合和过度绘制</strong>：大面积半透明会让 GPU 把多层颜色叠在一起。能用不透明背景就用不透明，减少重叠的透明区域。</li>
 <li><strong>光栅化要看内容稳不稳</strong>：<code>shouldRasterize = YES</code> 会把图层渲成位图并缓存。静止、反复出现的复杂内容可能更便宜；滚动中内容一直变，缓存不断失效，反而更慢。</li>
 </ul>
@@ -702,7 +998,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 <blockquote>
 <p>卡顿就是某一帧没赶上 VSync。CPU 侧不要把 IO、文本排版、图片解码、<code>drawRect:</code> 和过深布局堆在主线程，大图按下采样后的尺寸解码，并发任务要限流；GPU 侧减少离屏渲染、半透明混合和图层数量；列表再配合复用、缓存行高和滑动时按需加载。主线程卡没卡，用 RunLoop Observer 量 <code>beforeSources</code> 到 <code>beforeWaiting</code>；GPU 掉帧看 Instruments 或 <code>CADisplayLink</code>。先分清是主线程 CPU、图片 IO / 解码，还是 GPU 渲染超了预算，再选对应的办法。</p>
 </blockquote>
-<h3  class="heading" id="heading-28" data-id="heading-28">22. App网络层有哪些优化策略？<span id="user-content-22"></span></h3>
+<h3  class="heading" id="heading-28" data-id="heading-28">37. App网络层有哪些优化策略？<span id="user-content-37"></span></h3>
 <ol>
 <li>优化DNS解析和缓存</li>
 <li>对传输的数据进行压缩，减少传输的数据</li>
@@ -710,13 +1006,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 <li>使用策略来减少请求的发起次数，比如在上一个请求未着地之前，不进行新的请求</li>
 <li>避免网络抖动，提供重发机制</li>
 </ol>
-<h3  class="heading" id="heading-29" data-id="heading-29">23. TCP为什么要三次握手，四次挥手？<span id="user-content-23"></span></h3>
+<h3  class="heading" id="heading-29" data-id="heading-29">38. TCP为什么要三次握手，四次挥手？<span id="user-content-38"></span></h3>
 <p>三次握手：</p>
 <ol>
 <li>客户端向服务端发起请求链接，首先发送SYN报文，SYN=1，seq=x,并且客户端进入SYN_SENT状态</li>
 <li>服务端收到请求链接，服务端向客户端进行回复，并发送响应报文，SYN=1，seq=y,ACK=1,ack=x+1,并且服务端进入到SYN_RCVD状态</li>
 <li>客户端收到确认报文后，向服务端发送确认报文，ACK=1，ack=y+1，此时客户端进入到ESTABLISHED，服务端收到用户端发送过来的确认报文后，也进入到ESTABLISHED状态，此时链接创建成功</li>
 </ol>
+<p>为什么需要三次握手：
+为了防止已失效的连接请求报文段突然又传送到了服务端，因而产生错误，假设这是一个早已失效的报文段。但server收到此失效的连接请求报文段后，就误认为是client再次发出的一个新的连接请求。于是就向client发出确认报文段，同意建立连接。假设不采用“三次握手”，那么只要server发出确认，新的连接就建立了。由于现在client并没有发出建立连接的请求，因此不会理睬server的确认，也不会向server发送数据。但server却以为新的运输连接已经建立，并一直等待client发来数据。这样，server的很多资源就白白浪费掉了。</p>
 <p>四次挥手：</p>
 <ol>
 <li>客户端向服务端发起关闭链接，并停止发送数据</li>
@@ -724,92 +1022,405 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 <li>当服务端发送数据结束之后，向客户端发起关闭链接，并停止发送数据</li>
 <li>客户端收到关闭链接的请求时，向服务端发送回应，我知道了，然后停止接收数据</li>
 </ol>
-<p>为什么需要三次握手：
-为了防止已失效的连接请求报文段突然又传送到了服务端，因而产生错误，假设这是一个早已失效的报文段。但server收到此失效的连接请求报文段后，就误认为是client再次发出的一个新的连接请求。于是就向client发出确认报文段，同意建立连接。假设不采用“三次握手”，那么只要server发出确认，新的连接就建立了。由于现在client并没有发出建立连接的请求，因此不会理睬server的确认，也不会向server发送数据。但server却以为新的运输连接已经建立，并一直等待client发来数据。这样，server的很多资源就白白浪费掉了。</p>
 <p>为什么需要四次挥手：
 因为TCP是全双工通信的，在接收到客户端的关闭请求时，还可能在向客户端发送着数据，因此不能再回应关闭链接的请求时，同时发送关闭链接的请求</p>
-<h3  class="heading" id="heading-30" data-id="heading-30">24. 对称加密和非对称加密的区别？分别有哪些算法的实现？<span id="user-content-24"></span></h3>
+<p>参考链接：<a href="iOS-interview.html#heading-48">23. 网络协议</a></p>
+<h3  class="heading" id="heading-75" data-id="heading-75">39. HTTP 里 GET 和 POST 有什么区别？<span id="user-content-39"></span></h3>
+<p>GET 和 POST 都是 HTTP 方法，差别在语义和报文放在哪，不在「谁更安全」或「谁更快」。</p>
+<table>
+  <thead>
+    <tr><th></th><th>GET</th><th>POST</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>语义</td><td>获取资源。规范里是安全的、幂等的：一次和多次，对资源的影响应当相同</td><td>提交、创建一类处理。不保证幂等，重复提交可能产生多份结果</td></tr>
+    <tr><td>参数放哪</td><td>通常在 URL 的 query。规范没有禁止 body，但中间盒和库经常丢掉 GET 的 body，不能依赖</td><td>通常在 body，格式由 <code>Content-Type</code> 决定</td></tr>
+    <tr><td>缓存</td><td>可以被缓存、放进历史和书签</td><td>默认不缓存</td></tr>
+    <tr><td>长度</td><td>规范不限制 URL 长度。浏览器、服务器、代理各自有实现上的上限</td><td>body 没有 URL 那种实现上的短上限，服务器仍会限制体积</td></tr>
+  </tbody>
+</table>
+<ul>
+<li>GET 的参数会出现在 URL 里，于是进入访问日志、Referer 和浏览器历史。POST 的 body 不在 URL 里，但抓包一样能看见明文。两者都不是加密。要保密用 HTTPS，见后面的握手和中间人那几题。</li>
+<li>「GET 一定比 POST 快」不成立。有的客户端对 POST 使用 <code>Expect: 100-continue</code>，先头发再等服务器允许才发 body，这是可选项，不是每个 POST 都多一轮。快慢取决于连接是否复用、报文大小和服务器实现。</li>
+<li>幂等才是选用时更该说的理由：刷新、预取、重试适合 GET；下单、转账这种不能默默做两次的，用 POST，并在业务上自己做去重。</li>
+</ul>
+<blockquote><p>一句话：GET 把参数放在 URL 上、应当幂等、可以被缓存；POST 把数据放在 body 里、不保证幂等。安全靠 HTTPS，不靠换成 POST。</p></blockquote>
+
+<h3  class="heading" id="heading-30" data-id="heading-30">40. 对称加密和非对称加密的区别？分别有哪些算法的实现？<span id="user-content-40"></span></h3>
 <p>对称加密，加密的加密和解密使用同一密钥。</p>
 <p>非对称加密，使用一对密钥用于加密和解密，分别为公开密钥和私有密钥。公开密钥所有人都可以获得，通信发送方获得接收方的公开密钥之后，就可以使用公开密钥进行加密，接收方收到通信内容后使用私有密钥解密。</p>
 <p>对称加密常用的算法实现有AES,ChaCha20,DES,不过DES被认为是不安全的;非对称加密用的算法实现有RSA，ECC</p>
-<h3  class="heading" id="heading-31" data-id="heading-31">25. HTTPS的握手流程？为什么密钥的传递需要使用非对称加密？双向认证了解么？<span id="user-content-25"></span></h3>
-<p>HTTPS的握手流程，如下图，摘自图解HTTP</p>
-<p></p><figure><img src="assets/advanced/images/advanced-image-3.png" loading="lazy"><figcaption></figcaption></figure><p></p>
-<ol>
-<li>客户端发送Client Hello 报文开始SSL通信。报文中包含客户端支持的SSL的版本，加密组件列表。</li>
-<li>服务器收到之后，会以Server Hello 报文作为应答。和客户端一样，报文中包含客户端支持的SSL的版本，加密组件列表。服务器的加密组件内容是从接收到的客户端加密组件内筛选出来的</li>
-<li>服务器发送Certificate报文。报文中包含公开密钥证书。</li>
-<li>然后服务器发送Server Hello Done报文通知客户端，最初阶段的SSL握手协商部分结束</li>
-<li>SSL第一次握手结束之后，客户端以Client Key Exchange报文作为会议。报文中包含通信加密中使用的一种被称为Pre-master secret的随机密码串</li>
-<li>接着客户端发送Change Cipher Space报文。该报文会提示服务器，在次报文之后的通信会采用Pre-master secret密钥加密</li>
-<li>客户端发送Finished 报文。该报文包含链接至今全部报文的整体校验值。这次握手协商是否能够成功，要以服务器是否能够正确揭秘该报文作为判定标准</li>
-<li>服务器同样发送Change Cipher Space报文。</li>
-<li>服务器同样发送Finished报文。</li>
-<li>服务器和客户端的Finished报文交换完毕之后，SSL连接建立完成，从此开始HTTP通信，通信的内容都使用Pre-master secret加密。然后开始发送HTTP请求</li>
-<li>应用层收到HTTP请求之后，发送HTTP响应</li>
-<li>最后有客户端断开连接</li>
-</ol>
+<h3  class="heading" id="heading-31" data-id="heading-31">41. HTTPS的握手流程？为什么密钥的传递需要使用非对称加密？双向认证了解么？<span id="user-content-41"></span></h3>
+<p>HTTPS 先完成 TCP 三次握手，再在这条连接上做 TLS 握手，握完才开始发 HTTP。下面三条都是只验证服务器的完整握手，不含会话复用，也不含客户端证书。面试按版本和密钥交换分开说，不要把三种流程揉成一套。</p>
+<h4 class="heading" id="heading-31-rsa" data-id="heading-31-rsa">① TLS 1.2 完整流程（RSA 密钥交换）</h4>
+<p><strong>口述版</strong></p>
+<blockquote>
+<p>这是 TLS 1.2 里用 RSA 做密钥交换的完整握手。证书上的 RSA 公钥用来加密 premaster secret，服务器用对应私钥解开。这种交换没有前向安全，TLS 1.3 已经去掉了，但面试还是会拿它当基础版。下面的序号和下方流程图里的报文一一对应。</p>
+<p>① 客户端先发 <code>Client Hello</code>。里面有客户端随机数、自己支持的协议版本、加密套件列表，HTTPS 里通常还会带 SNI，告诉服务器要访问哪个域名。</p>
+<p>② 服务器回 <code>Server Hello</code>，从客户端给的列表里选定 TLS 1.2，以及一个 RSA 密钥交换的套件，同时带上服务器随机数。</p>
+<p>③ 接着服务器发 <code>Certificate</code>，把证书链交给客户端。证书里装着服务器的 RSA 公钥。客户端要核验证书是不是可信 CA 签发的、域名对不对、有没有过期或被吊销。</p>
+<p>④ RSA 密钥交换用的就是证书里这把长期公钥，所以没有 <code>Server Key Exchange</code>。服务器直接发 <code>Server Hello Done</code>，表示自己这边该发的握手消息发完了。</p>
+<p>⑤ 客户端自己生成一段 48 字节的 premaster secret，用证书里的公钥加密，放进 <code>Client Key Exchange</code> 发给服务器。只有持有对应私钥的服务器能解开。premaster secret 是随机数，这一步传的是它的密文。</p>
+<p>双方各自拿同样的三样材料做计算：premaster secret、客户端随机数、服务器随机数。先导出 master secret，再导出真正加解密用的对称会话密钥。这一步是图里的灰框，会话密钥在两边本地算出来，不在网络上传输。</p>
+<p>⑥ 客户端发 <code>Change Cipher Spec</code>，通知对方从下一条消息开始改用刚算出来的会话密钥。</p>
+<p>⑦ 紧接着发 <code>Finished</code>。<code>Finished</code> 是加密的，内容是到目前为止全部握手消息的校验值。服务器能正确解密并且校验通过，说明两边密钥一致，握手内容也没有被改过。</p>
+<p>⑧ 服务器同样发 <code>Change Cipher Spec</code>，切换到同一把会话密钥。</p>
+<p>⑨ 服务器再发 <code>Finished</code>。两边的 <code>Finished</code> 都对上之后，握手结束，后面的 HTTP 请求和响应都用这把对称会话密钥保护。</p>
+<p>这条链路的代价是：premaster secret 靠服务器的长期私钥才能解开。以后这把私钥泄露，以前录下来的握手可以重新解开，历史流量也就不再保密。所以线上现在基本改用 ECDHE。</p>
+</blockquote>
+<figure class="tls-rsa-handshake" style="margin:22px 0;padding:18px;border:1px solid #e4e7ed;border-radius:8px;background:#ffffff;">
+  <svg viewBox="0 0 720 860" role="img" aria-labelledby="tls-rsa-title tls-rsa-desc" style="display:block;width:100%;height:auto;overflow:visible;font-family:PingFang SC,-apple-system,BlinkMacSystemFont,sans-serif;">
+    <title id="tls-rsa-title">TLS 1.2 RSA 密钥交换流程图</title>
+    <desc id="tls-rsa-desc">客户端与服务器完成 Client Hello、Server Hello、Certificate、Server Hello Done、Client Key Exchange、双方本地导出会话密钥，以及两边的 Change Cipher Spec 和 Finished。</desc>
+    <defs>
+      <marker id="tls-rsa-right" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#0269c8"></path>
+      </marker>
+      <marker id="tls-rsa-left" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#16a34a"></path>
+      </marker>
+    </defs>
+    <rect x="48" y="16" width="120" height="36" rx="6" fill="#f2f7ff" stroke="#0269c8"></rect>
+    <text x="108" y="39" text-anchor="middle" font-size="16" font-weight="600" fill="#252933">客户端</text>
+    <rect x="552" y="16" width="120" height="36" rx="6" fill="#f2fff8" stroke="#16a34a"></rect>
+    <text x="612" y="39" text-anchor="middle" font-size="16" font-weight="600" fill="#252933">服务端</text>
+    <line x1="108" y1="52" x2="108" y2="800" stroke="#9ca3af" stroke-width="2" stroke-dasharray="8 6"></line>
+    <line x1="612" y1="52" x2="612" y2="800" stroke="#9ca3af" stroke-width="2" stroke-dasharray="8 6"></line>
+    <line x1="108" y1="108" x2="612" y2="108" stroke="#0269c8" stroke-width="3" marker-end="url(#tls-rsa-right)"></line>
+    <text x="360" y="92" text-anchor="middle" font-size="15" font-weight="600" fill="#0269c8">① Client Hello</text>
+    <text x="360" y="128" text-anchor="middle" font-size="13" fill="#64748b">客户端随机数、协议版本、加密套件、SNI</text>
+    <line x1="612" y1="186" x2="108" y2="186" stroke="#16a34a" stroke-width="3" marker-end="url(#tls-rsa-left)"></line>
+    <text x="360" y="170" text-anchor="middle" font-size="15" font-weight="600" fill="#16a34a">② Server Hello</text>
+    <text x="360" y="206" text-anchor="middle" font-size="13" fill="#64748b">选定 TLS 1.2 与 RSA 套件，带服务器随机数</text>
+    <line x1="612" y1="264" x2="108" y2="264" stroke="#16a34a" stroke-width="3" marker-end="url(#tls-rsa-left)"></line>
+    <text x="360" y="248" text-anchor="middle" font-size="15" font-weight="600" fill="#16a34a">③ Certificate</text>
+    <text x="360" y="284" text-anchor="middle" font-size="13" fill="#64748b">证书链，内含服务器 RSA 公钥</text>
+    <line x1="612" y1="342" x2="108" y2="342" stroke="#16a34a" stroke-width="3" marker-end="url(#tls-rsa-left)"></line>
+    <text x="360" y="326" text-anchor="middle" font-size="15" font-weight="600" fill="#16a34a">④ Server Hello Done</text>
+    <text x="360" y="362" text-anchor="middle" font-size="13" fill="#64748b">服务器侧握手消息发送完毕</text>
+    <line x1="108" y1="420" x2="612" y2="420" stroke="#0269c8" stroke-width="3" marker-end="url(#tls-rsa-right)"></line>
+    <text x="360" y="404" text-anchor="middle" font-size="15" font-weight="600" fill="#0269c8">⑤ Client Key Exchange</text>
+    <text x="360" y="440" text-anchor="middle" font-size="13" fill="#64748b">用证书公钥加密后的 premaster secret</text>
+    <rect x="150" y="462" width="420" height="34" rx="6" fill="#f8fafc" stroke="#cbd5e1"></rect>
+    <text x="360" y="484" text-anchor="middle" font-size="13" fill="#475569">双方本地计算：premaster secret + 两个随机数 → 会话密钥</text>
+    <line x1="108" y1="540" x2="612" y2="540" stroke="#0269c8" stroke-width="3" marker-end="url(#tls-rsa-right)"></line>
+    <text x="360" y="524" text-anchor="middle" font-size="15" font-weight="600" fill="#0269c8">⑥ Change Cipher Spec</text>
+    <text x="360" y="560" text-anchor="middle" font-size="13" fill="#64748b">通知对方：下一条起改用会话密钥</text>
+    <line x1="108" y1="618" x2="612" y2="618" stroke="#0269c8" stroke-width="3" marker-end="url(#tls-rsa-right)"></line>
+    <text x="360" y="602" text-anchor="middle" font-size="15" font-weight="600" fill="#0269c8">⑦ Finished</text>
+    <text x="360" y="638" text-anchor="middle" font-size="13" fill="#64748b">用会话密钥加密的握手校验值</text>
+    <line x1="612" y1="696" x2="108" y2="696" stroke="#16a34a" stroke-width="3" marker-end="url(#tls-rsa-left)"></line>
+    <text x="360" y="680" text-anchor="middle" font-size="15" font-weight="600" fill="#16a34a">⑧ Change Cipher Spec</text>
+    <text x="360" y="716" text-anchor="middle" font-size="13" fill="#64748b">服务器切换到同一把会话密钥</text>
+    <line x1="612" y1="774" x2="108" y2="774" stroke="#16a34a" stroke-width="3" marker-end="url(#tls-rsa-left)"></line>
+    <text x="360" y="758" text-anchor="middle" font-size="15" font-weight="600" fill="#16a34a">⑨ Finished</text>
+    <text x="360" y="810" text-anchor="middle" font-size="13" fill="#64748b">校验通过后，HTTP 请求和响应用这把对称会话密钥保护</text>
+  </svg>
+  <figcaption style="margin-top:12px;font-size:14px;line-height:1.6;color:#64748b;text-align:center;">TLS 1.2 RSA 密钥交换：报文顺序与上方口述一一对应。灰框是双方本地计算，不在网络上传输。</figcaption>
+</figure>
+<h4 class="heading" id="heading-31-ecdhe" data-id="heading-31-ecdhe">② TLS 1.2 完整流程（ECDHE 密钥交换）</h4>
+<p><strong>口述版</strong></p>
+<blockquote>
+<p>还是 TLS 1.2 的完整握手，密钥交换换成 ECDHE。证书上的密钥只用来签名，premaster secret 由两边在本地算出来，不在报文里传输。这样才有前向安全。下面的序号和下方流程图里的报文一一对应。</p>
+<p>① 客户端发 <code>Client Hello</code>，除了随机数、版本和套件，还会带上自己支持的椭圆曲线，比如 X25519、P-256，以及能接受的签名算法。</p>
+<p>② 服务器回 <code>Server Hello</code>，选定一组带 ECDHE 的套件，常见是 ECDHE_RSA 或 ECDHE_ECDSA 再配 AES-GCM，并带上服务器随机数。</p>
+<p>③ 然后发 <code>Certificate</code>。这张证书里的公钥用来验签。</p>
+<p>④ 接下来是 <code>Server Key Exchange</code>。服务器临时生成一对椭圆曲线密钥，把曲线参数和临时公钥发过来，并用证书对应的私钥对客户端随机数、服务器随机数，以及这条消息里的曲线参数和临时公钥签名。客户端用证书公钥验这个签名，确认临时公钥确实来自证书持有者。</p>
+<p>⑤ 服务器再发 <code>Server Hello Done</code>，表示自己这边该发的握手消息发完了。</p>
+<p>⑥ 客户端验完证书和签名之后，自己也生成一对临时密钥，把临时公钥放进 <code>Client Key Exchange</code> 发回去。报文里只有公钥。</p>
+<p>两边各自用自己的临时私钥和对方的临时公钥做 ECDH，算出同一个共享秘密，这个共享秘密就是 premaster secret。再用 premaster secret 和两边的随机数导出 master secret，然后导出对称会话密钥。临时私钥用完就丢掉。这一步是图里的灰框，不在网络上传输。</p>
+<p>⑦ 客户端发 <code>Change Cipher Spec</code>，通知对方从下一条起改用会话密钥。</p>
+<p>⑧ 客户端接着发 <code>Finished</code>，内容是用会话密钥加密的握手校验值。</p>
+<p>⑨ 服务器回 <code>Change Cipher Spec</code>，切换到同一把会话密钥。</p>
+<p>⑩ 服务器再发 <code>Finished</code>。校验通过后，后面的 HTTP 用会话密钥加密。</p>
+<p>和 RSA 密钥交换相比，证书私钥在这里只给 <code>Server Key Exchange</code> 签名。以后长期私钥泄露，也推不出以前那把已经丢掉的临时私钥，录下来的历史会话解不开。</p>
+</blockquote>
+<figure class="tls-ecdhe-handshake" style="margin:22px 0;padding:18px;border:1px solid #e4e7ed;border-radius:8px;background:#ffffff;">
+  <svg viewBox="0 0 720 940" role="img" aria-labelledby="tls-ecdhe-title tls-ecdhe-desc" style="display:block;width:100%;height:auto;overflow:visible;font-family:PingFang SC,-apple-system,BlinkMacSystemFont,sans-serif;">
+    <title id="tls-ecdhe-title">TLS 1.2 ECDHE 密钥交换流程图</title>
+    <desc id="tls-ecdhe-desc">客户端与服务器完成 Client Hello、Server Hello、Certificate、Server Key Exchange、Server Hello Done、Client Key Exchange，双方本地做 ECDH 导出会话密钥，再交换 Change Cipher Spec 和 Finished。</desc>
+    <defs>
+      <marker id="tls-ecdhe-right" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#0269c8"></path>
+      </marker>
+      <marker id="tls-ecdhe-left" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#16a34a"></path>
+      </marker>
+    </defs>
+    <rect x="48" y="16" width="120" height="36" rx="6" fill="#f2f7ff" stroke="#0269c8"></rect>
+    <text x="108" y="39" text-anchor="middle" font-size="16" font-weight="600" fill="#252933">客户端</text>
+    <rect x="552" y="16" width="120" height="36" rx="6" fill="#f2fff8" stroke="#16a34a"></rect>
+    <text x="612" y="39" text-anchor="middle" font-size="16" font-weight="600" fill="#252933">服务端</text>
+    <line x1="108" y1="52" x2="108" y2="880" stroke="#9ca3af" stroke-width="2" stroke-dasharray="8 6"></line>
+    <line x1="612" y1="52" x2="612" y2="880" stroke="#9ca3af" stroke-width="2" stroke-dasharray="8 6"></line>
+    <line x1="108" y1="108" x2="612" y2="108" stroke="#0269c8" stroke-width="3" marker-end="url(#tls-ecdhe-right)"></line>
+    <text x="360" y="92" text-anchor="middle" font-size="15" font-weight="600" fill="#0269c8">① Client Hello</text>
+    <text x="360" y="128" text-anchor="middle" font-size="13" fill="#64748b">客户端随机数、支持的曲线、签名算法</text>
+    <line x1="612" y1="186" x2="108" y2="186" stroke="#16a34a" stroke-width="3" marker-end="url(#tls-ecdhe-left)"></line>
+    <text x="360" y="170" text-anchor="middle" font-size="15" font-weight="600" fill="#16a34a">② Server Hello</text>
+    <text x="360" y="206" text-anchor="middle" font-size="13" fill="#64748b">选定 ECDHE 套件，带服务器随机数</text>
+    <line x1="612" y1="264" x2="108" y2="264" stroke="#16a34a" stroke-width="3" marker-end="url(#tls-ecdhe-left)"></line>
+    <text x="360" y="248" text-anchor="middle" font-size="15" font-weight="600" fill="#16a34a">③ Certificate</text>
+    <text x="360" y="284" text-anchor="middle" font-size="13" fill="#64748b">证书公钥用来验签</text>
+    <line x1="612" y1="342" x2="108" y2="342" stroke="#16a34a" stroke-width="3" marker-end="url(#tls-ecdhe-left)"></line>
+    <text x="360" y="326" text-anchor="middle" font-size="15" font-weight="600" fill="#16a34a">④ Server Key Exchange</text>
+    <text x="360" y="362" text-anchor="middle" font-size="13" fill="#64748b">临时公钥与曲线参数，证书私钥签名</text>
+    <line x1="612" y1="420" x2="108" y2="420" stroke="#16a34a" stroke-width="3" marker-end="url(#tls-ecdhe-left)"></line>
+    <text x="360" y="404" text-anchor="middle" font-size="15" font-weight="600" fill="#16a34a">⑤ Server Hello Done</text>
+    <text x="360" y="440" text-anchor="middle" font-size="13" fill="#64748b">服务器侧握手消息发送完毕</text>
+    <line x1="108" y1="498" x2="612" y2="498" stroke="#0269c8" stroke-width="3" marker-end="url(#tls-ecdhe-right)"></line>
+    <text x="360" y="482" text-anchor="middle" font-size="15" font-weight="600" fill="#0269c8">⑥ Client Key Exchange</text>
+    <text x="360" y="518" text-anchor="middle" font-size="13" fill="#64748b">只发送客户端临时公钥</text>
+    <rect x="130" y="540" width="460" height="34" rx="6" fill="#f8fafc" stroke="#cbd5e1"></rect>
+    <text x="360" y="562" text-anchor="middle" font-size="13" fill="#475569">双方本地 ECDH 得到 premaster secret，再导出会话密钥</text>
+    <line x1="108" y1="618" x2="612" y2="618" stroke="#0269c8" stroke-width="3" marker-end="url(#tls-ecdhe-right)"></line>
+    <text x="360" y="602" text-anchor="middle" font-size="15" font-weight="600" fill="#0269c8">⑦ Change Cipher Spec</text>
+    <text x="360" y="638" text-anchor="middle" font-size="13" fill="#64748b">通知对方：下一条起改用会话密钥</text>
+    <line x1="108" y1="696" x2="612" y2="696" stroke="#0269c8" stroke-width="3" marker-end="url(#tls-ecdhe-right)"></line>
+    <text x="360" y="680" text-anchor="middle" font-size="15" font-weight="600" fill="#0269c8">⑧ Finished</text>
+    <text x="360" y="716" text-anchor="middle" font-size="13" fill="#64748b">用会话密钥加密的握手校验值</text>
+    <line x1="612" y1="774" x2="108" y2="774" stroke="#16a34a" stroke-width="3" marker-end="url(#tls-ecdhe-left)"></line>
+    <text x="360" y="758" text-anchor="middle" font-size="15" font-weight="600" fill="#16a34a">⑨ Change Cipher Spec</text>
+    <text x="360" y="794" text-anchor="middle" font-size="13" fill="#64748b">服务器切换到同一把会话密钥</text>
+    <line x1="612" y1="852" x2="108" y2="852" stroke="#16a34a" stroke-width="3" marker-end="url(#tls-ecdhe-left)"></line>
+    <text x="360" y="836" text-anchor="middle" font-size="15" font-weight="600" fill="#16a34a">⑩ Finished</text>
+    <text x="360" y="888" text-anchor="middle" font-size="13" fill="#64748b">校验通过后，HTTP 使用会话密钥；临时私钥已经丢弃</text>
+  </svg>
+  <figcaption style="margin-top:12px;font-size:14px;line-height:1.6;color:#64748b;text-align:center;">TLS 1.2 ECDHE 密钥交换：报文顺序与上方口述一一对应。premaster secret 在灰框里本地算出，不出现在报文中。</figcaption>
+</figure>
+<h4 class="heading" id="heading-31-tls13" data-id="heading-31-tls13">③ TLS 1.3 完整流程</h4>
+<p><strong>口述版</strong></p>
+<blockquote>
+<p>TLS 1.3 的完整握手正常是一个往返。它只保留 ECDHE 或 DHE 这种带前向安全的密钥交换，RSA 密钥交换没有了。证书、签名和 <code>Finished</code> 都在握手密钥保护下发送。下面的序号和下方流程图里的 1-RTT 主路径一一对应。</p>
+<p>① 客户端发 <code>Client Hello</code> 时，除了随机数和支持的套件，会带上 <code>key_share</code>，也就是自己已经生成好的临时公钥，常见是 X25519。<code>supported_versions</code> 里声明支持 TLS 1.3。HTTPS 同样会带 SNI。</p>
+<p>② 服务器如果接受这组参数，就在 <code>Server Hello</code> 里选定 TLS 1.3 和套件，并带上自己的 <code>key_share</code>，也就是服务器临时公钥。</p>
+<p>到这里，两边已经能做 ECDH，算出同一个共享秘密。再结合目前的握手内容，用 HKDF 导出握手阶段的密钥。这一步是图里 <code>Server Hello</code> 下面的灰框，② 之后的消息都用这把握手密钥加密。</p>
+<p>③ 服务器接着发 <code>Encrypted Extensions</code>。</p>
+<p>④ <code>Certificate</code> 是加密的证书链。客户端照旧校验签发链、域名和有效期。</p>
+<p>⑤ <code>Certificate Verify</code> 是服务器用证书私钥对前面的握手内容做的签名，客户端用证书公钥验签，确认对方拿着私钥。</p>
+<p>⑥ 服务器发 <code>Finished</code>。它是用握手密钥算出来的校验值，证明两边导出的密钥一致，握手没有被篡改。</p>
+<p>客户端核完服务器的 <code>Finished</code> 之后，双方已经能根据到这条消息为止的握手内容，再导出一套应用数据密钥，和前面的握手密钥分开。这一步是图里第二个灰框。</p>
+<p>⑦ 客户端发自己的 <code>Finished</code>，这条仍用握手密钥保护。</p>
+<p>⑧ 同一轮里就可以带上用应用数据密钥加密的 HTTP 请求。客户端发出第一轮之后，只要等服务器回一轮就可以开始发业务数据，所以叫 1-RTT。</p>
+<p>⑨ 服务器再用应用数据密钥回 HTTP 响应。</p>
+<p>如果服务器不支持客户端在 <code>key_share</code> 里选的曲线，会先回 <code>HelloRetryRequest</code>，让客户端换一组参数再发一次 <code>Client Hello</code>，握手就变成两轮。面试先讲曲线能对上的这条主路径。</p>
+<p>和 TLS 1.2 放在一起记三件事。临时公钥在 ① <code>Client Hello</code> 里就发出去了，不再等 <code>Server Hello Done</code> 之后单独发 <code>Client Key Exchange</code>。共享秘密在本地用 ECDHE 算出来，再用 HKDF 分成握手密钥和应用数据密钥，没有「把 premaster secret 加密后传给服务器」这一步。密钥切换靠这次导出完成；报文里即使还能看到 <code>Change Cipher Spec</code>，也只是为了兼容中间设备，不参与换密钥。</p>
+</blockquote>
+<figure class="tls13-handshake" style="margin:22px 0;padding:18px;border:1px solid #e4e7ed;border-radius:8px;background:#ffffff;">
+  <svg viewBox="0 0 720 900" role="img" aria-labelledby="tls13-title tls13-desc" style="display:block;width:100%;height:auto;overflow:visible;font-family:PingFang SC,-apple-system,BlinkMacSystemFont,sans-serif;">
+    <title id="tls13-title">TLS 1.3 完整握手流程图</title>
+    <desc id="tls13-desc">客户端在 Client Hello 中带上 key_share，服务器在 Server Hello 中回应临时公钥。双方导出握手密钥后，服务器加密发送 Encrypted Extensions、Certificate、Certificate Verify 和 Finished。客户端再发 Finished，并可在同一轮带上 HTTP 请求。</desc>
+    <defs>
+      <marker id="tls13-right" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#0269c8"></path>
+      </marker>
+      <marker id="tls13-left" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#16a34a"></path>
+      </marker>
+    </defs>
+    <rect x="48" y="16" width="120" height="36" rx="6" fill="#f2f7ff" stroke="#0269c8"></rect>
+    <text x="108" y="39" text-anchor="middle" font-size="16" font-weight="600" fill="#252933">客户端</text>
+    <rect x="552" y="16" width="120" height="36" rx="6" fill="#f2fff8" stroke="#16a34a"></rect>
+    <text x="612" y="39" text-anchor="middle" font-size="16" font-weight="600" fill="#252933">服务端</text>
+    <line x1="108" y1="52" x2="108" y2="820" stroke="#9ca3af" stroke-width="2" stroke-dasharray="8 6"></line>
+    <line x1="612" y1="52" x2="612" y2="820" stroke="#9ca3af" stroke-width="2" stroke-dasharray="8 6"></line>
+    <line x1="108" y1="108" x2="612" y2="108" stroke="#0269c8" stroke-width="3" marker-end="url(#tls13-right)"></line>
+    <text x="360" y="92" text-anchor="middle" font-size="15" font-weight="600" fill="#0269c8">① Client Hello + key_share</text>
+    <text x="360" y="128" text-anchor="middle" font-size="13" fill="#64748b">临时公钥（常见 X25519）、supported_versions、SNI</text>
+    <line x1="612" y1="186" x2="108" y2="186" stroke="#16a34a" stroke-width="3" marker-end="url(#tls13-left)"></line>
+    <text x="360" y="170" text-anchor="middle" font-size="15" font-weight="600" fill="#16a34a">② Server Hello + key_share</text>
+    <text x="360" y="206" text-anchor="middle" font-size="13" fill="#64748b">选定 TLS 1.3，带上服务器临时公钥</text>
+    <rect x="148" y="228" width="424" height="34" rx="6" fill="#f8fafc" stroke="#cbd5e1"></rect>
+    <text x="360" y="250" text-anchor="middle" font-size="13" fill="#475569">双方本地 ECDH，再用 HKDF 导出握手密钥</text>
+    <line x1="612" y1="306" x2="108" y2="306" stroke="#16a34a" stroke-width="3" stroke-dasharray="7 5" marker-end="url(#tls13-left)"></line>
+    <text x="360" y="290" text-anchor="middle" font-size="15" font-weight="600" fill="#16a34a">③ Encrypted Extensions</text>
+    <text x="360" y="326" text-anchor="middle" font-size="13" fill="#64748b">握手密钥加密</text>
+    <line x1="612" y1="384" x2="108" y2="384" stroke="#16a34a" stroke-width="3" stroke-dasharray="7 5" marker-end="url(#tls13-left)"></line>
+    <text x="360" y="368" text-anchor="middle" font-size="15" font-weight="600" fill="#16a34a">④ Certificate</text>
+    <text x="360" y="404" text-anchor="middle" font-size="13" fill="#64748b">加密的证书链</text>
+    <line x1="612" y1="462" x2="108" y2="462" stroke="#16a34a" stroke-width="3" stroke-dasharray="7 5" marker-end="url(#tls13-left)"></line>
+    <text x="360" y="446" text-anchor="middle" font-size="15" font-weight="600" fill="#16a34a">⑤ Certificate Verify</text>
+    <text x="360" y="482" text-anchor="middle" font-size="13" fill="#64748b">证书私钥对握手内容签名</text>
+    <line x1="612" y1="540" x2="108" y2="540" stroke="#16a34a" stroke-width="3" stroke-dasharray="7 5" marker-end="url(#tls13-left)"></line>
+    <text x="360" y="524" text-anchor="middle" font-size="15" font-weight="600" fill="#16a34a">⑥ Finished</text>
+    <text x="360" y="560" text-anchor="middle" font-size="13" fill="#64748b">用握手密钥计算的校验值</text>
+    <rect x="132" y="582" width="456" height="34" rx="6" fill="#f8fafc" stroke="#cbd5e1"></rect>
+    <text x="360" y="604" text-anchor="middle" font-size="13" fill="#475569">双方再导出应用数据密钥，与握手密钥分开</text>
+    <line x1="108" y1="660" x2="612" y2="660" stroke="#0269c8" stroke-width="3" stroke-dasharray="7 5" marker-end="url(#tls13-right)"></line>
+    <text x="360" y="644" text-anchor="middle" font-size="15" font-weight="600" fill="#0269c8">⑦ Finished</text>
+    <text x="360" y="680" text-anchor="middle" font-size="13" fill="#64748b">仍用握手密钥保护</text>
+    <line x1="108" y1="738" x2="612" y2="738" stroke="#0269c8" stroke-width="3" stroke-dasharray="7 5" marker-end="url(#tls13-right)"></line>
+    <text x="360" y="722" text-anchor="middle" font-size="15" font-weight="600" fill="#0269c8">⑧ HTTP 请求</text>
+    <text x="360" y="758" text-anchor="middle" font-size="13" fill="#64748b">同一轮发出，改用应用数据密钥</text>
+    <line x1="612" y1="816" x2="108" y2="816" stroke="#16a34a" stroke-width="3" stroke-dasharray="7 5" marker-end="url(#tls13-left)"></line>
+    <text x="360" y="800" text-anchor="middle" font-size="15" font-weight="600" fill="#16a34a">⑨ HTTP 响应</text>
+    <text x="360" y="852" text-anchor="middle" font-size="13" fill="#64748b">应用数据密钥。虚线表示已经加密</text>
+  </svg>
+  <figcaption style="margin-top:12px;font-size:14px;line-height:1.6;color:#64748b;text-align:center;">TLS 1.3 的 1-RTT 主路径，报文顺序与上方口述一一对应。曲线对不上时服务器会先回 HelloRetryRequest，图中没有画出。兼容中间设备的 Change Cipher Spec 不参与换密钥，也未画入。</figcaption>
+</figure>
 <h4  class="heading" id="heading-32" data-id="heading-32">为什么密钥的传递需要使用非对称加密？</h4>
 <p>答：使用非对称加密是为了后面客户端生成的Pre-master secret密钥的安全，通过上面的步骤能得知，服务器向客户端发送公钥证书这一步是有可能被别人拦截的，如果使用对称加密的话，在客户端向服务端发送Pre-master secret密钥的时候，被黑客拦截的话，就能够使用公钥进行解码，就无法保证Pre-master secret密钥的安全了</p>
 <h4  class="heading" id="heading-33" data-id="heading-33">双向认证了解么？（这里我真想说一句不了解）</h4>
 <p>答：上面的HTTPS的通信流程只验证了服务端的身份，而服务端没有验证客户端的身份，双向认证是服务端也要确保客户端的身份，大概流程是客户端在校验完服务器的证书之后，会向服务器发送自己的公钥，然后服务端用公钥加密产生一个新的密钥，传给客户端，客户端再用私钥解密，以后就用此密钥进行对称加密的通信</p>
-<h3  class="heading" id="heading-34" data-id="heading-34">26. HTTPS是如何实现验证身份和验证完整性的？<span id="user-content-26"></span></h3>
+<h3  class="heading" id="heading-34" data-id="heading-34">42. HTTPS是如何实现验证身份和验证完整性的？<span id="user-content-42"></span></h3>
 <p>使用数字证书和CA来验证身份,首先服务端先向CA机构去申请证书，CA审核之后会给一个数字证书，里面包裹公钥、签名、有效期，用户信息等各种信息，在客户端发送请求时，服务端会把数字证书发给客户端，然后客户端会通过信任链来验证数字证书是否是有效的，来验证服务端的身份。</p>
 <p>使用摘要算法来验证完整性，也就是说在发送消息时，会对消息的内容通过摘要算法生成一段摘要，在收到收到消息时也使用同样的算法生成摘要，来判断摘要是否一致。</p>
-<h3  class="heading" id="heading-35" data-id="heading-35">27. 如何用Charles抓HTTPS的包？其中原理和流程是什么？<span id="user-content-27"></span></h3>
+<h3  class="heading" id="heading-35" data-id="heading-35">43. 如何用Charles抓HTTPS的包？其中原理和流程是什么？<span id="user-content-43"></span></h3>
+<p>用 Charles 抓 HTTPS，本质是自己做一次中间人。Charles 对手机扮成服务器，对真实服务器扮成客户端，两边各握一段 TLS，中间就能看见明文。</p>
 <p>流程：</p>
 <ol>
-<li>首先在手机上安装Charles证书</li>
-<li>在代理设置中开启Enable SSL Proxying</li>
-<li>之后添加需要抓取服务端的地址</li>
+<li>电脑打开 Charles，手机和电脑连同一个局域网。</li>
+<li>在手机 Wi-Fi 里设置 HTTP 代理，服务器填电脑的 IP，端口一般是 8888。设好之后，走系统代理的 HTTP、HTTPS 请求会先发到这台电脑上的 Charles，再由 Charles 转给真正的服务器。</li>
+<li>手机浏览器打开 chls.pro/ssl，安装 Charles 的根证书。</li>
+<li>iOS 10.3 之后，到「设置 → 通用 → 关于本机 → 证书信任设置」，把这张根证书打开完全信任。只安装描述文件，系统仍然不信任它。</li>
+<li>在 Charles 里进入 Proxy → SSL Proxying Settings，勾上 Enable SSL Proxying，把要解密的主机加进去：指定域名加 443，或者主机填 *、端口填 443。SSL Proxying 默认是白名单，没加进去的连接只会转发，不会解密。</li>
 </ol>
+<p>不理会系统代理的 App，请求仍然直接出去，Charles 上看不到。</p>
 <p>原理：</p>
-<p>Charles作为中间人，对客户端伪装成服务端，对服务端伪装成客户端。简单来说：</p>
-<ul>
-<li>截获客户端的HTTPS请求，伪装成中间人客户端去向服务端发送HTTPS请求</li>
-<li>接受服务端返回，用自己的证书伪装成中间人服务端向客户端发送数据内容。</li>
-</ul>
-<p>具体流程如下图,图片来自<a target="_blank" href="https://juejin.cn/post/6844903809068564493#heading-3" title="https://juejin.cn/post/6844903809068564493#heading-3">扯一扯HTTPS单向认证、双向认证、抓包原理、反抓包策略</a></p>
-<p></p><figure><img src="assets/advanced/images/advanced-image-4.png" loading="lazy"><figcaption></figcaption></figure><p></p>
-<h3  class="heading" id="heading-36" data-id="heading-36">28. 什么是中间人攻击？如何避免？<span id="user-content-28"></span></h3>
-<p>中间人攻击就是截获到客户端的请求以及服务器的响应，比如Charles抓取HTTPS的包就属于中间人攻击。</p>
-<p>避免的方式：客户端可以预埋证书在本地，然后进行证书的比较是否是匹配的</p>
-<h3  class="heading" id="heading-37" data-id="heading-37">29. 了解编译的过程么？分为哪几个步骤？<span id="user-content-29"></span></h3>
 <ol>
-<li>预编译：主要处理以“#”开始的预编译指令。</li>
-<li>编译：
+<li>客户端要访问某个域名时，请求先发到 Charles。</li>
+<li>客户端发出 ClientHello，SNI 里带上要访问的域名。</li>
+<li>Charles 用自己根证书的私钥，当场签一张叶子证书，域名写成这个真实主机名，拿它跟客户端把 TLS 握完。</li>
+<li>客户端校验这张证书：签发者是已经信任的 Charles CA，域名也能对上，握手通过。</li>
+<li>Charles 自己作为普通客户端，再和真实服务器单独握一次手，并按系统信任库校验服务器的真证书。</li>
+<li>至此有两条独立的 TLS，两把会话密钥：客户端和 Charles 之间一把，Charles 和服务器之间另一把。</li>
+<li>请求到了，Charles 用前一把解开，再按后一把加密转发给服务器；响应原路反过来。真实服务器的私钥一直在服务器上，Charles 用来签发假证书的，是自己根证书的私钥。</li>
+</ol>
+<p>如果 App 做了证书锁定，只认自己预埋的证书或公钥，系统信任 Charles 根证书也没用，假证书对不上，这段就解不开。</p>
+<figure class="charles-mitm" style="margin:22px 0;padding:18px;border:1px solid #e4e7ed;border-radius:8px;background:#ffffff;">
+  <p style="margin:0 0 16px;text-align:center;font-size:16px;font-weight:600;line-height:1.5;color:#252933;">Charles 抓 HTTPS：两条独立的 TLS</p>
+  <svg viewBox="0 0 900 1052" role="img" aria-labelledby="charles-mitm-title charles-mitm-desc" style="display:block;width:100%;height:auto;overflow:visible;font-family:PingFang SC,-apple-system,BlinkMacSystemFont,sans-serif;">
+    <title id="charles-mitm-title">Charles 抓 HTTPS：两条独立的 TLS</title>
+    <desc id="charles-mitm-desc">客户端先把请求发到 Charles。Charles 用自己的根证书签发假叶子证书，和客户端握出会话密钥 K1。Charles 再作为普通客户端和真实服务器另握一次，得到会话密钥 K2。之后用 K1 解密、用 K2 加密转发，两把密钥不共用。</desc>
+    <defs>
+      <marker id="charles-to-right" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#0269c8"></path>
+      </marker>
+      <marker id="charles-to-left" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#d97706"></path>
+      </marker>
+      <marker id="server-to-left" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#16a34a"></path>
+      </marker>
+    </defs>
+    <rect x="40" y="16" width="120" height="36" rx="6" fill="#f2f7ff" stroke="#0269c8"></rect>
+    <text x="100" y="39" text-anchor="middle" font-size="16" font-weight="600" fill="#252933">客户端</text>
+    <rect x="390" y="16" width="120" height="36" rx="6" fill="#fff7ed" stroke="#d97706"></rect>
+    <text x="450" y="39" text-anchor="middle" font-size="16" font-weight="600" fill="#252933">Charles</text>
+    <rect x="740" y="16" width="120" height="36" rx="6" fill="#f2fff8" stroke="#16a34a"></rect>
+    <text x="800" y="39" text-anchor="middle" font-size="16" font-weight="600" fill="#252933">服务端</text>
+    <line x1="100" y1="52" x2="100" y2="980" stroke="#9ca3af" stroke-width="2" stroke-dasharray="8 6"></line>
+    <line x1="450" y1="52" x2="450" y2="980" stroke="#9ca3af" stroke-width="2" stroke-dasharray="8 6"></line>
+    <line x1="800" y1="52" x2="800" y2="980" stroke="#9ca3af" stroke-width="2" stroke-dasharray="8 6"></line>
+    <line x1="100" y1="112" x2="450" y2="112" stroke="#0269c8" stroke-width="3" marker-end="url(#charles-to-right)"></line>
+    <text x="275" y="96" text-anchor="middle" font-size="14" font-weight="600" fill="#0269c8">① 请求先发到 Charles</text>
+    <text x="275" y="132" text-anchor="middle" font-size="12" fill="#64748b">走系统 HTTP 代理，不直连服务器</text>
+    <line x1="100" y1="184" x2="450" y2="184" stroke="#0269c8" stroke-width="3" marker-end="url(#charles-to-right)"></line>
+    <text x="275" y="168" text-anchor="middle" font-size="14" font-weight="600" fill="#0269c8">② ClientHello</text>
+    <text x="275" y="204" text-anchor="middle" font-size="12" fill="#64748b">SNI 里带要访问的域名</text>
+    <rect x="310" y="228" width="280" height="52" rx="6" fill="#fff7ed" stroke="#fdba74"></rect>
+    <text x="450" y="248" text-anchor="middle" font-size="13" font-weight="600" fill="#9a3412">③ 用自己的根证书私钥</text>
+    <text x="450" y="268" text-anchor="middle" font-size="12" fill="#9a3412">签发叶子证书，域名写成真实主机名</text>
+    <line x1="450" y1="340" x2="100" y2="340" stroke="#d97706" stroke-width="3" marker-end="url(#charles-to-left)"></line>
+    <text x="275" y="324" text-anchor="middle" font-size="14" font-weight="600" fill="#d97706">④ 假叶子证书，握完 TLS</text>
+    <text x="275" y="360" text-anchor="middle" font-size="12" fill="#64748b">校验通过：Charles CA 已信任，域名一致</text>
+    <line x1="450" y1="424" x2="800" y2="424" stroke="#0269c8" stroke-width="3" marker-end="url(#charles-to-right)"></line>
+    <text x="625" y="408" text-anchor="middle" font-size="14" font-weight="600" fill="#0269c8">⑤ 另一次 TLS 握手</text>
+    <text x="625" y="444" text-anchor="middle" font-size="12" fill="#64748b">Charles 充当普通客户端</text>
+    <line x1="800" y1="496" x2="450" y2="496" stroke="#16a34a" stroke-width="3" marker-end="url(#server-to-left)"></line>
+    <text x="625" y="480" text-anchor="middle" font-size="14" font-weight="600" fill="#16a34a">服务器真证书</text>
+    <text x="625" y="516" text-anchor="middle" font-size="12" fill="#64748b">Charles 按系统信任库校验</text>
+    <text x="450" y="556" text-anchor="middle" font-size="14" font-weight="600" fill="#252933">⑥ 两条独立的 TLS</text>
+    <rect x="125" y="572" width="300" height="48" rx="6" fill="#f8fafc" stroke="#cbd5e1"></rect>
+    <text x="275" y="592" text-anchor="middle" font-size="13" font-weight="600" fill="#252933">会话密钥 K1</text>
+    <text x="275" y="610" text-anchor="middle" font-size="12" fill="#64748b">只在客户端和 Charles 之间</text>
+    <rect x="475" y="572" width="300" height="48" rx="6" fill="#f8fafc" stroke="#cbd5e1"></rect>
+    <text x="625" y="592" text-anchor="middle" font-size="13" font-weight="600" fill="#252933">会话密钥 K2</text>
+    <text x="625" y="610" text-anchor="middle" font-size="12" fill="#64748b">只在 Charles 和服务器之间</text>
+    <text x="450" y="656" text-anchor="middle" font-size="14" font-weight="600" fill="#252933">⑦ 解密后再加密转发</text>
+    <line x1="100" y1="692" x2="450" y2="692" stroke="#0269c8" stroke-width="3" stroke-dasharray="7 5" marker-end="url(#charles-to-right)"></line>
+    <text x="275" y="676" text-anchor="middle" font-size="14" font-weight="600" fill="#0269c8">HTTP 请求</text>
+    <text x="275" y="712" text-anchor="middle" font-size="12" fill="#64748b">用 K1 加密</text>
+    <rect x="330" y="728" width="240" height="32" rx="6" fill="#fff7ed" stroke="#fdba74"></rect>
+    <text x="450" y="749" text-anchor="middle" font-size="12" fill="#9a3412">用 K1 解开，再用 K2 加密</text>
+    <line x1="450" y1="792" x2="800" y2="792" stroke="#0269c8" stroke-width="3" stroke-dasharray="7 5" marker-end="url(#charles-to-right)"></line>
+    <text x="625" y="776" text-anchor="middle" font-size="14" font-weight="600" fill="#0269c8">HTTP 请求</text>
+    <text x="625" y="812" text-anchor="middle" font-size="12" fill="#64748b">用 K2 加密</text>
+    <line x1="800" y1="864" x2="450" y2="864" stroke="#16a34a" stroke-width="3" stroke-dasharray="7 5" marker-end="url(#server-to-left)"></line>
+    <text x="625" y="848" text-anchor="middle" font-size="14" font-weight="600" fill="#16a34a">HTTP 响应</text>
+    <text x="625" y="884" text-anchor="middle" font-size="12" fill="#64748b">用 K2 加密</text>
+    <rect x="330" y="900" width="240" height="32" rx="6" fill="#fff7ed" stroke="#fdba74"></rect>
+    <text x="450" y="921" text-anchor="middle" font-size="12" fill="#9a3412">用 K2 解开，再用 K1 加密</text>
+    <line x1="450" y1="964" x2="100" y2="964" stroke="#d97706" stroke-width="3" stroke-dasharray="7 5" marker-end="url(#charles-to-left)"></line>
+    <text x="275" y="948" text-anchor="middle" font-size="14" font-weight="600" fill="#d97706">HTTP 响应</text>
+    <text x="275" y="984" text-anchor="middle" font-size="12" fill="#64748b">用 K1 加密</text>
+    <text x="450" y="1020" text-anchor="middle" font-size="12" fill="#64748b">服务器私钥留在服务器。签发假证书用的是 Charles 根证书私钥。虚线表示应用数据已经加密。</text>
+  </svg>
+  <figcaption style="margin-top:12px;font-size:14px;line-height:1.6;color:#64748b;text-align:center;">K1 和 K2 是两把独立的会话密钥，不会合成一把交给三方共用。</figcaption>
+</figure>
+<h3  class="heading" id="heading-36" data-id="heading-36">44. 什么是中间人攻击？如何避免？<span id="user-content-44"></span></h3>
+<p>中间人是攻击者插在客户端和服务器之间，对两边分别冒充对方。Charles 抓 HTTPS 就是同一种结构。防住它，先靠系统的证书校验，再靠证书锁定。</p>
+<p><strong>口述版</strong></p>
+<blockquote>
+<p><strong>什么是中间人攻击？</strong>简单说，就是攻击者夹在客户端和服务器中间：对 App 冒充服务器，握一段 TLS；再作为客户端去连真实服务器，另握一段 TLS。两边都以为在直连。Charles 抓 HTTPS 就是这个套路——它用自己的根证书签一张域名正确的叶子证书跟 App 握手，再自己去连真实服务器。App 能接受，是因为手机里信任了 Charles 的根证书。所以不是 TLS 被破解了，是客户端信任了攻击者的证书。</p>
+<p><strong>怎么避免？iOS 上主要两层：</strong>第一层靠系统证书校验，<code>URLSession</code> 默认会校验证书链、域名、有效期这些；在 <code>URLSessionDelegate</code> 的认证回调里可以根据 <code>SecTrust</code> 结果决定继续还是取消。第二层做证书锁定，在认证回调里对服务器证书做 SPKI 哈希比对，留一把备用公钥，Pinning 失败直接拒绝，不能静默降级。另外别引导用户随便装未知根证书，也别在“证书信任设置”里完全信任抓包证书；可以配合 ATS、mTLS 这些。</p>
+<p><strong>一句话总结：</strong>中间人攻击是利用信任链冒充双方；防御就是系统信任评估加证书锁定。不随便信任根证书不是再加的第三层，而是第一层能拦住 Charles 的前提；根一旦进了信任库，系统评估会通过，就要靠 Pinning 拒绝。SPKI 是证书里“公钥那块数据”的名字；SPKI 哈希是锁公钥时实际比对的值；Pinning 就是把预期值固定住、不认其他证书的策略。Charles 能抓包是因为客户端信任了它的根证书；Pinning 就是用来防这种“信任库里多出来的根”和 CA 误签的。</p>
+</blockquote>
+<h3  class="heading" id="heading-37" data-id="heading-37">45. 了解编译的过程么？分为哪几个步骤？<span id="user-content-45"></span></h3>
+<p>从源码到可执行文件，编译过程分为四步：</p>
 <ol>
-<li>词法分析：将字符序列分割成一系列的记号。</li>
-<li>语法分析：根据产生的记号进行语法分析生成语法树。</li>
-<li>语义分析：分析语法树的语义，进行类型的匹配、转换、标识等。</li>
-<li>中间代码生成：源码级优化器将语法树转换成中间代码，然后进行源码级优化，比如把 1+2 优化为 3。中间代码使得编译器被分为前端和后端，不同的平台可以利用不同的编译器后端将中间代码转换为机器代码，实现跨平台。</li>
-<li>目标代码生成：此后的过程属于编译器后端，代码生成器将中间代码转换成目标代码（汇编代码），其后目标代码优化器对目标代码进行优化，比如调整寻址方式、使用位移代替乘法、删除多余指令、调整指令顺序等。</li>
+<li>预处理：展开宏、包含头文件、处理条件编译、去掉注释，产物仍是源码。</li>
+<li>编译：把源码编译成汇编，内部又分几步：
+<ol>
+<li>词法分析：把字符序列切分成记号（token）。</li>
+<li>语法分析：根据记号生成语法树。</li>
+<li>语义分析：做类型检查、类型转换、作用域和标识符解析。</li>
+<li>中间代码生成：把语法树转换成与平台无关的中间代码（Clang 里是 LLVM IR）。中间代码把编译器分成前端和后端，不同平台共用前端，再由各自的后端生成目标代码。</li>
+<li>中间代码优化：在中间代码上做优化，比如常量折叠把 1+2 折成 3；用位移代替乘法这种强度削弱也多发生在这一层。</li>
+<li>目标代码生成：编译器后端把中间代码转换成汇编，并做指令选择、寄存器分配、指令调度等与目标平台相关的优化。</li>
 </ol>
 </li>
-<li>汇编：汇编器将汇编代码转变成机器指令。</li>
-<li>静态链接：链接器将各个已经编译成机器指令的目标文件链接起来，经过重定位过后输出一个可执行文件。</li>
-<li>装载：装载可执行文件、装载其依赖的共享对象。</li>
-<li>动态链接：动态链接器将可执行文件和共享对象中需要重定位的位置进行修正。</li>
-<li>最后，进程的控制权转交给程序入口，程序终于运行起来了。</li>
+<li>汇编：汇编器把汇编变成目标文件（.o），里面是带重定位信息的机器码，这时还不能直接执行。</li>
+<li>链接：链接器合并各个目标文件，完成符号解析、段合并和重定位，输出可执行文件。iOS 上产物是 Mach-O，对 libSystem、UIKit 等系统库仍保留动态依赖，要到运行时才绑定。</li>
 </ol>
-<h3  class="heading" id="heading-38" data-id="heading-38">30. 静态链接了解么？静态库和动态库的区别？<span id="user-content-30"></span></h3>
-<p>静态链接是指将多个目标文件合并为一个可执行文件，直观感觉就是将所有目标文件的段合并。需要注意的是可执行文件与目标文件的结构基本一致，不同的是是否“可执行”。
-静态库：链接时完整地拷贝至可执行文件中，被多次使用就有多份冗余拷贝。
-动态库：链接时不复制，程序运行时由系统动态加载到内存，供程序调用，系统只加载一次，多个程序共用，节省内存。</p>
-<h3  class="heading" id="heading-39" data-id="heading-39">31. 内存的几大区域，各自的职能分别是什么？<span id="user-content-31"></span></h3>
+<p>装载和动态链接不属于编译。进程启动时，内核装入主程序和 dyld，dyld 再加载依赖的动态库并完成 rebase / bind，然后把控制权交给程序入口。Swift 在语法树和 LLVM IR 之间还有一层 SIL。</p>
+<h3  class="heading" id="heading-38" data-id="heading-38">46. 静态链接了解么？静态库和动态库的区别？<span id="user-content-46"></span></h3>
+<p><strong>口述版</strong></p>
+<blockquote>
+<p><strong>静态链接。</strong>静态链接就是把多个目标文件合并成一个可执行文件，直观感觉就是把同类型的段合并到一起。可执行文件和目标文件的结构差不多，可执行文件的地址已经定好，可以直接运行。</p>
+<p><strong>静态库。</strong>链接时把用到的代码拷进可执行文件，这个程序里只留一份。多个程序各自用到它，就会各有一份拷贝。</p>
+<p><strong>动态库。</strong>链接时不拷贝代码，程序运行起来再加载到内存里调用。系统的动态库加载一份，多个程序共用，比较省内存。放进 App 里的动态库只给这个 App 用。</p>
+</blockquote>
+<h3  class="heading" id="heading-39" data-id="heading-39">47. 内存的几大区域，各自的职能分别是什么？<span id="user-content-47"></span></h3>
 <ol>
 <li>栈区：有系统自动分配并释放，一般存放函数的参数值，局部变量等</li>
 <li>堆区：有程序员分配和释放，若程序员未释放，则在程序结束时有系统释放，在iOS里创建出来的对象会放在堆区</li>
 <li>数据段：字符串常量，全局变量，静态变量</li>
 <li>代码段：编译之后的代码</li>
 </ol>
-<h3  class="heading" id="heading-40" data-id="heading-40">32. static和const有什么区别？<span id="user-content-32"></span></h3>
+<h3  class="heading" id="heading-40" data-id="heading-40">48. static和const有什么区别？<span id="user-content-48"></span></h3>
 <p>const是指声明一个常量
 static修饰全局变量时，表示此全局变量只在当前文件可见
 static修饰局部变量时，表示每次调用的初始值为上一次调用的值，调用结束后存储空间不释放</p>
-<h3  class="heading" id="heading-41" data-id="heading-41">33. 了解内联函数么？<span id="user-content-33"></span></h3>
-<p>内联函数是为了减少函数调用的开销，编译器在编译阶段把函数体内的代码复制到函数调用处</p>
-<h3  class="heading" id="heading-42" data-id="heading-42">34. 什么时候会出现死锁？如何避免？<span id="user-content-34"></span></h3>
+<h3  class="heading" id="heading-41" data-id="heading-41">49. 了解内联函数么？<span id="user-content-49"></span></h3>
+<p>下面给你一版<strong>针对 OC 语境</strong>的面试话术。核心是先把问题拆成两层：<strong>C 函数层面的内联</strong>和<strong>OC 方法层面的“不能内联”</strong>。</p>
+<h4 class="heading" id="heading-41-short" data-id="heading-41-short">更简短版（如果面试官只要一句话）</h4>
+<blockquote>
+<p>在 OC 里要区分开：<code>inline</code> 是 C 函数层面的建议，编译器决定是否把函数体展开到调用点；而 OC 方法走的是 <code>objc_msgSend</code> 动态消息派发，编译期不知道最终实现，所以 OC 方法不能被内联。OC 项目里能内联的是用 <code>static inline</code> 或 <code>NS_INLINE</code> 写的 C 函数。</p>
+</blockquote>
+<h4 class="heading" id="heading-41-follow" data-id="heading-41-follow">面试官追问时可用补充</h4>
+<p><strong>追问：<code>NS_INLINE</code> 是什么？</strong></p>
+<blockquote>
+<p>它本质上是 Cocoa 提供的一个宏，通常展开成 <code>static inline</code>，部分平台还会带 <code>always_inline</code> 属性，方便在头文件里定义小工具函数，避免重复符号，同时给编译器更强的内联提示。</p>
+</blockquote>
+<p><strong>追问：<code>inline</code> 一定能省掉函数调用吗？</strong></p>
+<blockquote>
+<p>不一定。<code>inline</code> 只是建议，编译器可能不内联；即使内联，也可能带来代码膨胀、指令缓存压力、调试断点不好打等问题。所以一般只对短小热点函数使用。</p>
+</blockquote>
+<p><strong>追问：OC 方法为什么不能内联？</strong></p>
+<blockquote>
+<p>因为 OC 方法是动态消息派发，<code>[obj foo]</code> 编译后类似 <code>objc_msgSend(obj, @selector(foo))</code>，运行时才根据 <code>isa</code> 找到 IMP，还可能被 swizzle 或转发，编译期没有确定的调用目标，所以没法像普通 C 函数那样直接展开。</p>
+</blockquote>
+<h3  class="heading" id="heading-42" data-id="heading-42">50. 什么时候会出现死锁？如何避免？<span id="user-content-50"></span></h3>
 <p>死锁是指两个或两个以上的线程在执行过程中，由于竞争资源或者由于彼此通信而造成的一种阻塞的现象，若无外力作用，它们都将无法推进下去。
 发生死锁的四个必要条件：</p>
 <ol>
@@ -819,9 +1430,46 @@ static修饰局部变量时，表示每次调用的初始值为上一次调用�
 <li>循环等待条件：若干线程之间形成一种头尾相接的循环等待资源关系。</li>
 </ol>
 <p>只要上面四个条件有一个条件不被满足就能避免死锁</p>
-<h3  class="heading" id="heading-43" data-id="heading-43">35. 说一说你对线程安全的理解？<span id="user-content-35"></span></h3>
-<p>在并发执行的环境中，对于共享数据通过同步机制保证各个线程都可以正确的执行，不会出现数据污染的情况，或者对于某个资源，在被多个线程访问时，不管运行时执行这些线程有什么样的顺序或者交错，不会出现错误的行为，就认为这个资源是线程安全的，一般来说，对于某个资源如果只有读操作，则这个资源无需同步就是线程安全的，若有多个线程进行读写操作，则需要线程同步来保证线程安全。</p>
-<h3  class="heading" id="heading-44" data-id="heading-44">36. 列举你知道的线程同步策略？<span id="user-content-36"></span></h3>
+<p><strong>口述版</strong></p>
+<blockquote>
+<p><strong>定义</strong>：死锁就是一组线程互相等对方手里的资源，外面没人介入，就一直停着。同一条线程把自己等死也算。</p>
+<p><strong>四个条件</strong>：互斥、占有并等待、不可剥夺、循环等待。四条同时成立才可能死锁，拆一条就能避免。工程上主要拆两条：<strong>多把锁按固定顺序拿，拆循环等待；拿着资源不再等下一把锁，拆占有并等待。</strong></p>
+<p><strong>OC 三个高频场景</strong>：</p>
+<ol>
+<li><strong>串行队列上对同一条队列调用 <code>dispatch_sync</code></strong>。当前任务占着队列执行权，又同步派发回同一条队列；<code>dispatch_sync</code> 要等 block 执行完，block 又要等当前任务让出队列，互等。主线程 <code>dispatch_sync(dispatch_get_main_queue(), ...)</code> 最典型。并发队列通常没事，但 barrier 独占期间、或 target 是主队列又在主线程同步派发，会停住。</li>
+<li><strong>锁不可重入</strong>。<code>NSLock</code>、默认 <code>pthread_mutex</code>、<code>os_unfair_lock</code> 同一线程连续加锁会停住；<code>NSRecursiveLock</code>、同一个对象上的 <code>@synchronized</code> 可重入。但两个线程反序拿两把锁，递归锁也救不了。</li>
+<li><strong>信号量和依赖</strong>。串行队列里先 <code>dispatch_semaphore_wait</code>，再把 <code>signal</code> 派回同一条队列，signal 排在当前任务后面，永远轮不到。<code>NSOperation</code> 互相依赖、在自己队列里 <code>waitUntilFinished</code> 也一样。</li>
+</ol>
+<p><strong>避免三句话</strong>：已经在目标队列上就直接执行，别 <code>dispatch_sync</code>，切队列用 <code>dispatch_async</code>；临界区只包共享数据，不在锁里做 UI、网络、回调、<code>dispatch_sync</code>；多把锁按全局统一顺序拿。</p>
+<p><strong>排查</strong>：暂停调试器看线程栈，等待关系能连成环就是死锁。<code>0x8badf00d</code> 只说明主线程超时没返回，是不是死锁还要看栈。</p>
+</blockquote>
+<h3  class="heading" id="heading-43" data-id="heading-43">51. 说一说你对线程安全的理解？<span id="user-content-51"></span></h3>
+<p>线程安全是指多线程并发访问共享资源时，无论调度如何交错，程序都保持正确行为，不破坏共享状态的不变式。Objective-C 里可变容器和可变属性默认不是线程安全的；<code>atomic</code> 只保证单次存取原子，同步手段也不只 <code>@synchronized</code>。</p>
+<p><strong>口述版</strong></p>
+<blockquote>
+<p>线程安全是指：在多线程并发访问共享资源时，无论线程如何调度、交错执行，程序都能表现出符合预期的正确行为，不破坏共享状态的不变式。在 Objective-C 里，像 <code>NSMutableArray</code>、<code>NSMutableDictionary</code>、自定义对象的可变属性这类共享可变状态，默认不是线程安全的。实现线程安全不一定只靠 <code>@synchronized</code>，还可以用 <code>NSLock</code>、<code>os_unfair_lock</code>、GCD 串行队列、并发队列加 <code>dispatch_barrier</code>、不可变对象、<code>dispatch_once</code> 安全初始化等方式来保证原子性、可见性和执行顺序。</p>
+<p>需要注意的是，<code>atomic</code> 属性只保证单次 getter/setter 的原子性，不保证 <code>count + addObject:</code> 这种复合操作线程安全；<code>nonatomic</code> 则不保证属性访问原子性。只读也不是绝对安全：如果同时有写线程，仍可能读到中间状态或存在可见性问题；只有对象不可变且安全发布，或确定没有并发写时，只读通常才无需同步。所以线程安全的核心是：共享可变状态在并发下仍满足语义和不变式，同步只是手段之一。</p>
+<p>比如保护一份共享的可变数组，可以这样写：</p>
+<pre><code class="hljs objectivec" lang="objectivec"><span class="hljs-comment">// 方式一：互斥锁保护复合操作</span>
+<span class="hljs-keyword">@synchronized</span> (<span class="hljs-built_in">self</span>.items) {
+    [<span class="hljs-built_in">self</span>.items addObject:obj];
+}
+
+<span class="hljs-comment">// 方式二：串行队列隔离共享状态</span>
+<span class="hljs-built_in">self</span>.queue = dispatch_queue_create(<span class="hljs-string">@"com.example.items"</span>, DISPATCH_QUEUE_SERIAL);
+dispatch_async(<span class="hljs-built_in">self</span>.queue, ^{
+    [<span class="hljs-built_in">self</span>.items addObject:obj];
+});
+
+<span class="hljs-comment">// 方式三：并发队列 + barrier 做读写隔离</span>
+<span class="hljs-comment">// 注意：要用自己创建的 concurrent queue，不能用 global queue</span>
+dispatch_barrier_async(<span class="hljs-built_in">self</span>.concurrentQueue, ^{
+    [<span class="hljs-built_in">self</span>.items addObject:obj];
+});
+</code></pre>
+<p><strong>追问。</strong>Objective-C 中 <code>atomic</code> 不等于线程安全，<code>@synchronized</code> 是递归互斥锁，GCD 串行队列/barrier 更适合做资源隔离和读写控制。</p>
+</blockquote>
+<h3  class="heading" id="heading-44" data-id="heading-44">52. 列举你知道的线程同步策略？<span id="user-content-52"></span></h3>
 <ol>
 <li>OSSpinLock 自旋锁，已不再安全，除了这个锁之外，下面写的锁，在等待时，都会进入线程休眠状态，而非忙等</li>
 <li>os_unfair_lock atomic就是使用此锁来保证原子性的</li>
@@ -831,7 +1479,8 @@ static修饰局部变量时，表示每次调用的初始值为上一次调用�
 <li>dispatch_semaphore_t 信号量</li>
 <li>@synchronized 也是pthread_mutex_t的封装</li>
 </ol>
-<h3  class="heading" id="heading-45" data-id="heading-45">37. 有哪几种锁？各自的原理？它们之间的区别是什么？最好可以结合使用场景来说<span id="user-content-37"></span></h3>
+<p><strong>总结。</strong><code>OSSpinLock</code> 是忙等且不安全的。其他如 <code>pthread_mutex_t</code>、<code>NSLock</code>、<code>@synchronized</code> 以及信号量等，在等待时通常会使线程进入阻塞/休眠状态。但 <code>os_unfair_lock</code> 在无竞争时类似自旋，竞争时才休眠；而信号量的等待行为也依赖于具体的使用方式。</p>
+<h3  class="heading" id="heading-45" data-id="heading-45">53. 有哪几种锁？各自的原理？它们之间的区别是什么？最好可以结合使用场景来说<span id="user-content-53"></span></h3>
 <ol>
 <li>自旋锁：自旋锁在无法进行加锁时，会不断的进行尝试，一般用于临界区的执行时间较短的场景，不过iOS的自旋锁OSSpinLock不再安全，主要原因发生在低优先级线程拿到锁时，高优先级线程进入忙等(busy-wait)状态，消耗大量 CPU 时间，从而导致低优先级线程拿不到 CPU 时间，也就无法完成任务并释放锁。这种问题被称为优先级反转。</li>
 <li>互斥锁：对于某一资源同时只允许有一个访问，无论读写，平常使用的NSLock就属于互斥锁</li>
@@ -839,11 +1488,240 @@ static修饰局部变量时，表示每次调用的初始值为上一次调用�
 <li>条件锁：在满足某个条件的时候进行加锁或者解锁，iOS中可使用NSConditionLock来实现</li>
 <li>递归锁：可以被一个线程多次获得，而不会引起死锁。它记录了成功获得锁的次数，每一次成功的获得锁，必须有一个配套的释放锁和其对应，这样才不会引起死锁。只有当所有的锁被释放之后，其他线程才可以获得锁，iOS可使用NSRecursiveLock来实现</li>
 </ol>
-<h3  class="heading" id="heading-46" data-id="heading-46">38. 链表和数组的区别是什么？插入和查询的时间复杂度分别是多少？<span id="user-content-38"></span></h3>
+<p><strong>口述版</strong></p>
+<blockquote>
+<p>iOS 里线程是一条执行流，锁是多条执行流安全访问共享资源的规则。几个线程同时读写同一份数据，就会出现数据竞争，所以临界区要加锁，保证同一时刻只有一个线程能改这块共享状态。</p>
+<p>按类型说，常见的是自旋锁、互斥锁、读写锁、条件锁和递归锁。落到 Objective-C 上，就是 <code>OSSpinLock</code>、<code>os_unfair_lock</code>、<code>pthread_mutex_t</code>、<code>NSLock</code>、<code>NSRecursiveLock</code>、<code>NSCondition</code>、<code>NSConditionLock</code>、<code>@synchronized</code>，再加上读写锁 <code>pthread_rwlock_t</code>。<code>dispatch_semaphore_t</code>、自己创建的串行队列、<code>dispatch_barrier</code> 和 <code>dispatch_group</code> 也能做线程协调，面试里要和锁分开讲。</p>
+<p><strong>自旋锁。</strong>拿不到锁就不让出 CPU，在原地循环尝试。临界区只有几条指令时，它省掉了休眠和唤醒；可低优先级线程一旦拿着锁，高优先级线程会一直忙等、占满 CPU，低优先级线程分不到时间片，锁就放不掉，这就是优先级反转。<code>OSSpinLock</code> 因此从 iOS 10 起废弃，不能再当安全的锁用。</p>
+<p><strong>互斥锁。</strong>同一时刻只放进一个线程，读和写都独占。等锁的时候，现代互斥锁和条件锁一般是阻塞休眠。<code>pthread_mutex_t</code> 是基座，可以配成普通、递归、错误检查。<code>NSLock</code> 是普通互斥锁，同一线程再 <code>lock</code> 一次会把自己卡住；它包的是 <code>pthread_mutex</code>，另外提供 <code>tryLock</code> 和 <code>lockBeforeDate:</code>，拿不到就可以返回。<code>NSRecursiveLock</code> 记下同一线程的加锁次数，每次 <code>lock</code> 都要配一次 <code>unlock</code>，次数回到 0，别的线程才能进来，用来处理递归，或者同一条调用链会再次进入临界区。</p>
+<p><code>os_unfair_lock</code> 是低开销互斥锁，不能重入，也必须由加锁的那条线程来 <code>os_unfair_lock_unlock</code>。没人竞争时它走一条类似自旋的快路径，一旦发生竞争就休眠，并向持锁线程做优先级捐赠，用来缓解优先级反转。所以 <code>OSSpinLock</code> 废弃之后换它，等待方式却和老的自旋锁不一样。等待方式这里要说严谨：只有 <code>OSSpinLock</code> 是持续忙等，不能概括成“其他锁全都在休眠”。</p>
+<p><code>@synchronized(obj)</code> 是语法级同步，按传入的对象加锁，底层通常是一把递归互斥锁，同一个对象上同一线程可以重入。编译器会在异常抛出时把锁放开，比手写 <code>NSRecursiveLock</code> 少一次忘了 <code>unlock</code> 的风险。找锁和异常保护都有成本，热点路径上不要拿它当默认方案。</p>
+<p><strong>读写锁。</strong><code>pthread_rwlock_t</code> 是读共享、写独占：多个读者可以同时进，出现写者就独占，写和读、写和写都互斥。缓存、配置这种读多写少适合它。等待默认是阻塞休眠，实现上可能在睡下去之前先短暂自旋一下，不会一直占着 CPU。</p>
+<p><strong>条件锁。</strong>它解决的是什么时候做，不只是能不能进。<code>NSCondition</code> 和 <code>NSConditionLock</code> 本质都是互斥锁加上条件变量。<code>NSCondition</code> 在条件不满足时 <code>wait</code>，持有锁的一方改完条件再 <code>signal</code>，典型就是生产者和消费者。<code>NSConditionLock</code> 用一个整型条件，<code>lockWhenCondition:</code> 和 <code>unlockWithCondition:</code> 用来约定线程的执行顺序。</p>
+<p><strong>另外三个要和互斥锁切开。</strong><code>dispatch_semaphore_t</code> 是信号量，初始值为 1 时可以做出互斥的效果，但它没有所有者，任意线程都能 <code>signal</code>，也不能重入，本质仍是信号量；初始值设成 N，用来限制同时进入的线程数。<code>dispatch_semaphore_wait</code> 本身是阻塞等待，如果配 <code>DISPATCH_TIME_NOW</code> 在循环里空转尝试，效果就接近忙等。<code>atomic</code> 只保证属性这一次 getter 或 setter 是原子的，<code>self.count += 1</code> 这种先读再加再写，中间仍然可能被别的线程插进来。串行队列、<code>dispatch_barrier_async</code>、<code>dispatch_group</code> 是在调度任务，也不是一把互斥锁。</p>
+<p><strong>选型。</strong>临界区极短、又在热点上，用 <code>os_unfair_lock</code>；调用链上会再次加同一把锁，用 <code>NSRecursiveLock</code>；读多写少用 <code>pthread_rwlock_t</code>；线程之间要按条件互相等，用 <code>NSCondition</code>；要限制并发个数，或者等一组异步任务汇合，用信号量或 <code>dispatch_group</code>。业务里如果只是保护一块可变状态，我通常先用一条自己创建的串行队列把访问收口。</p>
+<p><strong>收尾。</strong>线程是执行流，锁是共享资源的访问规则。自旋锁忙等，<code>OSSpinLock</code> 已经不安全；互斥锁通常阻塞等待；读写锁读共享、写独占，等待会休眠；条件锁和信号量用来做更复杂的线程协调；<code>atomic</code> 只保证单次存取是原子的。</p>
+</blockquote>
+<h3  class="heading" id="heading-76" data-id="heading-76">54. 单例有几种写法？怎么销毁？不用 dispatch_once 怎么写？项目里单例用来做什么？<span id="user-content-54"></span></h3>
+<p>单例是进程里一份共享实例。写法的差别在于怎么保证并发下只创建一次，以及 <code>alloc</code> / <code>copy</code> 会不会造出第二份。</p>
+<h4 class="heading" id="heading-76-once" data-id="heading-76-once">dispatch_once</h4>
+<pre><code class="hljs objectivec" lang="objectivec"><span class="hljs-keyword">+</span> (<span class="hljs-keyword">instancetype</span>)sharedInstance {
+    <span class="hljs-keyword">static</span> SessionManager *instance = <span class="hljs-literal">nil</span>;
+    <span class="hljs-keyword">static</span> dispatch_once_t onceToken;
+    <span class="hljs-built_in">dispatch_once</span>(&amp;onceToken, ^{
+        instance = [[SessionManager alloc] init];
+    });
+    <span class="hljs-keyword">return</span> instance;
+}
+</code></pre>
+<p><code>dispatch_once</code> 保证 block 在进程里只执行一次，并发调用会等那一次完成。这是默认选择。</p>
+<h4 class="heading" id="heading-76-lock" data-id="heading-76-lock">不用 dispatch_once</h4>
+<pre><code class="hljs objectivec" lang="objectivec"><span class="hljs-keyword">+</span> (<span class="hljs-keyword">instancetype</span>)sharedInstance {
+    <span class="hljs-keyword">static</span> SessionManager *instance = <span class="hljs-literal">nil</span>;
+    <span class="hljs-keyword">@synchronized</span> (self) {
+        <span class="hljs-keyword">if</span> (instance == <span class="hljs-literal">nil</span>) {
+            instance = [[SessionManager alloc] init];
+        }
+    }
+    <span class="hljs-keyword">return</span> instance;
+}
+</code></pre>
+<p>锁也能做。每次调用都要进锁，比 <code>dispatch_once</code> 重。如果还要求 <code>[[SessionManager alloc] init]</code> 不能造出另一份，就在 <code>+allocWithZone:</code> 里同样加锁返回那一个实例，<code>-copyWithZone:</code> 返回 <code>self</code>。只防 <code>sharedInstance</code>、不防 <code>alloc</code> 的写法，严格说不是单例。</p>
+<h4 class="heading" id="heading-76-die" data-id="heading-76-die">销毁</h4>
+<p>正常单例跟进程走，不需要销毁。<code>dispatch_once_t</code> 是不透明类型，不要在外面把它改成 0 再指望重新创建，和仍在执行的 <code>dispatch_once</code> 并发时是未定义行为。</p>
+<p>确实要「退出登录就丢掉这份状态」，就不要用 <code>dispatch_once</code> 死死钉住。用自己的锁：销毁时在锁里把实例置 <code>nil</code>，下次访问再创建。销毁之前要保证没有别的线程还在用它。</p>
+<h4 class="heading" id="heading-76-use" data-id="heading-76-use">项目里拿来做什么</h4>
+<ul>
+<li>整份进程共用、又没有自然所有者的状态：当前登录用户、环境配置、日志。</li>
+<li>登录信息可以仍放在 <code>NSUserDefaults</code> 或钥匙串里，单例只做这一处的读取入口，避免每个页面各读各的。</li>
+<li>本地数据库的访问入口收成一个，避免多处同时打开同一份库。</li>
+</ul>
+<p>单例把依赖藏进全局，单测要替换实现就很疼。能从外面传进来的对象（网络客户端、播放器）就不要做成单例。整个 App 只有一个，不等于它的每个模块都要有一个 <code>shared</code>。</p>
+<blockquote><p>一句话：用 <code>dispatch_once</code> 创建，不要去重置那个 token。需要销毁就换成自己的锁。只把真正全局、没有所有者的入口做成单例。</p></blockquote>
+
+<h3  class="heading" id="heading-53" data-id="heading-53">55. 事件响应链和事件传递<span id="user-content-55"></span></h3>
+<p>既然都是图形绘制了，那就再研究一下<strong>事件响应链&#x26;原理</strong>。传统问法是：<strong>UIView 和 CALayer 的区别？</strong>通常这样回答：<strong>UIView 可以响应用户事件，而 CALayer 不能处理事件。</strong>回答这个之前，先回顾另一个经典面试题：<strong>事件响应链和事件传递？</strong></p>
+<h4 class="heading" id="heading-53-concept" data-id="heading-53-concept">1. 基本概念</h4>
+<ul>
+<li><strong>响应链：</strong>响应链由多个 UIResponder 对象组成，通常从第一响应者一直到 UIApplication。</li>
+<li><strong>事件传递：</strong>事件传递是获取响应链后，将事件由第一响应者向 UIApplication 传递的过程。</li>
+</ul>
+<p></p><figure><img alt="事件响应链示意图" src="assets/image-2.awebp" loading="lazy"><figcaption></figcaption></figure><p></p>
+<p></p><figure><img alt="事件传递示意图" src="assets/image-3.awebp" loading="lazy"><figcaption></figcaption></figure><p></p>
+<h4 class="heading" id="heading-53-dispatch" data-id="heading-53-dispatch">2. 事件的分发和传递</h4>
+<ol>
+<li>当程序中发生触摸事件之后，系统会将事件添加到 UIApplication 管理的一个队列当中。</li>
+<li>UIApplication 将处于任务队列最前端的事件向下分发，即 UIWindow。</li>
+<li>UIWindow 将事件向下分发，即 UIView 或者 UIViewController。</li>
+<li>UIView 首先看自己能否处理这个事件：触摸点是否在自己身上，alpha 是否大于 0.01，userInteractionEnabled 是否为 YES，hidden 是否为 NO。如果这些都满足，那么继续寻找其子视图。</li>
+<li>遍历子控件，重复上面步骤。</li>
+<li>如果没有找到，那么自己就是该事件的处理者。</li>
+<li>如果自己不能处理，那么就不做任何处理。即视为没有合适的 View 能接收处理当前事件，则该事件会被废弃。</li>
+</ol>
+<h4 class="heading" id="heading-53-find" data-id="heading-53-find">3. 怎么寻找当前触摸的是哪一个 View?</h4>
+<p>下面是两个方法</p>
+<pre><code class="hljs objectivec" lang="objectivec">// 此方法返回的View是本次点击事件需要的最佳View
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
+
+// 判断一个点是否落在范围内
+- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
+</code></pre>
+<p>事件传递给控件之后，就会调用 <code>hitTest:withEvent:</code> 去寻找更合适的 View。如果当前 View 存在子控件，则在子控件继续调用 <code>hitTest:withEvent:</code> 判断是否是合适的 View；如果还不是就一直遍历寻找；如果子视图均未命中，则返回自身；如果当前视图不能接收事件，则返回 nil。</p>
+<h4 class="heading" id="heading-53-example" data-id="heading-53-example">4. hitTest 查找流程示例</h4>
+<pre><code class="hljs objectivec" lang="objectivec">// 示例：自定义 BaseView 可以重写 hitTest:withEvent:
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+    // 1.判断当前控件能否接收事件
+    if (self.userInteractionEnabled == NO || self.hidden == YES || self.alpha &lt;= 0.01) return nil;
+
+    // 2. 判断点在不在当前控件
+    if ([self pointInside:point withEvent:event] == NO) return nil;
+
+    // 3.从后往前遍历自己的子控件
+    NSInteger count = self.subviews.count;
+    for (NSInteger i = count - 1; i &gt;= 0; i--) {
+        UIView *childView = self.subviews[i];
+
+        // 把当前控件上的坐标系转换成子控件上的坐标系
+        CGPoint childP = [self convertPoint:point toView:childView];
+        UIView *fitView = [childView hitTest:childP withEvent:event];
+        if (fitView) { // 寻找到最合适的view
+            return fitView;
+        }
+    }
+
+    // 循环结束,表示没有比自己更合适的view
+    return self;
+}
+</code></pre>
+<h4 class="heading" id="heading-53-point" data-id="heading-53-point">5. 判断触摸点是否在视图内</h4>
+<pre><code class="hljs objectivec" lang="objectivec">- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
+</code></pre>
+<h4 class="heading" id="heading-53-summary" data-id="heading-53-summary">倒序遍历子控件与事件传递是否矛盾</h4>
+<h5>一、30 秒结论版（开口先说这句）</h5>
+<blockquote>
+<p>不矛盾。因为「倒序遍历子控件」发生在 <strong>hitTest 找 target 阶段</strong>，而大家直觉里的「事件传递顺序」其实是 <strong>找到 target 之后的响应者链阶段</strong>。这是两个阶段、两个方向、两个目的，时间上还有先后。</p>
+</blockquote>
+<p><strong>记忆锚点：</strong>倒序管「同层谁优先」，父到子管「递归往哪走」，响应者链管「没人处理怎么办」。</p>
+<h5>二、展开：一次触摸的两个阶段</h5>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>目的</th>
+<th>方向</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>① hitTest 命中测试</td>
+<td>找出最合适的 view（target）</td>
+<td>父 → 子递归；同层兄弟<strong>倒序</strong>（上层优先）</td>
+</tr>
+<tr>
+<td>② 响应者链</td>
+<td>target 不处理时找兜底处理者</td>
+<td>子 → 父（superview → VC → window → App）</td>
+</tr>
+</tbody>
+</table>
+<p>关键点：<strong>找到 target 后，事件是直接投递给 target 的，不是逐层从父传到子。</strong>所谓「子到父上抛」只发生在 target 不处理的时候，是兜底机制，发生在命中测试之后。</p>
+<h5>三、收尾金句（说完停住，等追问）</h5>
+<blockquote>
+<p>所以倒序遍历不是和事件传递矛盾，而是<strong>和渲染顺序对齐</strong>——hitTest 解决「找谁」，响应者链解决「没人管怎么办」，方向相反但阶段不同。</p>
+</blockquote>
+<h4 class="heading" id="heading-53-scenes" data-id="heading-53-scenes">hitTest 四个定制场景（面试精简版）</h4>
+<h5>总纲（开口先说）</h5>
+<blockquote>
+<p>四个场景都基于同一套 <code>hitTest</code> 三步逻辑：<strong>先判断自身能否响应，再判断触摸点是否命中，最后倒序询问子视图。</strong>定制时只有两个入口：<strong>重写 <code>pointInside</code> 是改「命中范围」，重写 <code>hitTest</code> 是改「命中后的接收者」。</strong></p>
+</blockquote>
+<h5>1. 事件穿透——命中自己就放弃</h5>
+<pre><code class="hljs objectivec" lang="objectivec">- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+    UIView *v = [super hitTest:point withEvent:event];
+    return v == self ? nil : v;   // 命中自己→nil，交给下层
+}</code></pre>
+<p><strong>坑：</strong>只穿自己；子视图命中的话穿透不生效。</p>
+<h5>2. 事件拦截——命中自己就独占</h5>
+<pre><code class="hljs objectivec" lang="objectivec">- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+    if ([self pointInside:point withEvent:event]) return self;
+    return nil;
+}</code></pre>
+<p><strong>坑：</strong><code>pointInside</code> 仍要判，否则吞掉 bounds 外的点。</p>
+<h5>3. 扩大点击区域——只改 pointInside</h5>
+<pre><code class="hljs objectivec" lang="objectivec">- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
+    return CGRectContainsPoint(CGRectInset(self.bounds, -10, -10), point);
+}</code></pre>
+<p><strong>坑：</strong><code>point</code> 是相对 self 的坐标，别转窗口坐标。</p>
+<h5>4. 超出父 bounds 的子视图可点（高频）</h5>
+<blockquote>
+<p>子视图超出父视图 bounds 后，触摸点在父视图看来是“点在外面”；父视图 <code>pointInside</code> 返回 NO 并提前 <code>return nil</code>，不再遍历子视图，所以子视图 <code>hitTest</code> 没机会执行，点击自然无效。</p>
+</blockquote>
+<p><strong>根因：</strong>子视图超出父 bounds → 父 <code>pointInside</code> 返回 NO → 父 hitTest 返回 nil → <strong>子视图 hitTest 根本没被调用</strong>。</p>
+<p><strong>方案 A：父视图改 <code>pointInside</code></strong></p>
+<pre><code class="hljs objectivec" lang="objectivec">- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
+    if ([super pointInside:point withEvent:event]) return YES;
+    for (UIView *sub in self.subviews) {
+        if ([sub pointInside:[self convertPoint:point toView:sub] withEvent:event]) return YES;
+    }
+    return NO;
+}</code></pre>
+<p><strong>方案 B：父视图改 <code>hitTest</code>，跳过自身判定直接问子视图</strong></p>
+<pre><code class="hljs objectivec" lang="objectivec">- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+    if (self.userInteractionEnabled == NO || self.hidden || self.alpha &lt;= 0.01) return nil;
+    for (UIView *sub in self.subviews.reverseObjectEnumerator) {
+        UIView *v = [sub hitTest:[self convertPoint:point toView:sub] withEvent:event];
+        if (v) return v;
+    }
+    return [super hitTest:point withEvent:event];  // 兜底，别直接 return nil
+}</code></pre>
+<p><strong>坑：</strong>方案 B 最后若直接 <code>return nil</code>，父视图自己会失去点击响应。</p>
+<h5>总表（背这张）</h5>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>改哪个方法</th>
+<th>核心一句</th>
+<th>坑</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>穿透</td><td><code>hitTest</code></td><td>命中自己返回 nil</td><td>只穿自己</td></tr>
+<tr><td>拦截</td><td><code>hitTest</code></td><td>命中自己返回 self</td><td>仍要判 pointInside</td></tr>
+<tr><td>扩区</td><td><code>pointInside</code></td><td><code>CGRectInset(bounds,-10,-10)</code></td><td>坐标系别转错</td></tr>
+<tr><td>超 bounds</td><td><code>pointInside</code> 或 <code>hitTest</code></td><td>别让父视图提前 return nil</td><td>方案 B 要 super 兜底</td></tr>
+</tbody>
+</table>
+<h5>收尾金句</h5>
+<blockquote>
+<p>四个场景不是四套写法，而是<strong>一套三步逻辑的四种取舍</strong>。超出 bounds 失效的唯一根因是「父视图提前 return nil」——记住这一点，四个场景都能现场推出来。</p>
+</blockquote>
+<h4 class="heading" id="heading-53-follow" data-id="heading-53-follow">延伸追问</h4>
+<ul>
+<li><strong>tableView 添加 tap 手势后，点击 cell 时哪个事件会被响应？为什么？</strong></li>
+<li><strong>勘误：</strong>UIGestureRecognizer 不属于 UIResponder 响应者链的“最顶端”。手势识别成功后，默认 <code>cancelsTouchesInView = YES</code> 会取消视图的 touches；具体行为取决于 recognizer、delegate、touch type 和视图控件。可通过 delegate 让特定触摸不参与手势。</li>
+</ul>
+<pre><code class="hljs objectivec" lang="objectivec">- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    if ([touch.view isKindOfClass:[XXXXcell class]]) {
+        return NO;
+    }
+    return YES;
+}
+</code></pre>
+<h5>简短总结</h5>
+<ul>
+<li><strong>默认情况</strong>：在 <code>UITableView</code> 上加 <code>UITapGestureRecognizer</code> 后点击 Cell，<strong>手势会响应，<code>didSelectRowAtIndexPath</code> 不触发</strong>。原因是手势识别成功后，默认 <code>cancelsTouchesInView = YES</code>，会取消传递给视图的 touches。</li>
+<li><strong>勘误</strong>：<code>UIGestureRecognizer</code> 不属于 <code>UIResponder</code> 响应者链“最顶端”，它只是观察触摸并影响事件传递；具体行为取决于 recognizer、delegate、touch type 和控件。</li>
+<li><strong>想让两者都响应</strong>：设置 <code>tapGesture.cancelsTouchesInView = NO</code>。</li>
+<li><strong>想点击 Cell 只走 Cell 选择、不触发手势</strong>：实现 <code>gestureRecognizer:shouldReceiveTouch:</code>，当 <code>touch.view</code> 是 Cell 时返回 <code>NO</code>。</li>
+</ul>
+<blockquote>
+<p>一句话：<strong>默认手势“吃掉”Cell 点击；可通过 <code>cancelsTouchesInView</code> 或 delegate 精准控制。</strong></p>
+</blockquote>
+<h3  class="heading" id="heading-46" data-id="heading-46">56. 链表和数组的区别是什么？插入和查询的时间复杂度分别是多少？<span id="user-content-56"></span></h3>
 <p>链表和数组都是一个有序的集合，数组需要连续的内存空间，而链表不需要，链表的插入删除的时间复杂度是O(1)，数组是O(n)，根据下标查询的时间复杂度数组是O(1)，链表是O(n),根据值查询的时间复杂度，链表和数组都是O(n)</p>
-<h3  class="heading" id="heading-47" data-id="heading-47">39. 哈希表是如何实现的？如何解决地址冲突？<span id="user-content-39"></span></h3>
+<h3  class="heading" id="heading-47" data-id="heading-47">57. 哈希表是如何实现的？如何解决地址冲突？<span id="user-content-57"></span></h3>
 <p>哈希表是也是通过数组来实现的，首先对key值进行哈希化得到一个整数，然后对整数进行计算，得到一个数组中的下标，然后进行存取，解决地址冲突常用方法有开放定址法和链表法。runtime源码的存放weak指针哈希表使用的就是开放定址法，Java里的HashMap使用的是链表法。</p>
-<h3  class="heading" id="heading-48" data-id="heading-48">40. 排序题：冒泡排序，选择排序，插入排序，快速排序（二路，三路）能写出那些？<span id="user-content-40"></span></h3>
+<h3  class="heading" id="heading-48" data-id="heading-48">58. 排序题：冒泡排序，选择排序，插入排序，快速排序（二路，三路）能写出那些？<span id="user-content-58"></span></h3>
 <p>这里简单的说下几种快速排序的不同之处，随机快排，是为了解决在近似有序的情况下，时间复杂度会退化为O(n^2),双路快排是为了解决快速排序在大量数据重复的情况下，时间复杂度会退化为O(n^2)，三路快排是在大量数据重复的情况下，对双路快排的一种优化。</p>
 <ol>
 <li>冒泡排序</li>
@@ -1007,7 +1885,7 @@ extension Array <span class="hljs-built_in">where</span> Element : Comparable{
         quickSort(left: 0, right: self.count - 1)
     }
 }
-</code></pre><h3  class="heading" id="heading-49" data-id="heading-49">41. 链表题：如何检测链表中是否有环？如何删除链表中等于某个值的所有节点？<span id="user-content-41"></span></h3>
+</code></pre><h3  class="heading" id="heading-49" data-id="heading-49">59. 链表题：如何检测链表中是否有环？如何删除链表中等于某个值的所有节点？<span id="user-content-59"></span></h3>
 <ol>
 <li>如何检测链表中是否有环？</li>
 </ol>
@@ -1052,7 +1930,7 @@ extension ListNode {
     }
     <span class="hljs-built_in">return</span> tmpNode.next
 }
-</code></pre><h3  class="heading" id="heading-50" data-id="heading-50">42. 数组题：如何在有序数组中找出和等于给定值的两个元素？如何合并两个有序的数组之后保持有序？<span id="user-content-42"></span></h3>
+</code></pre><h3  class="heading" id="heading-50" data-id="heading-50">60. 数组题：如何在有序数组中找出和等于给定值的两个元素？如何合并两个有序的数组之后保持有序？<span id="user-content-60"></span></h3>
 <ol>
 <li>如何在有序数组中找出和等于给定值的两个元素？LeetCode第167题</li>
 </ol>
@@ -1096,7 +1974,7 @@ extension ListNode {
         j += 1
     }
 }
-</code></pre><h3  class="heading" id="heading-51" data-id="heading-51">43. 二叉树题：如何反转二叉树？如何验证两个二叉树是完全相等的？<span id="user-content-43"></span></h3>
+</code></pre><h3  class="heading" id="heading-51" data-id="heading-51">61. 二叉树题：如何反转二叉树？如何验证两个二叉树是完全相等的？<span id="user-content-61"></span></h3>
 <ol>
 <li>如何翻转二叉树？LeetCode第226题</li>
 </ol>
@@ -1148,94 +2026,142 @@ extension ListNode {
       数据结构&amp;算法题
     </a></div> <!----></li></ul></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-7" title="1.分类和扩展有什么区别？可以分别用来做什么？分类有哪些局限性？分类的结构体里面有哪些成员？" class="catalog-aTag d1-aTag-title">
       1.分类和扩展有什么区别？可以分别用来做什么？分类有哪些局限性？分类的结构体里面有哪些成员？
-    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-8" title="2.讲一下atomic的实现机制；为什么不能保证绝对的线程安全（最好可以结合场景来说）？" class="catalog-aTag d1-aTag-title">
-      2.讲一下atomic的实现机制；为什么不能保证绝对的线程安全（最好可以结合场景来说）？
-    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-9" title="3. 被weak修饰的对象在被释放的时候会发生什么？是如何实现的？知道sideTable么？里面的结构可以画出来么？" class="catalog-aTag d1-aTag-title">
-      3. 被weak修饰的对象在被释放的时候会发生什么？是如何实现的？知道sideTable么？里面的结构可以画出来么？
-    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-10" title="4. 关联对象有什么应用，系统如何管理关联对象？其被释放的时候需要手动将所有的关联对象的指针置空么？" class="catalog-aTag d1-aTag-title">
-      4. 关联对象有什么应用，系统如何管理关联对象？其被释放的时候需要手动将所有的关联对象的指针置空么？
-    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-11" title="5. KVO的底层实现？如何取消系统默认的KVO并手动触发（给KVO的触发设定条件：改变的值符合某个条件时再触发KVO）？" class="catalog-aTag d1-aTag-title">
-      5. KVO的底层实现？如何取消系统默认的KVO并手动触发（给KVO的触发设定条件：改变的值符合某个条件时再触发KVO）？
-    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-12" title="6. Autoreleasepool所使用的数据结构是什么？AutoreleasePoolPage结构体了解么？" class="catalog-aTag d1-aTag-title">
-      6. Autoreleasepool所使用的数据结构是什么？AutoreleasePoolPage结构体了解么？
-    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-13" title="7. 讲一下对象，类对象，元类，跟元类结构体的组成以及他们是如何相关联的？为什么对象方法没有保存的对象结构体里，而是保存在类对象的结构体里？" class="catalog-aTag d1-aTag-title">
-      7. 讲一下对象，类对象，元类，跟元类结构体的组成以及他们是如何相关联的？为什么对象方法没有保存的对象结构体里，而是保存在类对象的结构体里？
-    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-14" title="8. class_ro_t和class_rw_t的区别？" class="catalog-aTag d1-aTag-title">
-      8. class_ro_t和class_rw_t的区别？
-    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-15" title="9. iOS中内省的几个方法？class方法和objc_getClass方法有什么区别?" class="catalog-aTag d1-aTag-title">
-      9. iOS中内省的几个方法？class方法和objc_getClass方法有什么区别?
-    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-16" title="10. 在运行时创建类的方法objc_allocateClassPair的方法名尾部为什么是pair（成对的意思）？" class="catalog-aTag d1-aTag-title">
-      10. 在运行时创建类的方法objc_allocateClassPair的方法名尾部为什么是pair（成对的意思）？
-    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-17" title="11. 一个int变量被__block修饰与否的区别？" class="catalog-aTag d1-aTag-title">
-      11. 一个int变量被__block修饰与否的区别？
-    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-18" title="12. 为什么在block外部使用__weak修饰的同时需要在内部使用__strong修饰？" class="catalog-aTag d1-aTag-title">
-      12. 为什么在block外部使用__weak修饰的同时需要在内部使用__strong修饰？
-    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-19" title="13. RunLoop的作用是什么？它的内部工作机制了解么？（最好结合线程和内存管理来说）" class="catalog-aTag d1-aTag-title">
-      13. RunLoop的作用是什么？它的内部工作机制了解么？（最好结合线程和内存管理来说）
-    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-20" title="14. 哪些场景可以触发离屏渲染？（知道多少说多少）" class="catalog-aTag d1-aTag-title">
-      14. 哪些场景可以触发离屏渲染？（知道多少说多少）
-    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-21" title="15.AppDelegate如何瘦身？" class="catalog-aTag d1-aTag-title">
-      15.AppDelegate如何瘦身？
-    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-22" title="16. 反射是什么？可以举出几个应用场景么？（知道多少说多少）" class="catalog-aTag d1-aTag-title">
-      16. 反射是什么？可以举出几个应用场景么？（知道多少说多少）
-    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-23" title="17. 有哪些场景是NSOperation比GCD更容易实现的？（或是NSOperation优于GCD的几点，知道多少说多少）" class="catalog-aTag d1-aTag-title">
-      17. 有哪些场景是NSOperation比GCD更容易实现的？（或是NSOperation优于GCD的几点，知道多少说多少）
-    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-24" title="18. App启动优化策略？最好结合启动流程来说（main()函数的执行前后都分别说一下，知道多少说多少）" class="catalog-aTag d1-aTag-title">
-      18. App启动优化策略？最好结合启动流程来说（main()函数的执行前后都分别说一下，知道多少说多少）
-    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-25" title="19. App无痕埋点的思路了解么？你认为理想的无痕埋点系统应该具备哪些特点？（知道多少说多少））" class="catalog-aTag d1-aTag-title">
-      19. App无痕埋点的思路了解么？你认为理想的无痕埋点系统应该具备哪些特点？（知道多少说多少））
-    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-26" title="20. 你知道有哪些情况会导致app崩溃，分别可以用什么方法拦截并化解？（知道多少说多少））" class="catalog-aTag d1-aTag-title">
-      20. 你知道有哪些情况会导致app崩溃，分别可以用什么方法拦截并化解？（知道多少说多少））
-    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-27" title="21. 你知道有哪些情况会导致app卡顿，分别可以用什么方法来避免？（知道多少说多少）" class="catalog-aTag d1-aTag-title">
-      21. 你知道有哪些情况会导致app卡顿，分别可以用什么方法来避免？（知道多少说多少）
-    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-28" title="22. App网络层有哪些优化策略？" class="catalog-aTag d1-aTag-title">
-      22. App网络层有哪些优化策略？
-    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-29" title="23. TCP为什么要三次握手，四次挥手？" class="catalog-aTag d1-aTag-title">
-      23. TCP为什么要三次握手，四次挥手？
-    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-30" title="24. 对称加密和非对称加密的区别？分别有哪些算法的实现？" class="catalog-aTag d1-aTag-title">
-      24. 对称加密和非对称加密的区别？分别有哪些算法的实现？
-    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-31" title="25. HTTPS的握手流程？为什么密钥的传递需要使用非对称加密？双向认证了解么？" class="catalog-aTag d1-aTag-title">
-      25. HTTPS的握手流程？为什么密钥的传递需要使用非对称加密？双向认证了解么？
-    </a></div> <ul class="sub-list"><li class="item d2"><div class="a-container"><a href="#heading-32" title="为什么密钥的传递需要使用非对称加密？" class="catalog-aTag d2-aTag-title">
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-60" title="2. @synthesize 和 @dynamic 分别有什么作用？" class="catalog-aTag d1-aTag-title">
+      2. @synthesize 和 @dynamic 分别有什么作用？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-61" title="3. 深拷贝和浅拷贝有什么区别？" class="catalog-aTag d1-aTag-title">
+      3. 深拷贝和浅拷贝有什么区别？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-62" title="4. NSString 为什么要用 copy 修饰？" class="catalog-aTag d1-aTag-title">
+      4. NSString 为什么要用 copy 修饰？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-8" title="5.讲一下atomic的实现机制；为什么不能保证绝对的线程安全（最好可以结合场景来说）？" class="catalog-aTag d1-aTag-title">
+      5.讲一下atomic的实现机制；为什么不能保证绝对的线程安全（最好可以结合场景来说）？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-9" title="6. 被weak修饰的对象在被释放的时候会发生什么？是如何实现的？知道sideTable么？里面的结构可以画出来么？" class="catalog-aTag d1-aTag-title">
+      6. 被weak修饰的对象在被释放的时候会发生什么？是如何实现的？知道sideTable么？里面的结构可以画出来么？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-63" title="7. 什么是野指针？如何检测？" class="catalog-aTag d1-aTag-title">
+      7. 什么是野指针？如何检测？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-10" title="8. 关联对象有什么应用，系统如何管理关联对象？其被释放的时候需要手动将所有的关联对象的指针置空么？" class="catalog-aTag d1-aTag-title">
+      8. 关联对象有什么应用，系统如何管理关联对象？其被释放的时候需要手动将所有的关联对象的指针置空么？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-11" title="9. KVO的底层实现？如何取消系统默认的KVO并手动触发（给KVO的触发设定条件：改变的值符合某个条件时再触发KVO）？" class="catalog-aTag d1-aTag-title">
+      9. KVO的底层实现？如何取消系统默认的KVO并手动触发（给KVO的触发设定条件：改变的值符合某个条件时再触发KVO）？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-64" title="10. KVC 的底层实现？通过 KVC 修改属性会触发 KVO 么？直接改成员变量呢？" class="catalog-aTag d1-aTag-title">
+      10. KVC 的底层实现？通过 KVC 修改属性会触发 KVO 么？直接改成员变量呢？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-12" title="11. Autoreleasepool所使用的数据结构是什么？AutoreleasePoolPage结构体了解么？" class="catalog-aTag d1-aTag-title">
+      11. Autoreleasepool所使用的数据结构是什么？AutoreleasePoolPage结构体了解么？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-65" title="12. 对象方法和类方法有什么区别？类方法里的 self 是什么？类方法存在哪里，为什么要有元类？" class="catalog-aTag d1-aTag-title">
+      12. 对象方法和类方法有什么区别？类方法里的 self 是什么？类方法存在哪里，为什么要有元类？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-13" title="13. 讲一下对象，类对象，元类，跟元类结构体的组成以及他们是如何相关联的？为什么对象方法没有保存的对象结构体里，而是保存在类对象的结构体里？" class="catalog-aTag d1-aTag-title">
+      13. 讲一下对象，类对象，元类，跟元类结构体的组成以及他们是如何相关联的？为什么对象方法没有保存的对象结构体里，而是保存在类对象的结构体里？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-14" title="14. class_ro_t和class_rw_t的区别？" class="catalog-aTag d1-aTag-title">
+      14. class_ro_t和class_rw_t的区别？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-15" title="15. iOS中内省的几个方法？class方法和objc_getClass方法有什么区别?" class="catalog-aTag d1-aTag-title">
+      15. iOS中内省的几个方法？class方法和objc_getClass方法有什么区别?
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-66" title="16. ==、isEqual:、isEqualToString: 有什么区别？" class="catalog-aTag d1-aTag-title">
+      16. ==、isEqual:、isEqualToString: 有什么区别？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-67" title="17. objc 向一个对象发送消息时，发生了什么？" class="catalog-aTag d1-aTag-title">
+      17. objc 向一个对象发送消息时，发生了什么？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-16" title="18. 在运行时创建类的方法objc_allocateClassPair的方法名尾部为什么是pair（成对的意思）？" class="catalog-aTag d1-aTag-title">
+      18. 在运行时创建类的方法objc_allocateClassPair的方法名尾部为什么是pair（成对的意思）？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-68" title="19. +load 和 +initialize 的调用时机，以及父子类、分类的调用顺序？" class="catalog-aTag d1-aTag-title">
+      19. +load 和 +initialize 的调用时机，以及父子类、分类的调用顺序？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-17" title="20. 一个int变量被__block修饰与否的区别？" class="catalog-aTag d1-aTag-title">
+      20. 一个int变量被__block修饰与否的区别？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-18" title="21. 为什么在block外部使用__weak修饰的同时需要在内部使用__strong修饰？" class="catalog-aTag d1-aTag-title">
+      21. 为什么在block外部使用__weak修饰的同时需要在内部使用__strong修饰？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-69" title="22. Block 为什么用 copy 修饰？" class="catalog-aTag d1-aTag-title">
+      22. Block 为什么用 copy 修饰？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-19" title="23. RunLoop的作用是什么？它的内部工作机制了解么？（最好结合线程和内存管理来说）" class="catalog-aTag d1-aTag-title">
+      23. RunLoop的作用是什么？它的内部工作机制了解么？（最好结合线程和内存管理来说）
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-70" title="24. 有没有用过 performSelector:？NSTimer 在子线程怎么跑，为什么不准，循环引用怎么断？" class="catalog-aTag d1-aTag-title">
+      24. 有没有用过 performSelector:？NSTimer 在子线程怎么跑，为什么不准，循环引用怎么断？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-71" title="25. ViewController 的生命周期是怎样的？" class="catalog-aTag d1-aTag-title">
+      25. ViewController 的生命周期是怎样的？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-20" title="26. 哪些场景可以触发离屏渲染？（知道多少说多少）" class="catalog-aTag d1-aTag-title">
+      26. 哪些场景可以触发离屏渲染？（知道多少说多少）
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-21" title="27.AppDelegate如何瘦身？" class="catalog-aTag d1-aTag-title">
+      27.AppDelegate如何瘦身？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-72" title="28. APNS 的基本原理是什么？" class="catalog-aTag d1-aTag-title">
+      28. APNS 的基本原理是什么？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-22" title="29. 反射是什么？可以举出几个应用场景么？（知道多少说多少）" class="catalog-aTag d1-aTag-title">
+      29. 反射是什么？可以举出几个应用场景么？（知道多少说多少）
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-23" title="30. 有哪些场景是NSOperation比GCD更容易实现的？（或是NSOperation优于GCD的几点，知道多少说多少）" class="catalog-aTag d1-aTag-title">
+      30. 有哪些场景是NSOperation比GCD更容易实现的？（或是NSOperation优于GCD的几点，知道多少说多少）
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-73" title="31. 为什么 AFN 3.0 要把 operationQueue.maxConcurrentOperationCount 设为 1？2.0 为什么不需要？" class="catalog-aTag d1-aTag-title">
+      31. 为什么 AFN 3.0 要把 operationQueue.maxConcurrentOperationCount 设为 1？2.0 为什么不需要？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-24" title="32. App启动优化策略？最好结合启动流程来说（main()函数的执行前后都分别说一下，知道多少说多少）" class="catalog-aTag d1-aTag-title">
+      32. App启动优化策略？最好结合启动流程来说（main()函数的执行前后都分别说一下，知道多少说多少）
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-25" title="33. App无痕埋点的思路了解么？你认为理想的无痕埋点系统应该具备哪些特点？（知道多少说多少））" class="catalog-aTag d1-aTag-title">
+      33. App无痕埋点的思路了解么？你认为理想的无痕埋点系统应该具备哪些特点？（知道多少说多少））
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-26" title="34. 你知道有哪些情况会导致app崩溃，分别可以用什么方法拦截并化解？（知道多少说多少））" class="catalog-aTag d1-aTag-title">
+      34. 你知道有哪些情况会导致app崩溃，分别可以用什么方法拦截并化解？（知道多少说多少））
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-74" title="35. 不使用第三方，如何把已经上线的崩溃定位到具体类和方法？" class="catalog-aTag d1-aTag-title">
+      35. 不使用第三方，如何把已经上线的崩溃定位到具体类和方法？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-27" title="36. 你知道有哪些情况会导致app卡顿，分别可以用什么方法来避免？（知道多少说多少）" class="catalog-aTag d1-aTag-title">
+      36. 你知道有哪些情况会导致app卡顿，分别可以用什么方法来避免？（知道多少说多少）
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-28" title="37. App网络层有哪些优化策略？" class="catalog-aTag d1-aTag-title">
+      37. App网络层有哪些优化策略？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-29" title="38. TCP为什么要三次握手，四次挥手？" class="catalog-aTag d1-aTag-title">
+      38. TCP为什么要三次握手，四次挥手？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-75" title="39. HTTP 里 GET 和 POST 有什么区别？" class="catalog-aTag d1-aTag-title">
+      39. HTTP 里 GET 和 POST 有什么区别？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-30" title="40. 对称加密和非对称加密的区别？分别有哪些算法的实现？" class="catalog-aTag d1-aTag-title">
+      40. 对称加密和非对称加密的区别？分别有哪些算法的实现？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-31" title="41. HTTPS的握手流程？为什么密钥的传递需要使用非对称加密？双向认证了解么？" class="catalog-aTag d1-aTag-title">
+      41. HTTPS的握手流程？为什么密钥的传递需要使用非对称加密？双向认证了解么？
+    </a></div> <ul class="sub-list"><li class="item d2"><div class="a-container"><a href="#heading-31-rsa" title="① TLS 1.2 完整流程（RSA 密钥交换）" class="catalog-aTag d2-aTag-title">
+      ① TLS 1.2 完整流程（RSA 密钥交换）
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-31-ecdhe" title="② TLS 1.2 完整流程（ECDHE 密钥交换）" class="catalog-aTag d2-aTag-title">
+      ② TLS 1.2 完整流程（ECDHE 密钥交换）
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-31-tls13" title="③ TLS 1.3 完整流程" class="catalog-aTag d2-aTag-title">
+      ③ TLS 1.3 完整流程
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-32" title="为什么密钥的传递需要使用非对称加密？" class="catalog-aTag d2-aTag-title">
       为什么密钥的传递需要使用非对称加密？
     </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-33" title="双向认证了解么？（这里我真想说一句不了解）" class="catalog-aTag d2-aTag-title">
       双向认证了解么？（这里我真想说一句不了解）
-    </a></div> <!----></li></ul></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-34" title="26. HTTPS是如何实现验证身份和验证完整性的？" class="catalog-aTag d1-aTag-title">
-      26. HTTPS是如何实现验证身份和验证完整性的？
-    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-35" title="27. 如何用Charles抓HTTPS的包？其中原理和流程是什么？" class="catalog-aTag d1-aTag-title">
-      27. 如何用Charles抓HTTPS的包？其中原理和流程是什么？
-    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-36" title="28. 什么是中间人攻击？如何避免？" class="catalog-aTag d1-aTag-title">
-      28. 什么是中间人攻击？如何避免？
-    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-37" title="29. 了解编译的过程么？分为哪几个步骤？" class="catalog-aTag d1-aTag-title">
-      29. 了解编译的过程么？分为哪几个步骤？
-    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-38" title="30. 静态链接了解么？静态库和动态库的区别？" class="catalog-aTag d1-aTag-title">
-      30. 静态链接了解么？静态库和动态库的区别？
-    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-39" title="31. 内存的几大区域，各自的职能分别是什么？" class="catalog-aTag d1-aTag-title">
-      31. 内存的几大区域，各自的职能分别是什么？
-    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-40" title="32. static和const有什么区别？" class="catalog-aTag d1-aTag-title">
-      32. static和const有什么区别？
-    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-41" title="33. 了解内联函数么？" class="catalog-aTag d1-aTag-title">
-      33. 了解内联函数么？
-    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-42" title="34. 什么时候会出现死锁？如何避免？" class="catalog-aTag d1-aTag-title">
-      34. 什么时候会出现死锁？如何避免？
-    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-43" title="35. 说一说你对线程安全的理解？" class="catalog-aTag d1-aTag-title">
-      35. 说一说你对线程安全的理解？
-    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-44" title="36. 列举你知道的线程同步策略？" class="catalog-aTag d1-aTag-title">
-      36. 列举你知道的线程同步策略？
-    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-45" title="37. 有哪几种锁？各自的原理？它们之间的区别是什么？最好可以结合使用场景来说" class="catalog-aTag d1-aTag-title">
-      37. 有哪几种锁？各自的原理？它们之间的区别是什么？最好可以结合使用场景来说
-    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-46" title="38. 链表和数组的区别是什么？插入和查询的时间复杂度分别是多少？" class="catalog-aTag d1-aTag-title">
-      38. 链表和数组的区别是什么？插入和查询的时间复杂度分别是多少？
-    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-47" title="39. 哈希表是如何实现的？如何解决地址冲突？" class="catalog-aTag d1-aTag-title">
-      39. 哈希表是如何实现的？如何解决地址冲突？
-    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-48" title="40. 排序题：冒泡排序，选择排序，插入排序，快速排序（二路，三路）能写出那些？" class="catalog-aTag d1-aTag-title">
-      40. 排序题：冒泡排序，选择排序，插入排序，快速排序（二路，三路）能写出那些？
-    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-49" title="41. 链表题：如何检测链表中是否有环？如何删除链表中等于某个值的所有节点？" class="catalog-aTag d1-aTag-title">
-      41. 链表题：如何检测链表中是否有环？如何删除链表中等于某个值的所有节点？
-    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-50" title="42. 数组题：如何在有序数组中找出和等于给定值的两个元素？如何合并两个有序的数组之后保持有序？" class="catalog-aTag d1-aTag-title">
-      42. 数组题：如何在有序数组中找出和等于给定值的两个元素？如何合并两个有序的数组之后保持有序？
-    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-51" title="43. 二叉树题：如何反转二叉树？如何验证两个二叉树是完全相等的？" class="catalog-aTag d1-aTag-title">
-      43. 二叉树题：如何反转二叉树？如何验证两个二叉树是完全相等的？
+    </a></div> <!----></li></ul></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-34" title="42. HTTPS是如何实现验证身份和验证完整性的？" class="catalog-aTag d1-aTag-title">
+      42. HTTPS是如何实现验证身份和验证完整性的？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-35" title="43. 如何用Charles抓HTTPS的包？其中原理和流程是什么？" class="catalog-aTag d1-aTag-title">
+      43. 如何用Charles抓HTTPS的包？其中原理和流程是什么？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-36" title="44. 什么是中间人攻击？如何避免？" class="catalog-aTag d1-aTag-title">
+      44. 什么是中间人攻击？如何避免？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-37" title="45. 了解编译的过程么？分为哪几个步骤？" class="catalog-aTag d1-aTag-title">
+      45. 了解编译的过程么？分为哪几个步骤？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-38" title="46. 静态链接了解么？静态库和动态库的区别？" class="catalog-aTag d1-aTag-title">
+      46. 静态链接了解么？静态库和动态库的区别？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-39" title="47. 内存的几大区域，各自的职能分别是什么？" class="catalog-aTag d1-aTag-title">
+      47. 内存的几大区域，各自的职能分别是什么？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-40" title="48. static和const有什么区别？" class="catalog-aTag d1-aTag-title">
+      48. static和const有什么区别？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-41" title="49. 了解内联函数么？" class="catalog-aTag d1-aTag-title">
+      49. 了解内联函数么？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-42" title="50. 什么时候会出现死锁？如何避免？" class="catalog-aTag d1-aTag-title">
+      50. 什么时候会出现死锁？如何避免？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-43" title="51. 说一说你对线程安全的理解？" class="catalog-aTag d1-aTag-title">
+      51. 说一说你对线程安全的理解？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-44" title="52. 列举你知道的线程同步策略？" class="catalog-aTag d1-aTag-title">
+      52. 列举你知道的线程同步策略？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-45" title="53. 有哪几种锁？各自的原理？它们之间的区别是什么？最好可以结合使用场景来说" class="catalog-aTag d1-aTag-title">
+      53. 有哪几种锁？各自的原理？它们之间的区别是什么？最好可以结合使用场景来说
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-76" title="54. 单例有几种写法？怎么销毁？不用 dispatch_once 怎么写？项目里单例用来做什么？" class="catalog-aTag d1-aTag-title">
+      54. 单例有几种写法？怎么销毁？不用 dispatch_once 怎么写？项目里单例用来做什么？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-53" title="55. 事件响应链和事件传递" class="catalog-aTag d1-aTag-title">
+      55. 事件响应链和事件传递
+    </a></div> <ul class="sub-list"><li class="item d2"><div class="a-container"><a href="#heading-53-summary" title="倒序遍历子控件与事件传递是否矛盾" class="catalog-aTag d2-aTag-title">
+      倒序遍历子控件与事件传递是否矛盾
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-53-scenes" title="hitTest 四个定制场景（面试精简版）" class="catalog-aTag d2-aTag-title">
+      hitTest 四个定制场景（面试精简版）
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-53-follow" title="延伸追问" class="catalog-aTag d2-aTag-title">
+      延伸追问
+    </a></div> <!----></li></ul></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-46" title="56. 链表和数组的区别是什么？插入和查询的时间复杂度分别是多少？" class="catalog-aTag d1-aTag-title">
+      56. 链表和数组的区别是什么？插入和查询的时间复杂度分别是多少？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-47" title="57. 哈希表是如何实现的？如何解决地址冲突？" class="catalog-aTag d1-aTag-title">
+      57. 哈希表是如何实现的？如何解决地址冲突？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-48" title="58. 排序题：冒泡排序，选择排序，插入排序，快速排序（二路，三路）能写出那些？" class="catalog-aTag d1-aTag-title">
+      58. 排序题：冒泡排序，选择排序，插入排序，快速排序（二路，三路）能写出那些？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-49" title="59. 链表题：如何检测链表中是否有环？如何删除链表中等于某个值的所有节点？" class="catalog-aTag d1-aTag-title">
+      59. 链表题：如何检测链表中是否有环？如何删除链表中等于某个值的所有节点？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-50" title="60. 数组题：如何在有序数组中找出和等于给定值的两个元素？如何合并两个有序的数组之后保持有序？" class="catalog-aTag d1-aTag-title">
+      60. 数组题：如何在有序数组中找出和等于给定值的两个元素？如何合并两个有序的数组之后保持有序？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-51" title="61. 二叉树题：如何反转二叉树？如何验证两个二叉树是完全相等的？" class="catalog-aTag d1-aTag-title">
+      61. 二叉树题：如何反转二叉树？如何验证两个二叉树是完全相等的？
     </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-52" title="参考" class="catalog-aTag d1-aTag-title">
       参考
     </a></div> <!----></li></ul></div></nav> <!----> <!----> <div class="adverts-list" data-v-0eca8145 data-v-4ed317c2></div> <!----> <!----></div> <!----></div> <!----> <!----> <div id="article-suspended-panel" data-v-539963b4 data-v-61fb5e44></div> <!----></div> <!----><!----><!----><!----><!----><!----><!----></main> <!----></div> <!----></div> <!----> <div class="global-component-box"><!----></div> <!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----> <!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----></div></div></div>
