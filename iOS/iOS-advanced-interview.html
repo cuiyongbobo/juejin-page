@@ -4,23 +4,7 @@
     <title>iOS 高级面试题--答案最近准备复习一下面试题，看到了J_Knight_在18年的出一套 iOS 高级面试题尝试着回答 - 掘金</title><meta data-n-head="ssr" charset="utf-8"><meta data-n-head="ssr" name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, viewport-fit=cover"><meta data-n-head="ssr" name="apple-itunes-app" content="app-id=987739104"><meta data-n-head="ssr" name="theme-color" content="#ffffff"><meta data-n-head="ssr" name="msapplication-TileColor" content="#da532c"><meta data-n-head="ssr" name="msvalidate.01" content="BADCF2429624CB0432BE8924E5343343"><meta data-n-head="ssr" name="google-site-verification" content="H_4N6FRhUA633zQuLcgQvaDDceBxlcb6vMSFXm5G4i8"><meta data-n-head="ssr" vmid="description" name="description" content="最近准备复习一下面试题，看到了J_Knight_在18年的出一套 iOS 高级面试题尝试着回答一下题目，由于水平有限，如有错误的地方，请大家多多指教。 1. 分类和扩展有什么区别？可以分别用来做什么？分类有哪些局限性？分类的结构体里面有哪些成员？ 3. 被weak修饰的对象在被…"><meta data-n-head="ssr" vmid="keywords" name="keywords" content="iOS中文技术社区,前端开发社区,前端技术交流,前端框架教程,JavaScript 学习资源,CSS 技巧与最佳实践,HTML5 最新动态,前端工程师职业发展,开源前端项目,前端技术趋势"><link data-n-head="ssr" rel="apple-touch-icon" sizes="180x180" href="assets/advanced/site/apple-touch-icon.png"><link data-n-head="ssr" rel="icon" type="image/png" sizes="32x32" href="assets/advanced/site/favicon-32x32.png"><link data-n-head="ssr" rel="icon" type="image/png" sizes="16x16" href="assets/advanced/site/favicon-16x16.png"><link data-n-head="ssr" rel="mask-icon" href="assets/advanced/site/safari-pinned-tab.svg" color="#1E80FF"><link  data-n-head="ssr" rel="stylesheet" href="assets/advanced/css/bytedesign.min.css"><link data-n-head="ssr" rel="canonical" href="https://juejin.cn/post/6844904030750130183"><link  rel="stylesheet" href="assets/advanced/css/app.070ff99.css"><link  rel="stylesheet" href="assets/advanced/css/default.a1d6163.css"><link  rel="stylesheet" href="assets/advanced/css/12.782611d.css">
   </head>
   <body >
-    <div data-server-rendered="true" id="__nuxt"><div id="__layout"><div id="juejin"><div data-v-539963b4 data-v-61fb5e44><div class="view-container" data-v-539963b4><!----> <header data-fetch-key="data-v-14fe2051:0" class="main-header main-header unauthorized visible" data-v-14fe2051 data-v-539963b4><div class="container" data-v-14fe2051><a rel="noreferrer" class="logo" data-v-14fe2051><img src="assets/advanced/images/e08da34488b114bd4c665ba2fa520a31.svg" alt="稀土掘金" class="logo-img" data-v-14fe2051> <img src="assets/advanced/images/6c61ae65d1c41ae8221a670fa32d05aa.svg" alt="稀土掘金" class="mobile" data-v-14fe2051></a> <!----> <nav role="navigation" class="main-nav" data-v-14fe2051><ul class="nav-list" data-v-14fe2051><!----> <li class="main-nav-list" data-v-14fe2051><!----> <ul class="phone-hide" data-v-14fe2051><li class="nav-item link-item" data-v-14fe2051><a href="https://juejin.cn/" data-v-14fe2051>首页</a></li> <li class="nav-item link-item activities" data-v-14fe2051><a href="https://juejin.cn/pins" data-v-14fe2051>
-                沸点
-                <span class="text" data-v-14fe2051><!----></span></a></li> <li class="nav-item link-item book" data-v-14fe2051><a href="https://juejin.cn/course" data-v-14fe2051>
-                课程
-                <!----></a></li> <li class="nav-item link-item download-center-entry" data-v-14fe2051><a href="https://juejin.cn/download" target="_blank" rel="noopener" data-v-14fe2051>APP</a></li> <li class="nav-item link-item" data-v-14fe2051><a href="https://juejin.cn/aiusage/dashboard" data-v-14fe2051>AI用量</a></li> <li class="nav-item link-item" data-v-14fe2051><a href="https://juejin.cn/vibe-work" data-v-14fe2051>作品广场</a></li> <li class="nav-item link-item" data-v-14fe2051><a href="https://corexpert.juejin.cn/" data-v-14fe2051>
-                专家标注
-              </a></li> <!----></ul></li> <ul class="right-side-nav" data-v-14fe2051><li class="search-add" data-v-14fe2051><ul class="search-add-ul" data-v-14fe2051><li class="nav-item search" data-v-14fe2051><form role="search" class="search-form" data-v-14fe2051><input type="search" maxlength="64" placeholder="" value="" class="search-input" data-v-14fe2051> <div class="seach-icon-container" data-v-14fe2051><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" class="search-icon" data-v-14fe2051 data-v-14fe2051><path d="M12.4008 12.4008C14.744 10.0577 14.744 6.25871 12.4008 3.91556C10.0577 1.57242 6.25871 1.57242 3.91556 3.91556C1.57242 6.25871 1.57242 10.0577 3.91556 12.4008C6.25871 14.744 10.0577 14.744 12.4008 12.4008ZM12.4008 12.4008L15.5828 15.5828" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-v-14fe2051 data-v-14fe2051></path></svg></div> <!----> <div class="typehead" style="display:none;" data-v-14fe2051><!----> <div class="title" data-v-14fe2051><span data-v-14fe2051>搜索历史</span> <span class="clear" data-v-14fe2051>
-                        清空
-                      </span></div> <div class="list" data-v-14fe2051></div></div></form></li> <!----> <li class="nav-item add creator-item" data-v-14fe2051><div class="add-group" data-v-222d7b0f data-v-14fe2051><!----> <button class="add-btn" data-v-222d7b0f>
-    创作者中心
-  </button> <div class="more" data-v-222d7b0f><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" class="unfold12-icon" data-v-222d7b0f data-v-222d7b0f><path d="M2.45025 4.82383C2.17422 4.49908 2.40501 4 2.83122 4H9.16878C9.59499 4 9.82578 4.49908 9.54975 4.82382L6.38097 8.5518C6.1813 8.7867 5.8187 8.7867 5.61903 8.5518L2.45025 4.82383Z" fill="white" data-v-222d7b0f data-v-222d7b0f></path></svg> <div class="more-mask" data-v-222d7b0f></div> <div class="more-list" data-v-222d7b0f><ul class="menu" data-v-222d7b0f><li class="item" data-v-222d7b0f><div class="icon write-article" data-v-222d7b0f></div> <div class="title" data-v-222d7b0f>写文章</div></li><li class="item" data-v-222d7b0f><div class="icon issue-points" data-v-222d7b0f></div> <div class="title" data-v-222d7b0f>发沸点</div></li><li class="item" data-v-222d7b0f><div class="icon write-note" data-v-222d7b0f></div> <div class="title" data-v-222d7b0f>写笔记</div></li><li class="item" data-v-222d7b0f><div class="icon create-jcode" data-v-222d7b0f></div> <div class="title" data-v-222d7b0f>写代码</div></li><li class="item" data-v-222d7b0f><div class="icon drafts" data-v-222d7b0f></div> <div class="title" data-v-222d7b0f>草稿箱</div></li></ul> <div class="divider" data-v-222d7b0f></div> <div class="inspiration" data-v-222d7b0f><div class="info" data-v-222d7b0f><span class="title" data-v-222d7b0f>创作灵感</span> <span class="more-info" data-v-222d7b0f>
-            查看更多
-            <i class="icon byte-icon byte-icon--right" data-v-222d7b0f><svg t="1561636167146" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="404349" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M630.4 512L283.52 165.12a21.12 21.12 0 0 1 0-30.08l30.08-30.08a21.12 21.12 0 0 1 30.08 0l377.6 376.96a42.24 42.24 0 0 1 0 60.16l-377.6 376.96a21.12 21.12 0 0 1-30.08 0l-30.08-30.08a21.12 21.12 0 0 1 0-30.08z" p-id="404350"></path></svg></i></span></div> <div class="list" data-v-222d7b0f>  <div class="item" data-v-21339fef data-v-222d7b0f><div class="xitu-skeleton xitu-skeleton-animated" data-v-21339fef><div class="xitu-skeleton-item" data-v-21339fef><!----> <div class="xitu-skeleton-content" style="padding:20px;" data-v-21339fef><div class="xitu-skeleton-line" data-v-21339fef></div><div class="xitu-skeleton-line" data-v-21339fef></div><div class="xitu-skeleton-line" data-v-21339fef></div></div></div></div></div></div></div></div></div> <!----></div></li></ul></li> <!----> <!----> <!----> <li class="nav-item auth hidden" data-v-14fe2051><div class="login-button-wrap" data-v-14fe2051><button class="login-button" data-v-14fe2051>
-                登录
-                <div class="login-button-inner" data-v-14fe2051><div class="login-button-line" data-v-14fe2051></div>
-                  注册
-                </div></button> <!----></div></li></ul></ul></nav></div></header>  <main class="container main-container" style="max-width:1140px;" data-v-539963b4><div class="view column-view post-view" data-v-539963b4 data-v-61fb5e44><!----> <div class="main-area article-area" data-v-539963b4 data-v-61fb5e44><article itemscope="itemscope" itemtype="http://schema.org/Article" data-entry-id="6844904030750130183" data-draft-id="6845076590062206989" data-original-type="0" class="article" data-v-61fb5e44><meta itemprop="url" content="https://juejin.im/post/6844904030750130183"> <meta itemprop="headline" content="iOS 高级面试题--答案"> <meta itemprop="keywords" content="iOS"> <meta itemprop="datePublished" content="2019-12-24T09:23:37.000Z"> <meta itemprop="image" content="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-assets/icon/icon-128.png~tplv-t2oaga2asx-image.image"> <div itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><meta itemprop="name" content="李坤"> <meta itemprop="url" content="https://juejin.cn/user/571401774831662"></div> <div itemprop="publisher" itemscope="itemscope" itemtype="http://schema.org/Organization"><meta itemprop="name" content="掘金"> <div itemprop="logo" itemscope="itemscope" itemtype="https://schema.org/ImageObject"><meta itemprop="url" content="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-assets/icon/icon-white-180.png~tplv-t2oaga2asx-image.image"> <meta itemprop="width" content="180"> <meta itemprop="height" content="180"></div></div> <h1 class="article-title" data-v-61fb5e44>
+    <div data-server-rendered="true" id="__nuxt"><div id="__layout"><div id="juejin"><div data-v-539963b4 data-v-61fb5e44><div class="view-container" data-v-539963b4><!---->   <main class="container main-container" style="max-width:1140px;" data-v-539963b4><div class="view column-view post-view" data-v-539963b4 data-v-61fb5e44><!----> <div class="main-area article-area" data-v-539963b4 data-v-61fb5e44><article itemscope="itemscope" itemtype="http://schema.org/Article" data-entry-id="6844904030750130183" data-draft-id="6845076590062206989" data-original-type="0" class="article" data-v-61fb5e44><meta itemprop="url" content="https://juejin.im/post/6844904030750130183"> <meta itemprop="headline" content="iOS 高级面试题--答案"> <meta itemprop="keywords" content="iOS"> <meta itemprop="datePublished" content="2019-12-24T09:23:37.000Z"> <meta itemprop="image" content="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-assets/icon/icon-128.png~tplv-t2oaga2asx-image.image"> <div itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><meta itemprop="name" content="李坤"> <meta itemprop="url" content="https://juejin.cn/user/571401774831662"></div> <div itemprop="publisher" itemscope="itemscope" itemtype="http://schema.org/Organization"><meta itemprop="name" content="掘金"> <div itemprop="logo" itemscope="itemscope" itemtype="https://schema.org/ImageObject"><meta itemprop="url" content="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-assets/icon/icon-white-180.png~tplv-t2oaga2asx-image.image"> <meta itemprop="width" content="180"> <meta itemprop="height" content="180"></div></div> <h1 class="article-title" data-v-61fb5e44>
             iOS 高级面试题--答案
             <!----> <!----></h1> <div class="author-info-block block-hidden" data-v-61fb5e44><div class="author-info-box" data-v-61fb5e44><div class="author-name" data-v-61fb5e44><a href="https://juejin.cn/user/571401774831662/posts" target="_blank" rel="" class="jj-link username username ellipsis" data-v-65b50b51 data-v-292f6e48 data-v-61fb5e44><span class="name" style="max-width:160px;" data-v-65b50b51 data-v-292f6e48>
     李坤
@@ -184,7 +168,7 @@ person.name = text;   <span class="hljs-comment">// copy：属性里是一份不
 <h3  class="heading" id="heading-8" data-id="heading-8">5.讲一下atomic的实现机制；为什么不能保证绝对的线程安全（最好可以结合场景来说）？<span></span></h3>
 <ol>
 <li>atomic的实现机制<br>
-atomic是property的修饰词之一，表示是原子性的，使用方式为<code>@property(atomic)int age;</code>,此时编译器会自动生成getter/setter方法，最终会调用<code>objc_getProperty</code>和<code>objc_setProperty</code>方法来进行存取属性。若此时属性用<code>atomic</code>修饰的话，在这两个方法内部使用<code>os_unfair_lock</code>来进行加锁，来保证读写的原子性。锁都在PropertyLocks中保存着（在iOS平台会初始化8个，mac平台64个），在用之前，会把锁都初始化好，在需要用到时，用对象的地址加上成员变量的偏移量为key，去PropertyLocks中去取。因此存取时用的是同一个锁，所以atomic能保证属性的存取时是线程安全的。注：由于锁是有限的，不用对象，不同属性的读取用的也可能是同一个锁</li>
+<code>atomic</code> 要保证的是：这一次读或者这一次写完整做完，别的线程不能插在半截。这个性质叫原子性。写法是 <code>@property(atomic)int age;</code>。编译器生成的 getter/setter 最终走到 <code>objc_getProperty</code> 和 <code>objc_setProperty</code>，这两个函数内部用 <code>os_unfair_lock</code> 把这一次存取包住。锁放在 PropertyLocks 里，用之前会先建好（iOS 上 8 把，Mac 上 64 把）。取哪一把，用对象的地址加上成员变量的偏移量当 key。同一次属性的读和写会拿到同一把锁，所以单次存取是线程安全的。锁的数量有限，不同对象、不同属性也可能用到同一把锁。</li>
 <li>atomic为什么不能保证绝对的线程安全？
 <ol>
 <li>atomic在getter/setter方法中加锁，仅保证了存取时的线程安全，假设我们的属性是<code>@property(atomic)NSMutableArray *array;</code>可变的容器时,无法保证对容器的修改是线程安全的</li>
@@ -204,7 +188,7 @@ runTime会把对weak修饰的对象放到一个全局的哈希表中，用 weak 
 当对象释放时，runtime 会通过该对象自身的内存地址在哈希表中找到对应的 weak 指针数组，遍历该数组，并将其中每个 weak 指针置为 nil</p>
 </li>
 <li>
-<p>sideTable的结构</p>
+<p>引用计数和 weak 指针表不放在对象自己身上，集中放在按对象地址分桶的全局表里，这张表叫 sideTable。结构如下：</p>
 </li>
 </ol>
 <pre><code class="hljs bash" lang="bash">struct SideTable {
@@ -234,18 +218,13 @@ runTime会把对weak修饰的对象放到一个全局的哈希表中，用 weak 
 <li>关联对象有什么应用？<br>
 一般用于在分类中给类添加实例变量</li>
 <li>系统如何管理关联对象？<br>
-首先系统中有一个全局<code>AssociationsManager</code>,里面有个<code>AssociationsHashMap</code>哈希表，<br>
-哈希表中的key是对象的内存地址，value是<code>ObjectAssociationMap</code>,也是一个哈希表，<br>
-其中key是我们设置关联对象所设置的key，value是<code>ObjcAssociation</code>,里面存放着关联对象设置的值和内存管理的策略。<br>
-已<code>void objc_setAssociatedObject(id object, const void * key,id value, objc_AssociationPolicy policy)</code>为例，<br>
-首先会通过<code>AssociationsManager</code>获取<code>AssociationsHashMap</code>，<br>
-然后以<code>object</code>的内存地址为key，从<code>AssociationsHashMap</code>中取出<code>ObjectAssociationMap</code>，<br>
-若没有，则新创建一个<code>ObjectAssociationMap</code>，<br>
-然后通过key获取旧值，以及通过key和policy生成新值<code>ObjcAssociation(policy, new_value)</code>，<br>
-把新值存放到<code>ObjectAssociationMap</code>中，<br>
-若新值不为nil，并且内存管理策略为<code>retain</code>，则会对新值进行一次<code>retain</code>，<br>
-若新值为nil，则会删除旧值，<br>
-若旧值不为空并且内存管理的策略是<code>retain</code>，则对旧值进行一次<code>release</code></li>
+关联对象不放在对象里面。全局有一个 <code>AssociationsManager</code>，里面是一张哈希表 <code>AssociationsHashMap</code>。先用对象的内存地址找到这个对象自己的一张表 <code>ObjectAssociationMap</code>；再用设置时传入的 key 找到其中一条 <code>ObjcAssociation</code>，里面是关联的值和内存策略（要不要 retain）。<br>
+以 <code>void objc_setAssociatedObject(id object, const void * key,id value, objc_AssociationPolicy policy)</code> 为例：<br>
+先拿到这张全局表，用对象地址取出 <code>ObjectAssociationMap</code>，没有就新建一张。<br>
+用 key 取出旧值，再按 key 和 policy 放进新的 <code>ObjcAssociation(policy, new_value)</code>。<br>
+新值不是 nil，并且策略是 <code>retain</code>，就对新值 retain 一次（多留一份引用）。<br>
+新值是 nil，就删掉旧的那一条。<br>
+旧值还在，并且当时的策略是 <code>retain</code>，就对旧值 release 一次。</li>
 <li>其被释放的时候需要手动将所有的关联对象的指针置空么？<br>
 注：对这个问题我的理解是：当对象被释放时，需要手动移除该对象所设置的关联对象吗？<br>
 不需要，因为在对象的dealloc中，若发现对象有关联对象时，会调用<code>_object_remove_assocations</code>方法来移除所有的关联对象，并根据内存策略，来判断是否需要对关联对象的值进行release</li>
@@ -256,19 +235,19 @@ runTime会把对weak修饰的对象放到一个全局的哈希表中，用 weak 
 <p>KVO的底层实现？</p>
 <ol>
 <li>
-<p>当某个类的属性被观察时，系统会在运行时动态的创建一个该类的子类。并且把改对象的isa指向这个子类</p>
+<p>某个属性被观察时，系统要在不改你原来那个类的前提下，换成一个会在赋值前后发通知的 setter。做法是运行时造一个子类，再把这个对象的 isa 指到子类上。isa 就是对象开头那个标明「我属于哪个类」的指针，指过去之后，这个对象的 setter 就会走到子类里。</p>
 </li>
 <li>
-<p>假设被观察的属性名是<code>name</code>，若父类里有<code>setName:</code>或这<code>_setName:</code>,那么在子类里重写这2个方法，若2个方法同时存在，则只会重写<code>setName:</code>一个（这里和KVCset时的搜索顺序是一样的）</p>
+<p>被观察的属性如果叫 <code>name</code>，子类就重写 <code>setName:</code>。父类里如果同时有 <code>setName:</code> 和 <code>_setName:</code>，只重写 <code>setName:</code>。这和 KVC 找 setter 的顺序一样。</p>
 </li>
 <li>
-<p>若被观察的类型是NSString,那么重写的方法的实现会指向<code>_NSSetObjectValueAndNotify</code>这个函数，若是Bool类型，那么重写的方法的实现会指向<code>_NSSetBoolValueAndNotify</code>这个函数，这个函数里会调用<code>willChangeValueForKey:</code>和<code>didChangevlueForKey:</code>,并且会在这2个方法调用之间，调用父类set方法的实现</p>
+<p>重写出来的 setter 自己不写赋值。属性是对象（比如 NSString）时，实现指向 <code>_NSSetObjectValueAndNotify</code>；是 Bool 时指向 <code>_NSSetBoolValueAndNotify</code>。这些函数先调用 <code>willChangeValueForKey:</code>，再调用原来的 setter，最后调用 <code>didChangeValueForKey:</code>。</p>
 </li>
 <li>
-<p>系统会在<code>willChangeValueForKey:</code>对observe里的change[old]赋值，取值是用<code>valueForKey:</code>取值的,<code>didChangevlueForKey:</code>对observe里的change[new]赋值，然后调用observe的这个方法<code>- (void)observeValueForKeyPath:(nullable NSString *)keyPath ofObject:(nullable id)object change:(nullable NSDictionary&#x3C;NSKeyValueChangeKey, id> *)change context:(nullable void *)context;</code></p>
+<p><code>willChangeValueForKey:</code> 里用 <code>valueForKey:</code> 记下旧值，<code>didChangeValueForKey:</code> 记下新值，然后回调观察者的 <code>observeValueForKeyPath:ofObject:change:context:</code>。</p>
 </li>
 <li>
-<p>当使用KVC赋值的时候,在NSObject里的<code>setValue:forKey:</code>方法里,若父类不存在<code>setName:</code>或这<code>_setName:</code>这些方法,会调用<code>_NSSetValueAndNotifyForKeyInIvar</code>这个函数，这个函数里同样也会调用<code>willChangeValueForKey:</code>和<code>didChangevlueForKey:</code>,若存在则调用</p>
+<p>没有 setter、改用 KVC 的 <code>setValue:forKey:</code> 直接写成员变量时，<code>NSObject</code> 会走 <code>_NSSetValueAndNotifyForKeyInIvar</code>，同样在写入前后调用 <code>willChangeValueForKey:</code> 和 <code>didChangeValueForKey:</code>。setter 存在就直接调 setter，通知由 setter 发出。</p>
 </li>
 </ol>
 </li>
@@ -311,9 +290,9 @@ runTime会把对weak修饰的对象放到一个全局的哈希表中，用 weak 
 <blockquote><p>一句话：KVC 先找 setter，没有才按顺序写成员变量，并且自己会发 KVO；绕过 KVC、直接改成员变量则不会。</p></blockquote>
 
 <h3  class="heading" id="heading-12" data-id="heading-12">11. Autoreleasepool所使用的数据结构是什么？AutoreleasePoolPage结构体了解么？<span></span></h3>
-<p>Autoreleasepool是由多个<code>AutoreleasePoolPage</code>以双向链表的形式连接起来的，
-Autoreleasepool的基本原理：在每个自动释放池创建的时候，会在当前的<code>AutoreleasePoolPage</code>中设置一个标记位，在此期间，当有对象调用 <code>autorelease</code> 时，会把该对象的指针（即对象内存地址）添加到当前 <code>AutoreleasePoolPage</code> 中；若当前页已满，则初始化新页，并通过双向链表连接，同时把新页设为 <code>hotPage</code>。当自动释放池 <code>pop</code> 时，会从当前栈顶开始依次 <code>pop</code> ，对每个指针指向的对象调用 <code>release</code>，直到遇到边界标记（<code>POOL_BOUNDARY</code> / 哨兵）为止。
-AutoreleasePoolPage结构如下</p>
+<p>自动释放池是一页一页接起来的栈，每一页是一个 <code>AutoreleasePoolPage</code>，页和页用双向链表串着。
+创建池子时，在当前页里压一个标记，这个标记叫哨兵（<code>POOL_BOUNDARY</code>）。之后谁调用 <code>autorelease</code>，就把这个对象的地址推进当前页；这一页满了就新建一页，挂到链表上，并把它当成当前正在用的页（<code>hotPage</code>）。池子结束（<code>pop</code>）时，从栈顶往回对每个地址发 <code>release</code>，直到碰到这次留下的标记为止。
+<code>AutoreleasePoolPage</code> 结构如下</p>
 <pre><code class="hljs bash" lang="bash">class AutoreleasePoolPage {
     magic_t const magic;
     id *next;//下一个存放autorelease对象的地址
@@ -339,8 +318,8 @@ AutoreleasePoolPage结构如下</p>
 <h3  class="heading" id="heading-13" data-id="heading-13">13. 讲一下对象，类对象，元类，跟元类结构体的组成以及他们是如何相关联的？为什么对象方法没有保存的对象结构体里，而是保存在类对象的结构体里？<span></span></h3>
 <ol>
 <li>讲一下对象，类对象，元类，跟元类结构体的组成以及他们是如何相关联的？<br>
-对象的结构体里存放着isa和成员变量的值，isa指向类对象。
-类对象的isa指向元类，元类的isa指向NSObject的元类。
+每个对象开头有一个指针，标明它属于哪个类，这个指针叫 isa。对象的结构体里存放着 isa 和成员变量的值，isa 指向类对象。
+类对象的 isa 指向元类，元类的 isa 指向 NSObject 的元类。
 类对象和元类的结构体有isa、superclass、cache、bits，bits里存放着class_rw_t的指针。
 放一张经典的图
 <figure><img alt="isa" src="assets/advanced/images/advanced-image-1.png" loading="lazy"><figcaption></figcaption></figure></li>
@@ -348,8 +327,7 @@ AutoreleasePoolPage结构如下</p>
 方法是每个对象互相可以共用的，如果每个对象都存储一份方法列表太浪费内存，由于对象的isa是指向类对象的，当调用的时候，直接去类对象中查找就行了。可以节约很多内存空间的</li>
 </ol>
 <h3  class="heading" id="heading-14" data-id="heading-14">14. class_ro_t和class_rw_t的区别？</h3>
-<p>class_rw_t提供了运行时对类拓展的能力，而class_ro_t存储的大多是类在编译时就已经确定的信息。二者都存有类的方法、属性（成员变量）、协议等信息，不过存储它们的列表实现方式不同。简单的说class_rw_t存储列表使用的二维数组，class_ro_t使用的一维数组。
-class_ro_t存储于class_rw_t结构体中，是不可改变的。保存着类的在编译时就已经确定的信息。而运行时修改类的方法，属性，协议等都存储于class_rw_t中</p>
+<p>编译时就已经定死、运行时不能改的那份信息放在 <code>class_ro_t</code> 里，包括当时确定的方法、属性、成员变量和协议，是一整张固定列表。运行时还能往类上追加内容，比如分类新加的方法，这些放在 <code>class_rw_t</code> 里。它里面可以再挂多张列表，所以常被说成二维数组；<code>class_ro_t</code> 那张不能再拆，是一维数组。<code>class_ro_t</code> 嵌在 <code>class_rw_t</code> 里，只读。运行时改方法、属性、协议，改的是 <code>class_rw_t</code>。</p>
 <h3  class="heading" id="heading-15" data-id="heading-15">15. iOS中内省的几个方法？class方法和objc_getClass方法有什么区别?</h3>
 <ol>
 <li>什么是内省？</li>
@@ -372,7 +350,7 @@ class_ro_t存储于class_rw_t结构体中，是不可改变的。保存着类的
 </li>
 <li>
 <p>class方法和object_getClass方法有什么区别?<br>
-实例class方法就直接返回object_getClass(self),类class方法直接返回self，而object_getClass(类对象)，则返回的是元类</p>
+对实例调 <code>class</code>，拿到的是它的类，实现上就是 <code>object_getClass(self)</code>。对类对象再调 <code>class</code>，拿到的还是这个类自己。<code>object_getClass</code> 不管传进来的是实例还是类，都顺着 isa 走，所以传类对象时拿到的是元类。</p>
 </li>
 </ol>
 <h3  class="heading" id="heading-66" data-id="heading-66">16. ==、isEqual:、isEqualToString: 有什么区别？<span id="user-content-16"></span></h3>
@@ -512,7 +490,7 @@ NSLog(<span class="hljs-string">@"%d"</span>, age);   <span class="hljs-comment"
   <h5>五、一句话总结</h5>
   <blockquote><p>普通捕获是<strong>值拷贝</strong>，成员被 <code>const</code> 限定，所以只读、是<strong>值副本</strong>；<code>__block</code> 是把变量<strong>包装成结构体</strong>，让变量生命周期和 Block 绑定，Block 上堆时变量跟着上堆，并通过 <code>__forwarding</code> 保证访问指向正确的那一份，从而实现可修改。</p></blockquote>
 <h3  class="heading" id="heading-18" data-id="heading-18">21. 为什么在block外部使用__weak修饰的同时需要在内部使用__strong修饰？</h3>
-<p>用__weak修饰之后block不会对该对象进行retain，只是持有了weak指针，在block执行之前或执行的过程时，随时都有可能被释放，将weak指针置位nil，产生一些未知的错误。在内部用__strong修饰，会在block执行时，对该对象进行一次retain，保证在执行时若该指针不指向nil，则在执行过程中不会指向nil。但有可能在执行执行之前已经为nil了</p>
+<p>外面用 <code>__weak</code>，block 只留一个弱指针，不会 retain 对象，也就是不会多留一份引用把对象拽住。block 还没开始执行，或者正在执行时，对象都可能先被释放，这个弱指针会被置成 nil，后面还拿它当有效对象就会出错。里面再写一个 <code>__strong</code> 局部变量，是在 block 真正跑起来的这一段里先 retain 一次：进来时如果它还不是 nil，这段执行期间就不会变成 nil。它仍可能在 block 开始之前就已经是 nil。</p>
 <h3  class="heading" id="heading-69" data-id="heading-69">22. Block 为什么用 copy 修饰？<span id="user-content-22"></span></h3>
 <p>Block 是对象。捕获了自动变量的 Block 字面量一开始在栈上，跟着当前栈帧走。栈帧结束之后如果还有人拿着这个指针，就是悬空指针。属性用 <code>copy</code>，是为了在持有它的时候把栈 Block 拷到堆上。</p>
 <ul>
@@ -700,7 +678,7 @@ NSLog(<span class="hljs-string">@"%d"</span>, age);   <span class="hljs-comment"
 AppDelegate是一个项目的入口，承担了太多的功能，如初始化根控制器，管理应用的状态，管理推送，和其他APP交互，初始化第三方SDK，获取权限等等</li>
 <li>如何瘦身
 瘦身的方案有很多，比如说把某些方法放到swift扩展或者OC的分类中，抽取中间类，利用通知监听等等，不过我比较喜欢的是使用命令设计模式进行瘦身。
-命令模式是描述对象被称作命令相当于是一个简单的方法或者事件。因为对象封装了触发自身所需的所有参数，因此命令的调用者不知道该命令做了什么以及响应者是谁
+命令模式在这里就是：把启动时每件事写成一个带 execute 的小对象，AppDelegate 只负责挨个调用，不用知道里面做了什么、谁去响应。
 可以为APPdelegate的每一个职责定义一个命令，这个命令的名字有他们自己指定</li>
 </ol>
 <pre><code class="hljs bash" lang="bash">protocol Command {
@@ -790,7 +768,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 <li>应用场景
 <ul>
 <li>JSON与模型之间的相互转换</li>
-<li>Method Swizzling</li>
+<li>运行时把两个方法的实现换掉（Method Swizzling）</li>
 <li>KVO的实现原理</li>
 <li>实现NSCoding的自动归档和自动解档</li>
 <li>探索系统某些类的具体实现</li>
@@ -821,9 +799,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 <ol>
 <li>根据 info.plist 里的设置加载闪屏，建立沙箱，对权限进行检查等</li>
 <li>加载可执行文件</li>
-<li>加载动态链接库，进行 rebase 指针调整和 bind 符号绑定</li>
+<li>加载动态链接库。库实际加载到的地址和编译时假设的不一样，里面写死的指针要按这个偏移改掉（rebase）；调用的外部函数要填上真正的地址（bind）</li>
 <li>Objc 运行时的初始处理，包括 Objc 相关类的注册、category 注册、selector 唯一性检查等；</li>
-<li>初始化，包括了执行 +load() 方法、attribute((constructor)) 修饰的函数的调用、创建 C++ 静态全局变量。</li>
+<li>初始化，包括执行 +load() 方法、main 之前就会跑的 C 函数（用 attribute((constructor)) 标记）、创建 C++ 静态全局变量。</li>
 <li>执行 main 函数</li>
 <li>Application 初始化，到 applicationDidFinishLaunchingWithOptions 执行完</li>
 <li>初始化帧渲染，到 viewDidAppear 执行完，用户可见可操作。</li>
@@ -840,7 +818,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 </li>
 </ol>
 <h3  class="heading" id="heading-25" data-id="heading-25">33. App无痕埋点的思路了解么？你认为理想的无痕埋点系统应该具备哪些特点？（知道多少说多少））<span id="user-content-33"></span></h3>
-<p>App无痕埋点的思路是利用AOP来拦截用户的操作并进行标记记录然后进行上传</p>
+<p>无痕埋点是不改业务代码，在点击、页面出现这些入口外面套一层，把用户操作记下来再上传。这种在原有逻辑外面包一层的做法叫 AOP。</p>
 <p>我认为理想的无痕埋点系统应该具备以下特点</p>
 <ol>
 <li>不侵入业务代码</li>
@@ -867,7 +845,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 <li>死锁</li>
 <li>除0</li>
 </ol>
-<p>1-9都可以利用Runtime进行拦截，然后进行一些逻辑处理，防止crash</p>
+<p>前面 1–9 可以在这些方法被调用前换成自己的实现：先检查参数，有问题就拦住，没问题再调原来的，避免直接崩。这是用 Runtime 做的拦截。</p>
 <h3  class="heading" id="heading-74" data-id="heading-74">35. 不使用第三方，如何把已经上线的崩溃定位到具体类和方法？<span id="user-content-35"></span></h3>
 <p>不引入崩溃收集 SDK，也可以自己把崩溃现场留下来。分两截：进程里把现场写到磁盘，下次启动再上传；服务端用对应版本的 dSYM 把地址翻成类名和方法名。崩溃回调里不要发网络请求，进程随时会被杀掉。</p>
 <h4 class="heading" id="heading-74-catch" data-id="heading-74-catch">能接到哪些崩溃</h4>
@@ -904,7 +882,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 <li><strong>文本排版</strong>：<code>UILabel</code>、<code>CATextLayer</code> 的尺寸和绘制不便宜。解决：子线程算好宽高并缓存，滚动中不要反复排版同一段文字。</li>
 <li><strong>图片解码</strong>：PNG、JPEG 画到屏幕前必须解成位图，大约是宽 × 高 × 4 字节。<code>UIImage</code> 手里通常还是压缩数据，系统为了省内存，往往拖到真正绘制时才解码，这次解码经常落在主线程。图片上屏是加载、解码、渲染三步，业务代码往往只做了加载。解决：子线程先解码成位图，再回主线程赋给 <code>UIImageView</code>。</li>
 <li><strong>高清图</strong>：按原图像素解码，内存和时间都远超控件实际显示尺寸。解决：按显示尺寸下采样，只解出屏幕上用得到的那一档。</li>
-<li><strong>Core Graphics 绘制</strong>：实现了 <code>drawRect:</code> 或 <code>drawLayer:inContext:</code> 时，Core Animation 要先分配一块寄宿图，画完再经 IPC 交给渲染服务。滚动路径上避免每帧都走 <code>drawRect:</code>；必须自绘时放到子线程异步绘制，画完再切回主线程提交。</li>
+<li><strong>Core Graphics 绘制</strong>：实现了 <code>drawRect:</code> 或 <code>drawLayer:inContext:</code> 时，Core Animation 要先分配一块这个图层自己的位图（寄宿图），画完再交给另一个进程里负责上屏的渲染服务。滚动路径上避免每帧都走 <code>drawRect:</code>；必须自绘时放到子线程异步绘制，画完再切回主线程提交。</li>
 <li><strong>图层打包</strong>：图层树提交之后，CPU 仍要把每个可见图层转成 GPU 能画的纹理和三角形，工作量和图层数量成正比。解决：去掉不必要的子视图和子图层。</li>
 </ul>
 <h5>三、线程太多，也会把主线程挤掉</h5>
@@ -1009,9 +987,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 <h3  class="heading" id="heading-29" data-id="heading-29">38. TCP为什么要三次握手，四次挥手？<span id="user-content-38"></span></h3>
 <p>三次握手：</p>
 <ol>
-<li>客户端向服务端发起请求链接，首先发送SYN报文，SYN=1，seq=x,并且客户端进入SYN_SENT状态</li>
-<li>服务端收到请求链接，服务端向客户端进行回复，并发送响应报文，SYN=1，seq=y,ACK=1,ack=x+1,并且服务端进入到SYN_RCVD状态</li>
-<li>客户端收到确认报文后，向服务端发送确认报文，ACK=1，ack=y+1，此时客户端进入到ESTABLISHED，服务端收到用户端发送过来的确认报文后，也进入到ESTABLISHED状态，此时链接创建成功</li>
+<li>客户端先说「我要建连接」，并带上自己的起始序号 x。这一段叫 SYN（SYN=1，seq=x）。发出去之后客户端进入 SYN_SENT，表示请求已经发出，还在等回复。</li>
+<li>服务端收到后回复两件事：自己也要建连接，并带上起始序号 y（SYN=1，seq=y）；同时告诉客户端「你的 x 我收到了」（ACK=1，确认号 ack=x+1）。服务端进入 SYN_RCVD，表示对方的请求收到了，还在等最后一次确认。</li>
+<li>客户端再回一句「你的 y 我也收到了」（ACK=1，ack=y+1）。客户端进入 ESTABLISHED。服务端收到这句确认后也进入 ESTABLISHED，连接建成。</li>
 </ol>
 <p>为什么需要三次握手：
 为了防止已失效的连接请求报文段突然又传送到了服务端，因而产生错误，假设这是一个早已失效的报文段。但server收到此失效的连接请求报文段后，就误认为是client再次发出的一个新的连接请求。于是就向client发出确认报文段，同意建立连接。假设不采用“三次握手”，那么只要server发出确认，新的连接就建立了。由于现在client并没有发出建立连接的请求，因此不会理睬server的确认，也不会向server发送数据。但server却以为新的运输连接已经建立，并一直等待client发来数据。这样，server的很多资源就白白浪费掉了。</p>
@@ -1258,12 +1236,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   <figcaption style="margin-top:12px;font-size:14px;line-height:1.6;color:#64748b;text-align:center;">TLS 1.3 的 1-RTT 主路径，报文顺序与上方口述一一对应。曲线对不上时服务器会先回 HelloRetryRequest，图中没有画出。兼容中间设备的 Change Cipher Spec 不参与换密钥，也未画入。</figcaption>
 </figure>
 <h4  class="heading" id="heading-32" data-id="heading-32">为什么密钥的传递需要使用非对称加密？</h4>
-<p>答：使用非对称加密是为了后面客户端生成的Pre-master secret密钥的安全，通过上面的步骤能得知，服务器向客户端发送公钥证书这一步是有可能被别人拦截的，如果使用对称加密的话，在客户端向服务端发送Pre-master secret密钥的时候，被黑客拦截的话，就能够使用公钥进行解码，就无法保证Pre-master secret密钥的安全了</p>
+<p>答：后面真正加密业务数据的那把会话密钥不能明文放在网上。TLS 1.2 用 RSA 交换时，客户端自己生成一段 premaster secret，用证书里的公钥包起来再发。公钥谁都能看到，只有服务器的私钥能解开，截到报文的人解不开。如果这段秘密也用对称加密来传，双方得先有同一把钥匙，问题又回到原点。ECDHE 那条路不把秘密加密寄过去，两边用临时公钥在本地算出同一个共享秘密；非对称在那里是用来确认对方拿着私钥。两条路径见上面的握手流程。</p>
 <h4  class="heading" id="heading-33" data-id="heading-33">双向认证了解么？（这里我真想说一句不了解）</h4>
-<p>答：上面的HTTPS的通信流程只验证了服务端的身份，而服务端没有验证客户端的身份，双向认证是服务端也要确保客户端的身份，大概流程是客户端在校验完服务器的证书之后，会向服务器发送自己的公钥，然后服务端用公钥加密产生一个新的密钥，传给客户端，客户端再用私钥解密，以后就用此密钥进行对称加密的通信</p>
+<p>答：上面的流程只核对了服务器的证书，服务器并不知道对面是不是它认可的客户端。双向认证是服务器也要看客户端的证书：客户端把自己的证书发过去，再用私钥对握手内容签名，服务器用证书里的公钥验这份签名，确认对方拿着对应私钥。对上了，后面仍用双方算出来的对称会话密钥通信。</p>
 <h3  class="heading" id="heading-34" data-id="heading-34">42. HTTPS是如何实现验证身份和验证完整性的？<span id="user-content-42"></span></h3>
-<p>使用数字证书和CA来验证身份,首先服务端先向CA机构去申请证书，CA审核之后会给一个数字证书，里面包裹公钥、签名、有效期，用户信息等各种信息，在客户端发送请求时，服务端会把数字证书发给客户端，然后客户端会通过信任链来验证数字证书是否是有效的，来验证服务端的身份。</p>
-<p>使用摘要算法来验证完整性，也就是说在发送消息时，会对消息的内容通过摘要算法生成一段摘要，在收到收到消息时也使用同样的算法生成摘要，来判断摘要是否一致。</p>
+<p>身份靠数字证书和 CA。CA 是预先被信任的签发机构。服务器先向它申请，审核通过后拿到一张数字证书，里面有公钥、CA 的签名、有效期和主体信息。握手时服务器把证书发给客户端。客户端不是只听证书自己怎么说，而是从已经信任的根证书出发，一级级核对签名、域名和有效期。这条逐级核对叫信任链，对上了才认对方是这台服务器。</p>
+<p>完整性靠摘要。发出去之前，对内容用同一套摘要算法算出一段短指纹；收到后再算一遍。两段对得上，说明内容没有被改过。</p>
 <h3  class="heading" id="heading-35" data-id="heading-35">43. 如何用Charles抓HTTPS的包？其中原理和流程是什么？<span id="user-content-43"></span></h3>
 <p>用 Charles 抓 HTTPS，本质是自己做一次中间人。Charles 对手机扮成服务器，对真实服务器扮成客户端，两边各握一段 TLS，中间就能看见明文。</p>
 <p>流程：</p>
@@ -1362,7 +1340,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 <p><strong>口述版</strong></p>
 <blockquote>
 <p><strong>什么是中间人攻击？</strong>简单说，就是攻击者夹在客户端和服务器中间：对 App 冒充服务器，握一段 TLS；再作为客户端去连真实服务器，另握一段 TLS。两边都以为在直连。Charles 抓 HTTPS 就是这个套路——它用自己的根证书签一张域名正确的叶子证书跟 App 握手，再自己去连真实服务器。App 能接受，是因为手机里信任了 Charles 的根证书。所以不是 TLS 被破解了，是客户端信任了攻击者的证书。</p>
-<p><strong>怎么避免？iOS 上主要两层：</strong>第一层靠系统证书校验，<code>URLSession</code> 默认会校验证书链、域名、有效期这些；在 <code>URLSessionDelegate</code> 的认证回调里可以根据 <code>SecTrust</code> 结果决定继续还是取消。第二层做证书锁定，在认证回调里对服务器证书做 SPKI 哈希比对，留一把备用公钥，Pinning 失败直接拒绝，不能静默降级。另外别引导用户随便装未知根证书，也别在“证书信任设置”里完全信任抓包证书；可以配合 ATS、mTLS 这些。</p>
+<p><strong>怎么避免？iOS 上主要两层：</strong>第一层靠系统证书校验，<code>URLSession</code> 默认会校验证书链、域名、有效期这些；在 <code>URLSessionDelegate</code> 的认证回调里可以根据 <code>SecTrust</code> 结果决定继续还是取消。第二层是证书锁定：事先把服务器证书里「公钥那一段」的哈希固定下来，这段数据叫 SPKI，比的就是这个哈希；对不上就拒绝，不能悄悄退回到只做系统校验。这个策略叫 Pinning，一般再留一把备用公钥，方便证书轮换。另外别引导用户随便装未知根证书，也别在“证书信任设置”里完全信任抓包证书。还可以配合 ATS（系统默认要求走 HTTPS，并限制过弱的加密）和 mTLS（双方都出示证书，也就是双向认证）。</p>
 <p><strong>一句话总结：</strong>中间人攻击是利用信任链冒充双方；防御就是系统信任评估加证书锁定。不随便信任根证书不是再加的第三层，而是第一层能拦住 Charles 的前提；根一旦进了信任库，系统评估会通过，就要靠 Pinning 拒绝。SPKI 是证书里“公钥那块数据”的名字；SPKI 哈希是锁公钥时实际比对的值；Pinning 就是把预期值固定住、不认其他证书的策略。Charles 能抓包是因为客户端信任了它的根证书；Pinning 就是用来防这种“信任库里多出来的根”和 CA 误签的。</p>
 </blockquote>
 <h3  class="heading" id="heading-37" data-id="heading-37">45. 了解编译的过程么？分为哪几个步骤？<span id="user-content-45"></span></h3>
@@ -1382,7 +1360,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 <li>汇编：汇编器把汇编变成目标文件（.o），里面是带重定位信息的机器码，这时还不能直接执行。</li>
 <li>链接：链接器合并各个目标文件，完成符号解析、段合并和重定位，输出可执行文件。iOS 上产物是 Mach-O，对 libSystem、UIKit 等系统库仍保留动态依赖，要到运行时才绑定。</li>
 </ol>
-<p>装载和动态链接不属于编译。进程启动时，内核装入主程序和 dyld，dyld 再加载依赖的动态库并完成 rebase / bind，然后把控制权交给程序入口。Swift 在语法树和 LLVM IR 之间还有一层 SIL。</p>
+<p>装载和动态链接不属于编译。进程启动时，内核装入主程序和 dyld，dyld 再加载依赖的动态库。库实际加载到的地址和编译时假设的不一样，里面写死的指针要按这个偏移改掉，这一步叫 rebase；调用的外部函数还要填上真正的地址，这一步叫 bind。做完之后把控制权交给程序入口。Swift 在语法树和 LLVM IR 之间还有一层自己的中间表示，叫 SIL。</p>
 <h3  class="heading" id="heading-38" data-id="heading-38">46. 静态链接了解么？静态库和动态库的区别？<span id="user-content-46"></span></h3>
 <p><strong>口述版</strong></p>
 <blockquote>
@@ -1444,11 +1422,11 @@ static修饰局部变量时，表示每次调用的初始值为上一次调用�
 <p><strong>排查</strong>：暂停调试器看线程栈，等待关系能连成环就是死锁。<code>0x8badf00d</code> 只说明主线程超时没返回，是不是死锁还要看栈。</p>
 </blockquote>
 <h3  class="heading" id="heading-43" data-id="heading-43">51. 说一说你对线程安全的理解？<span id="user-content-51"></span></h3>
-<p>线程安全是指多线程并发访问共享资源时，无论调度如何交错，程序都保持正确行为，不破坏共享状态的不变式。Objective-C 里可变容器和可变属性默认不是线程安全的；<code>atomic</code> 只保证单次存取原子，同步手段也不只 <code>@synchronized</code>。</p>
+<p>线程安全是指多线程交错读写同一份可变数据时，结果仍然符合预期。比如数组的个数和实际元素对得上，不会读到写了一半的状态。这份必须一直成立的关系叫不变式。Objective-C 里可变容器和可变属性默认不是线程安全的；<code>atomic</code> 只保证单次存取原子，同步手段也不只 <code>@synchronized</code>。</p>
 <p><strong>口述版</strong></p>
 <blockquote>
-<p>线程安全是指：在多线程并发访问共享资源时，无论线程如何调度、交错执行，程序都能表现出符合预期的正确行为，不破坏共享状态的不变式。在 Objective-C 里，像 <code>NSMutableArray</code>、<code>NSMutableDictionary</code>、自定义对象的可变属性这类共享可变状态，默认不是线程安全的。实现线程安全不一定只靠 <code>@synchronized</code>，还可以用 <code>NSLock</code>、<code>os_unfair_lock</code>、GCD 串行队列、并发队列加 <code>dispatch_barrier</code>、不可变对象、<code>dispatch_once</code> 安全初始化等方式来保证原子性、可见性和执行顺序。</p>
-<p>需要注意的是，<code>atomic</code> 属性只保证单次 getter/setter 的原子性，不保证 <code>count + addObject:</code> 这种复合操作线程安全；<code>nonatomic</code> 则不保证属性访问原子性。只读也不是绝对安全：如果同时有写线程，仍可能读到中间状态或存在可见性问题；只有对象不可变且安全发布，或确定没有并发写时，只读通常才无需同步。所以线程安全的核心是：共享可变状态在并发下仍满足语义和不变式，同步只是手段之一。</p>
+<p>线程安全是指：多线程交错读写同一份可变数据时，结果仍然符合预期，不破坏上面说的不变式。在 Objective-C 里，像 <code>NSMutableArray</code>、<code>NSMutableDictionary</code>、自定义对象的可变属性这类共享可变状态，默认不是线程安全的。实现线程安全不一定只靠 <code>@synchronized</code>，还可以用 <code>NSLock</code>、<code>os_unfair_lock</code>、GCD 串行队列、并发队列加 <code>dispatch_barrier</code>、不可变对象、<code>dispatch_once</code> 安全初始化。这些手段要保住三件事：这一次操作做完、中间态不让别人看见（原子性）；一个线程改完，别的线程能读到这次修改，而不是自己缓存里的旧值（可见性）；该先发生的不会被调到后面（执行顺序）。</p>
+<p>需要注意的是，<code>atomic</code> 属性只保证单次 getter/setter 的原子性，不保证 <code>count + addObject:</code> 这种复合操作线程安全；<code>nonatomic</code> 则不保证属性访问原子性。只读也不是绝对安全：如果同时有写线程，仍可能读到写了一半的状态，或者还看见旧值（可见性问题）。只有对象不可变，并且是构造完整之后才让别的线程拿到它（安全发布），或确定没有并发写时，只读通常才无需同步。所以线程安全的核心是：共享可变状态在并发下仍满足该有的含义和不变式，同步只是手段之一。</p>
 <p>比如保护一份共享的可变数组，可以这样写：</p>
 <pre><code class="hljs objectivec" lang="objectivec"><span class="hljs-comment">// 方式一：互斥锁保护复合操作</span>
 <span class="hljs-keyword">@synchronized</span> (<span class="hljs-built_in">self</span>.items) {
@@ -1471,13 +1449,13 @@ dispatch_barrier_async(<span class="hljs-built_in">self</span>.concurrentQueue, 
 </blockquote>
 <h3  class="heading" id="heading-44" data-id="heading-44">52. 列举你知道的线程同步策略？<span id="user-content-52"></span></h3>
 <ol>
-<li>OSSpinLock 自旋锁，已不再安全，除了这个锁之外，下面写的锁，在等待时，都会进入线程休眠状态，而非忙等</li>
-<li>os_unfair_lock atomic就是使用此锁来保证原子性的</li>
-<li>pthread_mutex_t 互斥锁，并且支持递归实现和条件实现</li>
-<li>NSLock,NSRecursiveLock,基本的互斥锁，NSRecursiveLock支持递归调用，都是对pthread_mutex_t的封装</li>
-<li>NSCondition,NSConditionLock，条件锁，也都是对pthread_mutex_t的封装</li>
-<li>dispatch_semaphore_t 信号量</li>
-<li>@synchronized 也是pthread_mutex_t的封装</li>
+<li><code>OSSpinLock</code>：拿不到锁就原地转圈、占着 CPU 等，这种等法叫自旋，也叫忙等。它已经不再安全。</li>
+<li><code>os_unfair_lock</code>：同一时刻只放进一个线程的互斥锁。<code>atomic</code> 的 getter/setter 用它把单次存取包住。没人抢时走一条很快的路径，有人抢才休眠。</li>
+<li><code>pthread_mutex_t</code>：互斥锁，同一时刻只放进一个线程。可以配成普通互斥，也可以配成同一线程能反复加锁（递归），或配上「等到某个条件再继续」（条件变量）。</li>
+<li><code>NSLock</code>、<code>NSRecursiveLock</code>：基本的互斥锁，都是对 <code>pthread_mutex_t</code> 的封装。<code>NSRecursiveLock</code> 允许同一线程反复加锁。</li>
+<li><code>NSCondition</code>、<code>NSConditionLock</code>：条件锁，等到某个条件成立再继续，底层也是 <code>pthread_mutex_t</code> 加上条件变量。</li>
+<li><code>dispatch_semaphore_t</code>：信号量，用一个计数限制同一时刻能进几个线程。计数减到 0 再来的就等。</li>
+<li><code>@synchronized</code>：按传入的对象加一把互斥锁，也是 <code>pthread_mutex_t</code> 的封装。</li>
 </ol>
 <p><strong>总结。</strong><code>OSSpinLock</code> 是忙等且不安全的。其他如 <code>pthread_mutex_t</code>、<code>NSLock</code>、<code>@synchronized</code> 以及信号量等，在等待时通常会使线程进入阻塞/休眠状态。但 <code>os_unfair_lock</code> 在无竞争时类似自旋，竞争时才休眠；而信号量的等待行为也依赖于具体的使用方式。</p>
 <h3  class="heading" id="heading-45" data-id="heading-45">53. 有哪几种锁？各自的原理？它们之间的区别是什么？最好可以结合使用场景来说<span id="user-content-53"></span></h3>
@@ -1720,7 +1698,7 @@ dispatch_barrier_async(<span class="hljs-built_in">self</span>.concurrentQueue, 
 <h3  class="heading" id="heading-46" data-id="heading-46">56. 链表和数组的区别是什么？插入和查询的时间复杂度分别是多少？<span id="user-content-56"></span></h3>
 <p>链表和数组都是一个有序的集合，数组需要连续的内存空间，而链表不需要，链表的插入删除的时间复杂度是O(1)，数组是O(n)，根据下标查询的时间复杂度数组是O(1)，链表是O(n),根据值查询的时间复杂度，链表和数组都是O(n)</p>
 <h3  class="heading" id="heading-47" data-id="heading-47">57. 哈希表是如何实现的？如何解决地址冲突？<span id="user-content-57"></span></h3>
-<p>哈希表是也是通过数组来实现的，首先对key值进行哈希化得到一个整数，然后对整数进行计算，得到一个数组中的下标，然后进行存取，解决地址冲突常用方法有开放定址法和链表法。runtime源码的存放weak指针哈希表使用的就是开放定址法，Java里的HashMap使用的是链表法。</p>
+<p>哈希表也是用数组实现的。先把 key 算出一个整数（哈希），再换算成数组下标，按这个下标去存取。两个 key 算出同一个下标，就叫地址冲突。常用两种处理：这个格子有人了，就往后找下一个空位，叫开放定址法；或者同一个格子挂一条链表，撞上的都串在一起，叫链表法。runtime 里存放 weak 指针的哈希表用的是开放定址法，Java 的 HashMap 用的是链表法。</p>
 <h3  class="heading" id="heading-48" data-id="heading-48">58. 排序题：冒泡排序，选择排序，插入排序，快速排序（二路，三路）能写出那些？<span id="user-content-58"></span></h3>
 <p>这里简单的说下几种快速排序的不同之处，随机快排，是为了解决在近似有序的情况下，时间复杂度会退化为O(n^2),双路快排是为了解决快速排序在大量数据重复的情况下，时间复杂度会退化为O(n^2)，三路快排是在大量数据重复的情况下，对双路快排的一种优化。</p>
 <ol>
@@ -2167,9 +2145,10 @@ extension ListNode {
     </a></div> <!----></li></ul></div></nav> <!----> <!----> <div class="adverts-list" data-v-0eca8145 data-v-4ed317c2></div> <!----> <!----></div> <!----></div> <!----> <!----> <div id="article-suspended-panel" data-v-539963b4 data-v-61fb5e44></div> <!----></div> <!----><!----><!----><!----><!----><!----><!----></main> <!----></div> <!----></div> <!----> <div class="global-component-box"><!----></div> <!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----> <!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----></div></div></div>
   <style>
 /* 本地静态导出目录增强 */
-#article-root .heading{scroll-margin-top:96px}
+#article-root .heading{scroll-margin-top:24px}
 .sidebar .article-catalog{display:block!important}
-.sidebar .catalog-body{max-height:calc(100vh - 180px)!important}
+.sidebar .sticky-block-box{top:1.5rem!important}
+.sidebar .catalog-body{max-height:calc(100vh - 80px)!important}
 .sidebar .catalog-body .catalog-aTag{cursor:pointer}
 
 /* 正文表格沿用页面灰底样式，避免长类名在单元格里被拆开 */
@@ -2196,7 +2175,7 @@ extension ListNode {
     event.preventDefault();
     var target = document.getElementById(decodeURIComponent(link.getAttribute('href').slice(1)));
     if (!target) return;
-    window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - 96, behavior: 'auto' });
+    window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - 24, behavior: 'auto' });
     history.replaceState(null, '', link.getAttribute('href'));
   });
   var links = Array.prototype.slice.call(nav.querySelectorAll('.catalog-aTag[href^="#"]'));

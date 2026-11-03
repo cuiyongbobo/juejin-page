@@ -1,0 +1,571 @@
+<!doctype html>
+<html data-n-head-ssr lang="zh" data-n-head="%7B%22lang%22:%7B%22ssr%22:%22zh%22%7D%7D">
+  <head >
+    <title>Swift 语言高频面试题</title><meta data-n-head="ssr" charset="utf-8"><meta data-n-head="ssr" name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, viewport-fit=cover"><meta data-n-head="ssr" name="apple-itunes-app" content="app-id=987739104"><meta data-n-head="ssr" name="theme-color" content="#ffffff"><meta data-n-head="ssr" name="msapplication-TileColor" content="#da532c"><meta data-n-head="ssr" name="msvalidate.01" content="BADCF2429624CB0432BE8924E5343343"><meta data-n-head="ssr" name="google-site-verification" content="H_4N6FRhUA633zQuLcgQvaDDceBxlcb6vMSFXm5G4i8"><meta data-n-head="ssr" vmid="description" name="description" content="2026 年 Swift 面试高频题，按从浅到深排列：类型与可选值、内存和闭包、协议、方法派发，以及 async/await、actor、Sendable。"><meta data-n-head="ssr" vmid="keywords" name="keywords" content="RxSwift,SwiftUI,Alamofire中文技术社区,前端开发社区,前端技术交流,前端框架教程,JavaScript 学习资源,CSS 技巧与最佳实践,HTML5 最新动态,前端工程师职业发展,开源前端项目,前端技术趋势"><link data-n-head="ssr" rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png"><link data-n-head="ssr" rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png"><link data-n-head="ssr" rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png"><link data-n-head="ssr" rel="mask-icon" href="assets/safari-pinned-tab.svg" color="#1E80FF"><link data-n-head="ssr" rel="stylesheet" href="assets/bytedesign.min.css"><link data-n-head="ssr" rel="canonical" href="https://juejin.cn/post/7229877486171930684"><link rel="stylesheet" href="assets/app.070ff99.css"><link rel="stylesheet" href="assets/default.a1d6163.css"><link rel="stylesheet" href="assets/12.782611d.css">
+  
+<style id="local-catalog-style">
+html{scroll-behavior:smooth}
+.article-area h2[id],.article-area h3[id]{scroll-margin-top:1.75rem}
+#sidebar-container .local-catalog{display:flex}
+#sidebar-container .sticky-block-box{top:1.767rem;max-height:calc(100vh - 3.5rem)}
+#sidebar-container .local-catalog .catalog-body.unfold{max-height:calc(100vh - 8rem);min-height:20rem}
+#sidebar-container .local-catalog .catalog-body.collapse{max-height:0;overflow:hidden;margin-top:0}
+#sidebar-container .local-catalog .catalog-list{padding-bottom:16px}
+#sidebar-container .local-catalog .item.active>.a-container{background:rgba(30,128,255,.07)}
+#sidebar-container .local-catalog .item.active>.a-container:before{content:"";position:absolute;top:2px;left:0;width:3px;height:14px;border-radius:2px;background:#1e80ff}
+#sidebar-container .local-catalog .catalog-aTag.active{color:#1e80ff;font-weight:600}
+#sidebar-container .local-catalog .direction{cursor:pointer;user-select:none}
+@media (max-width:1000px){
+  #sidebar-container{position:relative!important;width:100%!important;margin-top:1rem}
+  #sidebar-container .sticky-block-box{position:relative!important;top:auto!important;max-height:none}
+  #sidebar-container .local-catalog .catalog-body.unfold{max-height:22rem;min-height:0}
+}
+</style>
+
+  </head>
+  <body >
+    <div data-server-rendered="true" id="__nuxt"><div id="__layout"><div id="juejin"><div data-v-539963b4 data-v-61fb5e44><div class="view-container" data-v-539963b4><!---->   <main class="container main-container" style="max-width:1140px;" data-v-539963b4><div class="view column-view post-view" data-v-539963b4 data-v-61fb5e44><!----> <div class="main-area article-area" data-v-539963b4 data-v-61fb5e44><article itemscope="itemscope" itemtype="http://schema.org/Article" data-entry-id="7229877486171930684" data-draft-id="7229870849573126181" data-original-type="0" class="article" data-v-61fb5e44><!----> <meta itemprop="headline" content="Swift 语言高频面试题"> <meta itemprop="keywords" content="RxSwift,SwiftUI,Alamofire"> <meta itemprop="datePublished" content="2026-11-03T02:46:44.000Z"> <meta itemprop="image" content="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-assets/icon/icon-128.png~tplv-t2oaga2asx-image.image"> <div itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><meta itemprop="name" content="会飞的金鱼"> <meta itemprop="url" content="https://juejin.cn/user/4213782311876343"></div> <div itemprop="publisher" itemscope="itemscope" itemtype="http://schema.org/Organization"><meta itemprop="name" content="掘金"> <div itemprop="logo" itemscope="itemscope" itemtype="https://schema.org/ImageObject"><meta itemprop="url" content="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-assets/icon/icon-white-180.png~tplv-t2oaga2asx-image.image"> <meta itemprop="width" content="180"> <meta itemprop="height" content="180"></div></div> <h1 class="article-title" data-v-61fb5e44>
+            Swift 语言高频面试题
+            <!----> <!----></h1> <div class="author-info-block block-hidden" data-v-61fb5e44><div class="author-info-box" data-v-61fb5e44><div class="author-name" data-v-61fb5e44><a href="/user/4213782311876343/posts" target="_blank" rel="" class="jj-link username username ellipsis" data-v-65b50b51 data-v-292f6e48 data-v-61fb5e44><span class="name" style="max-width:160px;" data-v-65b50b51 data-v-292f6e48>
+    会飞的金鱼
+  </span> <!----> <!----> <!----> </a></div> <div class="meta-box" data-v-61fb5e44><time datetime="2026-11-03T02:00:00.000Z" title="Tue Nov 03 2026" class="time" data-v-61fb5e44>
+                    2026-11-03
+                  </time> <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="read-icon" data-v-61fb5e44><path d="M7.90078 2.80078C4.49278 2.80078 1.74745 6.11672 0.800781 7.77469C1.74745 9.58339 4.49278 13.2008 7.90078 13.2008C11.3088 13.2008 14.0541 9.58339 15.0008 7.77469C14.0541 6.11672 11.3088 2.80078 7.90078 2.80078Z" stroke="currentColor" data-v-61fb5e44></path><circle cx="7.89922" cy="8.00078" r="2.2" stroke="currentColor" data-v-61fb5e44></circle></svg> <span class="views-count" data-v-61fb5e44>
+                    29,877
+                  </span> <span class="read-time" data-v-61fb5e44><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" data-v-61fb5e44><rect width="16" height="16" fill="none" data-v-61fb5e44></rect><circle cx="8" cy="8" r="5.65625" stroke="#8A919F" data-v-61fb5e44></circle><path d="M7.69141 5.18652V8.30924H10.8141" stroke="#8A919F" stroke-linecap="round" stroke-linejoin="round" data-v-61fb5e44></path></svg>
+                    阅读25分钟
+                  </span> <!----></div></div> <div style="flex:1;" data-v-61fb5e44></div> <!----> <!----></div> <!----> <!----> <!----> <!----> <div id="article-root" itemprop="articleBody" class="main" data-v-61fb5e44><div class="article-viewer markdown-body cache result"><style>.markdown-body{word-break:break-word;line-height:1.75;font-weight:400;font-size:16px;overflow-x:hidden;color:#252933}.markdown-body h1,.markdown-body h2,.markdown-body h3,.markdown-body h4,.markdown-body h5,.markdown-body h6{line-height:1.5;margin-top:35px;margin-bottom:10px;padding-bottom:5px}.markdown-body h1{font-size:24px;line-height:38px;margin-bottom:5px}.markdown-body h2{font-size:22px;line-height:34px;padding-bottom:12px;border-bottom:1px solid #ececec}.markdown-body h3{font-size:20px;line-height:28px}.markdown-body h4{font-size:18px;line-height:26px}.markdown-body h5{font-size:17px;line-height:24px}.markdown-body h6{font-size:16px;line-height:24px}.markdown-body p{line-height:inherit;margin-top:22px;margin-bottom:22px}.markdown-body img{max-width:100%}.markdown-body hr{border:none;border-top:1px solid #ddd;margin-top:32px;margin-bottom:32px}.markdown-body code{word-break:break-word;border-radius:2px;overflow-x:auto;background-color:#fff5f5;color:#ff502c;font-size:.87em;padding:.065em .4em}.markdown-body code,.markdown-body pre{font-family:Menlo,Monaco,Consolas,Courier New,monospace}.markdown-body pre{overflow:auto;position:relative;line-height:1.75}.markdown-body pre>code{font-size:12px;padding:15px 12px;margin:0;word-break:normal;display:block;overflow-x:auto;color:#333;background:#f8f8f8}.markdown-body a{text-decoration:none;color:#0269c8;border-bottom:1px solid #d1e9ff}.markdown-body a:active,.markdown-body a:hover{color:#275b8c}.markdown-body table{display:inline-block!important;font-size:12px;width:auto;max-width:100%;overflow:auto;border:1px solid #f6f6f6}.markdown-body thead{background:#f6f6f6;color:#000;text-align:left}.markdown-body tr:nth-child(2n){background-color:#fcfcfc}.markdown-body td,.markdown-body th{padding:12px 7px;line-height:24px}.markdown-body td{min-width:120px}.markdown-body blockquote{color:#666;padding:1px 23px;margin:22px 0;border-left:4px solid #cbcbcb;background-color:#f8f8f8}.markdown-body blockquote:after{display:block;content:""}.markdown-body blockquote>p{margin:10px 0}.markdown-body ol,.markdown-body ul{padding-left:28px}.markdown-body ol li,.markdown-body ul li{margin-bottom:0;list-style:inherit}.markdown-body ol li .task-list-item,.markdown-body ul li .task-list-item{list-style:none}.markdown-body ol li .task-list-item ol,.markdown-body ol li .task-list-item ul,.markdown-body ul li .task-list-item ol,.markdown-body ul li .task-list-item ul{margin-top:0}.markdown-body ol ol,.markdown-body ol ul,.markdown-body ul ol,.markdown-body ul ul{margin-top:3px}.markdown-body ol li{padding-left:6px}.markdown-body .contains-task-list{padding-left:0}.markdown-body .task-list-item{list-style:none}@media (max-width:720px){.markdown-body h1{font-size:24px}.markdown-body h2{font-size:20px}.markdown-body h3{font-size:18px}}</style><style data-highlight data-highlight-key="juejin">.markdown-body pre,.markdown-body pre>code.hljs{color:#333;background:#f8f8f8}.hljs-comment,.hljs-quote{color:#998;font-style:italic}.hljs-keyword,.hljs-selector-tag,.hljs-subst{color:#333;font-weight:700}.hljs-literal,.hljs-number,.hljs-tag .hljs-attr,.hljs-template-variable,.hljs-variable{color:teal}.hljs-doctag,.hljs-string{color:#d14}.hljs-section,.hljs-selector-id,.hljs-title{color:#900;font-weight:700}.hljs-subst{font-weight:400}.hljs-class .hljs-title,.hljs-type{color:#458;font-weight:700}.hljs-attribute,.hljs-name,.hljs-tag{color:navy;font-weight:400}.hljs-link,.hljs-regexp{color:#009926}.hljs-bullet,.hljs-symbol{color:#990073}.hljs-built_in,.hljs-builtin-name{color:#0086b3}.hljs-meta{color:#999;font-weight:700}.hljs-deletion{background:#fdd}.hljs-addition{background:#dfd}.hljs-emphasis{font-style:italic}.hljs-strong{font-weight:700}</style>
+<blockquote><p>本文按从浅到深整理 Swift 面试里的必考题。先是类型、可选值、属性和内存，接着是协议和方法调用，最后是 Swift 并发。基础题对齐常见面试题单，派发和并发对齐 <a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/" target="_blank" rel="noopener noreferrer">Swift 官方文档</a>和已经落地的 Swift Evolution 提案。</p></blockquote>
+<h2 id="heading-0" data-id="heading-0">一、类型与可选值</h2>
+<h3 id="heading-1" data-id="heading-1">1. 类、结构体、枚举有什么差别？赋值之后谁和谁共享状态？</h3>
+<ul>
+<li>类是引用类型。赋值复制的是引用，两个变量指向同一个实例，改一个，另一个也看得到。类可以继承，可以写 <code>deinit</code>，可以用 <code>===</code> 比较是不是同一个对象。</li>
+<li>结构体和枚举是值类型。赋值之后各有一份，改这边不影响那边。它们不能继承。方法要改自身的属性，得标 <code>mutating</code>。</li>
+<li>结构体里如果放了一个类，拷贝结构体时拷走的是那个引用，两个结构体仍然共享同一个类实例。</li>
+<li>结构体没有自己写 <code>init</code> 时，编译器会生成按成员初始化的方法。类不会按成员生成；所有存储属性都有默认值、又没有自己写 <code>init</code> 时，类才会有一个无参数的 <code>init()</code>。</li>
+<li>值语义看的是赋值之后各有一份。结构体可以在栈上，也可以放进类、闭包，或者 <code>any</code> 盒子里。</li>
+<li>不需要继承、对象身份或 <code>deinit</code> 时，优先用结构体。需要这三样里的任意一样，再用类。</li>
+</ul>
+<hr>
+<h3 id="heading-2" data-id="heading-2">2. 枚举的关联值和原始值有什么区别？</h3>
+<ul>
+<li>原始值：每个 <code>case</code> 对应一个同类型的固定值，比如 <code>Int</code> 或 <code>String</code>。整型原始值可以不写，编译器从 0 开始递增。用 <code>init?(rawValue:)</code> 还原，对不上就是 <code>nil</code>。</li>
+<li>关联值：<code>case</code> 可以带上当时才知道的数据，不同 <code>case</code> 的数据类型可以不一样。</li>
+<li>同一个枚举不能既声明原始值类型，又给 <code>case</code> 带关联值。</li>
+<li>一组互斥状态用带关联值的枚举来表达，比堆一串可选属性更不容易出现非法组合。</li>
+</ul>
+<pre><code>enum LoadState {
+    case success(Data)
+    case failure(Int)
+}
+enum Direction: Int {
+    case north // 0
+    case east  // 1
+}</code></pre>
+<hr>
+<h3 id="heading-3" data-id="heading-3">3. 可选值是什么？接口边界怎么处理，什么情况下 ! 是合理的？</h3>
+<ul>
+<li>可选值是枚举 <code>Optional&lt;Wrapped&gt;</code>。有值是 <code>.some</code>，没有值是 <code>.none</code>。<code>nil</code> 就是 <code>.none</code>。</li>
+<li>缺值是正常情况，用 <code>if let</code>、<code>guard let</code>、可选链，或者 <code>??</code> 给默认值。<code>guard let</code> 不通过就离开当前作用域，后面的代码可以把这个值当成已经有了。</li>
+<li><code>!</code> 只用在眼前已经能确定它一定有值的地方。接口上传进来的数据，缺了很常见，不要用 <code>!</code> 去赌它一定有。</li>
+<li>缺值说明程序已经违反了自己的前提，就让它尽早失败，比如 <code>precondition</code>。</li>
+</ul>
+<hr>
+<h3 id="heading-4" data-id="heading-4">4. is、as、as?、as! 分别做什么？</h3>
+<ul>
+<li><code>is</code> 只判断是不是某个类型，得到 <code>Bool</code>。</li>
+<li><code>as</code> 用在编译器已经知道一定能转的时候，比如子类转成父类。</li>
+<li><code>as?</code> 尝试转换，失败得到 <code>nil</code>。</li>
+<li><code>as!</code> 认定一定能转，失败就崩。外部数据和不确定的类型不要用它。</li>
+</ul>
+<hr>
+<h3 id="heading-5" data-id="heading-5">5. throws、try?、try!、Result 怎么选？defer 什么时候执行？typed throws 适合用在哪？</h3>
+<ul>
+<li>错误还要往外抛，用 <code>throws</code>。失败可以当成没有，用 <code>try?</code>，错误被丢掉，变成 <code>nil</code>。只有确定失败就是程序写错了，才用 <code>try!</code>，否则会直接崩。</li>
+<li>想把成功和失败当成一个普通值存起来，或者传给别人，用 <code>Result</code>。</li>
+<li><code>defer</code> 在离开当前作用域时执行，正常返回和抛出错误都会走到。同一个作用域里写了多个，后写的先执行。</li>
+<li>typed throws 让 <code>catch</code> 直接拿到具体错误类型。公开接口一旦把错误类型写死，以后多一种失败就要改调用方，所以对外多半仍用普通 <code>throws</code>。模块内部的函数，或者泛型闭包，更适合用它。</li>
+</ul>
+<hr>
+<h2 id="heading-6" data-id="heading-6">二、属性、访问控制与泛型</h2>
+<h3 id="heading-7" data-id="heading-7">6. 存储属性、计算属性、lazy、属性观察器有什么区别？扩展为什么不能加存储属性？</h3>
+<ul>
+<li>存储属性自己保存值。计算属性没有自己的存储，读的时候走 getter，要改就再提供 setter。</li>
+<li><code>lazy</code> 是存储属性，第一次访问时才创建，所以只能写成 <code>var</code>。多线程同时第一次访问，可能创建多次。需要线程安全时，不要靠它。</li>
+<li><code>willSet</code> 里能拿到即将写入的 <code>newValue</code>，<code>didSet</code> 里能拿到旧的 <code>oldValue</code>。初始化器里给本类型自己声明的属性赋初值，不会触发观察器。</li>
+<li>扩展可以加计算属性、方法和协议遵循，不能加存储属性。存储属性要占实例的一块内存，扩展加进去，已经创建出来的实例对不上原来的布局。</li>
+</ul>
+<hr>
+<h3 id="heading-8" data-id="heading-8">7. static 和 class 修饰类型成员有什么区别？</h3>
+<ul>
+<li><code>static</code> 可以修饰类、结构体、枚举和协议上的类型成员。用在类上时，子类不能重写。</li>
+<li><code>class</code> 只能修饰类的类型方法和计算类型属性，子类可以重写。它不能修饰存储属性。</li>
+<li><code>static</code> 管的是这一个成员，不是把整个类标成 <code>final</code>。</li>
+</ul>
+<hr>
+<h3 id="heading-9" data-id="heading-9">8. 访问控制从宽到窄是什么？private 和 fileprivate 差在哪？</h3>
+<ul>
+<li><code>open</code>：其他模块可以访问，也可以继承和重写。只用于类，以及类里可以重写的成员。</li>
+<li><code>public</code>：其他模块可以访问，不能继承，也不能重写。</li>
+<li><code>package</code>：同一个 package 里可以访问。</li>
+<li><code>internal</code>：默认级别，当前模块可以访问。</li>
+<li><code>fileprivate</code>：当前源文件可以访问。</li>
+<li><code>private</code>：当前声明可以访问，同一文件里这个类型自己的扩展也可以。</li>
+<li>一个类型对外的访问级别，不能宽于它用到的那些类型。setter 可以单独设得比 getter 更严。</li>
+</ul>
+<hr>
+<h3 id="heading-10" data-id="heading-10">9. 泛型解决什么问题？它和 Any 有什么差别？</h3>
+<ul>
+<li>泛型把类型参数化。同一套逻辑可以用于多种类型，调用的地方仍然做类型检查。</li>
+<li><code>T: P</code> 表示必须遵循这个协议。只要引用类型，写 <code>T: AnyObject</code>。<code>T: SomeClass</code> 表示必须是这个类或它的子类。</li>
+<li><code>Any</code> 什么都能装，用的时候已经不知道原来的类型。<code>AnyObject</code> 只表示类实例。泛型在每次调用处仍是一个具体类型。</li>
+<li>协议里的类型参数写成关联类型。<code>where</code> 用来加更细的约束。</li>
+<li>编译器有时会按具体类型生成专门的函数。这是优化，语言不保证每次都会这样做。</li>
+</ul>
+<pre><code>func first&lt;T: Equatable&gt;(_ items: [T], equalTo target: T) -&gt; T? {
+    items.first { $0 == target }
+}</code></pre>
+<hr>
+<h2 id="heading-11" data-id="heading-11">三、内存、闭包与拷贝</h2>
+<h3 id="heading-12" data-id="heading-12">10. ARC 是什么？strong、weak、unowned 怎么选？</h3>
+<ul>
+<li>类和 actor 用 ARC。强引用计数到 0 就立刻 <code>deinit</code>，没有垃圾回收那种停顿。</li>
+<li>属性默认是强引用，会把对象留住。</li>
+<li><code>weak</code> 不增加计数。对象释放后自动变成 <code>nil</code>，所以必须是可选的 <code>var</code>。ARC 把它置为 <code>nil</code> 时，不会走属性观察器。</li>
+<li><code>unowned</code> 也不增加计数，但不会变成 <code>nil</code>。只有确定对象活得比这次引用久才用。对象没了还去访问，会直接崩。</li>
+<li><code>weak</code> 和 <code>unowned</code> 只能用在类、actor，以及限定为类的协议上。结构体和枚举没有引用计数。</li>
+<li>谁先释放不确定，用 <code>weak</code>。生命周期绑在一起、被引用的对象一定更久，才考虑 <code>unowned</code>。</li>
+</ul>
+<hr>
+<h3 id="heading-13" data-id="heading-13">11. 这段代码为什么循环引用？weak 和 unowned 怎么选？</h3>
+<ul>
+<li><code>Owner</code> 强引用闭包，闭包一创建又把 <code>self</code> 强抓住。两边互相持有，谁都释放不了。</li>
+<li>捕获列表写在闭包参数前面，用来改这次捕获的引用方式。<code>[weak self]</code> 不增加计数，<code>self</code> 先释放就变成 <code>nil</code>。</li>
+<li><code>unowned</code> 也不增加计数，但不会变成 <code>nil</code>。只有确定对象活得比闭包久才用，对象没了还去访问会直接崩。</li>
+</ul>
+<pre><code>class Owner {
+    var work: (() -&gt; Void)?
+    func start() {
+        work = { self.doWork() } // 强捕获 self，Owner 和闭包互相持有
+    }
+    func startSafely() {
+        work = { [weak self] in self?.doWork() }
+    }
+    func doWork() {}
+}</code></pre>
+<hr>
+<h3 id="heading-14" data-id="heading-14">12. 闭包是引用类型吗？@escaping 改变了什么？为什么逃逸闭包不能捕获 inout？</h3>
+<ul>
+<li>闭包是引用类型。赋值传出去的是同一个闭包，它会抓住外面的变量。抓住类实例时，默认是强引用。</li>
+<li>闭包参数默认不逃逸，函数返回后就不能再调用。<code>@escaping</code> 允许把它存起来，等函数返回之后再执行。</li>
+<li><code>inout</code> 只在这次调用期间指向外面那个变量。函数一返回，这个指向就作废了。</li>
+<li>逃逸闭包可能活得比函数久，不能抓住 <code>inout</code>。不逃逸的闭包出不了函数，所以可以用。</li>
+</ul>
+<hr>
+<h3 id="heading-15" data-id="heading-15">13. 为什么 Array、String、Dictionary、Set 是值类型？copy-on-write 怎么发生？自定义结构体为什么不会自动有？</h3>
+<ul>
+<li>它们做成值类型，是为了赋值、传参之后各改各的，不共享一块可变状态。</li>
+<li>赋值时先共用底层那块数据，并没有马上拷走。等到要改，并且这块数据还有别人在用，才复制一份再改。只剩自己这一份，就原地改。</li>
+<li>自己写的结构体没有这套机制，赋值就是把属性拷走。要做成改的时候才复制，得自己用一个类拿着那块数据，改之前用 <code>isKnownUniquelyReferenced</code> 看还有没有别人在用：有就先复制，没有就原地改。</li>
+</ul>
+<pre><code>final class Storage {
+    var items: [Int]
+    init(_ items: [Int]) { self.items = items }
+}
+struct Queue {
+    private var storage = Storage([])
+    mutating func append(_ n: Int) {
+        if !isKnownUniquelyReferenced(&amp;storage) {
+            storage = Storage(storage.items)
+        }
+        storage.items.append(n)
+    }
+}</code></pre>
+<hr>
+<h2 id="heading-16" data-id="heading-16">四、协议</h2>
+<h3 id="heading-17" data-id="heading-17">14. 为什么说 Swift 是面向协议编程的？</h3>
+<ul>
+<li>结构体和枚举也能遵循协议，想复用代码，不必先写个类去继承。</li>
+<li>协议扩展可以给默认实现，已有的类型也能事后补上一个能力。</li>
+<li>需要什么能力就组合什么协议。要分清是不是同一个对象、要继承，或者要在销毁时做事（<code>deinit</code>），再用类。</li>
+</ul>
+<hr>
+<h3 id="heading-18" data-id="heading-18">15. Swift 协议和 OC 协议有什么区别？</h3>
+<ul>
+<li>原生 Swift 协议，结构体和枚举也能遵循，还可以有关联类型和默认实现，但不能写 optional 方法。</li>
+<li>OC 的 <code>optional</code> 要求协议和方法都暴露给 OC，遵循者必须是类。Swift 里想做成可有可无，一般拆成小协议，或者在扩展里给一个默认实现。</li>
+<li>找方法的方式也不一样。Swift 协议靠一张方法表（witness table）找到实现；标了 <code>@objc</code> 的协议靠 Objective-C 按方法名去找，结构体和枚举也不能遵循它。</li>
+</ul>
+<hr>
+<h3 id="heading-19" data-id="heading-19">16. some 和 any 差在哪？</h3>
+<ul>
+<li><code>some P</code> 背后是一个具体类型。调用方看不见，编译器看得见。用在返回值上时，每条路径都必须返回同一种类型，编译器往往能直接调到那个函数，一般也不用再套一层盒子。</li>
+<li>用在参数上的 <code>some P</code> 就是 <code>&lt;T: P&gt;</code> 的简写，调用方决定具体类型。</li>
+<li><code>any P</code> 是一个盒子，每次可以装不同的遵循类型。调用时要先查方法表才能找到实现，值太大还会被挪到堆上。不需要把具体类型藏起来时，优先用 <code>some</code>。</li>
+</ul>
+<pre><code>func one() -&gt; some Greeter { Pirate() }
+func anyOne() -&gt; any Greeter { Pirate() }</code></pre>
+<hr>
+<h3 id="heading-20" data-id="heading-20">17. 协议扩展里写了方法，为什么有时调用不到类型自己的实现？</h3>
+<ul>
+<li>写进协议要求里的方法，调用时会查方法表，所以能调到类型自己写的实现。</li>
+<li>只写在扩展里、协议没要求的方法，编译器按当时看到的类型直接调用，不会再去找类型自己的同名方法。</li>
+<li>所以下面 <code>g</code> 的类型是 <code>any Greeter</code> 时，<code>hello()</code> 是 <code>&quot;Ahoy&quot;</code>，<code>bye()</code> 却是扩展里的 <code>&quot;Bye&quot;</code>。把 <code>bye</code> 补进协议要求，才会调到 <code>Pirate</code> 的版本。</li>
+</ul>
+<pre><code>protocol Greeter {
+    func hello() -&gt; String
+}
+extension Greeter {
+    func hello() -&gt; String { &quot;Hello&quot; }
+    func bye() -&gt; String { &quot;Bye&quot; } // 不是协议要求
+}
+struct Pirate: Greeter {
+    func hello() -&gt; String { &quot;Ahoy&quot; }
+    func bye() -&gt; String { &quot;Arr&quot; }
+}
+let g: any Greeter = Pirate()
+g.hello() // &quot;Ahoy&quot;，查方法表，调到 Pirate
+g.bye()   // &quot;Bye&quot;，按 any Greeter 直接调扩展</code></pre>
+<hr>
+<h3 id="heading-21" data-id="heading-21">18. 带关联类型的协议为什么往往不能直接写成 any？主关联类型解决了什么？</h3>
+<ul>
+<li>关联类型还没定成一个具体类型时，协议方法里用到它的地方就不知道是什么类型。Swift 5.7 之前，这种协议不能写成 <code>any</code>。</li>
+<li>现在可以写 <code>any Collection</code>，但元素是什么类型已经不知道了，很多用到元素类型的方法就调不了。比如 <code>any RangeReplaceableCollection</code> 不能直接 <code>append</code>，编译器不知道该往里放什么。</li>
+<li>主关联类型就是把最常用的那个类型写在尖括号里。<code>any Collection&lt;String&gt;</code> 把元素定成 <code>String</code>，上面那些方法才能用。方法参数如果要求必须是这个具体类型自己（<code>Self</code>），通过 <code>any</code> 还是调不了：盒子里到底是哪种类型，调用的人不知道，传不进一个对得上的值。</li>
+</ul>
+<hr>
+<h3 id="heading-22" data-id="heading-22">19. 什么是条件遵循？[String] 为什么可以是 Sendable？</h3>
+<ul>
+<li>条件遵循就是：里面的类型符合要求，外层才遵循这个协议。</li>
+<li><code>Array</code> 只有在 <code>Element: Sendable</code> 时才是 <code>Sendable</code>。<code>Sendable</code> 表示这个值可以交给别的任务，不会因此数据竞争。</li>
+<li><code>String</code> 可以安全地交给别的 actor 或任务，所以 <code>[String]</code> 可以。元素是普通的可变类时，数组也不行。</li>
+</ul>
+<pre><code>extension Array: Sendable where Element: Sendable {}</code></pre>
+<hr>
+<h2 id="heading-23" data-id="heading-23">五、方法调用与对象布局</h2>
+<h3 id="heading-24" data-id="heading-24">20. Swift 方法调用是如何实现的？</h3>
+<ul>
+<li>编译的时候就能确定调哪个函数的，直接跳过去，编译器还可能把函数体嵌到调用的地方。结构体、枚举、标了 <code>final</code> 的方法，以及协议扩展里多出来的方法，都是这样。</li>
+<li>类里可以重写的方法走一张方法表（虚表）。调用时从对象开头找到这张表，按下标取出函数。子类重写，就是把表里这一格换成自己的函数。</li>
+<li>协议要求的方法走另一张表（witness table）。类型遵循协议时生成这张表，每个要求对应一个实现，调用时按下标去取。泛型有时会被编译器按具体类型改成直接调用，那只是优化，语言不保证。</li>
+<li>标了 <code>dynamic</code>，或者重写了 Objective-C 的方法，会走 <code>objc_msgSend</code>。它拿方法名去缓存和方法列表里找函数，找不到再问父类。只加 <code>@objc</code> 时，从 Swift 里直接调用仍可能走上面那张虚表。</li>
+</ul>
+<hr>
+<h3 id="heading-25" data-id="heading-25">21. Swift 协议的内部结构是什么？</h3>
+<ul>
+<li>协议自己不占对象的内存。编译出来的是一份说明：叫什么、继承了谁、要求有哪些方法、属性和关联类型。</li>
+<li>类型一遵循，就生成一张方法表（witness table）。每个要求占一格，指向这个类型自己的实现；类型没写的，就指向扩展里的默认实现。</li>
+<li>所以调协议方法，不是在协议上找函数，而是拿这张表，按下标跳过去。</li>
+</ul>
+<hr>
+<h3 id="heading-26" data-id="heading-26">22. 把协议当成类型（any P）时，运行时里面有什么？</h3>
+<ul>
+<li><code>any P</code> 在运行时是一个盒子（existential container），里面有三样东西：一小块放值的空间、这个值的类型信息、协议的方法表。类型信息用来拷贝和销毁这个值，方法表用来找该调哪个函数。</li>
+<li>值不大（不超过三个指针那么大）就直接放在这块空间里；太大就放到堆上，空间里只留一个指针。</li>
+<li>调用协议方法都要先查这张方法表。编译器不知道盒子里具体是什么类型，不能直接跳到那个函数。</li>
+</ul>
+<hr>
+<h3 id="heading-27" data-id="heading-27">23. Swift 实例对象、类、元类的内部结构如何？</h3>
+<ul>
+<li>实例在堆上。开头是指向它的类的指针，接着是引用计数，后面才是存的那些属性。</li>
+<li>类在运行时就是一份说明。里面记着父类是谁、实例有多大、属性放在哪、方法表在哪。旁边还有一份编译时写好的描述，里面是类名、有哪些属性和方法。</li>
+<li>纯 Swift 类没有单独的元类。实例方法和类方法都记在这份说明上。</li>
+<li>只有继承 <code>NSObject</code> 才有元类。实例靠开头的 isa 指针找到自己的类，类再靠 isa 找到元类。最顶上那个元类的 isa 指回自己，它的父类是 <code>NSObject</code>。实例方法记在类上，类方法记在元类上。</li>
+</ul>
+<hr>
+<h2 id="heading-28" data-id="heading-28">六、并发</h2>
+<h3 id="heading-29" data-id="heading-29">24. Swift async/await 和 GCD 有什么区别？await 会不会堵住当前线程？</h3>
+<ul>
+<li><code>await</code> 挂起的是当前任务，线程不会干等，可以转去跑别的任务。</li>
+<li>GCD 是把闭包提交到队列。<code>sync</code>、信号量，或者在锁上干等，才会一直占着线程。</li>
+<li>别在异步函数里用信号量把 <code>await</code> 改成死等。Swift 用来跑这些任务的线程不多。线程都堵在等待上，别的任务就没线程可跑，严重时还会自己等自己，谁也继续不了。</li>
+</ul>
+<hr>
+<h3 id="heading-30" data-id="heading-30">25. actor 和类有什么差别？赋值之后谁和谁共享状态？</h3>
+<ul>
+<li>actor 也是引用类型。赋值之后还是同一个 actor，两边看到的是同一份状态。</li>
+<li>它里面能改的数据，同一时间只让一个任务碰。没遇到 <code>await</code> 时别人进不来；执行到 <code>await</code>，这个任务先停下来，别的任务才能进来改。</li>
+<li>类没有这层隔离。多个任务可以同时改同一个类的属性。</li>
+<li>actor 自动遵循 <code>Sendable</code>，可以把这个引用交给别的任务。交出去的是引用，里面的状态仍然只在这个 actor 上改。</li>
+</ul>
+<hr>
+<h3 id="heading-31" data-id="heading-31">26. async let、TaskGroup、Task、Task.detached 分别是谁的子任务？</h3>
+<ul>
+<li><code>async let</code> 和 <code>TaskGroup</code> 创建的是当前任务的子任务。它们出了当前这段代码就会被取消，父任务取消时也会一起取消。</li>
+<li><code>Task { }</code> 不是子任务。它沿用当前 actor、优先级，以及任务上带着的局部值（task local），但外层取消或者函数返回，都不会自动取消它。要停就自己留着这个 <code>Task</code>，调用 <code>cancel()</code>。</li>
+<li><code>Task.detached</code> 也不是子任务，而且不沿用当前 actor、优先级和任务上的局部值。</li>
+</ul>
+<hr>
+<h3 id="heading-32" data-id="heading-32">27. 取消为什么是协作式的？页面已经消失，请求为什么还在跑？</h3>
+<ul>
+<li>取消只是把任务标成已取消，不会把正在跑的代码掐断。</li>
+<li>任务要自己看 <code>Task.isCancelled</code>，或者走到会检查取消的接口，比如 <code>Task.checkCancellation()</code>，才会停。同步死循环不看这个标记，就会一直跑。</li>
+<li>页面里另外 <code>Task { }</code> 出来的任务没有父子关系，页面没了也不会把它一起取消。要停，就在离开页面时自己 <code>cancel()</code>。</li>
+</ul>
+<hr>
+<h3 id="heading-33" data-id="heading-33">28. Sendable 保证什么？@unchecked Sendable 在承诺什么？</h3>
+<ul>
+<li><code>Sendable</code> 表示这个值可以跨 actor、跨任务传，不会因此数据竞争。值类型传过去的是副本。</li>
+<li>属性都是 <code>Sendable</code> 的结构体和枚举可以遵循它。actor 自动遵循。类一般要是 <code>final</code>，属性还得是不可变的 <code>Sendable</code>。</li>
+<li><code>@unchecked Sendable</code> 是你自己打包票：编译器不再检查。你得自己保证不会有两处同时改它，比如把它关在 actor 里，或者自己加锁。保证错了，数据竞争还在。</li>
+</ul>
+<hr>
+<h3 id="heading-34" data-id="heading-34">29. @MainActor 保证的是什么？界面卡顿时先看什么？</h3>
+<ul>
+<li><code>@MainActor</code> 保证这段代码在主 actor 上执行，也就是跑在主线程上。</li>
+<li>界面卡的时候，先看主线程上有没有很重的计算、有没有在干等，以及有没有本来可以放到别的 actor 上做的事。</li>
+<li>它只管代码在哪跑，不会把重活自动变成异步。标上之后，照样可以堵主线程。</li>
+</ul>
+<hr>
+<h3 id="heading-35" data-id="heading-35">30. actor 重入是什么？await 之后写缓存为什么会写错？</h3>
+<ul>
+<li>actor 只保证没停在 <code>await</code> 上的时候，只有一个任务在跑。一到 <code>await</code>，当前任务先让开，别的调用就能进来改同一份数据。</li>
+<li>先看到缓存里没有，再去下载，回来不管中间发生了什么都写入，可能盖掉这段时间里已经写好的结果。两个调用都发现没有缓存，还会各下载一遍。</li>
+<li>把正在下载的 <code>Task</code> 放进缓存。后来的调用发现已经在下了，就等这一次的结果，不要再下一遍。</li>
+</ul>
+<pre><code>actor ImageCache {
+    private var cache: [URL: Data] = [:]
+    func image(for url: URL) async throws -&gt; Data {
+        if let cached = cache[url] { return cached }
+        let data = try await download(url) // 停在这里等的时候，其他调用可以进来
+        cache[url] = data // 可能盖掉这段时间里已经写好的结果
+        return data
+    }
+}</code></pre>
+<hr>
+<h3 id="heading-36" data-id="heading-36">31. 怎么把 completion 或 delegate 桥成 async？调用方不再等待时怎么结束？</h3>
+<ul>
+<li>只回调一次，用 <code>withCheckedContinuation</code>；会失败就用 <code>withCheckedThrowingContinuation</code>。拿到结果后必须刚好调用一次 <code>resume</code>：一次都不调，等结果的任务会一直停着；调两次，运行时直接报错。</li>
+<li>会回调很多次，用 <code>AsyncStream</code>。取消或者对象释放时调用 <code>finish</code>，把这条流结束掉。</li>
+<li>调用方不再等了，原来的回调不会自己停。取消时要把这个回调注销掉，可以放在 <code>withTaskCancellationHandler</code> 里做。</li>
+</ul>
+<hr>
+<h3 id="heading-37" data-id="heading-37">32. Swift 6 语言模式把什么变成了编译错误？它和编译器版本是一回事吗？</h3>
+<ul>
+<li>Swift 6 语言模式把数据竞争从警告变成编译错误。一份能改的数据被不同的 actor 或任务一起用，又没有标 <code>Sendable</code>，也没有关在某个 actor 里，就编不过。</li>
+<li>编译器版本和语言模式是两回事。Swift 6 编译器仍可以按 Swift 5 模式编译某个 target，这时同样的问题多半还是警告。</li>
+<li>有个例外：一个值就算没有标 <code>Sendable</code>，只要编译器能证明把它交给别的任务之后，你这边不再用，就允许传过去。</li>
+</ul>
+<hr>
+<h3 id="heading-38" data-id="heading-38">33. Swift 6.2 之后，一个 nonisolated async 函数默认跑在哪？@concurrent 做什么？</h3>
+<ul>
+<li>没开新开关时，<code>nonisolated async</code> 还是会跑到公共的并发线程池上，这是 6.2 之前的行为。</li>
+<li>打开 <code>NonisolatedNonsendingByDefault</code> 之后，这种函数默认留在调用它的那个 actor 上，不再自己跑到线程池里。Xcode 的 Approachable Concurrency 会打开这个开关。</li>
+<li><code>@concurrent</code> 用来明确说：离开调用方，放到并发线程池里跑。这样参数和返回值就必须能安全地交给别的 actor 或任务。这个开关开没开，同一段函数跑的地方不一样。</li>
+</ul>
+<hr>
+<h2 id="heading-39" data-id="heading-39">参考</h2>
+<ul>
+<li><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/" target="_blank" rel="noopener noreferrer">The Swift Programming Language</a>：类型、可选值、协议、内存和并发的语言定义。</li>
+<li><a href="https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/02_Swift_interview_questions/theory.md" target="_blank" rel="noopener noreferrer">ChenYilong/iOSInterviewQuestions</a>：类和结构体、泛型、<code>static</code> / <code>class</code>、<code>weak</code> / <code>unowned</code> 这些基础必考题的常见问法。</li>
+<li><a href="https://juejin.cn/post/6855977028689887240" target="_blank" rel="noopener noreferrer">Swift 方法派发</a>：直接调用、虚表、witness table 和 <code>objc_msgSend</code>。</li>
+<li><a href="https://github.com/swiftlang/swift-evolution/blob/main/proposals/0302-concurrent-value-and-concurrent-closures.md" target="_blank" rel="noopener noreferrer">SE-0302 Sendable</a>、<a href="https://github.com/swiftlang/swift-evolution/blob/main/proposals/0306-actors.md" target="_blank" rel="noopener noreferrer">SE-0306 actor</a>、<a href="https://github.com/swiftlang/swift-evolution/blob/main/proposals/0461-async-function-isolation.md" target="_blank" rel="noopener noreferrer">SE-0461</a>：并发隔离、<code>Sendable</code>，以及 <code>nonisolated async</code> 默认跑在调用方。</li>
+</ul>
+
+</div></div></article> <div class="article-end" data-v-539963b4 data-v-61fb5e44><div class="rank-entry-bottom" data-v-539963b4 data-v-61fb5e44><!----></div> <div class="tag-list-box" data-v-539963b4 data-v-61fb5e44><!----><!----><!----></div></div> <!----><!----><!----><!----><!----></div> <div id="sidebar-container" class="sidebar article-sidebar" data-v-4ed317c2 data-v-61fb5e44><div class="sidebar-block author-block author-block-container pure" data-v-7e7e812a data-v-1902877e data-v-4ed317c2><a href="/user/4213782311876343/posts" target="_blank" rel="" class="jj-link user-item item" data-v-65b50b51 data-v-1902877e><div class="avatar jj-avatar avatar" data-v-03256cc6 data-v-1902877e><img loading="eager" src="assets/avatar.awebp"" alt="avatar" class="lazy avatar-img immediate" data-v-5244ef91 data-v-03256cc6> </div> <div class="info-box" style="visibility:hidden;" data-v-65b50b51 data-v-1902877e><span to="[object Object]" blank="true" class="username" data-v-292f6e48 data-v-1902877e><span class="name" style="max-width:128px;" data-v-292f6e48>
+    会飞的金鱼
+  </span> <span to="" blank="true" class="rank" data-v-23743940 data-v-292f6e48><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8AQMAAAAAMksxAAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAAA5JREFUKM9jGAWjAAcAAAIcAAE27nY6AAAAAElFTkSuQmCC" alt="创作等级LV.5" title="创作等级LV.5" class="lazy" style="aspect-ratio:NaN;" data-v-5244ef91 data-v-23743940></span> <!----> <!----> </span> <div title="IT" class="position" data-v-65b50b51 data-v-1902877e>
+        IT
+      </div> <div class="extra-container" data-v-65b50b51 data-v-1902877e><!----> </div></div></a> <div class="count-container" data-v-7e7e812a data-v-1902877e><a href="/user/4213782311876343/posts" target="_blank" rel="" class="jj-link stat-item item" data-v-65b50b51 data-v-1902877e><div class="count" style="display:none;" data-v-65b50b51 data-v-1902877e>
+        106
+      </div> <div data-v-65b50b51 data-v-1902877e>文章</div></a> <a href="/user/4213782311876343/posts" target="_blank" rel="" class="jj-link stat-item item" data-v-65b50b51 data-v-1902877e><div class="count" style="display:none;" data-v-65b50b51 data-v-1902877e>
+        372k
+      </div> <div data-v-65b50b51 data-v-1902877e>阅读</div></a> <a href="/user/4213782311876343/followers" target="_blank" rel="" class="jj-link stat-item item" data-v-65b50b51 data-v-1902877e><div class="count" style="display:none;" data-v-65b50b51 data-v-1902877e>
+        473
+      </div> <div data-v-65b50b51 data-v-1902877e>粉丝</div></a></div> <div class="operate-btn hidden" style="position:relative;z-index:2;min-height:36px;" data-v-7e7e812a data-v-1902877e><!----><!----><!----></div> <!----></div> <div class="sticky-block-box" data-v-4ed317c2><nav class="article-catalog catalog-block local-catalog" data-local-catalog="true" data-v-6239701c data-v-16ed86c3 data-v-4ed317c2><div class="catalog-title" data-v-6239701c><div data-v-6239701c>目录</div> <div class="direction" data-v-6239701c><div class="word" data-v-6239701c>收起</div> <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-rotate" data-v-6239701c data-v-6239701c><g id="&amp;#229;&amp;#177;&amp;#149;&amp;#229;&amp;#188;&amp;#128;" data-v-6239701c data-v-6239701c><path id="&amp;#232;&amp;#183;&amp;#175;&amp;#229;&amp;#190;&amp;#132;" fill-rule="evenodd" clip-rule="evenodd" d="M5.99854 7.93206L10.0644 3.86619C10.162 3.76856 10.3203 3.76856 10.418 3.86619L10.7715 4.21975C10.8691 4.31738 10.8691 4.47567 10.7715 4.5733L6.35209 8.99272C6.15683 9.18798 5.84025 9.18798 5.64498 8.99272L1.22557 4.5733C1.12794 4.47567 1.12794 4.31738 1.22557 4.21975L1.57912 3.86619C1.67675 3.76856 1.83504 3.76856 1.93267 3.86619L5.99854 7.93206Z" fill="#8A919F" data-v-6239701c data-v-6239701c></path></g></svg></div></div> <div class="catalog-body unfold" data-v-6239701c><ul class="catalog-list" style="margin-top:0px;" data-v-6239701c><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-0" title="一、类型与可选值" class="catalog-aTag d1-aTag-title">
+      一、类型与可选值
+    </a></div> <ul class="sub-list"><li class="item d2"><div class="a-container"><a href="#heading-1" title="1. 类、结构体、枚举有什么差别？赋值之后谁和谁共享状态？" class="catalog-aTag d2-aTag-title">
+      1. 类、结构体、枚举有什么差别？赋值之后谁和谁共享状态？
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-2" title="2. 枚举的关联值和原始值有什么区别？" class="catalog-aTag d2-aTag-title">
+      2. 枚举的关联值和原始值有什么区别？
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-3" title="3. 可选值是什么？接口边界怎么处理，什么情况下 ! 是合理的？" class="catalog-aTag d2-aTag-title">
+      3. 可选值是什么？接口边界怎么处理，什么情况下 ! 是合理的？
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-4" title="4. is、as、as?、as! 分别做什么？" class="catalog-aTag d2-aTag-title">
+      4. is、as、as?、as! 分别做什么？
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-5" title="5. throws、try?、try!、Result 怎么选？defer 什么时候执行？typed throws 适合用在哪？" class="catalog-aTag d2-aTag-title">
+      5. throws、try?、try!、Result 怎么选？defer 什么时候执行？typed throws 适合用在哪？
+    </a></div> <!----></li></ul></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-6" title="二、属性、访问控制与泛型" class="catalog-aTag d1-aTag-title">
+      二、属性、访问控制与泛型
+    </a></div> <ul class="sub-list"><li class="item d2"><div class="a-container"><a href="#heading-7" title="6. 存储属性、计算属性、lazy、属性观察器有什么区别？扩展为什么不能加存储属性？" class="catalog-aTag d2-aTag-title">
+      6. 存储属性、计算属性、lazy、属性观察器有什么区别？扩展为什么不能加存储属性？
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-8" title="7. static 和 class 修饰类型成员有什么区别？" class="catalog-aTag d2-aTag-title">
+      7. static 和 class 修饰类型成员有什么区别？
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-9" title="8. 访问控制从宽到窄是什么？private 和 fileprivate 差在哪？" class="catalog-aTag d2-aTag-title">
+      8. 访问控制从宽到窄是什么？private 和 fileprivate 差在哪？
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-10" title="9. 泛型解决什么问题？它和 Any 有什么差别？" class="catalog-aTag d2-aTag-title">
+      9. 泛型解决什么问题？它和 Any 有什么差别？
+    </a></div> <!----></li></ul></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-11" title="三、内存、闭包与拷贝" class="catalog-aTag d1-aTag-title">
+      三、内存、闭包与拷贝
+    </a></div> <ul class="sub-list"><li class="item d2"><div class="a-container"><a href="#heading-12" title="10. ARC 是什么？strong、weak、unowned 怎么选？" class="catalog-aTag d2-aTag-title">
+      10. ARC 是什么？strong、weak、unowned 怎么选？
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-13" title="11. 这段代码为什么循环引用？weak 和 unowned 怎么选？" class="catalog-aTag d2-aTag-title">
+      11. 这段代码为什么循环引用？weak 和 unowned 怎么选？
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-14" title="12. 闭包是引用类型吗？@escaping 改变了什么？为什么逃逸闭包不能捕获 inout？" class="catalog-aTag d2-aTag-title">
+      12. 闭包是引用类型吗？@escaping 改变了什么？为什么逃逸闭包不能捕获 inout？
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-15" title="13. 为什么 Array、String、Dictionary、Set 是值类型？copy-on-write 怎么发生？自定义结构体为什么不会自动有？" class="catalog-aTag d2-aTag-title">
+      13. 为什么 Array、String、Dictionary、Set 是值类型？copy-on-write 怎么发生？自定义结构体为什么不会自动有？
+    </a></div> <!----></li></ul></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-16" title="四、协议" class="catalog-aTag d1-aTag-title">
+      四、协议
+    </a></div> <ul class="sub-list"><li class="item d2"><div class="a-container"><a href="#heading-17" title="14. 为什么说 Swift 是面向协议编程的？" class="catalog-aTag d2-aTag-title">
+      14. 为什么说 Swift 是面向协议编程的？
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-18" title="15. Swift 协议和 OC 协议有什么区别？" class="catalog-aTag d2-aTag-title">
+      15. Swift 协议和 OC 协议有什么区别？
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-19" title="16. some 和 any 差在哪？" class="catalog-aTag d2-aTag-title">
+      16. some 和 any 差在哪？
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-20" title="17. 协议扩展里写了方法，为什么有时调用不到类型自己的实现？" class="catalog-aTag d2-aTag-title">
+      17. 协议扩展里写了方法，为什么有时调用不到类型自己的实现？
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-21" title="18. 带关联类型的协议为什么往往不能直接写成 any？主关联类型解决了什么？" class="catalog-aTag d2-aTag-title">
+      18. 带关联类型的协议为什么往往不能直接写成 any？主关联类型解决了什么？
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-22" title="19. 什么是条件遵循？[String] 为什么可以是 Sendable？" class="catalog-aTag d2-aTag-title">
+      19. 什么是条件遵循？[String] 为什么可以是 Sendable？
+    </a></div> <!----></li></ul></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-23" title="五、方法调用与对象布局" class="catalog-aTag d1-aTag-title">
+      五、方法调用与对象布局
+    </a></div> <ul class="sub-list"><li class="item d2"><div class="a-container"><a href="#heading-24" title="20. Swift 方法调用是如何实现的？" class="catalog-aTag d2-aTag-title">
+      20. Swift 方法调用是如何实现的？
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-25" title="21. Swift 协议的内部结构是什么？" class="catalog-aTag d2-aTag-title">
+      21. Swift 协议的内部结构是什么？
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-26" title="22. 把协议当成类型（any P）时，运行时里面有什么？" class="catalog-aTag d2-aTag-title">
+      22. 把协议当成类型（any P）时，运行时里面有什么？
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-27" title="23. Swift 实例对象、类、元类的内部结构如何？" class="catalog-aTag d2-aTag-title">
+      23. Swift 实例对象、类、元类的内部结构如何？
+    </a></div> <!----></li></ul></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-28" title="六、并发" class="catalog-aTag d1-aTag-title">
+      六、并发
+    </a></div> <ul class="sub-list"><li class="item d2"><div class="a-container"><a href="#heading-29" title="24. Swift async/await 和 GCD 有什么区别？await 会不会堵住当前线程？" class="catalog-aTag d2-aTag-title">
+      24. Swift async/await 和 GCD 有什么区别？await 会不会堵住当前线程？
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-30" title="25. actor 和类有什么差别？赋值之后谁和谁共享状态？" class="catalog-aTag d2-aTag-title">
+      25. actor 和类有什么差别？赋值之后谁和谁共享状态？
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-31" title="26. async let、TaskGroup、Task、Task.detached 分别是谁的子任务？" class="catalog-aTag d2-aTag-title">
+      26. async let、TaskGroup、Task、Task.detached 分别是谁的子任务？
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-32" title="27. 取消为什么是协作式的？页面已经消失，请求为什么还在跑？" class="catalog-aTag d2-aTag-title">
+      27. 取消为什么是协作式的？页面已经消失，请求为什么还在跑？
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-33" title="28. Sendable 保证什么？@unchecked Sendable 在承诺什么？" class="catalog-aTag d2-aTag-title">
+      28. Sendable 保证什么？@unchecked Sendable 在承诺什么？
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-34" title="29. @MainActor 保证的是什么？界面卡顿时先看什么？" class="catalog-aTag d2-aTag-title">
+      29. @MainActor 保证的是什么？界面卡顿时先看什么？
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-35" title="30. actor 重入是什么？await 之后写缓存为什么会写错？" class="catalog-aTag d2-aTag-title">
+      30. actor 重入是什么？await 之后写缓存为什么会写错？
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-36" title="31. 怎么把 completion 或 delegate 桥成 async？调用方不再等待时怎么结束？" class="catalog-aTag d2-aTag-title">
+      31. 怎么把 completion 或 delegate 桥成 async？调用方不再等待时怎么结束？
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-37" title="32. Swift 6 语言模式把什么变成了编译错误？它和编译器版本是一回事吗？" class="catalog-aTag d2-aTag-title">
+      32. Swift 6 语言模式把什么变成了编译错误？它和编译器版本是一回事吗？
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-38" title="33. Swift 6.2 之后，一个 nonisolated async 函数默认跑在哪？@concurrent 做什么？" class="catalog-aTag d2-aTag-title">
+      33. Swift 6.2 之后，一个 nonisolated async 函数默认跑在哪？@concurrent 做什么？
+    </a></div> <!----></li></ul></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-39" title="参考" class="catalog-aTag d1-aTag-title">
+      参考
+    </a></div> </li></ul></div></nav> <!----> <!----> <div class="adverts-list" data-v-0eca8145 data-v-4ed317c2></div> <!----> <!----></div> <!----></div> <!----> <!----> <div id="article-suspended-panel" data-v-539963b4 data-v-61fb5e44></div> <!----></div> <!----><!----><!----><!----><!----><!----><!----></main> <!----></div> <!----></div> <!----> <div class="global-component-box"><!----></div> <!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----> <!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----></div></div></div>
+<script id="local-catalog-script">
+(function () {
+  'use strict';
+  var catalog = document.querySelector('[data-local-catalog="true"]');
+  if (!catalog) return;
+  var links = Array.prototype.slice.call(catalog.querySelectorAll('a[href^="#heading-"]'));
+  var body = catalog.querySelector('.catalog-body');
+  var list = catalog.querySelector('.catalog-list');
+  var title = catalog.querySelector('.catalog-title');
+  var direction = catalog.querySelector('.catalog-title .direction');
+  var directionWord = direction && direction.querySelector('.word');
+  var headings = links.map(function (link) {
+    return document.getElementById(decodeURIComponent(link.hash.slice(1)));
+  }).filter(Boolean);
+
+  function setActive(index, keepCatalogVisible) {
+    links.forEach(function (link, i) {
+      link.classList.toggle('active', i === index);
+      var li = link.closest('li');
+      if (li) li.classList.toggle('active', i === index);
+    });
+    if (index >= 0 && body && !body.classList.contains('collapse')) {
+      var activeLink = links[index];
+      var activeItem = activeLink.closest('li');
+      if (activeItem) {
+        // offsetTop is relative to the nearest positioned ancestor, which is the
+        // link's own .a-container and therefore unsuitable for catalog scrolling.
+        var activeTop = activeItem.getBoundingClientRect().top - body.getBoundingClientRect().top + body.scrollTop;
+        // Always move the clicked/current catalog entry to a stable, visible
+        // position rather than only scrolling when it is already off-screen.
+        var targetTop = Math.max(0, activeTop - body.clientHeight * 0.3);
+        if (body.scrollTo) {
+          body.scrollTo({ top: targetTop, behavior: 'auto' });
+        } else {
+          body.scrollTop = targetTop;
+        }
+      }
+    }
+  }
+
+  function currentHeadingIndex() {
+    var offset = 28;
+    for (var i = headings.length - 1; i >= 0; i--) {
+      if (headings[i].getBoundingClientRect().top - offset <= 0) return i;
+    }
+    return headings.length ? 0 : -1;
+  }
+
+  function ensureCatalogScrollPadding() {
+    if (!body || !list) return;
+    // The catalog can then scroll its final entries to the same visible
+    // position as earlier entries, instead of stopping at the list's end.
+    list.style.paddingBottom = Math.max(16, body.clientHeight * 0.75) + 'px';
+  }
+
+  var activeLockIndex = null;
+
+  function syncActive() {
+    var index = activeLockIndex === null ? currentHeadingIndex() : activeLockIndex;
+    setActive(index, true);
+  }
+
+  function releaseActiveLock(target) {
+    var startedAt = performance.now();
+    function check() {
+      if (activeLockIndex === null) return;
+      var arrived = Math.abs(target.getBoundingClientRect().top - 28) < 2;
+      var timedOut = performance.now() - startedAt > 10000;
+      if (arrived || timedOut) {
+        activeLockIndex = null;
+        syncActive();
+        return;
+      }
+      requestAnimationFrame(check);
+    }
+    requestAnimationFrame(check);
+  }
+
+  links.forEach(function (link, index) {
+    link.addEventListener('click', function (event) {
+      event.preventDefault();
+      var target = headings[index];
+      if (!target) return;
+      // Keep the right-hand catalog pinned to the clicked entry while the
+      // left-hand article is still animating, instead of highlighting headings
+      // that the page passes through during smooth scrolling.
+      activeLockIndex = index;
+      setActive(index, true);
+      window.scrollTo({ top: window.pageYOffset + target.getBoundingClientRect().top - 28, behavior: 'smooth' });
+      if (history.replaceState) history.replaceState(null, '', link.hash);
+      releaseActiveLock(target);
+    });
+  });
+
+  if (direction) {
+    direction.addEventListener('click', function (event) {
+      event.stopPropagation();
+      var collapsed = body.classList.toggle('collapse');
+      body.classList.toggle('unfold', !collapsed);
+      if (title) title.classList.toggle('collapse', collapsed);
+      if (directionWord) directionWord.textContent = collapsed ? '展开' : '收起';
+    });
+  }
+
+  window.addEventListener('scroll', syncActive, { passive: true });
+  window.addEventListener('resize', function () {
+    ensureCatalogScrollPadding();
+    syncActive();
+  });
+  ensureCatalogScrollPadding();
+  syncActive();
+})();
+</script>
+
+</body>
+</html>
