@@ -176,7 +176,7 @@
     <li>用 <code>var</code> 定下来的是变量的类型，不是值。变量还能重新赋值，但只能赋同一种类型的值。</li>
     <li>变量声明成 <code>Object</code> 时，只能直接调用 Object 上本来就有的方法。要用某个具体类的方法，得先判断类型，或者强制转换。</li>
     <li><code>dynamic</code> 可以装任何值，包括 null。对它调用任何方法，编译器都不报错。</li>
-    <li>空安全：类型后面加 <code>?</code>，表示这个值可以是 null。<code>!</code> 表示“我确定这里不是 null”，其实是 null 就抛异常。<code>late</code> 表示先声明、稍后再赋值，还没赋值就去读，会抛 <code>LateInitializationError</code>。<code>late final</code> 只能赋一次。</li>
+    <li>空安全：类型后面加 <code>?</code>，表示这个值可以是 null。<code>!</code> 表示“我确定这个值不是 null”，其实是 null 就抛异常。<code>late</code> 表示先声明、稍后再赋值，还没赋值就去读，会抛 <code>LateInitializationError</code>。<code>late final</code> 只能赋一次。</li>
   </ul>
   <p><strong>追问：</strong></p>
   <ul>
@@ -312,7 +312,7 @@
   <p><strong>结论：</strong>Isolate 是 Dart 用来真正并行的单位。每个 isolate 有自己的内存和事件循环，不能直接改另一个 isolate 里的对象，只能发消息。这种各自一份内存、只发消息的做法叫 actor 模型。Future 只是当前这条 isolate 上稍后才有的结果，不会并行。</p>
   <p><strong>机制：</strong></p>
   <ul>
-    <li>内存不共用，所以不用加锁。发消息的出口叫 <code>SendPort</code>，对面用 <code>ReceivePort</code> 收。送过去的数据通常会复制一份。少数情况可以把一块内存直接交给对方，交出去之后原来这边不能再使用。</li>
+    <li>内存不共用，所以不用加锁。发消息的出口叫 <code>SendPort</code>，对面用 <code>ReceivePort</code> 收。送过去的数据通常会复制一份。少数情况可以把一块内存直接交给对方，交出去之后原来的 isolate 不能再使用。</li>
     <li>Dart 虚拟机可以把多个 isolate 安排到不同的系统线程上同时跑。说“Dart 没有多线程”不准确：没有的是多个线程一起改同一块内存这种写法。Web 上 isolate 的实现不一样，不能假设和手机上完全相同。</li>
     <li><code>compute</code> 和 <code>Isolate.run</code> 适合做完一次、拿回一个结果。<code>Isolate.spawn</code> 适合需要一直待在后台、反复收消息的任务。</li>
     <li>解析很大的 JSON、压缩图片、加密，不要放在负责界面的那条主 isolate 上。</li>
@@ -349,7 +349,7 @@
   <p><strong>机制：</strong></p>
   <ul>
     <li><strong>Embedder</strong>：对接操作系统的那一层。负责窗口和画布、创建线程、把系统事件送进引擎，以及注册插件。</li>
-    <li><strong>Engine</strong>：主要是 C++，包含 Dart 运行时、文字、图形和平台事件，通过 <code>dart:ui</code> 交给上面用。画像素的库以前是 Skia，较新版本在多个平台换成 Impeller。</li>
+    <li><strong>Engine</strong>：主要是 C++，包含 Dart 运行时、文字、图形和平台事件，通过 <code>dart:ui</code> 交给 Framework 用。画像素的库以前是 Skia，较新版本在多个平台换成 Impeller。</li>
     <li><strong>Framework</strong>：用 Dart 写的框架。从下往上大致是绘制、手势、渲染、Widget、Material / Cupertino。业务代码通常导入 <code>package:flutter/material.dart</code>，而不是只导入 <code>dart:ui</code>。</li>
   </ul>
   <p><strong>追问：</strong></p>
@@ -553,7 +553,7 @@
   <ul>
     <li>隐式动画：<code>AnimatedContainer</code>、<code>AnimatedOpacity</code>、<code>AnimatedPadding</code>。目标值变了，框架在 <code>duration</code> 里自己过渡。</li>
     <li>显式动画：<code>AnimationController</code> 产生 0 到 1 的进度，<code>Tween</code> 把进度换成宽度、透明度这种实际值。界面用 <code>AnimatedBuilder</code> 或 <code>FadeTransition</code> 听这个值。</li>
-    <li>屏幕每刷新一次会发一个信号，动画按这个信号往前走，不在两次刷新之间空转。这个信号叫 vsync。跟这个信号走的计时器叫 Ticker，一般由 <code>SingleTickerProviderStateMixin</code> 提供。一个 State 要同时跑好几个动画，用 <code>TickerProviderStateMixin</code>。页面不在屏幕上时，这个节拍会停。</li>
+    <li>屏幕每刷新一次会发一个信号，动画按这个信号往前走，不在两次刷新之间空转。这个信号叫 vsync。跟这个信号走的计时器叫 Ticker，一般由 <code>SingleTickerProviderStateMixin</code> 提供。一个 State 要同时跑好几个动画，用 <code>TickerProviderStateMixin</code>。页面不在屏幕上时，Ticker 会停。</li>
     <li><code>AnimationController</code> 要在 <code>dispose</code> 里释放，否则 Ticker 还挂着。</li>
   </ul>
   <p><strong>追问：</strong></p>
@@ -571,7 +571,7 @@
   <p><strong>机制：</strong></p>
   <ul>
     <li>这个允许范围的类型叫 <code>BoxConstraints</code>，里面是最小宽度、最大宽度、最小高度、最大高度。子组件交回去的尺寸必须落在里面。子组件不能自己决定放在父组件的哪个位置。</li>
-    <li><code>Row</code>、<code>Column</code> 里的 <code>Expanded</code>，是让子组件把分到的那段主轴空间占满。<code>Flexible</code> 是最多用这么多，子组件可以更小。这两个都必须放在 <code>Row</code>、<code>Column</code> 或 <code>Flex</code> 里，并且这个方向上的最大尺寸得是有限的。</li>
+    <li><code>Row</code>、<code>Column</code> 里的 <code>Expanded</code>，是让子组件把分到的那段主轴空间占满。<code>Flexible</code> 是最多用这么多，子组件可以更小。这两个都必须放在 <code>Row</code>、<code>Column</code> 或 <code>Flex</code> 里，并且主轴上的最大尺寸得是有限的。</li>
     <li>纵向的 <code>ListView</code> 或 <code>SingleChildScrollView</code> 沿着滚动方向给出的是“多高都行”的无限高度。里面再放 <code>Expanded</code>，或者再放一个自己也要无限高的 <code>ListView</code>，就会报无界高度：一边要一个有限的上限，一边给不出。</li>
   </ul>
   <p><strong>追问：</strong></p>
@@ -629,7 +629,7 @@
   </ul>
   <p><strong>追问：</strong></p>
   <ul>
-    <li>三件套各管一段：Widget 暴露给外面的配置，Element 负责更新和挂到树上，RenderObject 真正去算布局和绘制。</li>
+    <li>三件套各管一段：Widget 对外露出的配置，Element 负责更新和挂到树上，RenderObject 真正去算布局和绘制。</li>
     <li>算大小时必须遵守父组件给的范围，再把自己的尺寸交回去。自己放在父组件的哪个位置，由父组件决定。</li>
   </ul>
 </blockquote>
@@ -722,7 +722,7 @@
     <li><code>RepaintBoundary</code> 把一块绘制单独成一层。滚动条、动画图标重画时，就不会带着整页一起重画。每一块都是单独的一层，划得太多会多占内存，合并图层的成本也更高。</li>
     <li>长列表用 <code>ListView.builder</code>，滑到附近才创建那一项。<code>ListView(children: ...)</code> 会一次全部建完。每一项高度固定时，把高度告诉列表，省掉反复测量。每一项的 Key 用业务 id，不要在 <code>build</code> 里创建 <code>UniqueKey</code>。</li>
     <li>大图按屏幕上实际显示的像素大小来解码，把目标像素写进 <code>cacheWidth</code> 和 <code>cacheHeight</code>，并使用缓存。不要在 <code>build</code> 里当场把整张原图读进内存。上传前先压缩、缩小；大文件分段传，并带上进度、取消和重试。压缩和算哈希放到另一条 isolate，进度再用 Stream 或状态管理送回负责界面的那条。</li>
-    <li>Controller、订阅和 Timer 没在 dispose 里放开，对象会一直被抓住。这是最常见的内存泄漏，先看这里，再怀疑图片缓存。</li>
+    <li>Controller、订阅和 Timer 没在 dispose 里放开，对象会一直被抓住。这是最常见的内存泄漏，先看 dispose 里有没有放开，再怀疑图片缓存。</li>
   </ul>
   <p><strong>追问：</strong></p>
   <ul>
@@ -766,7 +766,7 @@
 
 <h3 id="a4">A4. 库的可见性</h3>
 <blockquote>
-  <p>Dart 没有 public、protected、private 这些关键字。同一个库里的声明默认同库都能用。名字以下划线开头，就只有当前这个库能用。一个文件要给外面用哪些声明，看它 <code>export</code> 了什么。</p>
+  <p>Dart 没有 public、protected、private 这些关键字。同一个库里的声明默认同库都能用。名字以下划线开头，就只有当前这个库能用。一个文件要给库外用哪些声明，看它 <code>export</code> 了什么。</p>
 </blockquote>
 
 <h3 id="a5">A5. 级联操作符 ..</h3>

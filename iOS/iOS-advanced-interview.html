@@ -24,7 +24,7 @@
 <p><a href="#heading-8" title="#heading-8">5.讲一下atomic的实现机制；为什么不能保证绝对的线程安全（最好可以结合场景来说）？</a></p>
 <p><a href="#heading-9" title="#heading-9">6. 被weak修饰的对象在被释放的时候会发生什么？是如何实现的？知道sideTable么？里面的结构可以画出来么？</a></p>
 <p><a href="#heading-63" title="#heading-63">7. 什么是野指针？如何检测？</a></p>
-<p><a href="#heading-10" title="#heading-10">8. 关联对象有什么应用，系统如何管理关联对象？其被释放的时候需要手动将所有的关联对象的指针置空么？</a></p>
+<p><a href="#heading-10" title="#heading-10">8. 关联对象有什么应用，系统如何管理关联对象？宿主对象被释放的时候，需要手动将所有的关联对象的指针置空么？</a></p>
 <p><a href="#heading-11" title="#heading-11">9. KVO的底层实现？如何取消系统默认的KVO并手动触发（给KVO的触发设定条件：改变的值符合某个条件时再触发KVO）？</a></p>
 <p><a href="#heading-64" title="#heading-64">10. KVC 的底层实现？通过 KVC 修改属性会触发 KVO 么？直接改成员变量呢？</a></p>
 <p><a href="#heading-12" title="#heading-12">11. Autoreleasepool所使用的数据结构是什么？AutoreleasePoolPage结构体了解么？</a></p>
@@ -155,7 +155,7 @@
 <span class="hljs-built_in">NSMutableString</span> *text = [<span class="hljs-string">@"hello"</span> mutableCopy];
 person.name = text;   <span class="hljs-comment">// copy：属性里是一份不可变副本</span>
 [text appendString:<span class="hljs-string">@"!"</span>];
-<span class="hljs-comment">// person.name 仍是 @"hello"。如果属性是 strong，这里会变成 @"hello!"</span>
+<span class="hljs-comment">// person.name 仍是 @"hello"。如果属性是 strong，person.name 会变成 @"hello!"</span>
 </code></pre>
 <ul>
 <li>赋进来的本来就是不可变 <code>NSString</code> 时，<code>copy</code> 通常返回原对象，和 <code>strong</code> 一样，只是 retain。</li>
@@ -172,7 +172,7 @@ person.name = text;   <span class="hljs-comment">// copy：属性里是一份不
 <li>atomic为什么不能保证绝对的线程安全？
 <ol>
 <li>atomic在getter/setter方法中加锁，仅保证了存取时的线程安全，假设我们的属性是<code>@property(atomic)NSMutableArray *array;</code>可变的容器时,无法保证对容器的修改是线程安全的</li>
-<li>在编译器自动生产的getter/setter方法，最终会调用<code>objc_getProperty</code>和<code>objc_setProperty</code>方法存取属性，在此方法内部保证了读写时的线程安全的，当我们重写getter/setter方法时，就只能依靠自己在getter/setter中保证线程安全</li>
+<li>在编译器自动生产的getter/setter方法，最终会调用<code>objc_getProperty</code>和<code>objc_setProperty</code>方法存取属性，在 <code>objc_getProperty</code> 和 <code>objc_setProperty</code> 内部保证了读写时的线程安全的，当我们重写getter/setter方法时，就只能依靠自己在getter/setter中保证线程安全</li>
 </ol>
 </li>
 </ol>
@@ -213,7 +213,7 @@ runTime会把对weak修饰的对象放到一个全局的哈希表中，用 weak 
 </ul>
 <blockquote><p>一句话：野指针是「人没了，地址还在」。对象属性用 <code>weak</code> 而不是 <code>assign</code>；调试用 Zombie 看是谁被提前释放，用 ASan 把现场钉死。</p></blockquote>
 
-<h3  class="heading" id="heading-10" data-id="heading-10">8. 关联对象有什么应用，系统如何管理关联对象？其被释放的时候需要手动将所有的关联对象的指针置空么？<span></span></h3>
+<h3  class="heading" id="heading-10" data-id="heading-10">8. 关联对象有什么应用，系统如何管理关联对象？宿主对象被释放的时候，需要手动将所有的关联对象的指针置空么？<span></span></h3>
 <ol>
 <li>关联对象有什么应用？<br>
 一般用于在分类中给类添加实例变量</li>
@@ -225,7 +225,7 @@ runTime会把对weak修饰的对象放到一个全局的哈希表中，用 weak 
 新值不是 nil，并且策略是 <code>retain</code>，就对新值 retain 一次（多留一份引用）。<br>
 新值是 nil，就删掉旧的那一条。<br>
 旧值还在，并且当时的策略是 <code>retain</code>，就对旧值 release 一次。</li>
-<li>其被释放的时候需要手动将所有的关联对象的指针置空么？<br>
+<li>宿主对象被释放的时候，需要手动将所有的关联对象的指针置空么？<br>
 注：对这个问题我的理解是：当对象被释放时，需要手动移除该对象所设置的关联对象吗？<br>
 不需要，因为在对象的dealloc中，若发现对象有关联对象时，会调用<code>_object_remove_assocations</code>方法来移除所有的关联对象，并根据内存策略，来判断是否需要对关联对象的值进行release</li>
 </ol>
@@ -378,7 +378,7 @@ runTime会把对weak修饰的对象放到一个全局的哈希表中，用 weak 
 <li><strong>receiver 是 nil</strong>：直接返回。对象返回值是 <code>nil</code>，整数返回值是 0，不会崩。不要指望 nil 接收者去执行你的方法。</li>
 <li><strong>查缓存</strong>：用 receiver 的 isa 找到类，先查这个类的方法缓存。命中就把 IMP 取出来调用。</li>
 <li><strong>查方法列表</strong>：缓存没有，就扫当前类的方法列表；还没有就顺着 superclass 继续，每一级都先看缓存再看列表，直到根类。</li>
-<li><strong>找到了</strong>：调用 IMP，并把 selector 到 IMP 的映射写进这个类的缓存。</li>
+<li><strong>找到了</strong>：调用 IMP，并把 selector 到 IMP 的映射写进 receiver 的类的缓存。</li>
 <li><strong>整条链都没有</strong>，进入三次补救，失败才崩：
   <ul>
     <li>动态解析：<code>+resolveInstanceMethod:</code> 或 <code>+resolveClassMethod:</code>。这里可以用 <code>class_addMethod</code> 把实现补上，然后 runtime 再查一次。</li>
@@ -418,7 +418,7 @@ runTime会把对weak修饰的对象放到一个全局的哈希表中，用 weak 
   </tbody>
 </table>
 <h4 class="heading" id="heading-68-load" data-id="heading-68-load">+load 不要依赖「谁先编译」</h4>
-<p>同一个镜像里，没有父子关系的类谁先 <code>+load</code>，跟链接顺序有关，不能当成业务规则。分类的 <code>+load</code> 也是每个都调用，不是「后编译的覆盖先编译的」——那是普通实例方法的查找顺序，不是 <code>+load</code>。这里也不适合做锁、网络或依赖别的类已经 <code>+initialize</code> 完的事情，容易和 dyld 的加载过程卡在一起。启动阶段会跑到 <code>+load</code>，和启动耗时的关系见启动优化那一题。</p>
+<p>同一个镜像里，没有父子关系的类谁先 <code>+load</code>，跟链接顺序有关，不能当成业务规则。分类的 <code>+load</code> 也是每个都调用，不是「后编译的覆盖先编译的」——那是普通实例方法的查找顺序，不是 <code>+load</code>。<code>+load</code> 里也不适合做锁、网络，或依赖别的类已经 <code>+initialize</code> 完的事情，容易和 dyld 的加载过程卡在一起。启动阶段会跑到 <code>+load</code>，和启动耗时的关系见启动优化那一题。</p>
 <h4 class="heading" id="heading-68-init" data-id="heading-68-init">+initialize 里先看 self</h4>
 <p>子类没实现 <code>+initialize</code> 时，父类的实现会被用来初始化子类，方法里的 <code>self</code> 是子类。每个类仍然只初始化一次，但父类这份代码会进来多次。只想在父类自己初始化时做事，要判断 <code>self == [TheClass class]</code>。</p>
 <blockquote><p>一句话：<code>+load</code> 是加载时按函数指针点名，类和分类各跑各的；<code>+initialize</code> 是第一次收消息时走消息机制，会继承，分类可以盖住类。</p></blockquote>
@@ -490,7 +490,7 @@ NSLog(<span class="hljs-string">@"%d"</span>, age);   <span class="hljs-comment"
   <h5>五、一句话总结</h5>
   <blockquote><p>普通捕获是<strong>值拷贝</strong>，成员被 <code>const</code> 限定，所以只读、是<strong>值副本</strong>；<code>__block</code> 是把变量<strong>包装成结构体</strong>，让变量生命周期和 Block 绑定，Block 上堆时变量跟着上堆，并通过 <code>__forwarding</code> 保证访问指向正确的那一份，从而实现可修改。</p></blockquote>
 <h3  class="heading" id="heading-18" data-id="heading-18">21. 为什么在block外部使用__weak修饰的同时需要在内部使用__strong修饰？</h3>
-<p>外面用 <code>__weak</code>，block 只留一个弱指针，不会 retain 对象，也就是不会多留一份引用把对象拽住。block 还没开始执行，或者正在执行时，对象都可能先被释放，这个弱指针会被置成 nil，后面还拿它当有效对象就会出错。里面再写一个 <code>__strong</code> 局部变量，是在 block 真正跑起来的这一段里先 retain 一次：进来时如果它还不是 nil，这段执行期间就不会变成 nil。它仍可能在 block 开始之前就已经是 nil。</p>
+<p>外面用 <code>__weak</code>，block 只留一个弱指针，不会 retain 对象，也就是不会多留一份引用把对象拽住。block 还没开始执行，或者正在执行时，对象都可能先被释放，这个弱指针会被置成 nil，后面还拿它当有效对象就会出错。里面再写一个 <code>__strong</code> 局部变量，是在 block 真正跑起来的这一段里先 retain 一次：进来时如果这个弱指针还不是 nil，<code>__strong</code> 局部变量在这段执行期间就不会变成 nil。弱指针仍可能在 block 开始之前就已经是 nil。</p>
 <h3  class="heading" id="heading-69" data-id="heading-69">22. Block 为什么用 copy 修饰？<span id="user-content-22"></span></h3>
 <p>Block 是对象。捕获了自动变量的 Block 字面量一开始在栈上，跟着当前栈帧走。栈帧结束之后如果还有人拿着这个指针，就是悬空指针。属性用 <code>copy</code>，是为了在持有它的时候把栈 Block 拷到堆上。</p>
 <ul>
@@ -532,7 +532,7 @@ NSLog(<span class="hljs-string">@"%d"</span>, age);   <span class="hljs-comment"
   <ul>
     <li>RunLoop 和线程是<strong>一一对应</strong>的，这层映射关系保存在<strong>全局字典</strong>中（以线程为 key、RunLoop 为 value）；一个线程最多只有一个 RunLoop，RunLoop 也不能跨线程共享。</li>
     <li><strong>主线程</strong>的 RunLoop 在程序启动时（<code>UIApplicationMain</code>）<strong>默认创建</strong>并自动运行，这正是主线程执行完 <code>main</code> 里的代码后不会退出、能持续响应事件的原因。</li>
-    <li><strong>子线程</strong>的 RunLoop 是<strong>懒加载</strong>的：第一次调用 <code>[NSRunLoop currentRunLoop]</code> 时才创建，<strong>线程结束时销毁</strong>。所以子线程要保活，必须在 RunLoop 里先添加 Source 或 Timer，再调用 <code>run</code>，否则它会因为「无事可做」直接返回。</li>
+    <li><strong>子线程</strong>的 RunLoop 是<strong>懒加载</strong>的：第一次调用 <code>[NSRunLoop currentRunLoop]</code> 时才创建，<strong>线程结束时销毁</strong>。所以子线程要保活，必须在 RunLoop 里先添加 Source 或 Timer，再调用 <code>run</code>，否则 <code>run</code> 会因为「无事可做」直接返回。</li>
   </ul>
   <h5>二、一次循环做了什么：通知 Observer → 处理事件 → 休眠 → 被唤醒</h5>
   <ul>
@@ -564,7 +564,7 @@ NSLog(<span class="hljs-string">@"%d"</span>, age);   <span class="hljs-comment"
   <h5>五、如何保证一个线程常驻（常驻线程）</h5>
   <ul>
     <li><strong>线程为什么会退出</strong>：线程的入口方法（如 <code>play</code>）执行完，线程就结束了。想让线程<strong>常驻（保活）</strong>，就要让它的 RunLoop 一直跑；但 RunLoop 的 <code>run</code> 在没有任何 Source / Timer 时会<strong>立即返回</strong>，所以必须先「给它找点事做」。</li>
-    <li><strong>加 Port 的作用</strong>：<code>addPort:forMode:</code> 相当于给 RunLoop 添加一个 <strong>Source1</strong>（基于 mach port）。RunLoop 有了要监听的源、又不会被无故触发，线程就停留在<strong>「休眠但不退出」</strong>的状态，这是常驻线程的标准做法；相比加 Timer，它不会周期性醒来空耗资源。</li>
+    <li><strong>加 Port 的作用</strong>：<code>addPort:forMode:</code> 相当于给 RunLoop 添加一个 <strong>Source1</strong>（基于 mach port）。RunLoop 有了要监听的源、又不会被无故触发，线程就停留在<strong>「休眠但不退出」</strong>的状态，这是常驻线程的标准做法；相比加 Timer，这个 Source1 不会让线程周期性醒来空耗资源。</li>
     <li><strong>代码位置要注意</strong>：<code>addPort</code> 和 <code>run</code> 必须写在<strong>目标线程内部</strong>（即 <code>play</code> 方法里），因为 <code>[NSRunLoop currentRunLoop]</code> 取的是<strong>当前线程</strong>的 RunLoop，在主线程调用保活的就是主线程。题中片段是示意写法，实际这两行应放进线程入口方法。</li>
     <li><strong>之后如何派发任务</strong>：<code>performSelector:onThread:withObject:waitUntilDone:</code> 会把任务包装成 Source0 丢给目标线程的 RunLoop，RunLoop 被唤醒处理完又继续休眠，从而实现<strong>「线程常驻 + 按需执行任务」</strong>的模型，常用于单条后台线程长期处理任务的场景。</li>
     <li><strong>如何退出</strong>：常驻线程不会自己释放，不再需要时要移除 Port / 用 <code>CFRunLoopStop</code> 停掉 RunLoop，让线程自然结束，否则就是线程泄漏。</li>
@@ -678,8 +678,8 @@ NSLog(<span class="hljs-string">@"%d"</span>, age);   <span class="hljs-comment"
 AppDelegate是一个项目的入口，承担了太多的功能，如初始化根控制器，管理应用的状态，管理推送，和其他APP交互，初始化第三方SDK，获取权限等等</li>
 <li>如何瘦身
 瘦身的方案有很多，比如说把某些方法放到swift扩展或者OC的分类中，抽取中间类，利用通知监听等等，不过我比较喜欢的是使用命令设计模式进行瘦身。
-命令模式在这里就是：把启动时每件事写成一个带 execute 的小对象，AppDelegate 只负责挨个调用，不用知道里面做了什么、谁去响应。
-可以为APPdelegate的每一个职责定义一个命令，这个命令的名字有他们自己指定</li>
+命令模式在这里就是：把启动时每件事写成一个带 execute 的小对象，AppDelegate 只负责挨个调用，不用知道每个命令里做了什么、由哪个对象完成。
+可以为APPdelegate的每一个职责定义一个命令，每个命令的名字由该职责自己指定</li>
 </ol>
 <pre><code class="hljs bash" lang="bash">protocol Command {
     func execute()
@@ -787,7 +787,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 <p>这个 <code>1</code> 不是「同一时间只允许一个网络请求」。请求本身仍然并发。它限制的是 <strong>session 回调这条队列</strong>。</p>
 <h4 class="heading" id="heading-73-v3" data-id="heading-73-v3">3.0：delegateQueue 设成串行</h4>
 <p>AFNetworking 3.0 基于 <code>NSURLSession</code>。创建 session 时把一只 <code>NSOperationQueue</code> 传给 <code>delegateQueue</code>，session 的代理方法和 completion 处理都丢到这只队列上。队列的 <code>maxConcurrentOperationCount = 1</code>，这些回调就串行执行。</p>
-<p>要串行，是因为 AFN 内部有 task 和 delegate 的对应关系。并发回调会抢这张表，同一个 task 的 <code>didReceiveData</code> 和 <code>didCompleteWithError</code> 也可能交错。请求的收发由 <code>NSURLSession</code> 自己并发去做，不靠这只队列来限流。这和 <a href="#heading-23">NSOperation 相比 GCD</a> 里「能直接限制并发数」是同一类队列能力，但这里用并发数 1 是为了把回调收成一条队。</p>
+<p>要串行，是因为 AFN 内部有 task 和 delegate 的对应关系。并发回调会抢这张表，同一个 task 的 <code>didReceiveData</code> 和 <code>didCompleteWithError</code> 也可能交错。请求的收发由 <code>NSURLSession</code> 自己并发去做，不靠这只队列来限流。这和 <a href="#heading-23">NSOperation 相比 GCD</a> 里「能直接限制并发数」是同一类队列能力，但 AFN 3.0 这只队列用并发数 1，是为了把回调收成一条队。</p>
 <h4 class="heading" id="heading-73-v2" data-id="heading-73-v2">2.0：一条常驻线程已经是串行的</h4>
 <p>2.x 基于 <code>NSURLConnection</code>。connection 的回调出现在启动它的那条线程的 RunLoop 上，所以 AFN 用 <code>dispatch_once</code> 养了一条全局线程，RunLoop 里加一个 <code>NSMachPort</code> 防止没有 source 时直接退出。所有 connection 的回调都在这一条线程上排队，天然串行，不需要再把某只队列的并发数收成 1。</p>
 <p>2.x 里那只 <code>operationQueue</code> 是用来<strong>并发发出请求</strong>的，设成 1 会把请求也收成串行，和 3.0 这只队列不是一个角色。3.0 删掉了 <code>NSURLConnection</code> 的 API，用 session 的 delegateQueue 取代了那条常驻线程。线程跟着进程走，AFN 正常路径不会去停它；3.0 不再需要这条线程。</p>
@@ -873,7 +873,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 <p>上面五条主要是主线程或 CPU 被占住。卡顿还可以出在 GPU 合成和列表滚动上。面试里按「先看这一帧卡在哪一段，再对症处理」来答。</p>
 <h5>一、卡顿是怎么来的：某一帧没赶上 VSync</h5>
 <p>正常一帧是 CPU 算完布局、绘制和图层提交，GPU 合成进帧缓冲，显示系统在下一次 VSync 到来时把这一帧扫到屏幕上。VSync 间隔是固定的，60Hz 屏幕大约每 16.67ms 一次；刷新率更高时，这一帧的预算更短。</p>
-<p>CPU 算得慢，或者 GPU 合成超时，VSync 到来时这一帧还没准备好，当前没画完的帧就会被丢掉，屏幕改显后面已经画完的那一帧。用户看到的就是掉帧。避免卡顿，就是让 CPU 和 GPU 都在这一帧的预算里做完。</p>
+<p>CPU 算得慢，或者 GPU 合成超时，VSync 到来时这一帧还没准备好，当前没画完的帧就会被丢掉，屏幕继续显示已经画完的上一帧。用户看到的就是掉帧。避免卡顿，就是让 CPU 和 GPU 都在这一帧的预算里做完。</p>
 <h5>二、CPU 侧：主线程上的布局、IO、文本、解码和绘制</h5>
 <p>对应上面第 1、3、4、5 条。界面提交发生在主线程 RunLoop 里，下面这些工作堆在主线程，会直接吃掉这一帧：</p>
 <ul>
@@ -910,7 +910,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 <li><strong>挂在哪</strong>：Observer 必须加到 <code>CFRunLoopGetMain()</code>，Mode 用 <code>commonModes</code>。这样列表滚动时的 <code>UITrackingRunLoopMode</code> 也能被观察到，不会只在静止时才报警。</li>
 <li><strong>不用另开线程轮询</strong>：<code>repeat</code> 设为持续监听。主 RunLoop 睡着时不会回调。</li>
 <li><strong>回调里只做轻活</strong>：取时间、算差值、打一条日志。格式化、落盘、上报交给后台队列，否则监控本身就会把主线程拖卡。</li>
-<li><strong>它看不出 GPU</strong>：这段时间只说明主线程被占住。瓶颈在渲染提交之后的合成阶段时，要配合 Instruments 或 <code>CADisplayLink</code> 看掉帧、FPS、hitch。</li>
+<li><strong>这段计时看不出 GPU</strong>：这段时间只说明主线程被占住。瓶颈在渲染提交之后的合成阶段时，要配合 Instruments 或 <code>CADisplayLink</code> 看掉帧、FPS、hitch。</li>
 <li><strong>用完要停</strong>：页面退出、抽样结束或 App 进后台时调用 <code>stop()</code>，把 Observer 从主 RunLoop 拿掉，避免一直挂着。</li>
 </ul>
 <pre><code class="hljs language-swift" lang="swift">final class MainThreadStallMonitor {
@@ -1238,7 +1238,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 <h4  class="heading" id="heading-32" data-id="heading-32">为什么密钥的传递需要使用非对称加密？</h4>
 <p>答：后面真正加密业务数据的那把会话密钥不能明文放在网上。TLS 1.2 用 RSA 交换时，客户端自己生成一段 premaster secret，用证书里的公钥包起来再发。公钥谁都能看到，只有服务器的私钥能解开，截到报文的人解不开。如果这段秘密也用对称加密来传，双方得先有同一把钥匙，问题又回到原点。ECDHE 那条路不把秘密加密寄过去，两边用临时公钥在本地算出同一个共享秘密；非对称在那里是用来确认对方拿着私钥。两条路径见上面的握手流程。</p>
 <h4  class="heading" id="heading-33" data-id="heading-33">双向认证了解么？（这里我真想说一句不了解）</h4>
-<p>答：上面的流程只核对了服务器的证书，服务器并不知道对面是不是它认可的客户端。双向认证是服务器也要看客户端的证书：客户端把自己的证书发过去，再用私钥对握手内容签名，服务器用证书里的公钥验这份签名，确认对方拿着对应私钥。对上了，后面仍用双方算出来的对称会话密钥通信。</p>
+<p>答：上面三条只验证服务器的握手，都只核对了服务器的证书，服务器并不知道对面是不是它认可的客户端。双向认证是服务器也要看客户端的证书：客户端把自己的证书发过去，再用私钥对握手内容签名，服务器用证书里的公钥验这份签名，确认对方拿着对应私钥。对上了，后面仍用双方算出来的对称会话密钥通信。</p>
 <h3  class="heading" id="heading-34" data-id="heading-34">42. HTTPS是如何实现验证身份和验证完整性的？<span id="user-content-42"></span></h3>
 <p>身份靠数字证书和 CA。CA 是预先被信任的签发机构。服务器先向它申请，审核通过后拿到一张数字证书，里面有公钥、CA 的签名、有效期和主体信息。握手时服务器把证书发给客户端。客户端不是只听证书自己怎么说，而是从已经信任的根证书出发，一级级核对签名、域名和有效期。这条逐级核对叫信任链，对上了才认对方是这台服务器。</p>
 <p>完整性靠摘要。发出去之前，对内容用同一套摘要算法算出一段短指纹；收到后再算一遍。两段对得上，说明内容没有被改过。</p>
@@ -1336,7 +1336,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   <figcaption style="margin-top:12px;font-size:14px;line-height:1.6;color:#64748b;text-align:center;">K1 和 K2 是两把独立的会话密钥，不会合成一把交给三方共用。</figcaption>
 </figure>
 <h3  class="heading" id="heading-36" data-id="heading-36">44. 什么是中间人攻击？如何避免？<span id="user-content-44"></span></h3>
-<p>中间人是攻击者插在客户端和服务器之间，对两边分别冒充对方。Charles 抓 HTTPS 就是同一种结构。防住它，先靠系统的证书校验，再靠证书锁定。</p>
+<p>中间人是攻击者插在客户端和服务器之间，对两边分别冒充对方。Charles 抓 HTTPS 就是同一种结构。防住这种中间人，先靠系统的证书校验，再靠证书锁定。</p>
 <p><strong>口述版</strong></p>
 <blockquote>
 <p><strong>什么是中间人攻击？</strong>简单说，就是攻击者夹在客户端和服务器中间：对 App 冒充服务器，握一段 TLS；再作为客户端去连真实服务器，另握一段 TLS。两边都以为在直连。Charles 抓 HTTPS 就是这个套路——它用自己的根证书签一张域名正确的叶子证书跟 App 握手，再自己去连真实服务器。App 能接受，是因为手机里信任了 Charles 的根证书。所以不是 TLS 被破解了，是客户端信任了攻击者的证书。</p>
@@ -1365,7 +1365,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 <p><strong>口述版</strong></p>
 <blockquote>
 <p><strong>静态链接。</strong>静态链接就是把多个目标文件合并成一个可执行文件，直观感觉就是把同类型的段合并到一起。可执行文件和目标文件的结构差不多，可执行文件的地址已经定好，可以直接运行。</p>
-<p><strong>静态库。</strong>链接时把用到的代码拷进可执行文件，这个程序里只留一份。多个程序各自用到它，就会各有一份拷贝。</p>
+<p><strong>静态库。</strong>链接时把用到的代码拷进可执行文件，这个程序里只留一份。多个程序各自用到静态库，就会各有一份拷贝。</p>
 <p><strong>动态库。</strong>链接时不拷贝代码，程序运行起来再加载到内存里调用。系统的动态库加载一份，多个程序共用，比较省内存。放进 App 里的动态库只给这个 App 用。</p>
 </blockquote>
 <h3  class="heading" id="heading-39" data-id="heading-39">47. 内存的几大区域，各自的职能分别是什么？<span id="user-content-47"></span></h3>
@@ -2016,8 +2016,8 @@ extension ListNode {
       6. 被weak修饰的对象在被释放的时候会发生什么？是如何实现的？知道sideTable么？里面的结构可以画出来么？
     </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-63" title="7. 什么是野指针？如何检测？" class="catalog-aTag d1-aTag-title">
       7. 什么是野指针？如何检测？
-    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-10" title="8. 关联对象有什么应用，系统如何管理关联对象？其被释放的时候需要手动将所有的关联对象的指针置空么？" class="catalog-aTag d1-aTag-title">
-      8. 关联对象有什么应用，系统如何管理关联对象？其被释放的时候需要手动将所有的关联对象的指针置空么？
+    </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-10" title="8. 关联对象有什么应用，系统如何管理关联对象？宿主对象被释放的时候，需要手动将所有的关联对象的指针置空么？" class="catalog-aTag d1-aTag-title">
+      8. 关联对象有什么应用，系统如何管理关联对象？宿主对象被释放的时候，需要手动将所有的关联对象的指针置空么？
     </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-11" title="9. KVO的底层实现？如何取消系统默认的KVO并手动触发（给KVO的触发设定条件：改变的值符合某个条件时再触发KVO）？" class="catalog-aTag d1-aTag-title">
       9. KVO的底层实现？如何取消系统默认的KVO并手动触发（给KVO的触发设定条件：改变的值符合某个条件时再触发KVO）？
     </a></div> <!----></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-64" title="10. KVC 的底层实现？通过 KVC 修改属性会触发 KVO 么？直接改成员变量呢？" class="catalog-aTag d1-aTag-title">
