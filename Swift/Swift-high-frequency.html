@@ -57,13 +57,15 @@ html{scroll-behavior:smooth}
 .markdown-body blockquote ul{margin:6px 0 8px;color:#252933}
 .markdown-body blockquote li{margin:6px 0;line-height:1.65}
 </style>
+<p><strong>修订说明（2026-11-05）：</strong>按面试频率重排，高频必考在前；COW、协议扩展静态派发、条件遵循三道进阶题移到末尾「加分题」一节。补充初始化器、map/flatMap/compactMap、Codable、@autoclosure 四道常考题。</p>
 <p><strong>修订说明（2026-11-05）：</strong>删掉面试里很少单独出的 9 题：主关联类型、协议内部结构、<code>any P</code> 的运行时布局、实例和元类布局、协作式取消、actor 重入、continuation 桥接、Swift 6 语言模式、<code>nonisolated async</code> 的默认执行器。留下的题目重新编号。</p>
 <p><strong>修订说明（2026-11-05）：</strong>口述版里偏口语、没把机制说完整的句子，改成和解析一致、面试里可以直接说的表述。</p>
 <p><strong>修订说明（2026-11-05）：</strong>每题按口述版、解析排列。口述版按面试里直接回答的方式写成分点：先说是什么，再说差别，最后说什么时候用。解析紧跟在后面，把机制、例外和容易说错的地方讲清楚；行为不容易从字面看出来时配上最短的代码，谁和谁连在一起或者先后顺序靠文字看不清时，解析里有图。</p>
 <p><strong>修订说明（2026-11-03）：</strong>题目按常见面试题单从浅到深重排，基础必考在前，方法派发和 Swift 并发在后。actor 从类和结构体那一题挪到并发一节。</p>
-<blockquote><p>本文按从浅到深整理 Swift 面试里的必考题。先是类型、可选值、属性和内存，接着是协议和方法调用，最后是 Swift 并发。基础题对齐常见面试题单，派发和并发对齐 <a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/" target="_blank" rel="noopener noreferrer">Swift 官方文档</a>和已经落地的 Swift Evolution 提案。</p></blockquote>
+<blockquote><p>本文按面试频率从高到低整理 Swift 面试题：先是类型、可选值、属性和内存这些必考基础，接着是协议、方法调用和 Swift 并发，最后是容易拉开差距的加分题。基础题对齐常见面试题单，派发和并发对齐 <a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/" target="_blank" rel="noopener noreferrer">Swift 官方文档</a>和已经落地的 Swift Evolution 提案。</p></blockquote>
 <h2 id="heading-0" data-id="heading-0">一、类型与可选值</h2>
 <h3 id="heading-1" data-id="heading-1">1. 类、结构体、枚举有什么差别？赋值之后谁和谁共享状态？</h3>
+
 <h4>口述版</h4>
 <blockquote><ul>
 <li><strong>类</strong>是引用类型。赋值复制的是引用，两个变量指向同一个实例，可以用 <code>===</code> 判断。可以继承，销毁时走 <code>deinit</code>。</li>
@@ -105,8 +107,10 @@ var n2 = n1
 n2.title = "B"          // n1.title 仍是 "A"
 n2.room.name = "B"      // n1.room.name 也是 "B"</code></pre>
 <p>放在栈上还是堆上，不决定上面的共享关系。小结构体常常在栈上；一旦放进类、逃逸闭包或 <code>any</code> 容器，就可以到堆上。位置变了，该共享的还是共享，该分开的还是分开。</p>
+
 <hr>
 <h3 id="heading-2" data-id="heading-2">2. 枚举的关联值和原始值有什么区别？</h3>
+
 <h4>口述版</h4>
 <blockquote><ul>
 <li><strong>原始值</strong>是 case 的固定编码，声明时就定好，所有 case 共用一种类型。用 <code>init?(rawValue:)</code> 还原，对不上得到 <code>nil</code>，不会崩溃。</li>
@@ -117,6 +121,21 @@ n2.room.name = "B"      // n1.room.name 也是 "B"</code></pre>
 <h4>解析</h4>
 <p>原始值是 case 的常量，不是每个实例各自带的一份数据。所有 case 共用一种类型，声明时就定死。<code>Int</code> 原始值省略时等于前一个 case 加 1；只有第一个 case 省略才是 0。这是语言规则。还原必须走可失败初始化器，失败得到 <code>nil</code>，不会崩。</p>
 <p>关联值到创建这个值时才放进去。不同 case 可以带不同的类型，运行时这个枚举值只处于其中一个 case。</p>
+<figure class="explain-fig">
+<div class="fig-panels">
+<div class="fig-panel">
+<div class="fig-label">原始值</div>
+<div class="fig-line"><span class="node">north</span><span class="arrow">声明时就写好 →</span><span class="node shared">0</span></div>
+<div class="fig-line">每个 case 一个固定编码，类型相同</div>
+</div>
+<div class="fig-panel">
+<div class="fig-label">关联值</div>
+<div class="fig-line"><span class="node">success</span><span class="arrow">创建时放进去 →</span><span class="node shared">这次的 Data</span></div>
+<div class="fig-line">不同 case 可以带不同的类型</div>
+</div>
+</div>
+<figcaption>原始值是 case 的常量。关联值到创建这个枚举值时才放进去，运行时只处于其中一个 case。同一个枚举不能两样都有。</figcaption>
+</figure>
 <pre><code>enum Direction: Int {
     case north // 0，第一个省略才是 0
     case east  // 1，前一个加 1
@@ -131,8 +150,10 @@ enum LoadState {
 }
 let state = LoadState.success(Data())</code></pre>
 <p>同一个枚举不能一边写 <code>: Int</code>，一边又给 case 带关联值。原始值回答「这个 case 对应哪个固定编码」，关联值回答「这一次的值随身带了什么」。</p>
+
 <hr>
 <h3 id="heading-3" data-id="heading-3">3. 可选值是什么？接口边界怎么处理，什么情况下 ! 是合理的？</h3>
+
 <h4>口述版</h4>
 <blockquote><ul>
 <li>可选值表示这个位置<strong>可以没有值</strong>。类型写成 <code>Wrapped?</code>，也就是 <code>Optional&lt;Wrapped&gt;</code>。</li>
@@ -152,8 +173,10 @@ func show(_ response: Response) {
 let createdOutlet: String? = "ready"    // 创建流程已经保证有值
 let outlet = createdOutlet!             // 只放在「如果是空，就是写错了」的位置</code></pre>
 <p>外部 JSON、网络字段、用户输入都不属于这个位置。「正常情况下都会有」不代表调用方永远不传空。最好的 <code>!</code> 是让它不再出现。</p>
+
 <hr>
 <h3 id="heading-4" data-id="heading-4">4. is、as、as?、as! 分别做什么？</h3>
+
 <h4>口述版</h4>
 <blockquote><ul>
 <li><code>is</code>：只检查是不是这个类型，得到 <code>Bool</code>，不做转换。</li>
@@ -174,8 +197,10 @@ let animal = dog! as Animal // 向上转，编译期知道一定成功
 let forced = pet as! Dog   // 失败就崩</code></pre>
 <p><code>is</code> 不做转换。<code>as</code> 只接受编译期能证明的转换，包括子类转父类，以及语言规定一定成功的桥接，例如 <code>String</code> 到 <code>NSString</code>。向下转、转协议，失败是正常输入时用 <code>as?</code>，结果是可选值，不会抛 <code>Error</code>，也不会崩。</p>
 <p>紧接着就要用那个类型时，直接 <code>as?</code> 绑定，少一次 <code>is</code>。JSON、协议容器和框架回调上的失败是数据问题，不是编程前提，不要用 <code>as!</code>。你写哪种，语义就是哪种，不要说成编译器有时会把 <code>as?</code> 变成 <code>as</code>。</p>
+
 <hr>
 <h3 id="heading-5" data-id="heading-5">5. throws、try?、try!、Result 怎么选？defer 什么时候执行？typed throws 适合用在哪？</h3>
+
 <h4>口述版</h4>
 <blockquote><ul>
 <li>失败要交给直接调用方：函数标 <code>throws</code>，调用必须写 <code>try</code>，用 <code>do-catch</code> 处理。</li>
@@ -196,9 +221,47 @@ let forced = pet as! Dog   // 失败就崩</code></pre>
 let value = try? work()   // 失败变成 nil，错误对象没了
 let forced = try! bundledResource() // 只有「失败代表程序写错」才这样写</code></pre>
 <p><code>defer</code> 用来做必须成对的收尾：加锁解锁、开始结束、注册反注册。只有执行到这条语句才会登记；之后作用域正常结束，或者因 <code>return</code>、<code>throw</code>、<code>break</code>、<code>continue</code> 离开，都会跑它。<code>fatalError</code>、<code>precondition</code> 失败和真正的崩溃不展开栈，<code>defer</code> 不会跑。它不是「进程怎么死都会执行」的保险。<code>throws</code> 底层怎么传递错误是 ABI，面试讲到调用方看不看得见失败即可。</p>
+
+<hr>
+<h3 id="heading-40" data-id="heading-40">6. 指定初始化器、便利初始化器、required、可失败 init 各做什么？两阶段初始化是什么？</h3>
+
+<h4>口述版</h4>
+<blockquote><ul>
+<li><strong>指定初始化器</strong>（designated init）：把本类所有存储属性都初始化的那个入口。类和结构体靠它把属性填满，之后才能用 <code>self</code>。</li>
+<li><strong>便利初始化器</strong>（<code>convenience init</code>）：只是另一个入口，最终必须横向委托给本类的指定初始化器，自己不能直接给存储属性赋值。</li>
+<li><strong><code>required init</code></strong>：声明「子类必须实现这个初始化器」。子类要么自动继承，要么显式写实现，不能漏。</li>
+<li><strong>可失败初始化器</strong>（<code>init?</code>）：初始化可能不成功，用 <code>return nil</code> 提前退出，返回的是可选值，不抛 <code>Error</code>。</li>
+<li><strong>两阶段初始化</strong>：第一阶段从下往上——本类先给自己的存储属性赋值，再调用 <code>super.init</code>；第二阶段从上往下——<code>super.init</code> 完成后，才能用 <code>self</code>、改属性和调方法。这样保证属性不会在没初始化完之前被读到。</li>
+</ul></blockquote>
+<h4>解析</h4>
+<p>类和结构体都有指定初始化器，把存储属性全部填满，实例才算构造完。结构体没有继承，就没有 <code>super.init</code> 这套委托链，规则简单很多。类的规则复杂在继承：便利初始化器必须横向委托给同类的指定初始化器，指定初始化器纵向委托给父类的指定初始化器，环是不允许的。</p>
+<pre><code>class Vehicle {
+    var name: String
+    init(name: String) { self.name = name }      // 指定初始化器
+    required init() { self.name = "车" }           // 子类必须实现
+    convenience init(named n: String) {
+        self.init(name: n)                        // 便利初始化器横向委托
+    }
+}
+class Car: Vehicle {
+    var wheels: Int
+    init(name: String, wheels: Int) {
+        self.wheels = wheels                       // 阶段一：先给本类属性赋值
+        super.init(name: name)                     // 再调父类
+        // 阶段二：现在才能用 self、改属性、调方法
+    }
+    required init() {
+        self.wheels = 4
+        super.init()
+    }
+}
+let n = Int("x")                                   // init? 失败返回 nil</code></pre>
+<p>两阶段初始化的目的是安全：第一阶段还没轮到父类，子类不能读父类的属性；第二阶段父类已经就绪，才能用 <code>self</code> 做剩余工作。可失败初始化器失败时 <code>return nil</code>，调用方拿到可选值去判断。</p>
+
 <hr>
 <h2 id="heading-6" data-id="heading-6">二、属性、访问控制与泛型</h2>
-<h3 id="heading-7" data-id="heading-7">6. 存储属性、计算属性、lazy、属性观察器有什么区别？扩展为什么不能加存储属性？</h3>
+<h3 id="heading-7" data-id="heading-7">7. 存储属性、计算属性、lazy、属性观察器有什么区别？扩展为什么不能加存储属性？</h3>
+
 <h4>口述版</h4>
 <blockquote><ul>
 <li><strong>存储属性</strong>参与实例布局，存在实例里。类和结构体可以有，枚举没有存储属性。</li>
@@ -224,8 +287,10 @@ let forced = try! bundledResource() // 只有「失败代表程序写错」才�
 <p><code>lazy</code> 仍然占存储，只是第一次访问才创建，所以不能是 <code>let</code>。类型系统只保证它延迟初始化，不保证线程安全。多个线程可能同时第一次碰到它时，用锁、actor，或在外部显式初始化。</p>
 <p>观察器是初始化完成之后的赋值通知。子类初始化器在 <code>super.init</code> 之后再给父类属性赋值，会调用父类的观察器。这是语言规则。</p>
 <p>扩展可以加计算属性、方法、下标、嵌套类型和协议遵循。结构体和枚举的扩展可以加初始化器；类的扩展只能加便利初始化器，指定初始化器必须写在类型本体里。不能加存储属性。存储属性会改变实例大小和偏移，已经编译出的布局对不上。</p>
+
 <hr>
-<h3 id="heading-8" data-id="heading-8">7. static 和 class 修饰类型成员有什么区别？</h3>
+<h3 id="heading-8" data-id="heading-8">8. static 和 class 修饰类型成员有什么区别？</h3>
+
 <h4>口述版</h4>
 <blockquote><ul>
 <li><code>static</code> 和 <code>class</code> 都表示类型成员，通过类型访问，不通过实例。</li>
@@ -248,8 +313,10 @@ class Leaf: Node {
     // class var count 也没有这种存储语法
 }</code></pre>
 <p><code>static</code> 可以修饰类、结构体、枚举、协议和 actor 的类型成员。出现在类上时，这个成员不能被重写，语义就是 <code>class final</code>。<code>class</code> 只能用在类上，修饰类型方法或计算类型属性，子类写 <code>override class</code>。actor 不能继承，所以也没有 <code>class</code> 成员。</p>
+
 <hr>
-<h3 id="heading-9" data-id="heading-9">8. 访问控制从宽到窄是什么？private 和 fileprivate 差在哪？</h3>
+<h3 id="heading-9" data-id="heading-9">9. 访问控制从宽到窄是什么？private 和 fileprivate 差在哪？</h3>
+
 <h4>口述版</h4>
 <blockquote><ul>
 <li>从宽到窄：<code>open</code>、<code>public</code>、<code>package</code>、<code>internal</code>、<code>fileprivate</code>、<code>private</code>。不写就是 <code>internal</code>。这是编译期检查谁能看见这个名字，不是运行时再拦一层。</li>
@@ -261,17 +328,6 @@ class Leaf: Node {
 </ul></blockquote>
 <h4>解析</h4>
 <p>访问控制是编译器在检查谁能看见这个名字，不是运行时再拦一层，也不是编译器优化。<code>package</code> 从 Swift 5.9 起就是语言级别，对应同一个 package，不是同一个文件夹。</p>
-<table>
-<thead><tr><th>级别</th><th>谁可以访问</th></tr></thead>
-<tbody>
-<tr><td><code>open</code></td><td>其他模块可以访问，也可以继承、重写</td></tr>
-<tr><td><code>public</code></td><td>其他模块可以访问；不能在其他模块继承或重写。本模块里仍然可以，除非另外标了 <code>final</code></td></tr>
-<tr><td><code>package</code></td><td>同一个 Swift package</td></tr>
-<tr><td><code>internal</code></td><td>当前模块。不写就是它</td></tr>
-<tr><td><code>fileprivate</code></td><td>当前源文件里的所有类型</td></tr>
-<tr><td><code>private</code></td><td>当前声明，加上同一文件里这个类型自己的扩展</td></tr>
-</tbody>
-</table>
 <pre><code>struct Account {
     private var pin = "1234"
     fileprivate var id = "a"
@@ -285,8 +341,10 @@ struct Audit {
     // account.pin 看不见：private 不给同文件的其他类型
 }</code></pre>
 <p><code>private</code> 不是「只有这一对花括号」。<code>public</code> 也不是「任何地方都不能继承」，缺的主语是「其他模块」。</p>
+
 <hr>
-<h3 id="heading-10" data-id="heading-10">9. 泛型解决什么问题？它和 Any 有什么差别？</h3>
+<h3 id="heading-10" data-id="heading-10">10. 泛型解决什么问题？它和 Any 有什么差别？</h3>
+
 <h4>口述版</h4>
 <blockquote><ul>
 <li>泛型把类型做成参数。同一份实现可以复用，调用点的 <code>T</code> 仍是具体类型，约束在编译期检查，不是运行时再碰运气。</li>
@@ -303,9 +361,11 @@ let box: [Any] = [1, "a"]
 let text = box[1] as? String       // 拿出来已经不知道原来是什么</code></pre>
 <p><code>Any</code> 和 <code>AnyObject</code> 都是类型擦除之后的结果。前者装任意类型，后者只表示类实例。<code>T: AnyObject</code> 是泛型约束，约束的是「这个类型参数必须是类」，它自己不是 <code>Any</code>。<code>T: SomeClass</code> 约束的是继承关系。</p>
 <p>协议里要等遵循者来填的类型写成关联类型，例如集合的元素。它不是调用时随便换的参数。<code>where</code> 给泛型或扩展加附加约束。</p>
+
 <hr>
-<h2 id="heading-11" data-id="heading-11">三、内存、闭包与拷贝</h2>
-<h3 id="heading-12" data-id="heading-12">10. ARC 是什么？strong、weak、unowned 怎么选？</h3>
+<h2 id="heading-11" data-id="heading-11">三、内存与闭包</h2>
+<h3 id="heading-12" data-id="heading-12">11. ARC 是什么？strong、weak、unowned 怎么选？</h3>
+
 <h4>口述版</h4>
 <blockquote><ul>
 <li>ARC 在引用产生和失效时插入计数。最后一条强引用消失，纯 Swift 对象就进入 <code>deinit</code>。它不是垃圾回收。互相强引用时，环上的计数不会自己变成 0。</li>
@@ -344,8 +404,10 @@ let text = box[1] as? String       // 拿出来已经不知道原来是什么</c
 }</code></pre>
 <p>需要把对象留住，用默认强引用。两边谁先销毁不确定，或者销毁之后访问应该变成「没有」，用 <code>weak</code>。它必须是可选的 <code>var</code>。运行时把 <code>weak</code> 清成 <code>nil</code> 时，直接写空，不调用 <code>willSet</code> / <code>didSet</code>。</p>
 <p><code>unowned</code> 的前提是被引用的对象一定活得更久，例如它拥有我、我不可能活过它。拿不准就用 <code>weak</code>。多一次可选绑定，比崩溃便宜。<code>unowned</code> 不是可选值，对象释放后继续使用会立刻陷阱。</p>
+
 <hr>
-<h3 id="heading-13" data-id="heading-13">11. 这段代码为什么循环引用？weak 和 unowned 怎么选？</h3>
+<h3 id="heading-13" data-id="heading-13">12. 这段代码为什么循环引用？weak 和 unowned 怎么选？</h3>
+
 <h4>口述版</h4>
 <blockquote><ul>
 <li>对象用属性强引用闭包，闭包又默认强引用 <code>self</code>，两边的 <code>deinit</code> 都不会发生。</li>
@@ -379,8 +441,10 @@ let text = box[1] as? String       // 拿出来已经不知道原来是什么</c
     func doWork() {}
 }</code></pre>
 <p>闭包存在属性、回调、定时器里，页面或对象可能先消失，用 <code>[weak self]</code>，里面用 <code>self?</code> 或 <code>guard let self</code>。闭包只被这个对象持有，而且不会被拷给更长寿的一方，对象释放前不可能再调用，才可以 <code>[unowned self]</code>。闭包一旦逃到对象外面，这个前提通常就不成立。</p>
+
 <hr>
-<h3 id="heading-14" data-id="heading-14">12. 闭包是引用类型吗？@escaping 改变了什么？为什么逃逸闭包不能捕获 inout？</h3>
+<h3 id="heading-14" data-id="heading-14">13. 闭包是引用类型吗？@escaping 改变了什么？为什么逃逸闭包不能捕获 inout？</h3>
+
 <h4>口述版</h4>
 <blockquote><ul>
 <li>闭包是引用类型。赋给另一个变量，得到的是同一个闭包，不是再复制一份闭包体。</li>
@@ -415,49 +479,55 @@ func bump(_ value: inout Int, body: (inout Int) -&gt; Void) {
 }</code></pre>
 <p>函数参数的闭包默认非逃逸，例如 <code>map</code> 的变换，函数返回后不能再调用，所以可以捕获 <code>inout</code>。可选闭包参数是例外：<code>(() -&gt; Void)?</code> 已经是隐式逃逸，不必再标 <code>@escaping</code>。<code>@escaping</code> 允许非可选的闭包参数活过这次调用。<code>inout</code> 是临时把外面那个变量的独占使用权借给你，返回时必须写回并结束访问。带出函数的闭包不能夹走这次借用。</p>
 <p>类实例默认按强引用捕获。可能成环，要在捕获列表写 <code>[weak self]</code>。只是把 <code>self.</code> 写出来，仍然是强捕获。</p>
+
 <hr>
-<h3 id="heading-15" data-id="heading-15">13. 为什么 Array、String、Dictionary、Set 是值类型？copy-on-write 怎么发生？自定义结构体为什么不会自动有？</h3>
+<h3 id="heading-42" data-id="heading-42">14. map、flatMap、compactMap 有什么区别？</h3>
+
 <h4>口述版</h4>
 <blockquote><ul>
-<li>它们是值类型，保证的是值语义：赋值或传参之后，修改这一份，另一份观察不到。</li>
-<li>copy-on-write 是标准库的实现：赋值时先共用同一块缓冲区；要修改，并且这份缓冲区还有其他引用，才复制一份再改。只剩自己持有时，可以在原来那块上改。</li>
-<li>这是 <code>Array</code>、<code>String</code>、<code>Dictionary</code>、<code>Set</code> 自己实现的。编译器不会给自定义结构体自动做唯一性检查，赋值时直接拷贝各个存储属性。</li>
-<li>短 <code>String</code> 没有共享缓冲区，字符嵌在值里。缓冲区容量不够时，即使引用唯一，也会重新分配。</li>
+<li><strong><code>map</code></strong>：对每个元素做一次变换，一对一，返回元素个数不变。变换不能返回 <code>nil</code>。</li>
+<li><strong><code>compactMap</code></strong>：和 <code>map</code> 一样变换，但把返回的 <code>nil</code> 丢掉，是一对零或一。</li>
+<li><strong><code>flatMap</code></strong>：每个元素变换成一个序列，再把所有序列拍平成一个，是「变换 + 拍平」。Swift 4.1（SE-0187）把「过滤 nil」从 <code>flatMap</code> 拆成 <code>compactMap</code> 之后，<code>flatMap</code> 只负责拍平。</li>
+<li><strong>Optional 上的 <code>map</code> / <code>flatMap</code></strong>：<code>map</code> 对 <code>.some</code> 里的值变换，<code>.none</code> 保持 <code>.none</code>；<code>flatMap</code> 的变换如果又返回可选值，能避免套成双层 Optional。</li>
 </ul></blockquote>
 <h4>解析</h4>
-<p>语言保证的是值语义：赋值、传参之后，修改这一份，另一份观察不到。copy-on-write 是标准库为了让这份语义便宜，用在这四个类型上的实现。编译器不会看见结构体就自动插入唯一性检查。</p>
-<p>用到堆缓冲区时，变量里存的是这块内存的地址，元素在里面。赋值复制的是地址，两边地址相同，读和单纯赋值可以很便宜。要修改并且这个地址还有别人拿着，才新开一块内存，把元素复制过去，换成新地址再改。只剩自己拿着，才可以在原来那块上改；容量不够时，即使引用唯一，<code>Array</code> 的 <code>append</code> 仍会新分配。短 <code>String</code> 走小字符串优化，字符嵌在值里，赋值复制的是值本身，没有共享缓冲区。别人还拿着时却不复制，就会破坏值语义。这不是「编译器也许会优化掉复制」。</p>
-<figure class="explain-fig">
-<div class="fig-panels">
-<div class="fig-panel">
-<div class="fig-label">赋值之后，还没改</div>
-<div class="fig-line"><span class="node">a 的地址</span><span class="arrow">→</span><span class="node shared">同一块缓冲区<br>1, 2, 3</span><span class="arrow">←</span><span class="node">b 的地址</span></div>
-</div>
-<div class="fig-panel">
-<div class="fig-label">b 要改，而且地址还有别人拿着</div>
-<div class="fig-line"><span class="node">a</span><span class="arrow">→</span><span class="node">旧缓冲区</span></div>
-<div class="fig-line"><span class="node">b</span><span class="arrow">→</span><span class="node shared">新缓冲区</span></div>
-</div>
-</div>
-<figcaption>这图画的是堆缓冲区。赋值只复制地址。要修改并且这根箭头不止一份时，才为了值语义新开缓冲区。只剩自己拿着，才可以在原来那块上改；容量不够时仍会新分配。短 String 没有这张图里的共享缓冲区。普通结构体没有这套检查。</figcaption>
-</figure>
-<p>自定义结构体赋值，拷贝的是它的各个存储属性，没有自动的「整份结构体唯一化」。要给自己的大块缓冲区做延迟复制，就用一个类握住数据，修改前看强引用是不是只剩这一份。</p>
-<pre><code>final class Storage {
-    var items: [Int]
-    init(_ items: [Int]) { self.items = items }
+<p>三者都是泛型高阶函数，差别在「变换之后要不要去掉一些东西、要不要摊开一层」。</p>
+<pre><code>let nums = [1, 2, 3]
+nums.map { $0 * 2 }                    // [2, 4, 6]，一对一
+
+["1", "x", "3"].compactMap(Int.init)   // [1, 3]，Int.init 是 (String) -&gt; Int?，nil 被丢掉
+[[1, 2], [3]].flatMap { $0 }           // [1, 2, 3]，把内层数组拍平
+
+let s: String? = "hi"
+s.map { $0.uppercased() }              // "HI"?，.none 保持 .none
+s.flatMap { Int($0) }                  // nil?，Int("hi") 失败，不会变成 Int??</code></pre>
+<p>能拿到 <code>nil</code> 的变换，想丢掉空值用 <code>compactMap</code>。想展开嵌套结构用 <code>flatMap</code>。历史上 <code>flatMap</code> 既拍平又丢 <code>nil</code>，容易混，所以拆开了；面试里被问到，先分清「拍平」和「过滤 nil」是哪一件事。</p>
+
+<hr>
+<h3 id="heading-41" data-id="heading-41">15. @autoclosure 是做什么的？和普通闭包参数有什么区别？</h3>
+
+<h4>口述版</h4>
+<blockquote><ul>
+<li><code>@autoclosure</code> 把一个表达式自动包成闭包，调用点不用写 <code>{ }</code>。看起来像传值，实际是延迟执行。</li>
+<li>好处是<strong>延迟求值</strong>：参数只在函数体里真正走到那个分支时才执行。<code>assert</code>、<code>??</code>、<code>&amp;&amp;</code> 就是「不一定会执行」的场合。</li>
+<li>代价是隐蔽：调用方看不出这里会延迟、可能不执行，也看不出这个闭包会被捕获或逃逸。</li>
+<li>默认是非逃逸。要让它在函数返回后执行，写成 <code>@autoclosure @escaping</code>。</li>
+</ul></blockquote>
+<h4>解析</h4>
+<p>普通闭包参数要求调用方写出 <code>{ }</code>，<code>@autoclosure</code> 让编译器替调用方把表达式包起来。两者的类型一样，差别只在调用点写不写花括号，以及值什么时候被求。适合「参数可能根本不会被用到」的场景，省掉一次不必要的计算。</p>
+<pre><code>func require(_ condition: @autoclosure () -&gt; Bool,
+             _ message: @autoclosure () -&gt; String) {
+    if !condition() { print(message()) }
 }
-struct Queue {
-    private var storage = Storage([])
-    mutating func append(_ n: Int) {
-        if !isKnownUniquelyReferenced(&amp;storage) {
-            storage = Storage(storage.items)
-        }
-        storage.items.append(n)
-    }
-}</code></pre>
+require(1 &gt; 2, "算错了")   // 不用写 require({ 1 &gt; 2 }, { "算错了" })
+
+let name = person.name ?? "未命名"   // ?? 的右边就是 @autoclosure，只有左边是 nil 才算</code></pre>
+<p><code>@autoclosure</code> 不改变捕获规则：它还是闭包，还是会按闭包的方式捕获外面的变量。把它当成「省掉花括号的延迟求值」，而不是「不用闭包的传值」。</p>
+
 <hr>
 <h2 id="heading-16" data-id="heading-16">四、协议</h2>
-<h3 id="heading-17" data-id="heading-17">14. 为什么说 Swift 是面向协议编程的？</h3>
+<h3 id="heading-17" data-id="heading-17">16. 为什么说 Swift 是面向协议编程的？</h3>
+
 <h4>口述版</h4>
 <blockquote><ul>
 <li>面向协议复用的是「有没有这套能力」，不是继承树上的位置。类、结构体、枚举只要完成协议要求，就能用这套 API。</li>
@@ -473,8 +543,37 @@ extension Named {
 struct User: Named { var name: String }
 User(name: "Lin").greeting()</code></pre>
 <p>大部分类型的实现相同，就把默认实现写在扩展里，并且放进协议要求。不放进要求，具体类型的同名方法不一定会被调用。类仍然是引用类型，身份、继承和 <code>deinit</code> 都是它的语言能力。这题是设计规则：默认实现最终走直接调用还是见证表，由它是不是协议要求决定。</p>
+
 <hr>
-<h3 id="heading-18" data-id="heading-18">15. Swift 协议和 OC 协议有什么区别？</h3>
+<h3 id="heading-43" data-id="heading-43">17. Codable 是什么？Encodable/Decodable 怎么自动合成？自定义 key 怎么处理？</h3>
+
+<h4>口述版</h4>
+<blockquote><ul>
+<li><code>Codable</code> 是 <code>Encodable</code> 与 <code>Decodable</code> 的组合（协议组合）。实现了它，类型就能被 <code>JSONEncoder</code>/<code>JSONDecoder</code>、<code>PropertyListEncoder</code> 等编解码。</li>
+<li><strong>自动合成</strong>：当所有存储属性都是 <code>Codable</code> 时，编译器自动生成 <code>init(from:)</code> 和 <code>encode(to:)</code>，不用手写。</li>
+<li><strong>自定义 key</strong>：字段名和 JSON key 对不上时，写 <code>enum CodingKeys: String, CodingKey</code> 做映射。<code>Optional</code> 属性在 JSON 里缺失时解码成 <code>nil</code>，不会失败；非 <code>Optional</code> 缺失才抛错。</li>
+<li><strong>手动实现</strong>：默认策略不够用（日期格式、key 动态、字段需要转换）时，手写 <code>init(from:)</code> 和 <code>encode(to:)</code>。</li>
+<li>有继承时自动合成不会跨继承，子类要自己处理父类属性——这是常见坑。</li>
+</ul></blockquote>
+<h4>解析</h4>
+<p><code>Codable</code> 本身是协议组合，不是一个新协议。编译器能为结构体、枚举、类做自动合成，前提是每个存储属性都可编码。对不上的 key 用 <code>CodingKeys</code> 映射，枚举的 <code>case</code> 名是属性名，原始值是 JSON 里的 key。</p>
+<pre><code>struct User: Codable {
+    var id: Int
+    var displayName: String
+    var nickname: String?
+    enum CodingKeys: String, CodingKey {
+        case id
+        case displayName = "display_name"
+        case nickname
+    }
+}
+let data = try JSONEncoder().encode(User(id: 1, displayName: "Lin", nickname: nil))
+let user = try JSONDecoder().decode(User.self, from: data)</code></pre>
+<p>字段名完全一致时连 <code>CodingKeys</code> 都不用写。<code>nickname</code> 是 <code>String?</code>，JSON 缺这个 key 会解码成 <code>nil</code> 而不是报错。子类继承一个 <code>Codable</code> 父类时，编译器不会自动把父类属性也编进去，要自己调 <code>super.encode(to:)</code> 或手写整个实现。</p>
+
+<hr>
+<h3 id="heading-18" data-id="heading-18">18. Swift 协议和 OC 协议有什么区别？</h3>
+
 <h4>口述版</h4>
 <blockquote><ul>
 <li>Swift 原生协议：类、结构体、枚举都能遵循。可以有关联类型和默认实现，不能写 <code>optional</code>。调用走见证表，按要求的下标取实现。</li>
@@ -484,6 +583,21 @@ User(name: "Lin").greeting()</code></pre>
 </ul></blockquote>
 <h4>解析</h4>
 <p>两套协议的差别，来自两套「按协议找实现」的机制。Swift 原生协议为每个「类型 + 协议」生成见证表：左边是协议要求，右边是这个类型的实现，调用时按下标取。Objective-C 协议没有这张卡，调用变成 <code>objc_msgSend</code>，拿着方法名（选择子）去类里按名字找。</p>
+<figure class="explain-fig">
+<div class="fig-panels">
+<div class="fig-panel">
+<div class="fig-label">Swift 原生协议</div>
+<div class="fig-line"><span class="node">调用点</span><span class="arrow">→</span><span class="node shared">见证表第 n 格</span></div>
+<div class="fig-line">类、结构体、枚举都能有这一格</div>
+</div>
+<div class="fig-panel">
+<div class="fig-label"><code>@objc</code> 协议</div>
+<div class="fig-line"><span class="node">对象 + 方法名</span><span class="arrow">→</span><span class="node shared">按名字找</span></div>
+<div class="fig-line">遵循者必须是类，optional 可以没有</div>
+</div>
+</div>
+<figcaption>原生协议按下标取实现，所以默认实现可以填进那一格。Objective-C 协议没有这张表，<code>optional</code> 方法可以不实现，调用前要按「可能没有」处理。</figcaption>
+</figure>
 <pre><code>protocol Drawable {
     func draw()
 }
@@ -493,18 +607,11 @@ extension Drawable {
 @objc protocol Clickable: AnyObject {
     @objc optional func click() // 可以不实现，调用前要知道它可能没有
 }</code></pre>
-<table>
-<thead><tr><th></th><th>Swift 原生协议</th><th>标了 <code>@objc</code> 的协议</th></tr></thead>
-<tbody>
-<tr><td>谁能遵循</td><td>类、结构体、枚举</td><td>必须是类</td></tr>
-<tr><td>要求怎么写</td><td>可以有关联类型和默认实现，不能写 optional 要求</td><td>可以写 <code>optional</code>，不能有关联类型</td></tr>
-<tr><td>怎么找到实现</td><td>见证表，按下标</td><td><code>objc_msgSend</code>，按方法名</td></tr>
-<tr><td>缺这个方法时</td><td>没有默认实现就不通过编译</td><td>optional 方法可以不实现</td></tr>
-</tbody>
-</table>
 <p>必须跟现有 Objective-C 委托、可选回调兼容时，协议和方法标 <code>@objc</code>，遵循者用类，调用 optional 前按可选方法处理。不要用 OC 的 optional 来模拟「给一批遵循者一个默认做法」。</p>
+
 <hr>
-<h3 id="heading-19" data-id="heading-19">16. some 和 any 差在哪？</h3>
+<h3 id="heading-19" data-id="heading-19">19. some 和 any 差在哪？</h3>
+
 <h4>口述版</h4>
 <blockquote><ul>
 <li><strong><code>some</code></strong> 背后是一个具体类型。返回位置上，调用方看不见这个名字，非泛型函数的每条返回路径必须是同一种。</li>
@@ -542,100 +649,75 @@ func greetSome(_ value: some Greeter) {} // 参数上的 some 就是这种泛型
 var crowd: [any Greeter] = [Pirate(), Robot()]</code></pre>
 <p>返回位置的 <code>some P</code> 是不透明类型：调用方不能点名底层类型，也不需要先擦成 <code>any</code> 再返回。非泛型函数整个函数只有一个底层具体类型，每条路径都必须相同。泛型函数的底层类型可以跟着类型参数变，同一组类型参数下各条路径仍必须是同一种。参数位置的 <code>some P</code> 由调用方在每次调用时决定。两次调用可以是两种类型，同一次调用里就是一个 <code>T</code>。</p>
 <p><code>any P</code> 是存在类型。同一个变量前后可以装不同的遵循者，这些类型之间不必有继承关系。调用协议要求时通过见证表。要 <code>Pirate</code> 和 <code>Robot</code> 放进同一个数组，就得用它。</p>
-<hr>
-<h3 id="heading-20" data-id="heading-20">17. 协议扩展里写了方法，为什么有时调用不到类型自己的实现？</h3>
-<h4>口述版</h4>
-<blockquote><ul>
-<li>方法<strong>写进协议要求</strong>：见证表里有这个槽。类型自己写了，就填自己的实现；没写，才填扩展里的默认实现。</li>
-<li>方法<strong>只写在扩展里</strong>：没有这个槽，按调用点看见的静态类型直接调用扩展，不会去查见证表。</li>
-<li>所以静态类型是 <code>any Greeter</code> 时，<code>hello</code> 走到 <code>Pirate</code> 的实现，<code>bye</code> 仍是扩展里的默认实现。静态类型已经是 <code>Pirate</code> 时，可以直接调用 <code>Pirate</code> 自己的 <code>bye</code>。</li>
-<li>希望通过协议类型调用时仍然执行每个类型自己的版本，就把方法写进协议要求。只是某个具体类型的便利函数，才可以只写在扩展里。</li>
-</ul></blockquote>
-<h4>解析</h4>
-<p>调用时编译器手里有没有一个固定槽位，决定它会不会去查见证表。写进协议要求的方法有槽位，类型自己写了就填自己的，没写就填扩展里的默认实现。只写在扩展里的方法是按当时看见的静态类型直接调用的。</p>
-<pre><code>protocol Greeter {
-    func hello() -&gt; String
-}
-extension Greeter {
-    func hello() -&gt; String { "Hello" }
-    func bye() -&gt; String { "Bye" } // 不是协议要求
-}
-struct Pirate: Greeter {
-    func hello() -&gt; String { "Ahoy" }
-    func bye() -&gt; String { "Arr" }
-}
-let pirate = Pirate()
-pirate.bye()                 // "Arr"，静态类型就是 Pirate
-let g: any Greeter = Pirate()
-g.hello()                    // "Ahoy"，要求在见证表里
-g.bye()                      // "Bye"，按 any Greeter 直接调扩展</code></pre>
-<p>希望通过协议类型调用时仍然执行每个类型自己的版本，就把方法写进协议要求，默认实现可以放在扩展里。这个方法只是给某个具体类型用的便利函数，不需要被动态替换，才可以只写在扩展里。静态类型已经是具体类型时，编译器可以直接调用那个类型的方法；会不会再内联，是优化。</p>
 
 <hr>
-<h3 id="heading-22" data-id="heading-22">18. 什么是条件遵循？[String] 为什么可以是 Sendable？</h3>
-<h4>口述版</h4>
-<blockquote><ul>
-<li>条件遵循是编译期规则：<code>where</code> 里的约束满足，这个遵循才存在。<code>Array</code> 只有 <code>Element: Sendable</code> 时才遵循 <code>Sendable</code>。</li>
-<li><code>String</code> 满足，所以 <code>[String]</code> 满足。元素是普通可变类时，数组也不满足，编译失败。</li>
-<li>这是类型上的遵循关系，不是运行时再检查每个元素，也不会临时补一张见证表。</li>
-<li><code>Sendable</code> 表示这个值可以跨隔离域传递，不会因此数据竞争。值类型传过去的是副本。它不是运行时的锁。</li>
-</ul></blockquote>
-<h4>解析</h4>
-<p>条件遵循是编译期规则：<code>where</code> 里的约束满足，这个遵循才存在；不满足，就好像没有写过这个遵循。标准库的数组是 <code>Element: Sendable</code> 时才遵循 <code>Sendable</code>。</p>
-<pre><code>extension Array: Sendable where Element: Sendable {}
-let titles: [String] = ["a"]   // String 满足，[String] 就满足
-// let views: [UIView] = []    // 元素不是 Sendable，数组也不是</code></pre>
-<p><code>[String]</code> 能跨任务传递，是因为 <code>String</code> 这个类型已经满足，传过去的是值的副本。不是运行时检查了每个元素再决定让不让传。约束满足时，这个具体数组类型的遵循关系就参与普通的见证表派发；不满足就编译失败。编译器不会在运行时临时补一张表。</p>
-<p><code>Sendable</code> 是标记协议，不是一把运行时的锁。它表示值跨越并发隔离域不会因此数据竞争。元素是普通可变类时，不要把数组标成可以传递；先把类收成不可变且满足条件，或者把共享状态关进 actor。</p>
-<hr>
 <h2 id="heading-23" data-id="heading-23">五、方法调用</h2>
-<h3 id="heading-24" data-id="heading-24">19. Swift 方法调用是如何实现的？</h3>
+<h3 id="heading-24" data-id="heading-24">20. Swift 方法调用是如何实现的？</h3>
+
 <h4>口述版</h4>
 <blockquote><ul>
-<li>能在编译期确定唯一函数，就直接调用。</li>
-<li>不能确定、但有固定槽位，就查表。</li>
-<li>连槽位都没有，只能按方法名查找，就走 <code>objc_msgSend</code>。</li>
-<li>直接调用：结构体和枚举的方法，类里的 <code>final</code>、<code>private</code>、<code>static</code>，以及协议扩展里不是协议要求的方法。</li>
-<li>虚表：类里可以重写的实例方法，用类指针加上下标。见证表：通过 <code>any P</code>，或还没特化的泛型约束调用协议要求。<code>objc_msgSend</code>：标了 <code>dynamic</code> 的成员，以及重写了 Objective-C 方法的成员。只加 <code>@objc</code> 是暴露给 OC，Swift 这边的调用不会因此改成消息发送。</li>
+<li>派发方式有三种：<strong>静态派发</strong>、<strong>虚表派发</strong>、<strong>消息派发</strong>。看这次调用能不能在编译期定死唯一函数。</li>
+<li><strong>静态派发</strong>：编译期就知道跳到哪个函数，直接调用，也最有机会被内联。结构体和枚举上的直接调用，类里的 <code>final</code>、<code>private</code>、<code>static</code>，以及协议扩展里不是协议要求的方法。</li>
+<li><strong>虚表派发</strong>：类里还能被重写的实例方法。从对象开头的类指针找到类，按下标取出函数；子类重写，换的是这一格。协议要求走另一张见证表，同样是固定槽位。</li>
+<li><strong>消息派发</strong>：没有固定槽位，走 <code>objc_msgSend</code>，按方法名找。标了 <code>dynamic</code> 的成员，以及重写了 Objective-C 方法的成员。只加 <code>@objc</code> 是暴露给 OC，Swift 这边的调用不会因此改成消息派发。继承 <code>NSObject</code> 也不会。</li>
 </ul></blockquote>
 <h4>解析</h4>
-<p>能在编译期确定唯一函数，就直接跳。不能确定、但有固定槽位，就查表。连槽位都没有、只能按方法名找，就走消息发送。</p>
+<p>Swift 按调用点能确定多少，选择派发方式。能在编译期定死唯一函数，就静态派发。类里还有子类能换实现，就虚表派发，运行时查一次固定下标。要交给 Objective-C 运行时按名字找、还允许换实现，才消息派发。</p>
 <figure class="explain-fig">
 <div class="fig-panels">
 <div class="fig-panel">
-<div class="fig-label">直接调用</div>
+<div class="fig-label">静态派发</div>
 <div class="fig-line"><span class="node">调用点</span><span class="arrow">地址已经写好 →</span><span class="node shared">唯一函数</span></div>
 </div>
 <div class="fig-panel">
-<div class="fig-label">虚表</div>
+<div class="fig-label">虚表派发</div>
 <div class="fig-line"><span class="node">对象</span><span class="arrow">→</span><span class="node">类</span><span class="arrow">→</span><span class="node shared">第 n 格</span></div>
 <div class="fig-line">子类重写，换的是这一格</div>
 </div>
 <div class="fig-panel">
 <div class="fig-label">见证表</div>
 <div class="fig-line"><span class="node">any P</span><span class="arrow">→</span><span class="node shared">类型 + 协议的那一格</span></div>
+<div class="fig-line">和虚表一样查下标，不是同一张表</div>
 </div>
 <div class="fig-panel">
-<div class="fig-label">按名字</div>
+<div class="fig-label">消息派发</div>
 <div class="fig-line"><span class="node">对象 + 选择子</span><span class="arrow">→</span><span class="node">方法列表</span><span class="arrow">没有再问父类</span></div>
 </div>
 </div>
-<figcaption>前三种都能落到一个固定目标或固定下标。第四种没有槽位，拿方法名去查。内联是找到函数之后可能再做的事，不在这四条路径里。</figcaption>
+<figcaption>静态派发的地址在编译期已经写好。虚表和见证表都是运行时查一个固定下标。消息派发没有这个下标，拿方法名去查。内联发生在已经找到函数之后，本身不是第四种派发方式。</figcaption>
 </figure>
-<table>
-<thead><tr><th>方式</th><th>怎么找到函数</th><th>用在哪</th></tr></thead>
-<tbody>
-<tr><td>直接调用</td><td>调用点已经知道唯一的函数</td><td>结构体和枚举的方法；类里的 <code>final</code>、<code>private</code>、<code>static</code>；协议扩展里多出来、不是要求的方法</td></tr>
-<tr><td>虚表</td><td>对象的类指针加上下标</td><td>类里可以重写的实例方法</td></tr>
-<tr><td>见证表</td><td>按协议要求的槽位取出这个类型的实现</td><td>通过 <code>any P</code>，或还没特化的泛型约束调用协议要求</td></tr>
-<tr><td><code>objc_msgSend</code></td><td>按选择子查缓存、方法列表，再沿父类找</td><td>标了 <code>dynamic</code> 的成员，以及重写了 Objective-C 方法的成员</td></tr>
-</tbody>
-</table>
-<p>结构体、枚举没有子类能替换方法，所以目标可以在编译期确定。<code>final</code>、<code>static</code>、<code>private</code> 的类成员不能被重写，语言规则允许直接绑定到唯一实现。类的可重写方法用虚表。协议要求用见证表，类型遵循协议时生成这张表，每个要求对应一个实现。</p>
-<p><code>dynamic</code> 强制这个成员走 Objective-C 消息发送。只加 <code>@objc</code> 是把声明暴露给 OC：OC 那边按名字发消息，Swift 这边的直接调用不因此自动改成 <code>objc_msgSend</code>。只是要让 OC 能调用这个 Swift 方法，<code>@objc</code> 就够了。要给 OC 运行时替换实现、做 KVO，或者这就是在重写 OC 方法，才需要 <code>dynamic</code>。消息发送会使用缓存，缓存不改变「按选择子查找，找不到再问父类」这个规则。</p>
+<p><strong>静态派发。</strong>编译期已经把函数地址写进调用点，这是最快的一条，编译器还可以把短函数嵌进调用点，那是内联，不是另一种派发。结构体和枚举没有子类能替换方法，直接拿具体类型调用时就是静态派发。把它装进 <code>any P</code> 再调用协议要求，就改查见证表。<code>final</code>、<code>private</code>、<code>static</code> 的类成员不能被重写，语言规则允许绑到唯一实现。</p>
+<pre><code>struct Point {
+    var x: Int
+    func shifted(by dx: Int) -&gt; Point { Point(x: x + dx) } // 静态派发
+}
+final class FinalCar {
+    func run() { } // 整个类不能被继承，方法是静态派发
+}
+class Car {
+    final func vin() -&gt; String { "fixed" } // 这个方法不能被重写
+    private func log() { }                 // 文件外不能重写
+}</code></pre>
+<p><strong>虚表派发。</strong>类要支持子类换掉方法，每个类带着一张表，一格对应一个可重写的实例方法。调用时从对象开头的类指针找到类（继承 <code>NSObject</code> 时，这根指针就是 <code>isa</code>），再按下标取出函数。子类重写，复制这张表并换掉对应的那一格。<code>class</code> 修饰的类型方法还能被子类重写，同样不走静态派发。目标要到运行时才知道，调用点通常不能内联。协议要求用的是见证表：类型遵循协议时生成，左边是协议要求，右边是这个类型的实现。通过 <code>any P</code>，或泛型还没被特化时，按下标取。泛型在看得到实现、被特化之后，可能变成静态派发，那是优化，语言不保证。</p>
+<pre><code>class Animal {
+    func sound() { print("Animal") } // 虚表派发
+}
+class Dog: Animal {
+    override func sound() { print("Woof") } // 换掉虚表里的这一格
+}
+let animal: Animal = Dog()
+animal.sound() // 查 Dog 的虚表，输出 Woof</code></pre>
+<p><strong>消息派发。</strong><code>dynamic</code> 强制这个成员走 <code>objc_msgSend</code>。运行时拿着方法名查缓存和方法列表，没有再问父类，所以可以交换实现、做 KVO。缓存只是加快查找，不改变这条规则。只加 <code>@objc</code> 是把声明暴露给 OC：OC 那边按名字发消息，Swift 这边的调用仍可以是静态派发或虚表派发。继承 <code>NSObject</code> 同样不会让普通 Swift 方法自动改成消息派发。正在重写一个 Objective-C 方法时，因为父方法已经是 <code>dynamic</code>，这个重写才会跟着走消息派发。</p>
+<pre><code>class Demo: NSObject {
+    func overridable() { }                 // 虚表派发
+    @objc func exposed() { }               // OC 能调用；Swift 这边不因此变成消息派发
+    @objc dynamic func swizzleable() { }   // 消息派发，运行时可以换实现
+}</code></pre>
+
 <hr>
 <h2 id="heading-28" data-id="heading-28">六、并发</h2>
-<h3 id="heading-29" data-id="heading-29">20. Swift async/await 和 GCD 有什么区别？await 会不会堵住当前线程？</h3>
+<h3 id="heading-29" data-id="heading-29">21. Swift async/await 和 GCD 有什么区别？await 会不会堵住当前线程？</h3>
+
 <h4>口述版</h4>
 <blockquote><ul>
 <li><code>await</code> 只在挂起点挂起当前任务。挂起之后，这条线程可以执行别的任务，不会停在原地阻塞等待。</li>
@@ -660,8 +742,10 @@ let titles: [String] = ["a"]   // String 满足，[String] 就满足
 }</code></pre>
 <p>GCD 是把闭包投进某个队列。异步提交不会阻塞提交线程；<code>sync</code>、信号量、<code>Thread.sleep</code> 和锁上的死等会占住线程。这些东西放进 Swift 并发的合作线程池里，会把线程占死，其他任务没有线程可跑，严重时还会自己等自己。想把老的回调包成 <code>async</code>，用 continuation，不要在异步函数里用信号量把等待改成死等。</p>
 <p>看到卡顿，先看当前执行器上有没有一段没有 <code>await</code> 的重活，而不是先怪 <code>await</code> 本身。</p>
+
 <hr>
-<h3 id="heading-30" data-id="heading-30">21. actor 和类有什么差别？赋值之后谁和谁共享状态？</h3>
+<h3 id="heading-30" data-id="heading-30">22. actor 和类有什么差别？赋值之后谁和谁共享状态？</h3>
+
 <h4>口述版</h4>
 <blockquote><ul>
 <li>actor 和类一样是引用类型。赋值复制的是引用，两个变量共享同一个实例。</li>
@@ -691,8 +775,10 @@ let titles: [String] = ["a"]   // String 满足，[String] 就满足
 }</code></pre>
 <p>actor 不是「从函数入口锁到出口」。一到 <code>await</code>，当前任务挂起并让出，别的任务可以进入并修改同一份状态。隔离方法里只要写了 <code>await</code>，就不要假设前后中间没有别人改过状态。缓存、计数器和「先检查再写入」都按这个来设计：挂起前读到的状态，恢复之后可能已经变了。</p>
 <p>actor 自动遵循 <code>Sendable</code>。别的任务可以持有这个引用，但不能绕过隔离直接改里面的状态。编译器不会把类自动改写成「整段方法持有锁」；让出是语义的一部分。</p>
+
 <hr>
-<h3 id="heading-31" data-id="heading-31">22. async let、TaskGroup、Task、Task.detached 分别是谁的子任务？</h3>
+<h3 id="heading-31" data-id="heading-31">23. async let、TaskGroup、Task、Task.detached 分别是谁的子任务？</h3>
+
 <h4>口述版</h4>
 <blockquote><ul>
 <li><strong><code>async let</code>、任务组</strong>：当前任务的子任务。取消会顺着父子关系传下去。离开作用域时如果还没等完，先取消，再等它们结束。父任务不是发出取消就立刻返回。</li>
@@ -733,7 +819,8 @@ Task.detached { await fetch("d") }        // 也不继承 actor、优先级、ta
 <p><code>async let</code> 和任务组会沿用优先级和任务局部值。子任务理会取消，就可以提前结束；父任务不是发完取消就立刻返回。</p>
 
 <hr>
-<h3 id="heading-33" data-id="heading-33">23. Sendable 保证什么？@unchecked Sendable 在承诺什么？</h3>
+<h3 id="heading-33" data-id="heading-33">24. Sendable 保证什么？@unchecked Sendable 在承诺什么？</h3>
+
 <h4>口述版</h4>
 <blockquote><ul>
 <li><code>Sendable</code> 表示这个值可以跨隔离域传递，不会因此产生数据竞争。这是编译期检查，运行时不会加锁，也不会把类变成值类型。</li>
@@ -762,8 +849,10 @@ final class Counter: @unchecked Sendable {
 }</code></pre>
 <p>actor 隐式遵循 <code>Sendable</code>。能传的是引用，改仍然要进 actor。类要让编译器认可，必须是 <code>final</code>，存储属性不可变且为 <code>Sendable</code>，父类本身也得是 <code>Sendable</code>。<code>final</code> 的 <code>NSObject</code> 子类即使全是 <code>let</code>，编译器也不认，只能 <code>@unchecked</code>。还有 <code>var</code> 又没有同步，编译器就不认。传的是引用，所以条件比值类型严。</p>
 <p><code>@unchecked Sendable</code> 关闭的是检查，不是关闭数据竞争。给一个到处都是 <code>var</code> 的类加上它，报错没了，同时修改还在。</p>
+
 <hr>
-<h3 id="heading-34" data-id="heading-34">24. @MainActor 保证的是什么？界面卡顿时先看什么？</h3>
+<h3 id="heading-34" data-id="heading-34">25. @MainActor 保证的是什么？界面卡顿时先看什么？</h3>
+
 <h4>口述版</h4>
 <blockquote><ul>
 <li><code>@MainActor</code> 把这段代码隔离到主 actor，由主线程执行。这是隔离规则，不是性能优化。</li>
@@ -782,12 +871,120 @@ func prepare(_ raw: Data) async -&gt; [Item] {
 }</code></pre>
 <p>碰界面、UI 对象和主线程限定的 API，隔离到 <code>@MainActor</code>。函数体里有重计算，把重计算放到不会隔离在主 actor 上的函数里，算完再 <code>await</code> 回主 actor 更新界面。</p>
 <p>卡顿时的顺序：先看主线程有没有长计算、同步 I/O，或者锁和信号量上的阻塞等待；再看解码、压缩、大列表加工有没有被标进主 actor；最后才看刷新频率这些表现层问题。同步部分不挂起，就一直占着主线程。</p>
+
 <hr>
+<h2 id="heading-44" data-id="heading-44">七、加分题</h2>
+<h3 id="heading-15" data-id="heading-15">26. 为什么 Array、String、Dictionary、Set 是值类型？copy-on-write 怎么发生？自定义结构体为什么不会自动有？</h3>
+
+<h4>口述版</h4>
+<blockquote><ul>
+<li>它们是值类型，保证的是值语义：赋值或传参之后，修改这一份，另一份观察不到。</li>
+<li>copy-on-write 是标准库的实现：赋值时先共用同一块缓冲区；要修改，并且这份缓冲区还有其他引用，才复制一份再改。只剩自己持有时，可以在原来那块上改。</li>
+<li>这是 <code>Array</code>、<code>String</code>、<code>Dictionary</code>、<code>Set</code> 自己实现的。编译器不会给自定义结构体自动做唯一性检查，赋值时直接拷贝各个存储属性。</li>
+<li>短 <code>String</code> 没有共享缓冲区，字符嵌在值里。缓冲区容量不够时，即使引用唯一，也会重新分配。</li>
+</ul></blockquote>
+<h4>解析</h4>
+<p>语言保证的是值语义：赋值、传参之后，修改这一份，另一份观察不到。copy-on-write 是标准库为了让这份语义便宜，用在这四个类型上的实现。编译器不会看见结构体就自动插入唯一性检查。</p>
+<p>用到堆缓冲区时，变量里存的是这块内存的地址，元素在里面。赋值复制的是地址，两边地址相同，读和单纯赋值可以很便宜。要修改并且这个地址还有别人拿着，才新开一块内存，把元素复制过去，换成新地址再改。只剩自己拿着，才可以在原来那块上改；容量不够时，即使引用唯一，<code>Array</code> 的 <code>append</code> 仍会新分配。短 <code>String</code> 走小字符串优化，字符嵌在值里，赋值复制的是值本身，没有共享缓冲区。别人还拿着时却不复制，就会破坏值语义。这不是「编译器也许会优化掉复制」。</p>
+<figure class="explain-fig">
+<div class="fig-panels">
+<div class="fig-panel">
+<div class="fig-label">赋值之后，还没改</div>
+<div class="fig-line"><span class="node">a 的地址</span><span class="arrow">→</span><span class="node shared">同一块缓冲区<br>1, 2, 3</span><span class="arrow">←</span><span class="node">b 的地址</span></div>
+</div>
+<div class="fig-panel">
+<div class="fig-label">b 要改，而且地址还有别人拿着</div>
+<div class="fig-line"><span class="node">a</span><span class="arrow">→</span><span class="node">旧缓冲区</span></div>
+<div class="fig-line"><span class="node">b</span><span class="arrow">→</span><span class="node shared">新缓冲区</span></div>
+</div>
+</div>
+<figcaption>这图画的是堆缓冲区。赋值只复制地址。要修改并且这根箭头不止一份时，才为了值语义新开缓冲区。只剩自己拿着，才可以在原来那块上改；容量不够时仍会新分配。短 String 没有这张图里的共享缓冲区。普通结构体没有这套检查。</figcaption>
+</figure>
+<p>自定义结构体赋值，拷贝的是它的各个存储属性，没有自动的「整份结构体唯一化」。要给自己的大块缓冲区做延迟复制，就用一个类握住数据，修改前看强引用是不是只剩这一份。</p>
+<pre><code>final class Storage {
+    var items: [Int]
+    init(_ items: [Int]) { self.items = items }
+}
+struct Queue {
+    private var storage = Storage([])
+    mutating func append(_ n: Int) {
+        if !isKnownUniquelyReferenced(&amp;storage) {
+            storage = Storage(storage.items)
+        }
+        storage.items.append(n)
+    }
+}</code></pre>
+
+<hr>
+<h3 id="heading-20" data-id="heading-20">27. 协议扩展里写了方法，为什么有时调用不到类型自己的实现？</h3>
+
+<h4>口述版</h4>
+<blockquote><ul>
+<li>方法<strong>写进协议要求</strong>：见证表里有这个槽。类型自己写了，就填自己的实现；没写，才填扩展里的默认实现。</li>
+<li>方法<strong>只写在扩展里</strong>：没有这个槽，按调用点看见的静态类型直接调用扩展，不会去查见证表。</li>
+<li>所以静态类型是 <code>any Greeter</code> 时，<code>hello</code> 走到 <code>Pirate</code> 的实现，<code>bye</code> 仍是扩展里的默认实现。静态类型已经是 <code>Pirate</code> 时，可以直接调用 <code>Pirate</code> 自己的 <code>bye</code>。</li>
+<li>希望通过协议类型调用时仍然执行每个类型自己的版本，就把方法写进协议要求。只是某个具体类型的便利函数，才可以只写在扩展里。</li>
+</ul></blockquote>
+<h4>解析</h4>
+<p>调用时编译器手里有没有一个固定槽位，决定它会不会去查见证表。写进协议要求的方法有槽位，类型自己写了就填自己的，没写就填扩展里的默认实现。只写在扩展里的方法是按当时看见的静态类型直接调用的。</p>
+<figure class="explain-fig">
+<div class="fig-panels">
+<div class="fig-panel">
+<div class="fig-label">写进协议要求</div>
+<div class="fig-line"><span class="node">any P</span><span class="arrow">→</span><span class="node shared">见证表那一格</span></div>
+<div class="fig-line">类型自己写了就填自己的，没写才填默认实现</div>
+</div>
+<div class="fig-panel">
+<div class="fig-label">只写在扩展里</div>
+<div class="fig-line"><span class="node">静态类型</span><span class="arrow">直接调 →</span><span class="node shared">扩展里的方法</span></div>
+<div class="fig-line">没有这个槽，不会去查见证表</div>
+</div>
+</div>
+<figcaption>有没有固定槽位，决定通过协议类型调用时会不会走到每个类型自己的实现。静态类型已经是具体类型时，编译器可以直接调用那个类型的方法。</figcaption>
+</figure>
+<pre><code>protocol Greeter {
+    func hello() -&gt; String
+}
+extension Greeter {
+    func hello() -&gt; String { "Hello" }
+    func bye() -&gt; String { "Bye" } // 不是协议要求
+}
+struct Pirate: Greeter {
+    func hello() -&gt; String { "Ahoy" }
+    func bye() -&gt; String { "Arr" }
+}
+let pirate = Pirate()
+pirate.bye()                 // "Arr"，静态类型就是 Pirate
+let g: any Greeter = Pirate()
+g.hello()                    // "Ahoy"，要求在见证表里
+g.bye()                      // "Bye"，按 any Greeter 直接调扩展</code></pre>
+<p>希望通过协议类型调用时仍然执行每个类型自己的版本，就把方法写进协议要求，默认实现可以放在扩展里。这个方法只是给某个具体类型用的便利函数，不需要被动态替换，才可以只写在扩展里。静态类型已经是具体类型时，编译器可以直接调用那个类型的方法；会不会再内联，是优化。</p>
+
+<hr>
+<h3 id="heading-22" data-id="heading-22">28. 什么是条件遵循？[String] 为什么可以是 Sendable？</h3>
+
+<h4>口述版</h4>
+<blockquote><ul>
+<li>条件遵循是编译期规则：<code>where</code> 里的约束满足，这个遵循才存在。<code>Array</code> 只有 <code>Element: Sendable</code> 时才遵循 <code>Sendable</code>。</li>
+<li><code>String</code> 满足，所以 <code>[String]</code> 满足。元素是普通可变类时，数组也不满足，编译失败。</li>
+<li>这是类型上的遵循关系，不是运行时再检查每个元素，也不会临时补一张见证表。</li>
+<li><code>Sendable</code> 表示这个值可以跨隔离域传递，不会因此数据竞争。值类型传过去的是副本。它不是运行时的锁。</li>
+</ul></blockquote>
+<h4>解析</h4>
+<p>条件遵循是编译期规则：<code>where</code> 里的约束满足，这个遵循才存在；不满足，就好像没有写过这个遵循。标准库的数组是 <code>Element: Sendable</code> 时才遵循 <code>Sendable</code>。</p>
+<pre><code>extension Array: Sendable where Element: Sendable {}
+let titles: [String] = ["a"]   // String 满足，[String] 就满足
+// let views: [UIView] = []    // 元素不是 Sendable，数组也不是</code></pre>
+<p><code>[String]</code> 能跨任务传递，是因为 <code>String</code> 这个类型已经满足，传过去的是值的副本。不是运行时检查了每个元素再决定让不让传。约束满足时，这个具体数组类型的遵循关系就参与普通的见证表派发；不满足就编译失败。编译器不会在运行时临时补一张表。</p>
+<p><code>Sendable</code> 是标记协议，不是一把运行时的锁。它表示值跨越并发隔离域不会因此数据竞争。元素是普通可变类时，不要把数组标成可以传递；先把类收成不可变且满足条件，或者把共享状态关进 actor。</p>
+
+<hr>
+
 <h2 id="heading-39" data-id="heading-39">参考</h2>
 <ul>
 <li><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/" target="_blank" rel="noopener noreferrer">The Swift Programming Language</a>：类型、可选值、协议、内存和并发的语言定义。</li>
 <li><a href="https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/02_Swift_interview_questions/theory.md" target="_blank" rel="noopener noreferrer">ChenYilong/iOSInterviewQuestions</a>：类和结构体、泛型、<code>static</code> / <code>class</code>、<code>weak</code> / <code>unowned</code> 这些基础必考题的常见问法。</li>
-<li><a href="https://juejin.cn/post/6855977028689887240" target="_blank" rel="noopener noreferrer">Swift 方法派发</a>：直接调用、虚表、witness table 和 <code>objc_msgSend</code>。</li>
+<li><a href="https://juejin.cn/post/6855977028689887240" target="_blank" rel="noopener noreferrer">Swift 方法派发</a>：静态派发、虚表派发、见证表和消息派发（<code>objc_msgSend</code>）。</li>
 <li><a href="https://github.com/swiftlang/swift-evolution/blob/main/proposals/0302-concurrent-value-and-concurrent-closures.md" target="_blank" rel="noopener noreferrer">SE-0302 Sendable</a>、<a href="https://github.com/swiftlang/swift-evolution/blob/main/proposals/0306-actors.md" target="_blank" rel="noopener noreferrer">SE-0306 actor</a>：并发隔离和 <code>Sendable</code>。</li>
 </ul>
 
@@ -813,54 +1010,64 @@ func prepare(_ raw: Data) async -&gt; [Item] {
       4. is、as、as?、as! 分别做什么？
     </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-5" title="5. throws、try?、try!、Result 怎么选？defer 什么时候执行？typed throws 适合用在哪？" class="catalog-aTag d2-aTag-title">
       5. throws、try?、try!、Result 怎么选？defer 什么时候执行？typed throws 适合用在哪？
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-40" title="6. 指定初始化器、便利初始化器、required、可失败 init 各做什么？两阶段初始化是什么？" class="catalog-aTag d2-aTag-title">
+      6. 指定初始化器、便利初始化器、required、可失败 init 各做什么？两阶段初始化是什么？
     </a></div> <!----></li></ul></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-6" title="二、属性、访问控制与泛型" class="catalog-aTag d1-aTag-title">
       二、属性、访问控制与泛型
-    </a></div> <ul class="sub-list"><li class="item d2"><div class="a-container"><a href="#heading-7" title="6. 存储属性、计算属性、lazy、属性观察器有什么区别？扩展为什么不能加存储属性？" class="catalog-aTag d2-aTag-title">
-      6. 存储属性、计算属性、lazy、属性观察器有什么区别？扩展为什么不能加存储属性？
-    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-8" title="7. static 和 class 修饰类型成员有什么区别？" class="catalog-aTag d2-aTag-title">
-      7. static 和 class 修饰类型成员有什么区别？
-    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-9" title="8. 访问控制从宽到窄是什么？private 和 fileprivate 差在哪？" class="catalog-aTag d2-aTag-title">
-      8. 访问控制从宽到窄是什么？private 和 fileprivate 差在哪？
-    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-10" title="9. 泛型解决什么问题？它和 Any 有什么差别？" class="catalog-aTag d2-aTag-title">
-      9. 泛型解决什么问题？它和 Any 有什么差别？
-    </a></div> <!----></li></ul></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-11" title="三、内存、闭包与拷贝" class="catalog-aTag d1-aTag-title">
-      三、内存、闭包与拷贝
-    </a></div> <ul class="sub-list"><li class="item d2"><div class="a-container"><a href="#heading-12" title="10. ARC 是什么？strong、weak、unowned 怎么选？" class="catalog-aTag d2-aTag-title">
-      10. ARC 是什么？strong、weak、unowned 怎么选？
-    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-13" title="11. 这段代码为什么循环引用？weak 和 unowned 怎么选？" class="catalog-aTag d2-aTag-title">
-      11. 这段代码为什么循环引用？weak 和 unowned 怎么选？
-    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-14" title="12. 闭包是引用类型吗？@escaping 改变了什么？为什么逃逸闭包不能捕获 inout？" class="catalog-aTag d2-aTag-title">
-      12. 闭包是引用类型吗？@escaping 改变了什么？为什么逃逸闭包不能捕获 inout？
-    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-15" title="13. 为什么 Array、String、Dictionary、Set 是值类型？copy-on-write 怎么发生？自定义结构体为什么不会自动有？" class="catalog-aTag d2-aTag-title">
-      13. 为什么 Array、String、Dictionary、Set 是值类型？copy-on-write 怎么发生？自定义结构体为什么不会自动有？
+    </a></div> <ul class="sub-list"><li class="item d2"><div class="a-container"><a href="#heading-7" title="7. 存储属性、计算属性、lazy、属性观察器有什么区别？扩展为什么不能加存储属性？" class="catalog-aTag d2-aTag-title">
+      7. 存储属性、计算属性、lazy、属性观察器有什么区别？扩展为什么不能加存储属性？
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-8" title="8. static 和 class 修饰类型成员有什么区别？" class="catalog-aTag d2-aTag-title">
+      8. static 和 class 修饰类型成员有什么区别？
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-9" title="9. 访问控制从宽到窄是什么？private 和 fileprivate 差在哪？" class="catalog-aTag d2-aTag-title">
+      9. 访问控制从宽到窄是什么？private 和 fileprivate 差在哪？
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-10" title="10. 泛型解决什么问题？它和 Any 有什么差别？" class="catalog-aTag d2-aTag-title">
+      10. 泛型解决什么问题？它和 Any 有什么差别？
+    </a></div> <!----></li></ul></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-11" title="三、内存与闭包" class="catalog-aTag d1-aTag-title">
+      三、内存与闭包
+    </a></div> <ul class="sub-list"><li class="item d2"><div class="a-container"><a href="#heading-12" title="11. ARC 是什么？strong、weak、unowned 怎么选？" class="catalog-aTag d2-aTag-title">
+      11. ARC 是什么？strong、weak、unowned 怎么选？
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-13" title="12. 这段代码为什么循环引用？weak 和 unowned 怎么选？" class="catalog-aTag d2-aTag-title">
+      12. 这段代码为什么循环引用？weak 和 unowned 怎么选？
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-14" title="13. 闭包是引用类型吗？@escaping 改变了什么？为什么逃逸闭包不能捕获 inout？" class="catalog-aTag d2-aTag-title">
+      13. 闭包是引用类型吗？@escaping 改变了什么？为什么逃逸闭包不能捕获 inout？
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-42" title="14. map、flatMap、compactMap 有什么区别？" class="catalog-aTag d2-aTag-title">
+      14. map、flatMap、compactMap 有什么区别？
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-41" title="15. @autoclosure 是做什么的？和普通闭包参数有什么区别？" class="catalog-aTag d2-aTag-title">
+      15. @autoclosure 是做什么的？和普通闭包参数有什么区别？
     </a></div> <!----></li></ul></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-16" title="四、协议" class="catalog-aTag d1-aTag-title">
       四、协议
-    </a></div> <ul class="sub-list"><li class="item d2"><div class="a-container"><a href="#heading-17" title="14. 为什么说 Swift 是面向协议编程的？" class="catalog-aTag d2-aTag-title">
-      14. 为什么说 Swift 是面向协议编程的？
-    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-18" title="15. Swift 协议和 OC 协议有什么区别？" class="catalog-aTag d2-aTag-title">
-      15. Swift 协议和 OC 协议有什么区别？
-    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-19" title="16. some 和 any 差在哪？" class="catalog-aTag d2-aTag-title">
-      16. some 和 any 差在哪？
-    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-20" title="17. 协议扩展里写了方法，为什么有时调用不到类型自己的实现？" class="catalog-aTag d2-aTag-title">
-      17. 协议扩展里写了方法，为什么有时调用不到类型自己的实现？
-    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-22" title="18. 什么是条件遵循？[String] 为什么可以是 Sendable？" class="catalog-aTag d2-aTag-title">
-      18. 什么是条件遵循？[String] 为什么可以是 Sendable？
+    </a></div> <ul class="sub-list"><li class="item d2"><div class="a-container"><a href="#heading-17" title="16. 为什么说 Swift 是面向协议编程的？" class="catalog-aTag d2-aTag-title">
+      16. 为什么说 Swift 是面向协议编程的？
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-43" title="17. Codable 是什么？Encodable/Decodable 怎么自动合成？自定义 key 怎么处理？" class="catalog-aTag d2-aTag-title">
+      17. Codable 是什么？Encodable/Decodable 怎么自动合成？自定义 key 怎么处理？
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-18" title="18. Swift 协议和 OC 协议有什么区别？" class="catalog-aTag d2-aTag-title">
+      18. Swift 协议和 OC 协议有什么区别？
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-19" title="19. some 和 any 差在哪？" class="catalog-aTag d2-aTag-title">
+      19. some 和 any 差在哪？
     </a></div> <!----></li></ul></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-23" title="五、方法调用" class="catalog-aTag d1-aTag-title">
       五、方法调用
-    </a></div> <ul class="sub-list"><li class="item d2"><div class="a-container"><a href="#heading-24" title="19. Swift 方法调用是如何实现的？" class="catalog-aTag d2-aTag-title">
-      19. Swift 方法调用是如何实现的？
+    </a></div> <ul class="sub-list"><li class="item d2"><div class="a-container"><a href="#heading-24" title="20. Swift 方法调用是如何实现的？" class="catalog-aTag d2-aTag-title">
+      20. Swift 方法调用是如何实现的？
     </a></div> <!----></li></ul></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-28" title="六、并发" class="catalog-aTag d1-aTag-title">
       六、并发
-    </a></div> <ul class="sub-list"><li class="item d2"><div class="a-container"><a href="#heading-29" title="20. Swift async/await 和 GCD 有什么区别？await 会不会堵住当前线程？" class="catalog-aTag d2-aTag-title">
-      20. Swift async/await 和 GCD 有什么区别？await 会不会堵住当前线程？
-    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-30" title="21. actor 和类有什么差别？赋值之后谁和谁共享状态？" class="catalog-aTag d2-aTag-title">
-      21. actor 和类有什么差别？赋值之后谁和谁共享状态？
-    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-31" title="22. async let、TaskGroup、Task、Task.detached 分别是谁的子任务？" class="catalog-aTag d2-aTag-title">
-      22. async let、TaskGroup、Task、Task.detached 分别是谁的子任务？
-    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-33" title="23. Sendable 保证什么？@unchecked Sendable 在承诺什么？" class="catalog-aTag d2-aTag-title">
-      23. Sendable 保证什么？@unchecked Sendable 在承诺什么？
-    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-34" title="24. @MainActor 保证的是什么？界面卡顿时先看什么？" class="catalog-aTag d2-aTag-title">
-      24. @MainActor 保证的是什么？界面卡顿时先看什么？
+    </a></div> <ul class="sub-list"><li class="item d2"><div class="a-container"><a href="#heading-29" title="21. Swift async/await 和 GCD 有什么区别？await 会不会堵住当前线程？" class="catalog-aTag d2-aTag-title">
+      21. Swift async/await 和 GCD 有什么区别？await 会不会堵住当前线程？
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-30" title="22. actor 和类有什么差别？赋值之后谁和谁共享状态？" class="catalog-aTag d2-aTag-title">
+      22. actor 和类有什么差别？赋值之后谁和谁共享状态？
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-31" title="23. async let、TaskGroup、Task、Task.detached 分别是谁的子任务？" class="catalog-aTag d2-aTag-title">
+      23. async let、TaskGroup、Task、Task.detached 分别是谁的子任务？
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-33" title="24. Sendable 保证什么？@unchecked Sendable 在承诺什么？" class="catalog-aTag d2-aTag-title">
+      24. Sendable 保证什么？@unchecked Sendable 在承诺什么？
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-34" title="25. @MainActor 保证的是什么？界面卡顿时先看什么？" class="catalog-aTag d2-aTag-title">
+      25. @MainActor 保证的是什么？界面卡顿时先看什么？
+    </a></div> <!----></li></ul></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-44" title="七、加分题" class="catalog-aTag d1-aTag-title">
+      七、加分题
+    </a></div> <ul class="sub-list"><li class="item d2"><div class="a-container"><a href="#heading-15" title="26. 为什么 Array、String、Dictionary、Set 是值类型？copy-on-write 怎么发生？自定义结构体为什么不会自动有？" class="catalog-aTag d2-aTag-title">
+      26. 为什么 Array、String、Dictionary、Set 是值类型？copy-on-write 怎么发生？自定义结构体为什么不会自动有？
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-20" title="27. 协议扩展里写了方法，为什么有时调用不到类型自己的实现？" class="catalog-aTag d2-aTag-title">
+      27. 协议扩展里写了方法，为什么有时调用不到类型自己的实现？
+    </a></div> <!----></li><li class="item d2"><div class="a-container"><a href="#heading-22" title="28. 什么是条件遵循？[String] 为什么可以是 Sendable？" class="catalog-aTag d2-aTag-title">
+      28. 什么是条件遵循？[String] 为什么可以是 Sendable？
     </a></div> <!----></li></ul></li><li class="item d1" data-v-6239701c><div class="a-container"><a href="#heading-39" title="参考" class="catalog-aTag d1-aTag-title">
       参考
     </a></div> </li></ul></div></nav> <!----> <!----> <div class="adverts-list" data-v-0eca8145 data-v-4ed317c2></div> <!----> <!----></div> <!----></div> <!----> <!----> <div id="article-suspended-panel" data-v-539963b4 data-v-61fb5e44></div> <!----></div> <!----><!----><!----><!----><!----><!----><!----></main> <!----></div> <!----></div> <!----> <div class="global-component-box"><!----></div> <!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----> <!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----></div></div></div>
