@@ -1,0 +1,33 @@
+classDiagram
+    direction TB
+    class Task["Swift Task"] {
+        <<runtime>>
+        保存工作和取消等任务状态
+        挂起时保存继续执行状态
+        恢复时继续函数流程
+    }
+    class Executor["Executor"] {
+        <<runtime>>
+        调度可执行的任务片段
+        遵循 actor 隔离规则
+    }
+    class Thread["执行线程"] {
+        <<resource>>
+        实际执行同步代码
+        不与普通任务一一绑定
+    }
+    class Async["异步函数"] {
+        <<function>>
+        async 声明可挂起
+        await 标记可能挂起点
+    }
+    class Queue["GCD 队列"] {
+        <<runtime>>
+        调度 block
+        async 提交后不等待完成
+        sync 调用同步等待完成
+    }
+    Task ..> Async : 任务内调用
+    Executor ..> Task : 调度任务片段
+    Executor ..> Thread : 使用执行资源
+    Queue ..> Thread : 使用线程执行 block

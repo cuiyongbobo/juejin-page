@@ -1,0 +1,32 @@
+classDiagram
+    direction TB
+    class A["数组值 a"] {
+        <<value>>
+        元素为 1,2,3
+        保持原始内容
+    }
+    class B["数组值 b"] {
+        <<value>>
+        由 b = a 得到
+        append(4) 后为 1,2,3,4
+    }
+    class Buffer["共享 Buffer"] {
+        <<storage>>
+        保存元素或元素引用
+        共享时写入需要分离
+    }
+    class Owned["b 的独立 Buffer"] {
+        <<storage>>
+        共享写入后由 b 使用
+        独占写入通常无需再次复制
+    }
+    class Item["Item"] {
+        <<class>>
+        name: String
+        改对象属性不是改数组元素引用
+    }
+    A --> Buffer : 赋值后的共享存储
+    B --> Buffer : 写入前可共享
+    B --> Owned : 共享时先分离再写入
+    Buffer --> Item : 类元素时保存对象引用
+    Owned --> Item : 不自动深复制对象

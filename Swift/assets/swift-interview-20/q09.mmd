@@ -1,0 +1,27 @@
+classDiagram
+    direction TB
+    class Throwing["可能抛错的函数"] {
+        <<function>>
+        throws 声明可能失败
+        throw 传递具体错误
+    }
+    class Handling["调用策略"] {
+        <<usage>>
+        try 配合 catch 或继续抛出
+        try? 失败变 nil
+        try! 失败为运行时错误
+    }
+    class Result["Result"] {
+        <<enum>>
+        success(Success)
+        failure(Failure)
+    }
+    class Scope["defer 所在作用域"] {
+        <<concept>>
+        执行到 defer 才注册
+        正常结束或 return 或 throw 时执行
+        同一作用域按后注册先执行
+    }
+    Handling ..> Throwing : 选择错误策略
+    Result ..> Throwing : 可将成功或失败保存为值
+    Scope ..> Throwing : 负责退出时的资源清理

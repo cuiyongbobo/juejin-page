@@ -1,0 +1,27 @@
+classDiagram
+    direction TB
+    class Greeter["Greeter"] {
+        <<protocol>>
+        hello() String
+    }
+    class Extension["Greeter extension"] {
+        <<extension>>
+        hello() 默认 hello
+        bye() 默认 bye
+    }
+    class Person["Person"] {
+        <<struct>>
+        hello() 自己的 hello
+        bye() 自己的 bye
+    }
+    class Value["value: any Greeter"] {
+        <<existential>>
+        保存 Person 值
+        hello() 得到自己的 hello
+        bye() 得到默认 bye
+    }
+    Greeter <|.. Person : 遵循
+    Extension ..> Greeter : 默认要求实现和扩展成员
+    Value --> Person : 当前保存的具体值
+    Value ..> Greeter : hello 经协议要求
+    Value ..> Extension : bye 按静态信息选择

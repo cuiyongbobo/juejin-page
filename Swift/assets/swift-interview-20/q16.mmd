@@ -1,0 +1,26 @@
+classDiagram
+    direction TB
+    class Static["静态派发"] {
+        <<dispatch>>
+        本例 dog.speak 是 final
+        编译期确定函数目标
+        可直接调用并可能内联
+    }
+    class Virtual["虚表派发"] {
+        <<dispatch>>
+        animal 静态类型为 Animal
+        运行时对象实际为 Dog
+        查槽位得到 Dog.sound
+    }
+    class Witness["见证表派发"] {
+        <<dispatch>>
+        speaker 类型为 any Speaker
+        查 Dog 对 Speaker 的遵循
+        经见证入口调用 speak
+    }
+    class ObjC["OC 消息派发"] {
+        <<dispatch>>
+        本例 Demo.run 为 objc dynamic
+        objc_msgSend 接收者与 selector
+        缓存或方法查找得到 IMP
+    }

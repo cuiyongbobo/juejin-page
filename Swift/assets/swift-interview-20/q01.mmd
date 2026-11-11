@@ -1,0 +1,32 @@
+classDiagram
+    direction TB
+    class ProfileA["a: Profile"] {
+        <<struct>>
+        name: String = 小明
+    }
+    class ProfileB["b: Profile"] {
+        <<struct>>
+        name: String = 小红
+    }
+    class X["x"] {
+        <<reference>>
+        指向 Account 实例
+    }
+    class Y["y"] {
+        <<reference>>
+        由 y = x 得到
+    }
+    class Account["Account 实例"] {
+        <<class>>
+        balance: Int = 100
+        引用身份由 === 比较
+    }
+    class State["State"] {
+        <<enum>>
+        loading
+        success(String)
+        failure(Int)
+    }
+    ProfileA ..> ProfileB : b = a 后独立修改
+    X --> Account : 强引用
+    Y --> Account : 强引用

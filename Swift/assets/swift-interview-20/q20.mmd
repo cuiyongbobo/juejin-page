@@ -1,0 +1,31 @@
+classDiagram
+    direction TB
+    class Counter["Counter"] {
+        <<actor>>
+        private value: Int
+        increment() Int 无 await
+    }
+    class Screen["ScreenModel"] {
+        <<MainActor>>
+        private title: String
+        apply(Snapshot) 更新状态
+    }
+    class Snapshot["Snapshot"] {
+        <<struct>>
+        let count: Int
+    }
+    class Sendable["Sendable"] {
+        <<marker_protocol>>
+        承诺值可安全跨隔离域使用
+        不提供自动同步锁
+    }
+    class Reentry["actor 重入边界"] {
+        <<concept>>
+        await 真正挂起时可执行其他任务
+        恢复时重新校验状态
+        不保证整个异步方法原子性
+    }
+    Sendable <|.. Snapshot : 显式遵循
+    Counter ..> Snapshot : 返回值用于快照
+    Screen ..> Snapshot : 接收快照
+    Counter ..> Reentry : 有挂起点时需考虑

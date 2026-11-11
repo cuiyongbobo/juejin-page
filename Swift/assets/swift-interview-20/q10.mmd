@@ -1,0 +1,26 @@
+classDiagram
+    direction TB
+    class Generic["泛型 T"] {
+        <<concept>>
+        输入与输出共享类型参数
+        identity(T) 返回 T
+        T 可附加协议约束
+    }
+    class Opaque["some Named 返回值"] {
+        <<opaque>>
+        实现方选择底层类型
+        本例 make() 返回 User
+        保留隐藏的类型身份
+    }
+    class Existential["any Named"] {
+        <<existential>>
+        当前值可为 User 或 Book
+        暴露 Named 协议能力
+        具体静态类型被擦除
+    }
+    class Any["Any"] {
+        <<existential>>
+        可保存任意类型的值
+        不保证 Named 协议能力
+        具体能力需检查或转换
+    }

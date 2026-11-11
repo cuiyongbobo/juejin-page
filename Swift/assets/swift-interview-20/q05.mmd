@@ -1,0 +1,22 @@
+classDiagram
+    direction TB
+    class Page["Page 实例"] {
+        <<class>>
+        onTap: Closure
+        refresh()
+        deinit()
+    }
+    class Closure["onTap 闭包"] {
+        <<closure>>
+        执行回调代码
+        默认强捕获 self
+    }
+    class Capture["捕获列表策略"] {
+        <<concept>>
+        weak self 可自动变 nil
+        unowned self 不自动清零
+        两者均不增加强引用计数
+    }
+    Page --> Closure : 强持有
+    Closure --> Page : 默认强捕获形成环
+    Capture ..> Closure : 用合适捕获策略替换强回边

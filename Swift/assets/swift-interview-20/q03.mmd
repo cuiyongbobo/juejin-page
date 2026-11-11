@@ -1,0 +1,26 @@
+classDiagram
+    direction TB
+    class Meter["Meter"] {
+        <<struct>>
+        value: Int 存储属性
+        history: Array 实例 lazy var
+        static let unit: String
+        doubled.get() 根据 value 计算
+    }
+    class Vehicle["Vehicle"] {
+        <<class>>
+        static category() 不可重写
+        class name() 可重写
+    }
+    class Car["Car"] {
+        <<class>>
+        override class name() 返回汽车
+    }
+    class Guarantee["初始化保证"] {
+        <<concept>>
+        实例 lazy 不保证并发只初始化一次
+        类型存储属性只初始化一次
+        共享可变状态另行同步
+    }
+    Vehicle <|-- Car : 继承
+    Meter ..> Guarantee : 区分实例与类型属性

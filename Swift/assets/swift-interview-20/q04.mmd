@@ -1,0 +1,28 @@
+classDiagram
+    direction TB
+    class Vehicle["Vehicle"] {
+        <<class>>
+        name: String
+        init(name) 指定初始化器
+        convenience init() 横向委托
+    }
+    class Car["Car"] {
+        <<class>>
+        seats: Int
+        init(name,seats) 先设置 seats
+        super.init(name) 初始化父类部分
+    }
+    class Phase["两阶段规则"] {
+        <<concept>>
+        阶段一 先子类再父类设置初值
+        阶段二 先父类再子类完成定制
+        阶段一结束后才能使用完整 self
+    }
+    class Age["Age"] {
+        <<struct>>
+        value: Int
+        init?(value) 负数时返回 nil
+    }
+    Vehicle <|-- Car : 类继承
+    Car ..> Vehicle : super.init 向上委托
+    Car ..> Phase : 必须满足安全检查

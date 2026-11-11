@@ -1,0 +1,34 @@
+classDiagram
+    direction TB
+    class Encodable["Encodable"] {
+        <<protocol>>
+        encode(to) throws
+    }
+    class Decodable["Decodable"] {
+        <<protocol>>
+        init(from) throws
+    }
+    class User["User"] {
+        <<struct>>
+        id: Int
+        name: String
+        nickname: String?
+    }
+    class Keys["User.CodingKeys"] {
+        <<enum>>
+        id 与 nickname 同名
+        name 对应 display_name
+    }
+    class Decoder["JSONDecoder"] {
+        <<class>>
+        decode(User.Type, Data) throws
+    }
+    class Encoder["JSONEncoder"] {
+        <<class>>
+        encode(User) throws
+    }
+    Encodable <|.. User : 编码遵循
+    Decodable <|.. User : 解码遵循
+    User ..> Keys : 字段映射
+    Decoder ..> Decodable : 调用解码实现
+    Encoder ..> Encodable : 调用编码实现

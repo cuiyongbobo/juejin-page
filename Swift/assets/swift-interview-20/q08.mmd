@@ -1,0 +1,23 @@
+classDiagram
+    direction TB
+    class Input["字符串数组"] {
+        <<value>>
+        输入为 1、x、3
+    }
+    class Mapped["map 结果"] {
+        <<value>>
+        类型为 Array of Int?
+        值为 some 1、nil、some 3
+    }
+    class Compacted["compactMap 结果"] {
+        <<value>>
+        类型为 Array of Int
+        值为 1、3
+    }
+    class Groups["嵌套数组"] {
+        <<value>>
+        输入为 1,2 与 3 两组
+        flatMap(identity) 得到 1,2,3
+    }
+    Input ..> Mapped : 每项转换保留位置
+    Input ..> Compacted : 转换并去 nil

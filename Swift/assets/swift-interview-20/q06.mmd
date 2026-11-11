@@ -1,0 +1,26 @@
+classDiagram
+    direction TB
+    class Local["局部变量 count"] {
+        <<context>>
+        初值为 1
+        创建闭包后改为 2
+    }
+    class Live["readLive"] {
+        <<closure>>
+        默认捕获 count 变量
+        call() 读到 2
+    }
+    class Snapshot["readSnapshot"] {
+        <<closure>>
+        捕获列表保存 count 值 1
+        call() 仍读到 1
+    }
+    class Parameter["闭包参数规则"] {
+        <<concept>>
+        escaping 允许闭包活过函数返回
+        autoclosure 将表达式变为无参闭包
+        两者不自动创建异步任务
+    }
+    Live --> Local : 共享被捕获的变量
+    Snapshot ..> Local : 创建时取值快照
+    Parameter ..> Live : 生命周期规则独立于捕获方式

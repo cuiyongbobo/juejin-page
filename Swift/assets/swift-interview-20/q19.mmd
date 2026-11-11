@@ -1,0 +1,34 @@
+classDiagram
+    direction TB
+    class Parent["父任务作用域"] {
+        <<structured>>
+        async let 创建固定子任务
+        TaskGroup 动态添加子任务
+        退出前等待所有子任务结束
+    }
+    class A["子任务 A"] {
+        <<task>>
+        继承父子取消关系
+        协作检查取消
+    }
+    class B["子任务 B"] {
+        <<task>>
+        受结构化作用域约束
+        实际结束后才完成等待
+    }
+    class Unstructured["Task 创建的任务"] {
+        <<unstructured>>
+        可继承创建上下文隔离
+        可活过创建作用域
+        创建者取消不自动传播
+    }
+    class Handle["TaskHandle"] {
+        <<usage>>
+        cancel() 只请求取消
+        checkCancellation() 可抛错
+        value 等待任务实际结果
+    }
+    Parent --> A : 结构化子任务
+    Parent --> B : 结构化子任务
+    Parent ..> Unstructured : 创建而非结构化子关系
+    Handle --> Unstructured : 管理取消与结果

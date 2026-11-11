@@ -1,0 +1,30 @@
+classDiagram
+    direction TB
+    class Named["Named"] {
+        <<protocol>>
+        name: String get
+        greeting() String
+    }
+    class Extension["Named extension"] {
+        <<extension>>
+        greeting() 默认返回问候
+    }
+    class User["User"] {
+        <<struct>>
+        name: String
+        使用默认 greeting
+    }
+    class Robot["Robot"] {
+        <<struct>>
+        name: String
+        greeting() 返回编号
+    }
+    class Show["show"] {
+        <<generic>>
+        T 受 Named 约束
+        show(T) 调用 greeting
+    }
+    Named <|.. User : 遵循
+    Named <|.. Robot : 遵循
+    Extension ..> Named : 提供要求的默认实现
+    Show ..> Named : 依赖协议要求

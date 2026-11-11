@@ -1,0 +1,27 @@
+classDiagram
+    direction TB
+    class Drawable["Drawable"] {
+        <<protocol>>
+        draw() 必需要求
+    }
+    class Default["Drawable extension"] {
+        <<extension>>
+        draw() 默认绘制
+    }
+    class Dot["Dot"] {
+        <<struct>>
+        使用默认 draw
+    }
+    class Clickable["Clickable"] {
+        <<objc_protocol>>
+        optional click()
+        仅类可遵循
+    }
+    class Button["Button"] {
+        <<class>>
+        本例继承 NSObject
+        没有实现 click
+    }
+    Drawable <|.. Dot : 遵循
+    Default ..> Drawable : 提供默认实现
+    Clickable <|.. Button : 遵循但可省略 click

@@ -1,0 +1,33 @@
+classDiagram
+    direction TB
+    class Object["Person 实例"] {
+        <<runtime>>
+        对象头 metadata 关联
+        对象头 引用计数状态
+        实例属性 age: Int
+    }
+    class Metadata["Person 类元数据"] {
+        <<runtime>>
+        父类与字段布局
+        实例大小与对齐
+        Swift 虚表
+    }
+    class VTable["Swift vtable"] {
+        <<runtime>>
+        可重写方法槽位
+        记录实现入口
+    }
+    class Metaclass["OC 元类"] {
+        <<objc_runtime>>
+        OC 类方法等信息
+        仅限支持 OC 互操作的环境
+    }
+    class TypeValue["Person.self"] {
+        <<metatype_value>>
+        类型为 Person.Type
+        表示 Person 类型
+    }
+    Object --> Metadata : metadata
+    Metadata --> VTable : 方法槽位
+    Metadata --> Metaclass : Apple 互操作下的 isa
+    TypeValue ..> Metadata : 语言层类型值关联

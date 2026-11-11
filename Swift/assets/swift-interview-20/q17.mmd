@@ -1,0 +1,38 @@
+classDiagram
+    direction TB
+    class Container["any Speaker 容器"] {
+        <<existential>>
+        值缓冲区 通常三机器字
+        具体类型 metadata 指针
+        协议见证表指针
+    }
+    class Storage["具体值存储"] {
+        <<storage>>
+        小且对齐合适可内联
+        否则关联外部分配
+    }
+    class Metadata["具体类型元数据"] {
+        <<runtime>>
+        描述当前具体类型
+        关联值见证表
+    }
+    class VWT["Value Witness Table"] {
+        <<runtime>>
+        复制与移动
+        销毁等生命周期操作
+    }
+    class PWT["Protocol Witness Table"] {
+        <<runtime>>
+        对应 Dog 遵循 Speaker
+        speak 要求的实现入口
+    }
+    class Descriptor["Speaker 协议描述符"] {
+        <<runtime>>
+        协议身份
+        协议要求描述
+    }
+    Container --> Storage : 值缓冲区
+    Container --> Metadata : metadata
+    Container --> PWT : witness 指针
+    Metadata --> VWT : 值操作
+    PWT ..> Descriptor : 遵循满足这些要求

@@ -1,0 +1,27 @@
+classDiagram
+    direction TB
+    class Optional["Optional of Wrapped"] {
+        <<enum>>
+        some(Wrapped)
+        none
+    }
+    class Binding["可选绑定"] {
+        <<usage>>
+        if let 成功值限于分支
+        guard let 成功值用于后续作用域
+        guard 失败必须退出
+    }
+    class Access["可选链与默认值"] {
+        <<usage>>
+        nickname?.count 得到可选结果
+        nickname ?? 游客 按需给默认值
+    }
+    class Cast["运行时类型转换"] {
+        <<usage>>
+        value as? String
+        成功得到 some(String)
+        失败得到 nil
+    }
+    Binding ..> Optional : 检查并绑定值
+    Access ..> Optional : 按有值或缺值处理
+    Cast --> Optional : 返回可选结果

@@ -1,0 +1,32 @@
+classDiagram
+    direction TB
+    class Object["Object · Dog 对象"] {
+        +ClassMetadata* metadata 类型指针
+    }
+    class ClassMetadata["ClassMetadata · 类元数据"] {
+        +ClassMetadata* superclass 父类
+        +FunctionPointer[] vtable 虚表
+        +ObjCInfo objcInfo 运行时方法信息
+    }
+    class VTable["vtable · 虚表"] {
+        eat 指向 Animal.eat
+        sound 指向 Dog.sound
+    }
+    class ObjCDispatch["ObjC · 缓存与方法列表"] {
+        SEL 方法选择子
+        IMP 方法实现指针
+    }
+    class SpeakerValue["speaker: any Speaker · 协议值"] {
+        值存储区 保存 Dog 对象引用
+        +ClassMetadata* metadata 实际类型
+        +WitnessTable* witnessTable 见证表指针
+    }
+    class WitnessTable["Dog: Speaker · 见证表"] {
+        speak 经适配入口调用 Dog.speak
+    }
+    Object --> ClassMetadata : metadata · 指向实际类
+    ClassMetadata *-- VTable : Swift 重写方法
+    ClassMetadata --> ObjCDispatch : ObjC 运行时方法查找
+    SpeakerValue --> Object : 值存储区中的对象引用
+    SpeakerValue --> WitnessTable : witnessTable · 直接指向
+    SpeakerValue --> ClassMetadata : metadata · 实际类型
