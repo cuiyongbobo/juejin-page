@@ -1,7 +1,7 @@
 <!doctype html>
 <html data-n-head-ssr lang="zh" data-n-head="%7B%22lang%22:%7B%22ssr%22:%22zh%22%7D%7D">
   <head >
-    <title>Swift-high-frequency</title><meta data-n-head="ssr" charset="utf-8"><meta data-n-head="ssr" name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, viewport-fit=cover"><meta data-n-head="ssr" name="apple-itunes-app" content="app-id=987739104"><meta data-n-head="ssr" name="theme-color" content="#ffffff"><meta data-n-head="ssr" name="msapplication-TileColor" content="#da532c"><meta data-n-head="ssr" name="msvalidate.01" content="BADCF2429624CB0432BE8924E5343343"><meta data-n-head="ssr" name="google-site-verification" content="H_4N6FRhUA633zQuLcgQvaDDceBxlcb6vMSFXm5G4i8"><meta data-n-head="ssr" vmid="description" name="description" content="面向 Swift 新手的 20 道面试题：融合原理的面试总结、追问展开、带注释代码与直观图示。"><meta data-n-head="ssr" vmid="keywords" name="keywords" content="RxSwift,SwiftUI,Alamofire中文技术社区,前端开发社区,前端技术交流,前端框架教程,JavaScript 学习资源,CSS 技巧与最佳实践,HTML5 最新动态,前端工程师职业发展,开源前端项目,前端技术趋势"><link data-n-head="ssr" rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png"><link data-n-head="ssr" rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png"><link data-n-head="ssr" rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png"><link data-n-head="ssr" rel="mask-icon" href="assets/safari-pinned-tab.svg" color="#1E80FF"><link data-n-head="ssr" rel="stylesheet" href="assets/bytedesign.min.css"><link data-n-head="ssr" rel="canonical" href="https://juejin.cn/post/7229877486171930684"><link rel="stylesheet" href="assets/app.070ff99.css"><link rel="stylesheet" href="assets/default.a1d6163.css"><link rel="stylesheet" href="assets/12.782611d.css">
+    <title>Swift-high-frequency</title><meta data-n-head="ssr" charset="utf-8"><meta data-n-head="ssr" name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, viewport-fit=cover"><meta data-n-head="ssr" name="apple-itunes-app" content="app-id=987739104"><meta data-n-head="ssr" name="theme-color" content="#ffffff"><meta data-n-head="ssr" name="msapplication-TileColor" content="#da532c"><meta data-n-head="ssr" name="msvalidate.01" content="BADCF2429624CB0432BE8924E5343343"><meta data-n-head="ssr" name="google-site-verification" content="H_4N6FRhUA633zQuLcgQvaDDceBxlcb6vMSFXm5G4i8"><meta data-n-head="ssr" vmid="description" name="description" content="面向 Swift 新手的 20 道面试题：回答总结、逐步解释、带注释代码与直观图示。"><meta data-n-head="ssr" vmid="keywords" name="keywords" content="RxSwift,SwiftUI,Alamofire中文技术社区,前端开发社区,前端技术交流,前端框架教程,JavaScript 学习资源,CSS 技巧与最佳实践,HTML5 最新动态,前端工程师职业发展,开源前端项目,前端技术趋势"><link data-n-head="ssr" rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png"><link data-n-head="ssr" rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png"><link data-n-head="ssr" rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png"><link data-n-head="ssr" rel="mask-icon" href="assets/safari-pinned-tab.svg" color="#1E80FF"><link data-n-head="ssr" rel="stylesheet" href="assets/bytedesign.min.css"><link data-n-head="ssr" rel="canonical" href="https://juejin.cn/post/7229877486171930684"><link rel="stylesheet" href="assets/app.070ff99.css"><link rel="stylesheet" href="assets/default.a1d6163.css"><link rel="stylesheet" href="assets/12.782611d.css">
   
 <style id="local-catalog-style">
 html{scroll-behavior:smooth}
@@ -81,6 +81,17 @@ html{scroll-behavior:smooth}
 .markdown-body .source-link{font-size:13px;color:#6b7581}
 @media(max-width:600px){.markdown-body .question h3{font-size:20px}.markdown-body .study-intro{padding:14px}}
 @media print{.question h3{break-after:avoid}}
+
+/* 每个解释围绕一个疑问展开，进阶细节按需阅读。 */
+.markdown-body .explanation-item{margin:16px 0 20px;padding-left:15px;border-left:3px solid #d8e7f4}
+.markdown-body .question .explanation-item h5{font-size:16px;line-height:1.7;color:#243b53;margin:0 0 7px;font-weight:600}
+.markdown-body .question .explanation-item p{margin:0;line-height:1.9}
+.markdown-body .advanced-note{margin:18px 0;padding:12px 16px;border:1px solid #dce4ed;border-radius:8px;background:#f8fafc}
+.markdown-body .advanced-note summary{cursor:pointer;color:#486275;font-size:14px;line-height:1.7;font-weight:600}
+.markdown-body .advanced-note summary:focus-visible{outline:2px solid #1e80ff;outline-offset:4px}
+.markdown-body .question .advanced-note p{font-size:14px;line-height:1.85;margin:12px 0 0}
+@media(max-width:600px){.markdown-body .explanation-item{padding-left:11px}.markdown-body .advanced-note{padding:11px 12px}}
+
 /* 图示随正文排版：文字可选中，窄屏自动纵向阅读，无需横向拖图。 */
 .markdown-body .review-viz{margin:16px 0;padding:22px;background:#f5f8fc;border:1px solid #d5e0ec;border-radius:12px;color:#243449;font-size:15px;line-height:1.65;overflow-wrap:anywhere}
 .markdown-body .review-viz *{box-sizing:border-box;min-width:0}
@@ -111,27 +122,45 @@ html{scroll-behavior:smooth}
 .markdown-body .viz-container-title{font-weight:700;font-size:15px;color:#244968}
 .markdown-body .viz-strip{background:#e5eef8;color:#254b70;padding:12px 14px;border-radius:7px;font-size:14px;margin:14px 0;line-height:1.9}
 .markdown-body .viz-caution{background:#fff5e4;color:#79531b;border:1px solid #e5cc9b}
-.markdown-body .review-viz figcaption{display:block;border-top:1px solid #cbd9e8;padding-top:14px;margin-top:18px;font-size:15px;font-weight:600;color:#244968}
-.markdown-body .review-viz figcaption>strong{display:block;font-size:12px;letter-spacing:.06em;color:#526a80;margin-bottom:5px}
 .markdown-body .review-viz .viz-note{font-size:13px;color:#536579;margin:10px 0 0;line-height:1.7}
 @media(max-width:600px){.markdown-body .review-viz{padding:15px 12px}.markdown-body .viz-flow{grid-template-columns:minmax(0,1fr);gap:4px}.markdown-body .viz-arrow{transform:rotate(90deg);height:20px}.markdown-body .viz-node{padding:11px 13px}.markdown-body .viz-cards,.markdown-body .viz-choice .viz-cards{grid-template-columns:minmax(0,1fr)}.markdown-body .viz-title{font-size:18px}.markdown-body .viz-container{padding:10px}}
-@media print{.review-viz{break-inside:auto;background:#fff!important}.viz-lane,.viz-step,.viz-cards,.review-viz figcaption{break-inside:avoid}.viz-heading{break-after:avoid}}
+@media print{.review-viz{break-inside:auto;background:#fff!important}.viz-lane,.viz-step,.viz-cards{break-inside:avoid}.viz-heading{break-after:avoid}}
 
 </style>
 <div class="study-intro">
 <p><strong>Swift-high-frequency</strong></p>
-<p>每题已将口述答案与底层原理合并为一份「面试总结」。先练习「核心回答」，说明结论、用途与关键机制；被追问时再接「追问展开」，补充原理、限制与易错边界。随后结合代码和图示验证理解。</p>
+<p>每题开头的「回答总结」按问题说明结论、原理和适用条件，方便理解与面试复习；「进一步理解」则从具体疑问出发，讲清场景、发生过程与原因。</p>
+<p><strong>阅读方法 · 第一次学习：</strong>先读「进一步理解」，结合代码示例和图示看懂原因，再回头用自己的话说出「回答总结」。先理解原因，再记住结论，不必一开始就背答案。</p>
+<p><strong>阅读方法 · 面试复习：</strong>先遮住答案尝试口述，再对照开头的「回答总结」检查遗漏；遇到不理解或说不清的地方，回到「进一步理解」和例子中核对。</p>
 <p><strong>学习顺序：</strong>先学 1–10 与 14 题，建立语法、内存与数据处理基础；再学 11–13、16、18–20 题；15、17 题是你指定保留的底层进阶题，第二轮再读。</p>
 <p>从原 28 题合并、精简为 20 题。学习优先级根据基础覆盖与业务实用性安排，不代表招聘频率统计。示例各自独立，适用于 Swift 6；Objective-C 互操作示例面向 Apple 平台。并发执行位置还受编译设置影响。</p>
-<p>每题统一为：面试总结（核心回答＋追问展开）→ 代码示例 → 图示说明 → 易错提醒与官方资料。核心回答用于首次作答，追问展开按面试官的问题选择补充，不必一口气背完。图示按题目使用前后对比、判断分支、调用路径或执行时间线。路径图从左到右读，窄屏从上到下读；结果框直接标出代码结果，底部「面试记忆点」用于快速口述复习。运行时图只表示概念关系。</p>
+<p>每题的页面排列为「回答总结 → 进一步理解 → 代码示例 → 图示说明 → 易错提醒」，实际阅读顺序按上面的学习或复习方法选择；部分题目另有可折叠的「进阶补充」，用于第二轮学习特殊规则、底层布局或版本差异。先读正文也能建立基础理解，应用具体结论时仍需留意适用条件。图示从左到右读，窄屏从上到下读；结果框对应代码行为，复习时可回到题目开头的「回答总结」核对要点。运行时图只表示概念关系。</p>
 </div>
 <section class="question" data-question="1">
 <h3 id="heading-1" data-id="heading-1">1. struct、class、enum 有什么区别？什么时候用？</h3>
 <span class="level">基础优先</span>
-<h4>面试总结（核心回答＋追问展开）</h4>
+<h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>核心回答：</strong>struct 和 enum 是值类型，class 是引用类型。值类型赋值或传参后，修改一份值本身不会改变另一份；类的多个引用可以指向同一实例，因此能观察到共享状态的变化。独立的数据模型优先用 struct，需要对象身份、共享状态或继承时用 class，互斥状态及其附带数据用 enum。三者都可以遵循协议。</p>
-<p><strong>追问展开：</strong>值语义不等于深复制，也不规定一定存放在栈上：Array 可以共享缓冲区并在写入时分离；struct 中保存的类引用仍可指向同一对象。值类型方法修改自身属性、重新赋值 self，或切换枚举 case 时，需要 mutating；只修改所引用对象的内部状态则不需要。枚举原始值是声明时确定的固定值，关联值是创建枚举值时携带的数据。这里先讨论默认可拷贝的类型；进阶的 ~Copyable 表示取消默认可拷贝能力，这类值类型也能声明 deinit（销毁时执行的清理代码，见第 5 题），因此不能用有无 deinit 判断值类型或引用类型。</p>
+<p><strong><code>struct</code> 和 <code>enum</code> 是值类型，<code>class</code> 是引用类型。</strong>值类型在赋值或传参后，修改一份值本身不会影响另一份；引用类型的多个引用可以指向同一实例并共享状态。值语义不等于深复制，值类型中保存的类引用仍可能指向同一对象。三者都支持属性、方法和协议，类还支持继承与实例身份比较。选择时，独立数据优先用 <code>struct</code>，需要共享状态、对象身份或继承时用 <code>class</code>，需要表达互斥状态及其附带数据时用 <code>enum</code>。</p>
+</div>
+<h4>进一步理解</h4>
+<div class="understanding">
+<div class="explanation-item">
+<h5>值类型赋值后，为什么修改一份不会影响另一份？</h5>
+<p>把姓名“小明”放进结构体，再执行 b = a，可以把它理解为得到两份独立的个人资料。随后把 b.name 改为“小红”，a.name 仍是“小明”。这里说的独立，是修改值本身时互不影响；Swift 可以在底层采用共享存储等优化，不要求赋值时立即复制每一个字节。</p>
+</div>
+<div class="explanation-item">
+<h5>结构体里保存类对象，还会完全互不影响吗？</h5>
+<p>假设两份个人资料里都保存了同一个 Account 对象的引用。复制资料时，这个引用也被复制，但不会因此新建一个 Account。通过任一份资料修改账户余额，另一份都能看到变化。要分清“修改结构体自己的字段”和“修改字段所指对象的内部状态”，后者操作的是共享对象。</p>
+</div>
+<div class="explanation-item">
+<h5>为什么修改结构体属性要写 mutating？</h5>
+<p>结构体方法默认不能改变自身的值。例如把姓名从“小明”改为“小红”，是在修改这份结构体，方法需要标记 mutating，让调用方知道它会改变值。重新赋值 self、切换枚举 case 也是同一道理。如果方法只是修改所引用的 Account 对象余额，结构体保存的引用没有变，就不因此要求 mutating。</p>
+</div>
+<div class="explanation-item">
+<h5>枚举的关联值和原始值分别有什么用？</h5>
+<p>加载结果可以是 loading，也可以是 success(&quot;数据&quot;)；success 携带的内容随每次结果变化，这叫关联值。原始值则像固定编号，例如某个 case 对应字符串 &quot;loading&quot;，在声明时就确定。前者表达“本次状态附带什么数据”，后者表达“这个 case 对应什么固定值”。</p>
+</div>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-swift">struct Profile { var name: String }
@@ -172,19 +201,36 @@ print(HTTPStatus.ok.rawValue) // 200
 <figure class="review-viz" aria-labelledby="viz-title-1">
 <div class="viz-heading"><span class="viz-kicker">第 01 题 · 看图复习</span><div class="viz-title" id="viz-title-1">赋值之后，修改会影响谁？</div><p>三种类型分开看：值各自独立，引用共享对象，枚举表达当前状态。</p></div>
 <div class="viz-lane"><div class="viz-lane-title">struct · 两份独立的值</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>a.name = 小明；b = a</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>b.name = 小红</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>a：小明 ｜ b：小红</strong></div></div></div><div class="viz-lane"><div class="viz-lane-title">class · 两个引用共享一个对象</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>x → Account ← y</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>y.balance = 100</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>x.balance 也变成 100</strong></div></div></div><div class="viz-choice"><span>enum State：一次只处于一种状态</span><div class="viz-cards"><div class="viz-node "><span class="viz-label">等待</span><strong>loading</strong></div><div class="viz-node viz-result"><span class="viz-label">成功 · 本例选中</span><strong>success(&quot;加载成功&quot;)</strong></div><div class="viz-node "><span class="viz-label">失败</span><strong>failure(错误码)</strong></div></div></div>
-<figcaption><strong>面试记忆点</strong>独立数据用 struct；共享身份用 class；互斥状态用 enum。</figcaption>
 <p class="viz-note">值语义不等于深复制；struct 中的类属性仍可共享对象。</p>
 </figure>
 <p class="pitfall"><strong>别答错：</strong>不能用“值类型一定在栈、引用类型一定在堆”作为区别；存储位置还受上下文与优化影响。</p>
+<details class="advanced-note">
+<summary>进阶补充：值类型不等于一定在栈上，也不等于一定可复制</summary>
+<p>值语义描述修改行为，不能据此断定具体内存位置。~Copyable 用于取消默认可拷贝能力，这类值类型也能声明 deinit；因此“有没有 deinit”不能作为区分值类型与引用类型的规则。初学时先掌握本题默认可拷贝类型的赋值行为，再学习这些所有权能力。</p>
+</details>
 <p class="source-link">延伸核对：<a href="https://github.com/swiftlang/swift-evolution/blob/main/proposals/0390-noncopyable-structs-and-enums.md" target="_blank" rel="noopener noreferrer">非拷贝类型提案 SE-0390</a> · <a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/classesandstructures/" target="_blank" rel="noopener noreferrer">Swift 官方文档 / 实现资料</a></p>
 </section>
 <section class="question" data-question="2">
 <h3 id="heading-2" data-id="heading-2">2. Optional 是什么？if let、guard let、?? 和类型转换怎么用？</h3>
 <span class="level">基础优先</span>
-<h4>面试总结（核心回答＋追问展开）</h4>
+<h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>核心回答：</strong>Optional 用类型明确表达“值可能不存在”，T? 就是 Optional&lt;T&gt;，它有 .some(value) 和 .none 两种情况，nil 表示后者，空字符串仍然是有值。解包就是确认有值再取出：if let 适合分支内使用；guard let 适合先排除失败情况，失败分支必须退出当前作用域，成功后绑定值可在后续使用。?? 提供默认值，?. 在有值时继续访问，否则返回 nil。</p>
-<p><strong>追问展开：</strong>类型检查用 is，结果是 Bool；as 用于编译期可以确认的转换，as? 尝试转换并返回可选结果，通常配合 if let 使用。! 强制解包和 as! 强制转换都要求开发者保证成功，失败会触发运行时错误，不能靠 do-catch 恢复。因此，面对可能缺失的数据和不确定的运行时类型，应先安全解包或尝试转换。</p>
+<p><strong><code>Optional</code> 表达“有值或无值”；<code>if let</code> 在分支内解包使用，<code>guard let</code> 失败先退出、成功继续用。</strong><code>T?</code> 是 <code>Optional&lt;T&gt;</code> 的简写，<code>nil</code> 表示无值。<code>??</code> 在无值时提供默认值，<code>?.</code> 在有值时继续访问成员，无值时返回 <code>nil</code>。类型检查用 <code>is</code>，可能失败的转换用 <code>as?</code>，转换结果可以继续安全解包；编译期能够确认的转换用 <code>as</code>。强制解包 <code>!</code> 和强制转换 <code>as!</code> 都要求开发者保证成功，否则会触发运行时错误。</p>
+</div>
+<h4>进一步理解</h4>
+<div class="understanding">
+<div class="explanation-item">
+<h5>为什么空字符串与 nil 不能混为一谈？</h5>
+<p>昵称为 &quot;&quot;，表示已经拿到一个字符串，只是里面没有字符；昵称为 nil，表示这里没有字符串。比如输入框允许用户清空昵称，就可能得到空字符串；接口没有提供昵称，则可能用 nil 表示。Optional 让你先区分“没有值”和“有值但内容为空”，再决定显示什么。</p>
+</div>
+<div class="explanation-item">
+<h5>if let、guard let 和 ?? 应该怎么选？</h5>
+<p>只想在有昵称时显示一段欢迎语，用 if let，让解包后的名字只在分支里使用。如果整个后续流程都必须有名字，用 guard let，先在缺失时 return，后面的代码就能直接使用 String。若缺失时显示“游客”即可，用 nickname ?? &quot;游客&quot;；它提供替代值，不会把原来的 nickname 改成有值。</p>
+</div>
+<div class="explanation-item">
+<h5>as? 为什么经常与 if let 一起出现？</h5>
+<p>假设 value 声明为 Any，里面可能装字符串，也可能装数字。is String 只回答“是不是字符串”；as? String 则尝试取出字符串，成功得到 String? 中的值，失败得到 nil，再用 if let 判断并使用。as 用于编译期能确认的转换；as! 和强制解包 ! 则把成功当作前提，前提不成立就触发运行时错误，不能用 do-catch 补救。</p>
+</div>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-swift">let nickname: String? = nil
@@ -210,7 +256,6 @@ print(value is String) // true，只检查类型
 <figure class="review-viz" aria-labelledby="viz-title-2">
 <div class="viz-heading"><span class="viz-kicker">第 02 题 · 看图复习</span><div class="viz-title" id="viz-title-2">Optional：先判断有没有值，再决定下一步</div><p>nil 是没有值；空字符串 &quot;&quot; 仍然是有值。</p></div>
 <div class="viz-lane"><div class="viz-lane-title">有值分支</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>String? = .some(&quot;小明&quot;)</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>if let / guard let 解包</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>得到 String：小明</strong></div></div></div><div class="viz-lane"><div class="viz-lane-title">无值分支</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>nickname = nil</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>nickname ?? &quot;游客&quot;</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>得到：游客</strong></div></div></div><div class="viz-lane"><div class="viz-lane-title">可选链</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>nickname = nil</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>nickname?.count</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>直接得到 nil，不访问 count</strong></div></div></div><div class="viz-lane"><div class="viz-lane-title">安全转换</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>Any 中保存 &quot;Swift&quot;</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>as? String → if let</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>转换成功，text.count = 5</strong></div></div></div>
-<figcaption><strong>面试记忆点</strong>if let：在分支内用；guard let：失败先退出，成功继续用。</figcaption>
 <p class="viz-note">as? 失败返回 nil；! 和 as! 失败会触发运行时错误。</p>
 </figure>
 <p class="pitfall"><strong>别答错：</strong>guard let 绑定的变量可在后续作用域中使用；if let 绑定的变量通常只在对应分支中使用。</p>
@@ -219,10 +264,28 @@ print(value is String) // true，只检查类型
 <section class="question" data-question="3">
 <h3 id="heading-3" data-id="heading-3">3. 存储属性、计算属性、lazy、static 和 class 怎么区分？</h3>
 <span class="level">基础优先</span>
-<h4>面试总结（核心回答＋追问展开）</h4>
+<h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>核心回答：</strong>存储属性保存状态，计算属性通过 getter（读取时执行的代码）和可选 setter（赋值时执行的代码）提供访问，本身不额外保存结果。lazy 是第一次访问才初始化的实例存储属性，必须声明为 var。static 声明类型成员，也就是通过 Meter.unit 这样的类型名访问的成员，在类中可以继承但不能重写；class 只用于类的类型方法和计算类型属性，允许子类重写，不能声明类型存储属性。</p>
-<p><strong>追问展开：</strong>willSet 和 didSet 是属性观察器，也就是赋值前后自动执行的回调。willSet 在写入前调用，属性仍是旧值，newValue 是即将写入的值；didSet 在写入后调用，oldValue 保存旧值。初始化器直接为本类型定义的存储属性设置初值时不触发观察器，不能扩大为初始化期间所有赋值都不触发。扩展不能添加实例存储属性，可以添加计算属性和方法，也可在类型及泛型限制允许时添加 static 存储属性。实例 lazy 不保证并发首次访问只初始化一次；存储型类型属性延迟初始化且只初始化一次，但之后的共享可变状态仍需同步。</p>
+<p><strong>存储属性直接保存值，计算属性通过 getter 返回结果，也可通过 setter 处理赋值，本身不额外保存计算结果。</strong><code>lazy</code> 将实例存储属性的初始化推迟到首次访问，必须是 <code>var</code>，且不保证并发首次访问时只初始化一次。<code>static</code> 和 <code>class</code> 都用于声明类型成员：<code>static</code> 可声明存储属性、计算属性和方法，在类中可以继承但不能重写；<code>class</code> 用于允许子类重写的类型方法和计算类型属性，不能声明存储型类型属性。存储型类型属性保证延迟初始化且只初始化一次，后续共享可变状态的读写仍需同步。</p>
+</div>
+<h4>进一步理解</h4>
+<div class="understanding">
+<div class="explanation-item">
+<h5>存储属性与计算属性，读取时到底有什么不同？</h5>
+<p>在下面的 Meter 中，value 保存当前数值；doubled 不单独存一份结果，而是读取时执行 value * 2。所以 value 从 1 改成 3 后，读取 doubled 就得到 6。可读写计算属性的 setter 也不必保存传入值：把华氏温度设为 212，可以换算后写入 celsius，下次读取时再从摄氏温度算回来。</p>
+</div>
+<div class="explanation-item">
+<h5>lazy 为什么必须是 var？什么时候适合用？</h5>
+<p>假设 history 的创建比较费时，而有些实例从来不会读取它。lazy 把创建推迟到第一次访问，避免一开始就付出成本。第一次读取会把“尚未初始化”变成“已经保存了结果”，所以实例 lazy 必须是 var。它不会随其他属性变化自动重新计算，也不保证多个线程同时首次访问时只创建一次。</p>
+</div>
+<div class="explanation-item">
+<h5>willSet 和 didSet 各能看到什么？</h5>
+<p>执行 meter.value = 3 时，willSet 在真正写入前运行，此时 value 还是旧值，newValue 是 3；写入完成后 didSet 运行，此时 value 已是 3，oldValue 保存原值。它们适合在赋值前后做校验或刷新。初始化器直接给本类型定义的存储属性设置初值时不触发这些观察器，因此不要靠 didSet 完成必需的初始化工作。</p>
+</div>
+<div class="explanation-item">
+<h5>static 和 class 为什么不通过实例访问？</h5>
+<p>“米”是 Meter 这个类型共用的单位，不必让每个 meter 都各存一份，因此写成 Meter.unit。类的 static 成员可以被子类继承，但不允许重写；如果需要让 Car 给出不同的类型方法结果，就用允许重写的 class func。class 还能声明计算类型属性，但不能声明存储型类型属性。</p>
+</div>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-swift">struct Meter {
@@ -266,19 +329,36 @@ print(temperature.celsius)   // 100.0</code></pre>
 <figure class="review-viz" aria-labelledby="viz-title-3">
 <div class="viz-heading"><span class="viz-kicker">第 03 题 · 看图复习</span><div class="viz-title" id="viz-title-3">属性分两步看：属于谁？访问时做什么？</div><p>先区分实例成员和类型成员，再区分保存、计算与延迟初始化。</p></div>
 <div class="viz-cards"><div class="viz-node "><span class="viz-label">实例 · 存储属性</span><strong>value = 3：保存当前值</strong></div><div class="viz-node "><span class="viz-label">实例 · 计算属性</span><strong>doubled：访问时计算 3 × 2 = 6</strong></div><div class="viz-node "><span class="viz-label">实例 · lazy var</span><strong>history：首次访问才初始化</strong></div><div class="viz-node "><span class="viz-label">类型 · static let</span><strong>Meter.unit：通过类型访问「米」</strong></div></div><div class="viz-lane"><div class="viz-lane-title">类型方法对比</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>Car 继承 Vehicle</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>class name 可重写；static category 不可重写</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>Car.name()：汽车；Car.category()：车辆</strong></div></div></div>
-<figcaption><strong>面试记忆点</strong>存储是“存”，计算是“算”，lazy 是“晚点存”；static / class 表示类型成员。</figcaption>
 <p class="viz-note">实例 lazy 不保证并发首次访问只初始化一次；类型存储属性保证一次初始化，后续可变读写仍需同步。</p>
 </figure>
 <p class="pitfall"><strong>别答错：</strong>lazy 不保证并发首次访问只初始化一次；static let 的一次初始化也不意味着它引用的可变对象自动线程安全。</p>
+<details class="advanced-note">
+<summary>进阶补充：扩展与类型存储属性的限制</summary>
+<p>扩展不能添加实例存储属性，但能添加计算属性和方法；在类型与泛型限制允许时，也能添加 static 存储属性。存储型类型属性延迟初始化并保证只初始化一次，但之后若保存共享可变状态，仍需同步。不要把这项保证套到实例 lazy 上。初始化期间也不是所有赋值都不触发观察器，应区分初始化器直接设置本类型存储属性初值与其他赋值路径。</p>
+</details>
 <p class="source-link">延伸核对：<a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/properties/" target="_blank" rel="noopener noreferrer">Swift 官方文档 / 实现资料</a></p>
 </section>
 <section class="question" data-question="4">
 <h3 id="heading-4" data-id="heading-4">4. Swift 初始化器有哪些？两阶段初始化是什么？</h3>
 <span class="level">基础优先</span>
-<h4>面试总结（核心回答＋追问展开）</h4>
+<h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>核心回答：</strong>类的指定初始化器负责建立本类实例状态：先让本类新增的存储属性都有初值，再调用父类指定初始化器。便利初始化器通过 self.init 委托本类其他初始化器，最终到达本类指定初始化器。两阶段初始化先沿继承链自下而上完成属性初始化，再自上而下定制实例，目的是防止使用尚未完整建立的对象。</p>
-<p><strong>追问展开：</strong>第一阶段允许按规则写入初值，但结束前不能调用实例方法、读取实例属性或把 self 当成完整实例传出；修改继承属性则要等父类初始化返回。init? 用 nil 表示构造失败，throws 可携带具体失败原因，两者可以组合。required 是写在类的 init 前面的 Swift 关键字，表示“子类也必须支持用这一组参数创建对象”。例如父类声明 required init(name: String)，子类就必须支持 Child(name: "小明")。子类若能自动继承该初始化器，就不用重写；不能继承时，必须自己实现，并继续标 required。它是对子类的约束，不是额外调用步骤，下面有独立示例。结构体没有类继承，不使用 convenience 和 required。</p>
+<p><strong>初始化器负责为存储属性建立合法初值；类的两阶段初始化先沿继承链完成各层属性的初始赋值，再进行实例定制。</strong>类的指定初始化器先初始化本类新增的存储属性，再调用父类的指定初始化器；便利初始化器通过 <code>self.init</code> 调用本类其他初始化器，最终到达指定初始化器。第一阶段结束前，不能调用实例方法、读取实例属性或把 <code>self</code> 作为完整实例传出。<code>init?</code> 用 <code>nil</code> 表示失败，<code>throws</code> 可以传递失败原因；<code>required</code> 要求子类也支持该初始化器，可按规则继承，无法继承时必须自行实现。</p>
+</div>
+<h4>进一步理解</h4>
+<div class="understanding">
+<div class="explanation-item">
+<h5>为什么要先初始化本类属性，再调用父类初始化器？</h5>
+<p>创建子类对象时，对象既有子类新增的字段，也有继承的字段。指定初始化器先给本类新增字段初值，再调用 super.init，让父类负责它自己的部分。整条继承链完成这一步之前，对象还没有完全建立，不能调用实例方法、读取实例属性或把 self 传出去；修改继承属性也要等父类初始化返回。这样可以避免方法读到尚未准备好的状态。</p>
+</div>
+<div class="explanation-item">
+<h5>convenience 是多走一步，还是在复用代码？</h5>
+<p>下面 Vehicle.init() 没有重复设置 name，而是调用 self.init(name: &quot;默认车&quot;)。可以把它理解为“少填参数的快捷入口”，最终仍由指定初始化器完成建立对象的工作。便利初始化器必须先委托本类的其他初始化器；不能直接跳过去调用父类的 super.init。</p>
+</div>
+<div class="explanation-item">
+<h5>init?、throws、required 分别解决什么问题？</h5>
+<p>init? 表示“可能创建不出来”，失败返回 nil；throws 则能进一步说明失败原因，两者也可以组合。required 解决的是子类的接口约束：父类要求支持 init(name:)，子类也必须支持这一创建方式；能自动继承时无需重写，不能继承时必须实现并继续标 required。它不代表多调用一次初始化器。结构体没有类继承，不使用 convenience 和 required。</p>
+</div>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-swift">class Vehicle {
@@ -337,7 +417,6 @@ print(phone.name, phone.storage) // 手机 128</code></pre>
 <figure class="review-viz" aria-labelledby="viz-title-4">
 <div class="viz-heading"><span class="viz-kicker">第 04 题 · 看图复习</span><div class="viz-title" id="viz-title-4">初始化顺序：先让属性齐全，再使用完整 self</div><p>沿着 Car → Vehicle 完成第一阶段，再回到子类定制。</p></div>
 <div class="viz-timeline"><div class="viz-step"><span class="viz-number">1</span><div><strong>进入 Car.init(name:seats:)</strong><span>第一阶段：先设置本类新增属性 seats = 4</span></div></div><div class="viz-step"><span class="viz-number">2</span><div><strong>调用 super.init(name:)</strong><span>第一阶段：父类设置 name = 小车，整条继承链属性就绪</span></div></div><div class="viz-step"><span class="viz-number">3</span><div><strong>父类返回，继续 Car.init</strong><span>第二阶段：现在可以 print(self.name) 或调用实例方法</span></div></div></div><div class="viz-cards"><div class="viz-node "><span class="viz-label">便利入口 · 横向委托</span><strong>Vehicle.init() → self.init(name: &quot;默认车&quot;)</strong></div><div class="viz-node "><span class="viz-label">可失败入口</span><strong>Age(-1) → 检查不通过 → nil</strong></div><div class="viz-node "><span class="viz-label">required · 父类对创建方式的要求</span><strong>父类写 required init(name:) → 子类也必须支持 Child(name:)；能继承就复用，否则自己实现</strong></div></div>
-<figcaption><strong>面试记忆点</strong>指定初始化器向上委托，便利初始化器在本类委托；完整 self 要等第一阶段结束。</figcaption>
 
 </figure>
 <p class="pitfall"><strong>别答错：</strong>init? 与 throws 不同：前者返回可选实例，后者可携带错误原因；二者也能组合使用。</p>
@@ -346,10 +425,28 @@ print(phone.name, phone.storage) // 手机 128</code></pre>
 <section class="question" data-question="5">
 <h3 id="heading-5" data-id="heading-5">5. ARC 怎么工作？weak、unowned 和循环引用怎么处理？</h3>
 <span class="level">基础优先</span>
-<h4>面试总结（核心回答＋追问展开）</h4>
+<h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>核心回答：</strong>ARC 是自动引用计数（Automatic Reference Counting），由编译器插入、运行时执行保留和释放等所有权操作，管理类实例的生命周期；没有强引用继续保活时，实例可以被销毁，它不是定时扫描的垃圾回收。weak 和 unowned 都不增加强引用计数：weak 必须是可选 var，目标释放后自动变成 nil；普通安全的 unowned 不自动清零，释放后经它访问会触发运行时错误，只适合能保证每次访问时目标仍存活的关系。</p>
-<p><strong>追问展开：</strong>循环引用的关键是内部强连接形成了环，清空外部变量仍不能释放，需要把其中一条关系改为弱引用，或在合适时机主动断开。常见例子是对象保存闭包、闭包又强捕获对象，以及拥有者与 delegate 相互持有；delegate（代理）是替另一个对象处理回调的对象；声明 weak var delegate 时，其协议要继承 AnyObject，表示只有类能遵循，这样才能使用弱引用。并非所有闭包都要 weak self，应先判断所有权关系；写 self 并不会弱捕获，guard let self 是把可选的弱引用 self 解包成当前使用的强引用，会在后续使用期间保活对象，跨长时间 await 也可能延长生命周期。unowned 可以是可选类型，但不会自动置 nil。</p>
+<p><strong>ARC（自动引用计数）由编译器自动插入并优化 <code>retain</code>、<code>release</code> 等操作，由运行时执行这些操作来管理类实例的生命周期。</strong>获得一份强引用所有权时，<code>retain</code> 增加强引用计数；放弃这份所有权时，<code>release</code> 减少计数。计数归零时触发实例销毁，执行 <code>deinit</code> 并清理存储属性。强引用环会让环中实例的计数无法归零，ARC 不会自动拆环，需要根据所有权关系改用 <code>weak</code>、<code>unowned</code>，或主动断开强引用。两者都不增加强引用计数：对方可能先释放时用 <code>weak</code>，它必须声明为可选的 <code>var</code>，对象释放后自动变为 <code>nil</code>；只有能保证每次访问时对方仍存在，才考虑 <code>unowned</code>，它不会自动清零，访问已销毁的对象会触发运行时错误。</p>
+</div>
+<h4>进一步理解</h4>
+<div class="understanding">
+<div class="explanation-item">
+<h5>ARC 的“自动”体现在哪里？编译期与运行时各做什么？</h5>
+<p>编译器分析强引用的使用和所有权，在需要的位置自动插入保留、释放操作，并优化多余操作，开发者不需要手写 retain 和 release。程序运行时，这些操作实际增减对象的强引用计数；计数归零才进入实例销毁流程。因此不能把“自动插入代码”理解为“编译时就释放对象”，也不能把它理解为运行时定期扫描、回收所有用不到的对象。具体释放时机受引用的使用情况与编译器优化影响，不能简单断言局部变量一定等到右花括号处才释放对象。</p>
+</div>
+<div class="explanation-item">
+<h5>为什么外面的变量清空了，对象还没有释放？</h5>
+<p>下面的 Page 保存 onTap 闭包，如果闭包又通过默认的强捕获保存 Page，就形成 Page → 闭包 → Page 的环。page = nil 只去掉外面的那条引用，环里的两条强引用还在互相保活。ARC 不会因为这组对象“外面已经用不到”就自动拆环，需要改为弱引用，或者在合适时机主动清空闭包。</p>
+</div>
+<div class="explanation-item">
+<h5>为什么 [weak self] 能打断环，guard let self 又有什么作用？</h5>
+<p>[weak self] 让闭包能找到 Page，却不负责让它一直存活。Page 释放后 self 变成 nil，self?.refresh() 就不再执行。若一次操作中需要稳定使用对象，可先 guard let self，把当时仍存在的对象暂时强持有，避免使用期间消失。这会延长本次使用期间的生命周期；如果后面有长时间 await，也可能让对象跟着存活更久。</p>
+</div>
+<div class="explanation-item">
+<h5>weak 与 unowned 应该怎么选？</h5>
+<p>先问“访问时，对方可能已经释放吗？”如果可能，比如页面关闭后回调才到达，weak 可以通过 nil 安全地跳过。unowned 则表达更强的承诺：每次访问时对方一定还活着，它不会自动变成 nil，承诺失效后访问会出错。代理通常用 weak；协议需继承 AnyObject，把遵循者限定为类，才能建立这种弱引用关系。</p>
+</div>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-swift">final class Page {
@@ -398,19 +495,36 @@ showCardOwner()</code></pre>
 <figure class="review-viz" aria-labelledby="viz-title-5">
 <div class="viz-heading"><span class="viz-kicker">第 05 题 · 看图复习</span><div class="viz-title" id="viz-title-5">循环引用：把“谁强持有谁”画出来</div><p>下面对比的是两种捕获写法；代码示例采用 [weak self]。</p></div>
 <div class="viz-lane"><div class="viz-lane-title">默认强捕获 · 形成环</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>Page ─强→ onTap 闭包</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>闭包 ─强→ Page</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>清空外部 page 后，环仍保活</strong></div></div></div><div class="viz-lane"><div class="viz-lane-title">[weak self] · 打断环</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>Page ─强→ onTap 闭包</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>闭包 ─弱→ Page</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>page = nil → Page 释放</strong></div></div></div><div class="viz-timeline"><div class="viz-step"><span class="viz-number">1</span><div><strong>失去最后一条强引用</strong><span>本例 page = nil</span></div></div><div class="viz-step"><span class="viz-number">2</span><div><strong>实例销毁</strong><span>执行 deinit，打印「Page 释放」</span></div></div><div class="viz-step"><span class="viz-number">3</span><div><strong>弱引用自动清零</strong><span>observer 变成 nil</span></div></div></div>
-<figcaption><strong>面试记忆点</strong>ARC 看强引用是否还在保活；weak 不保活且会清零。</figcaption>
 <p class="viz-note">unowned 同样不保活，但不会自动置 nil；访问已释放目标会出错。先判断生命周期，再选择捕获策略。</p>
 </figure>
 <p class="pitfall"><strong>别答错：</strong>写 self.refresh() 不会自动弱捕获。guard let self 会在这次使用期间建立强引用；长时间 await 也可能延长对象存活。</p>
-<p class="source-link">延伸核对：<a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/automaticreferencecounting/" target="_blank" rel="noopener noreferrer">Swift 官方文档 / 实现资料</a></p>
+<details class="advanced-note">
+<summary>进阶补充：unowned 的可选形式</summary>
+<p>unowned 可以声明为可选类型，但“可选”不代表对象释放后自动置 nil。weak 的自动清零行为不能套在 unowned 上，使用方仍必须维护正确的生命周期关系。</p>
+</details>
+<p class="source-link">延伸核对：<a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/automaticreferencecounting/" target="_blank" rel="noopener noreferrer">Swift 官方文档：自动引用计数</a> · <a href="https://developer.apple.com/videos/play/wwdc2021/10216/" target="_blank" rel="noopener noreferrer">WWDC21：ARC in Swift — Basics and beyond</a></p>
 </section>
 <section class="question" data-question="6">
 <h3 id="heading-6" data-id="heading-6">6. 闭包如何捕获变量？@escaping、@autoclosure 有什么用？</h3>
 <span class="level">基础优先</span>
-<h4>面试总结（核心回答＋追问展开）</h4>
+<h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>核心回答：</strong>闭包可以捕获定义作用域中的值和变量，并带着捕获上下文一起使用。示例默认捕获可变局部变量 count 时，两个访问共享同一变量，所以能看到后续修改；[count] 则保存闭包创建时的值。若捕获的是类引用，保存的仍是引用，不会深复制对象。需要调整引用所有权时，使用 [weak self] 或满足生命周期约束的 [unowned self]。</p>
-<p><strong>追问展开：</strong>“逃逸”是指闭包被保存或返回，可能活到接收它的函数返回之后。直接写成 () -> Void 这类函数类型的参数默认非逃逸，只在本次调用有效期间使用；@escaping 允许保存、返回闭包并在函数返回后调用，但不代表一定晚执行，也不改变捕获强弱。可选闭包参数不受这一默认非逃逸限制，不额外标 @escaping。闭包是引用类型，可变局部变量可通过共享上下文保存；inout 允许函数在调用期间修改调用者传入的变量，调用时用 & 标记；逃逸闭包可能活得更久，不能直接捕获这个临时修改权限。只需要读取当时的值时，可显式捕获一个快照。@autoclosure 把表达式自动包装成无参闭包以延迟求值，是否调用、调用几次由函数实现决定，它与 @escaping 都不表示自动异步。</p>
+<p><strong>闭包是可以传递和保存的代码，能够捕获定义作用域中的值和变量。</strong>默认捕获可变局部变量时，闭包与外部可访问同一变量；捕获列表可以保存创建闭包时的值，但捕获类引用不会深复制对象。涉及生命周期时，可通过 <code>weak</code> 或 <code>unowned</code> 调整捕获关系，避免不必要的强引用或循环引用。直接函数类型的参数默认非逃逸，<code>@escaping</code> 允许将其保存到函数返回后使用，但不代表异步执行，也不改变引用强弱。<code>@autoclosure</code> 自动把表达式包装成无参闭包以延迟求值，是否执行及执行几次由函数实现决定。</p>
+</div>
+<h4>进一步理解</h4>
+<div class="understanding">
+<div class="explanation-item">
+<h5>同一个 count，为什么一个闭包读到 2，另一个读到 1？</h5>
+<p>下面 readLive 默认捕获可变局部变量 count，外面把 count 改成 2，它读取的仍是同一个变量，所以结果是 2。readSnapshot 使用 [count]，在创建闭包时保存 count 当时的值 1；之后读取的是“捕获时保存的值”，外部 count 改成 2 不会影响它。如果捕获的是类引用，捕获列表保存的仍是对象引用，不会把对象内部数据深复制一份。</p>
+</div>
+<div class="explanation-item">
+<h5>函数已经返回了，为什么闭包还能调用？</h5>
+<p>设想一个函数接收“下载完成后要做什么”，然后把闭包保存起来。函数本身先返回，下载完成后才调用闭包，闭包就活得比本次调用更久，这叫逃逸。直接函数类型的参数默认非逃逸，需要保存或允许返回后使用时标 @escaping。这个标记只允许更长的生命周期，既不保证晚执行，也不表示异步，更不会自动弱捕获对象。</p>
+</div>
+<div class="explanation-item">
+<h5>@autoclosure 帮调用方省掉了什么？</h5>
+<p>普通闭包参数需要调用方写 { 表达式 }；@autoclosure 允许直接传表达式，由编译器包装成无参闭包。这样函数可以决定是否执行这段表达式，例如条件不满足就不计算日志内容。延迟求值不等于后台执行；函数若调用闭包两次，表达式也可能求值两次。</p>
+</div>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-swift">func demoCapture() {
@@ -452,19 +566,36 @@ print(readTotal()) // 2</code></pre>
 <figure class="review-viz" aria-labelledby="viz-title-6">
 <div class="viz-heading"><span class="viz-kicker">第 06 题 · 看图复习</span><div class="viz-title" id="viz-title-6">闭包捕获：读的是同一个变量，还是当时的值？</div><p>时间顺序：count = 1 → 创建两个闭包 → count = 2 → 调用。</p></div>
 <div class="viz-lane"><div class="viz-lane-title">默认捕获</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>readLive = { count }</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>读取同一个可变局部变量</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>readLive() = 2</strong></div></div></div><div class="viz-lane"><div class="viz-lane-title">显式值捕获</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>readSnapshot = { [count] in count }</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>保存创建闭包时的 Int 值 1</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>readSnapshot() = 1</strong></div></div></div><div class="viz-cards"><div class="viz-node "><span class="viz-label">@escaping · 能否留到外面</span><strong>允许保存 / 返回闭包，在函数返回后调用；不代表异步</strong></div><div class="viz-node "><span class="viz-label">@autoclosure · 何时算表达式</span><strong>包装为无参闭包；log(false, …) 不调用 text，就不求值</strong></div></div>
-<figcaption><strong>面试记忆点</strong>捕获方式决定“读什么”，escaping 决定“能否逃逸”，autoclosure 决定“怎样包装参数”。</figcaption>
 <p class="viz-note">[对象引用] 保存的仍是引用，不会深复制对象。</p>
 </figure>
 <p class="pitfall"><strong>别答错：</strong>@autoclosure 不保证只调用一次；调用次数由函数实现决定。</p>
+<details class="advanced-note">
+<summary>进阶补充：可选闭包参数与 inout 捕获</summary>
+<p>可选闭包参数不受直接函数类型参数默认非逃逸的同一限制，不额外标 @escaping。inout 表示函数调用期间临时获得修改调用方变量的权限；逃逸闭包可能在调用结束后仍存活，不能直接捕获这个临时权限。如果只需要当时的数据，可用捕获列表保存捕获时的值，而不是保存修改原变量的能力。</p>
+</details>
 <p class="source-link">延伸核对：<a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/closures/" target="_blank" rel="noopener noreferrer">Swift 官方文档 / 实现资料</a></p>
 </section>
 <section class="question" data-question="7">
 <h3 id="heading-7" data-id="heading-7">7. Array 是值类型，为什么复制不一定很贵？COW 是什么？</h3>
 <span class="level">基础优先</span>
-<h4>面试总结（核心回答＋追问展开）</h4>
+<h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>核心回答：</strong>Array 是值类型，但赋值不一定立即复制全部元素，因为标准库使用 COW，也就是写时复制。两份数组值可以先共享元素缓冲区（实际存放元素的一块存储）；写入时，若存储仍被共享就先分离再修改，独占时通常可以直接修改，扩容仍可能重新分配。这样既保留数组值的独立性，也减少无须修改时的复制开销。</p>
-<p><strong>追问展开：</strong>COW 不会深复制类元素：两份数组里的引用仍可能指向同一对象，修改该对象的属性会被双方看到。自定义 struct 也不会自动让整份值延迟复制，各属性遵守各自类型的复制规则；自己用类封装共享存储时，需在修改入口检查独占性并分离，例如使用 isKnownUniquelyReferenced：它返回 Bool，判断是否已知只有一个强引用持有该存储对象；若不能确认独占，就先复制出自己的存储。这里的“分离”指复制共享存储后，让当前值改用新存储。独占性检查不是线程同步工具，COW 也不允许无同步地并发修改同一个数组变量。String 的短字符串还可能内联存储，不能把所有值类型都想成只保存一个地址。</p>
+<p><strong><code>Array</code> 是值类型，采用 COW（写时复制）在保持值语义的同时减少复制开销。</strong>赋值后可以先共享元素存储，修改时若存储仍被共享，才先复制存储再修改；独占存储时通常可直接修改，扩容等操作仍可能重新分配。因此，修改一份数组本身不会影响另一份。复制元素存储不会深复制其中的类对象，这些元素仍可能指向同一对象。COW 不提供线程同步能力，不能保证对同一个数组变量并发读写的安全。</p>
+</div>
+<h4>进一步理解</h4>
+<div class="understanding">
+<div class="explanation-item">
+<h5>数组赋值时，究竟复制了什么？</h5>
+<p>执行 b = a 后，从使用者角度看，a 和 b 是两份数组值；但底层可以暂时共用存放元素的那块存储。只读取时不必立即复制全部元素。随后执行 b.append(4)，如果存储仍被共享，b 就先取得自己的存储再修改，于是 a 保持 [1, 2, 3]，b 变成 [1, 2, 3, 4]。这就是“写时复制”：推迟复制成本，同时保持数组值的独立性。</p>
+</div>
+<div class="explanation-item">
+<h5>复制数组后，为什么修改对象属性，两边都会变？</h5>
+<p>下面 first = [Item()] 创建数组和一个 Item 对象，second = first 不会再创建一个 Item。两个数组中的元素引用仍指向同一个对象。second[0].name = &quot;新&quot; 改的是对象属性，因此通过 first[0].name 也会看到“新”。如果改成替换 second[0]，改变的才是 second 自己的数组元素。COW 不等于把元素所指对象也深复制。</p>
+</div>
+<div class="explanation-item">
+<h5>有了 COW，是否就能放心并发修改数组？</h5>
+<p>不能。COW 解决的是“两份值怎样减少复制开销”，并不负责安排两个任务的读写顺序。如果它们同时修改同一个数组变量，仍然需要 actor 等隔离或同步措施。只有一份值独占存储时，修改通常可以直接进行；需要扩容等情况仍可能重新分配，所以也不能理解成“只有共享时才会分配内存”。</p>
+</div>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-swift">let a = [1, 2, 3]
@@ -482,19 +613,36 @@ print(first[0].name) // 新：数组没有深复制类对象</code></pre>
 <figure class="review-viz" aria-labelledby="viz-title-7">
 <div class="viz-heading"><span class="viz-kicker">第 07 题 · 看图复习</span><div class="viz-title" id="viz-title-7">COW：先共享，写入时再分开</div><p>a、b 是两个数组值；共享的是底层元素存储。</p></div>
 <div class="viz-timeline"><div class="viz-step"><span class="viz-number">1</span><div><strong>赋值：var b = a</strong><span>a ─→ [1, 2, 3] ←─ b：此时可共享缓冲区</span></div></div><div class="viz-step"><span class="viz-number">2</span><div><strong>写入：b.append(4)</strong><span>发现缓冲区仍被共享 → 分离 b 的存储 → 再追加</span></div></div><div class="viz-step"><span class="viz-number">3</span><div><strong>写入后</strong><span>a ─→ [1, 2, 3]；b ─→ [1, 2, 3, 4]</span></div></div></div><div class="viz-lane"><div class="viz-lane-title">类元素例外</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>first[0] → Item ← second[0]</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>second[0].name = &quot;新&quot;</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>first[0].name 也为「新」</strong></div></div></div>
-<figcaption><strong>面试记忆点</strong>复制数组值，不一定立即复制缓冲区；复制缓冲区，也不等于深复制类元素。</figcaption>
 <p class="viz-note">独占存储时通常可直接修改；扩容仍可能重新分配。COW 不保证同一变量的并发读写安全。</p>
 </figure>
 <p class="pitfall"><strong>别答错：</strong>值类型和 COW 都不允许多个线程无同步地修改同一个变量。</p>
+<details class="advanced-note">
+<summary>进阶补充：自定义 COW 不会凭空出现</summary>
+<p>自定义 struct 的每个属性遵循各自类型的复制规则，并不会自动把整个结构体变成共享存储。若自己用类封装存储，需要在修改入口检查是否独占；isKnownUniquelyReferenced 返回 Bool，能确认唯一强引用时可直接修改，否则先复制出自己的存储。这个检查不是线程同步工具。String 的短字符串还可能内联保存，不能把所有值类型都理解成只保存一个地址。</p>
+</details>
 <p class="source-link">延伸核对：<a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes/" target="_blank" rel="noopener noreferrer">Swift 官方文档 / 实现资料</a></p>
 </section>
 <section class="question" data-question="8">
 <h3 id="heading-8" data-id="heading-8">8. map、compactMap、flatMap 有什么区别？</h3>
 <span class="level">基础优先</span>
-<h4>面试总结（核心回答＋追问展开）</h4>
+<h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>核心回答：</strong>对数组等序列，map 对每个元素做转换并保留每个转换结果；compactMap 转换后去掉 nil，并解包保留下来的值；flatMap 则把每个元素转换成序列，再拼接一层。比如把 ["1", "x", "3"] 转成整数，map 得到 [Int?]，保留转换失败的 nil；compactMap 得到 [1, 3]；把 [[1, 2], [3]] 用 flatMap 展开，得到 [1, 2, 3]。</p>
-<p><strong>追问展开：</strong>Optional 也有 map 和 flatMap：有值才执行转换，没值直接返回 nil。map 会把转换结果再包装一层，如果转换本身返回 Optional，就可能得到双层可选值；flatMap 接收返回 Optional 的转换，避免额外嵌套。以 String? 的 "x" 转 Int 为例，map 可得到 .some(nil)，flatMap 得到 nil。回答时先区分接收者是序列还是 Optional，不能把所有 flatMap 都解释成“过滤 nil”。$0 只是闭包第一个参数的简写。</p>
+<p><strong>对数组等序列，<code>map</code> 转换并保留全部结果，<code>compactMap</code> 转换后去掉 <code>nil</code> 并解包，<code>flatMap</code> 将每个元素产生的序列拼接为一层。</strong><code>Optional</code> 也提供 <code>map</code> 和 <code>flatMap</code>，但它们只在有值时执行转换：<code>map</code> 会将转换结果再包装一层可选值，<code>flatMap</code> 用于衔接本身返回可选值的转换，避免额外嵌套。使用时先区分操作对象是序列还是可选值，不能把所有 <code>flatMap</code> 都理解为过滤 <code>nil</code>。</p>
+</div>
+<h4>进一步理解</h4>
+<div class="understanding">
+<div class="explanation-item">
+<h5>把字符串转成整数，为什么 map 会保留 nil？</h5>
+<p>对 [&quot;1&quot;, &quot;x&quot;, &quot;3&quot;] 逐项调用 Int，依次得到 1、nil、3。map 要为每个输入保留一个转换结果，所以输出仍有三项，类型是 [Int?]。如果业务只需要转换成功的数字，用 compactMap：它在转换后去掉 nil，并把剩余可选值解包，得到 [1, 3]。选择取决于“失败位置是否需要保留”。</p>
+</div>
+<div class="explanation-item">
+<h5>flatMap 的“展开一层”是什么过程？</h5>
+<p>对 [[1, 2], [3]] 使用 flatMap { $0 }，闭包先返回每个子数组，再把它们顺次拼接成 [1, 2, 3]。它适合“每个输入产生一组输出”的场景，例如每个班级产生一组学生，再合成学生列表。$0 只是闭包第一个参数的简写，在这里就是当前子数组。</p>
+</div>
+<div class="explanation-item">
+<h5>Optional 也有 flatMap，和拼数组是一回事吗？</h5>
+<p>不是同一种操作。下面 text: String? 有值 &quot;x&quot;，所以会执行 Int(&quot;x&quot;)，但转换结果是 nil。Optional.map 会把这个结果再包一层，得到 .some(nil)，类型是 Int??：外层表示原字符串存在，内层表示转整数失败。Optional.flatMap 直接衔接这次可选转换的结果，得到 Int? 的 nil。先看接收者是序列还是 Optional，才能正确理解同名方法。</p>
+</div>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-swift">let input = [&quot;1&quot;, &quot;x&quot;, &quot;3&quot;]
@@ -513,7 +661,6 @@ let single: Int? = text.flatMap { Int($0) } // nil，无额外外层</code></pre
 <figure class="review-viz" aria-labelledby="viz-title-8">
 <div class="viz-heading"><span class="viz-kicker">第 08 题 · 看图复习</span><div class="viz-title" id="viz-title-8">把输入和输出摆在一起，三个方法就好分了</div><p>先看序列操作，再单独看 Optional 的同名方法。</p></div>
 <div class="viz-lane"><div class="viz-lane-title">map · 每项保留一个结果</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>[&quot;1&quot;, &quot;x&quot;, &quot;3&quot;]</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>逐项 Int(...)，失败保留 nil</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>[1?, nil, 3?] · 类型 [Int?]</strong></div></div></div><div class="viz-lane"><div class="viz-lane-title">compactMap · 丢掉 nil 并解包</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>[&quot;1&quot;, &quot;x&quot;, &quot;3&quot;]</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>逐项 Int(...)，去掉失败项</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>[1, 3] · 类型 [Int]</strong></div></div></div><div class="viz-lane"><div class="viz-lane-title">flatMap · 拼接一层序列</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>[[1, 2], [3]]</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>取出各子数组并拼接</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>[1, 2, 3]</strong></div></div></div><div class="viz-cards"><div class="viz-node "><span class="viz-label">Optional.map · text = &quot;x&quot;</span><strong>Int(&quot;x&quot;) 得到 nil，再包一层 → some(nil)，Int??</strong></div><div class="viz-node "><span class="viz-label">Optional.flatMap · text = &quot;x&quot;</span><strong>直接衔接 Int(&quot;x&quot;) 的结果 → nil，Int?</strong></div></div>
-<figcaption><strong>面试记忆点</strong>序列：map 转换，compactMap 去 nil，flatMap 展平一层。</figcaption>
 <p class="viz-note">图中 1?、3? 简写 .some(1)、.some(3)，不是 Swift 数组字面量。Optional.flatMap 不表示拼数组。</p>
 </figure>
 <p class="pitfall"><strong>别答错：</strong>不要把所有 flatMap 都解释为“过滤 nil”；序列这类用法现在应使用 compactMap。</p>
@@ -522,10 +669,24 @@ let single: Int? = text.flatMap { Int($0) } // nil，无额外外层</code></pre
 <section class="question" data-question="9">
 <h3 id="heading-9" data-id="heading-9">9. throws、try?、try!、Result 和 defer 怎么用？</h3>
 <span class="level">基础优先</span>
-<h4>面试总结（核心回答＋追问展开）</h4>
+<h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>核心回答：</strong>throws 声明函数可能抛出错误，throw 真正抛出错误，try 标记可能抛错的调用，本身不处理错误。调用方可以 do-catch 捕获，也可以继续向外抛。try? 把失败转换为 nil 并丢弃错误原因；try! 假定不会抛错，实际抛错时触发运行时错误。Result 用 success 和 failure 把成功值或错误保存为一个值，适合返回、存储或传递处理结果。</p>
-<p><strong>追问展开：</strong>defer 适合资源释放等收尾：执行到声明处才注册，在之后正常结束、return 或 throw 离开当前作用域时执行，同一作用域按注册的逆序执行。崩溃时不能依赖 defer 清理；强制解包失败、try! 失败和 fatalError 也不能用 do-catch 恢复。业务上可预期的失败应走错误处理，不能用 try! 代替。Swift 6 的 throws(InputError) 读作“这个函数只抛出 InputError 类型的错误”，称为类型化 throws；本题 parse 使用的是普通 throws，不限定具体错误类型。</p>
+<p><strong><code>throws</code> 声明函数可能抛错，<code>throw</code> 实际抛出错误，<code>try</code> 标记可能抛错的调用；调用方需用 <code>do-catch</code> 处理或继续向外抛出。</strong><code>try?</code> 将失败转为 <code>nil</code> 并舍弃错误原因；<code>try!</code> 假定调用成功，实际抛错时触发运行时错误，不能通过 <code>catch</code> 恢复。<code>Result</code> 将成功值或失败原因包装成一个值，便于返回、存储和传递。<code>defer</code> 用于当前作用域退出时收尾，执行到声明处才注册，在正常结束、<code>return</code> 或 <code>throw</code> 离开时按注册逆序执行；程序崩溃时不能依赖它完成清理。</p>
+</div>
+<h4>进一步理解</h4>
+<div class="understanding">
+<div class="explanation-item">
+<h5>try、try?、Result，应该根据什么选择？</h5>
+<p>用户输入 &quot;x&quot;，parse 无法转成整数，这是程序应当处理的业务失败。需要提示具体原因，就用 try 配合 do-catch，或继续向外抛错；只关心“有没有转换成功”，可用 try? 把失败换成 nil。若要把成功值或失败原因保存下来、交给后续代码处理，就用 Result，再通过 switch 分别取出。try 只是标记可能抛错的调用，本身不会接住错误。</p>
+</div>
+<div class="explanation-item">
+<h5>为什么把收尾代码写进 defer 更可靠？</h5>
+<p>假设函数打开资源后有多个 return，还可能 throw，每个出口都手写清理容易遗漏。执行到 defer 声明时先登记清理动作，之后离开当前作用域时统一执行。多个 defer 按登记的反方向执行，因此下面 finish() 先打印“先执行”，再打印“其次”，最后打印“最后”。如果在到达某个 defer 前就退出，那一个动作尚未登记，不会执行。</p>
+</div>
+<div class="explanation-item">
+<h5>为什么 try! 的失败不能交给 catch？</h5>
+<p>try! 相当于开发者断言“这次调用不可能抛错”。如果实际抛错，程序触发运行时错误，而不是把错误继续交给外层 catch。强制解包失败和 fatalError 也不能用 do-catch 恢复；程序崩溃时也不能依赖 defer 做收尾。因此网络失败、输入无效等可预期情况，应使用正常错误处理。</p>
+</div>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-swift">enum InputError: Error { case invalidNumber }
@@ -567,19 +728,36 @@ print((try? parseTyped("3")) as Any) // Optional(3)</code></pre>
 <figure class="review-viz" aria-labelledby="viz-title-9">
 <div class="viz-heading"><span class="viz-kicker">第 09 题 · 看图复习</span><div class="viz-title" id="viz-title-9">同一次抛错调用，不同写法走向不同</div><p>以 parse(&quot;x&quot;) 抛出 invalidNumber 为起点比较。</p></div>
 <div class="viz-lane"><div class="viz-lane-title">try + do-catch</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>parse(&quot;x&quot;) 抛错</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>catch 接住错误</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>打印「输入错误」及原因</strong></div></div></div><div class="viz-lane"><div class="viz-lane-title">try?</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>parse(&quot;x&quot;) 抛错</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>把失败转换成可选结果</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>nil；错误原因丢失</strong></div></div></div><div class="viz-lane"><div class="viz-lane-title">try!</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>parse(&quot;x&quot;) 抛错</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>断言“不可能抛错”被打破</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>运行时错误</strong></div></div></div><div class="viz-cards"><div class="viz-node "><span class="viz-label">Result · 把结果存成值</span><strong>success(成功值) 或 failure(错误)，稍后再处理</strong></div><div class="viz-node "><span class="viz-label">defer · 作用域退出时收尾</span><strong>先执行 → 后注册的 defer「其次」→ 先注册的 defer「最后」</strong></div></div>
-<figcaption><strong>面试记忆点</strong>抛错靠 catch 或继续抛；try? 换成 nil；defer 负责收尾。</figcaption>
 <p class="viz-note">try 本身不处理错误。defer 执行到声明处才注册；运行时终止时不能依赖它清理。</p>
 </figure>
 <p class="pitfall"><strong>别答错：</strong>不要用 try! 处理网络失败、用户输入等正常业务失败。</p>
+<details class="advanced-note">
+<summary>进阶补充：类型化 throws 进一步限制什么？</summary>
+<p>throws(InputError) 表示这个函数只能抛出 InputError 类型的错误，让错误类型也成为接口约定。下面 parse 使用普通 throws，不限定具体错误类型；补充代码中的 parseTyped 则演示类型化 throws。两者都需要调用方处理可能的失败。</p>
+</details>
 <p class="source-link">延伸核对：<a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/errorhandling/" target="_blank" rel="noopener noreferrer">Swift 官方文档 / 实现资料</a></p>
 </section>
 <section class="question" data-question="10">
 <h3 id="heading-10" data-id="heading-10">10. 泛型、Any、some、any 分别解决什么问题？</h3>
 <span class="level">基础优先</span>
-<h4>面试总结（核心回答＋追问展开）</h4>
+<h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>核心回答：</strong>泛型中的 T 是类型占位符，调用时由实参确定；例如 identity&lt;T&gt; 输入 Int 就返回 Int，输入 String 就返回 String，从而复用代码并保留类型关系。T: Equatable 表示 T 必须支持相等比较，where 可以补充更多限制。Any 可以装任意类型，但要先转换才能使用具体类型的专有接口。any P 表示“装着某个遵循协议 P 的值”，同一变量可以换装另一种遵循者。返回位置的 some P 则由函数实现决定具体类型，对外只展示协议能力，并保留这个隐藏类型的身份；参数位置的 some P 是泛型参数简写，由调用者选择类型。</p>
-<p><strong>追问展开：</strong>普通非泛型函数返回 some P 时，各返回路径必须对应同一底层类型；泛型函数的隐藏返回类型可以依赖泛型参数，对同一组实参保持一致。any P 隐藏的是调用处能直接使用的具体类型信息，并没有抹掉值的运行时类型。进阶边界：容器里的值遵循 P，不代表 any P 这个容器类型本身自动遵循 P；有些泛型调用会临时取出其中的具体类型来匹配参数，这叫“隐式打开存在值”。协议里用 Self 表示遵循类型自身，用 associatedtype 声明由遵循者确定的类型（见第 13 题），相关成员能否通过 any 调用仍受类型关系限制。存在容器见第 17 题；泛型专门化是编译器针对具体类型生成或优化代码，不能仅凭 some/any 关键字断言性能。</p>
+<p><strong>泛型通过类型参数让代码适用于多种类型，同时保留参数与返回值之间的类型关系，并可用协议约束能力。</strong><code>Any</code> 可以保存任意类型的值，通常需要转换后才能使用具体类型的专有接口。<code>any P</code> 允许同一变量保存不同的协议遵循者，通过协议接口使用它们。返回位置的 <code>some P</code> 由实现决定具体类型，对外隐藏类型名称并保留其身份，普通非泛型函数的各返回路径必须使用同一底层类型；参数位置的 <code>some P</code> 则是泛型参数的简写，由调用方决定具体类型。</p>
+</div>
+<h4>进一步理解</h4>
+<div class="understanding">
+<div class="explanation-item">
+<h5>既然 Any 能装任何值，为什么还需要泛型？</h5>
+<p>设想 identity 收到什么就原样返回什么。若参数和结果都写 Any，传入整数后，调用方还要转换才能做加法；写成 identity&lt;T&gt;(_: T) -&gt; T，编译器就能知道“输入与输出是同一种类型”。传入 3，返回值仍是 Int，可以直接加 1。泛型的价值不只是接受不同类型，还在于保留这些类型之间的关系；T: Equatable 则进一步要求它支持相等比较。</p>
+</div>
+<div class="explanation-item">
+<h5>some Named 与 any Named，谁决定里面的具体类型？</h5>
+<p>下面 make() 返回 some Named，具体返回 User 由函数实现决定；调用方可以读取 name，但不需要知道它就是 User。对于这里的普通非泛型函数，不能某条分支返回 User、另一条返回 Book。any Named 则适合在同一变量或数组里存放不同遵循者，例如先装 User，再换成 Book；调用方统一通过 Named 提供的能力使用它们。</p>
+</div>
+<div class="explanation-item">
+<h5>为什么隐藏类型后，不能直接使用所有专有成员？</h5>
+<p>假设 User 额外有 age，而 Named 只要求 name。拿到 any Named 时，调用方只凭这个接口无法确认里面一定是 User，所以不能直接读取 age；需要先尝试转换。同样，返回 some Named 是让调用方依赖声明的协议能力，不是公开 User 的所有接口。隐藏的是调用处可直接使用的具体类型信息，值在运行时仍然有自己的真实类型。</p>
+</div>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-swift">func identity&lt;T&gt;(_ value: T) -&gt; T { value }
@@ -620,19 +798,36 @@ print(sameWithWhere(1, 1)) // true</code></pre>
 <figure class="review-viz" aria-labelledby="viz-title-10">
 <div class="viz-heading"><span class="viz-kicker">第 10 题 · 看图复习</span><div class="viz-title" id="viz-title-10">四种类型写法：谁决定类型，保留什么能力？</div><p>用同一套 User / Book 示例横向比较。</p></div>
 <div class="viz-lane"><div class="viz-lane-title">泛型 T · 调用者决定</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>identity(3)</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>输入 T = Int，输出也是 T</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>返回 Int，可直接 + 1</strong></div></div></div><div class="viz-lane"><div class="viz-lane-title">返回 some Named · 实现方决定</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>make() 内返回 User</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>隐藏具体类型，保留类型身份</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>可读 name；本例不能另一路返回 Book</strong></div></div></div><div class="viz-lane"><div class="viz-lane-title">any Named · 变量可装不同遵循者</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>current 先装 User</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>之后可改装 Book</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>通过 Named 接口读取 name</strong></div></div></div><div class="viz-lane"><div class="viz-lane-title">Any · 不要求共同能力</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>可保存 Int / User / Book 等</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>没有承诺 Named 能力</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>要使用 name，需先转换</strong></div></div></div>
-<figcaption><strong>面试记忆点</strong>T 保留类型关系；some 隐藏但固定；any 按协议装不同类型；Any 容纳任意类型。</figcaption>
 <p class="viz-note">这里的 some 指普通非泛型函数的返回位置；参数 some P 是泛型参数简写。</p>
 </figure>
 <p class="pitfall"><strong>别答错：</strong>some 的返回类型由实现决定，some 参数的类型由调用者决定；any 可保存不同遵循者，但不保证协议里的每一种类型关系都能通过它使用。</p>
+<details class="advanced-note">
+<summary>进阶补充：some、any 与类型关系的边界</summary>
+<p>参数位置的 some P 是泛型参数的简写，由调用者选择具体类型，不同于返回位置由实现决定隐藏类型。泛型函数返回 some P 时，底层类型可以依赖泛型参数，对同一组实参保持一致。any P 中的值遵循 P，并不表示 any P 这个容器类型自动遵循 P；某些泛型调用可临时打开其中的具体类型。含 Self 或 associatedtype 的成员还受类型关系限制。性能取决于实际表示与优化，不能只凭 some 或 any 判断快慢。</p>
+</details>
 <p class="source-link">延伸核对：<a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/opaquetypes/" target="_blank" rel="noopener noreferrer">Swift 官方文档 / 实现资料</a></p>
 </section>
 <section class="question" data-question="11">
 <h3 id="heading-11" data-id="heading-11">11. 为什么说 Swift 支持面向协议编程（POP）？</h3>
 <span class="level">重点理解</span>
-<h4>面试总结（核心回答＋追问展开）</h4>
+<h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>核心回答：</strong>Swift 的面向协议编程，是用协议描述能力、用协议扩展复用默认行为，再通过泛型约束或 any 协议类型组织调用。类、结构体和枚举都可以遵循协议，因此不必依赖共同父类，也能组合能力和替换实现。本题 show 只依赖 Named 约定的 name 和 greeting()，所以既能接收 User，也能接收 Robot，不需要分别写两套 show。协议描述要求，不直接为实例保存字段。</p>
-<p><strong>追问展开：</strong>协议要求就是写在 protocol 花括号里、遵循者必须满足的属性和方法；默认实现就是扩展提供的后备代码，遵循者没有自己实现时可复用。协议扩展也能添加未列入要求的辅助方法；需要通过协议接口根据遵循类型选择实现的方法，必须列入协议要求。编译器若保留一份通用的泛型函数代码，可通过“协议见证表”这份实现对照表找到具体方法；若针对具体类型优化，也可能直接调用目标方法（见第 16、17 题），所以 POP 不等于所有调用都动态查表。它是一种组织依赖和复用行为的设计方式，可以与类继承、面向对象及函数式写法结合使用。</p>
+<p><strong>Swift 的面向协议编程以协议描述能力，通过协议扩展提供默认实现，再通过泛型约束或协议类型组织调用，让代码依赖接口。</strong>类、结构体和枚举都能遵循协议，无需共同父类即可组合能力；遵循者可以复用默认实现，也可以提供自己的实现。协议要求规定必须提供的属性与方法，需要通过协议接口按具体类型选择实现的方法，必须写入协议声明。协议本身不保存实例数据，数据由遵循类型管理。这种方式有利于减少耦合、替换实现和编写测试，也可以与类继承配合使用。</p>
+</div>
+<h4>进一步理解</h4>
+<div class="understanding">
+<div class="explanation-item">
+<h5>面向协议编程，能减少哪一种重复？</h5>
+<p>假设页面既要显示用户，也要显示机器人。若显示函数直接依赖 User，就得为 Robot 再写一份。先用 Named 声明 name 和 greeting()，显示函数只依赖这两个能力，User 与 Robot 都能传进去。这样共享的是接口约定，不必为了复用显示逻辑而给两者安排一个共同父类，结构体和枚举也能参与。</p>
+</div>
+<div class="explanation-item">
+<h5>默认实现到底替遵循者做了什么？</h5>
+<p>协议中的 func greeting() 是“必须具备这个能力”的要求；扩展里的函数体是“没有另写时，可以采用这一份代码”。所以 User 只提供 name，就能复用“你好，名字”；Robot 自己实现 greeting()，则输出“编号：名字”。协议不替实例保存 name 字段，具体数据仍由遵循类型负责。</p>
+</div>
+<div class="explanation-item">
+<h5>为什么有些方法必须写进 protocol，而不能只放扩展？</h5>
+<p>show 的目标是“根据传入对象选用各自的 greeting()”。要表达这个可替换的接口，greeting() 必须出现在协议要求中。只放在扩展里的同名辅助方法，不会自动获得这种选择规则；通过协议接口调用时可能仍选扩展版本。第 12 题用 hello 与 bye 的结果对比说明这个差别。</p>
+</div>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-swift">protocol Named {
@@ -656,19 +851,36 @@ show(Robot(name: &quot;R1&quot;)) // 编号：R1</code></pre>
 <figure class="review-viz" aria-labelledby="viz-title-11">
 <div class="viz-heading"><span class="viz-kicker">第 11 题 · 看图复习</span><div class="viz-title" id="viz-title-11">面向协议：调用方只关心能力，实现可以替换</div><p>show&lt;T: Named&gt; 只要求 name 和 greeting()，不需要共同父类。</p></div>
 <div class="viz-lane"><div class="viz-lane-title">User 没写 greeting</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>show(User(name: &quot;小明&quot;))</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>使用 Named 扩展的默认实现</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>你好，小明</strong></div></div></div><div class="viz-lane"><div class="viz-lane-title">Robot 自己写了 greeting</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>show(Robot(name: &quot;R1&quot;))</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>使用 Robot 满足协议要求的实现</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>编号：R1</strong></div></div></div><div class="viz-cards"><div class="viz-node "><span class="viz-label">协议：约定能力</span><strong>Named 要求 name 与 greeting()</strong></div><div class="viz-node "><span class="viz-label">扩展：提供复用代码</span><strong>默认 greeting() 可以用 name 拼问候语</strong></div></div>
-<figcaption><strong>面试记忆点</strong>协议定能力，扩展给默认行为，遵循者可提供自己的实现。</figcaption>
 <p class="viz-note">需要通过协议接口选择实现的方法，要写进协议要求。</p>
 </figure>
 <p class="pitfall"><strong>别答错：</strong>协议扩展不是给所有同名方法提供动态重写；需要多态调用的方法应列入协议要求，见下一题。</p>
+<details class="advanced-note">
+<summary>进阶补充：协议设计与实际调用方式</summary>
+<p>通用泛型实现可借助协议见证表选择方法；编译器针对具体类型优化后，也可能直接调用。因此面向协议编程是一种组织接口与复用行为的设计方式，不能等同于“所有调用都动态查表”。它也可以与类继承及其他编程方式结合。</p>
+</details>
 <p class="source-link">延伸核对：<a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/protocols/" target="_blank" rel="noopener noreferrer">Swift 官方文档 / 实现资料</a></p>
 </section>
 <section class="question" data-question="12">
 <h3 id="heading-12" data-id="heading-12">12. 协议扩展的方法为什么有时调用不到自己的实现？</h3>
 <span class="level">重点理解</span>
-<h4>面试总结（核心回答＋追问展开）</h4>
+<h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>核心回答：</strong>关键要看同名方法是否属于协议要求，也就是是否写在 protocol 的声明中。属于协议要求时，具体类型建立遵循关系，编译器记录“这个要求由哪个方法实现”，称为协议见证；any P 或泛型约束下的调用使用这份记录；只在扩展里新增的方法没有这个要求入口，在协议视角下按编译期可见的静态类型（变量声明或推断出的类型）和约束选择，而不是再去搜索实际对象的同名方法。因此示例中 value.hello() 调用 Person 的实现，value.bye() 调用扩展实现；直接用 Person 调用 bye() 才会选择 Person 的同名方法。</p>
-<p><strong>追问展开：</strong>想要通过协议接口多态调用，就把方法声明在协议中，扩展里仍可保留默认实现。不能因此说“扩展默认实现总会覆盖遵循者”。类继承还有一个边界：父类若直接使用协议扩展默认实现来建立遵循，子类只是新增同名方法，不会自动替换父类的协议见证。需要 override 行为时，应先让父类提供可重写的方法来满足协议要求，子类再重写该方法。</p>
+<p><strong>协议扩展方法如何选择实现，取决于它是否声明为协议要求。</strong>协议要求的对应实现在具体类型建立遵循关系时确定，通过协议类型或泛型约束调用时，能够按这份关系选择实现；扩展可以为要求提供默认实现。仅在扩展中新增的方法，则按调用处已知的类型和约束选择，不会再根据实际对象查找同名方法。因此，需要不同遵循者通过同一协议接口表现出不同行为时，应把方法加入协议声明。类继承还需注意：父类若采用扩展默认实现满足要求，子类新增同名方法不会自动替换这份遵循关系；需要支持重写时，应由父类先提供可重写实现，子类再重写。</p>
+</div>
+<h4>进一步理解</h4>
+<div class="understanding">
+<div class="explanation-item">
+<h5>同一个 Person，为什么换成协议变量后 bye() 变了？</h5>
+<p>person 的类型是 Person，编译器看得到 Person 自己的 bye()，所以直接调用时得到“自己的 bye”。value 的声明类型是 any Greeter，Greeter 并没有要求 bye()，编译器只根据这个接口选到扩展中的 bye()，不会再到实际对象里搜索同名方法。对象没有变，变化的是调用处知道哪些类型信息。</p>
+</div>
+<div class="explanation-item">
+<h5>hello() 为什么又能调用 Person 的实现？</h5>
+<p>因为 hello() 明确写在 Greeter 的协议声明中。Person 建立协议遵循时，会记录“hello 这个要求由 Person.hello 满足”，这份实现对应关系称为协议见证。通过 any Greeter 调用 hello()，能沿这份关系找到 Person 的实现。因此需要不同遵循者提供各自行为时，应把方法列入协议要求，扩展仍可提供默认版本。</p>
+</div>
+<div class="explanation-item">
+<h5>为什么泛型函数里的 bye() 也选扩展版本？</h5>
+<p>下面 sayBye&lt;T: Greeter&gt; 的通用实现，只知道 T 遵循 Greeter，不知道它一定是 Person。由于 bye 不属于协议要求，它按当前已知的协议约束选用扩展方法，不会因为这次实参恰好是 Person 就改成另一套语义。这也是“把方法写进协议要求”的实际意义，而不是代码书写位置上的偏好。</p>
+</div>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-swift">protocol Greeter { func hello() -&gt; String }
@@ -710,19 +922,36 @@ print(polymorphic.hello()) // 重写 hello：可以沿类方法的重写关系�
 <figure class="review-viz" aria-labelledby="viz-title-12">
 <div class="viz-heading"><span class="viz-kicker">第 12 题 · 看图复习</span><div class="viz-title" id="viz-title-12">同一个 Person，调用视角不同，结果就可能不同</div><p>先记住：hello 写进了协议要求；bye 只写在扩展里。</p></div>
 <div class="viz-lane"><div class="viz-lane-title">具体类型视角</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>person.bye()</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>编译器知道 person 是 Person</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>自己的 bye</strong></div></div></div><div class="viz-lane"><div class="viz-lane-title">协议视角 · 是协议要求</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>value.hello()</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>沿 Person: Greeter 的见证入口</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>自己的 hello</strong></div></div></div><div class="viz-lane"><div class="viz-lane-title">协议视角 · 仅扩展成员</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>value.bye()</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>按 Greeter 视角静态选择扩展方法</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>默认 bye</strong></div></div></div><div class="viz-lane"><div class="viz-lane-title">泛型约束视角</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>sayBye(person)</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>函数体只知道 T: Greeter</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>默认 bye</strong></div></div></div>
-<figcaption><strong>面试记忆点</strong>想让 bye 像 hello 一样按遵循关系选实现，就把 bye 加入协议要求。</figcaption>
 <p class="viz-note">以上四条路径对应最前面的 Person 结构体示例；父类使用默认实现与父类自己实现的差别，见图示前的类继承补充示例。</p>
 </figure>
 <p class="pitfall"><strong>别答错：</strong>协议要求有默认实现，并不意味着遵循者的实现一定被忽略；本例 hello 就会调用 Person 的实现。</p>
+<details class="advanced-note">
+<summary>进阶补充：类继承为什么还要多检查一步？</summary>
+<p>如果父类直接采用协议扩展的默认实现来建立遵循，记录中选定的就是那份默认实现。子类只是新写一个同名方法，不会自动替换父类的协议见证。需要子类 override 时，应先让父类自己提供可重写的方法以满足要求，子类再重写它。下方两组类代码分别展示未替换与成功重写的结果。</p>
+</details>
 <p class="source-link">延伸核对：<a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/protocols/" target="_blank" rel="noopener noreferrer">Swift 官方文档 / 实现资料</a></p>
 </section>
 <section class="question" data-question="13">
 <h3 id="heading-13" data-id="heading-13">13. Swift 协议和 Objective-C 协议有什么区别？</h3>
 <span class="level">重点理解</span>
-<h4>面试总结（核心回答＋追问展开）</h4>
+<h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>核心回答：</strong>Swift 原生协议可以由类、结构体和枚举遵循，支持关联类型（协议先声明一个类型名称，由遵循者确定具体类型）、泛型约束以及协议扩展默认实现；Objective-C 协议面向对象，支持 required（必须实现）和 optional（可以不实现）的协议要求。这里的 required 说的是 OC 协议要求，不是第 4 题 Swift 初始化器前的 required 修饰符；Swift 的 @objc 协议未标 optional 的要求默认必须实现。Swift 通过 @objc 声明可与 OC 互操作的协议，只能由类遵循；@objc 表示把声明暴露给 Objective-C，协议成员必须使用 Objective-C 能表示的类型和签名，因此不能直接带入 Swift 关联类型等能力。</p>
-<p><strong>追问展开：</strong>默认实现与 optional 的区别在于：前者提供一份可执行的后备代码，后者允许对象根本不实现该方法，所以用 button.click?() 等方式检查方法是否存在后再调用。Swift 原生协议不能直接用 optional 修饰要求，Swift 协议扩展也不是 OC 协议的默认实现机制。原生协议要求的典型调用可经见证表，OC 协议的方法调用则走运行时消息查找。@objc 协议限制遵循者为类，不等于所有遵循者都必须直接继承 NSObject。</p>
+<p><strong>Swift 原生协议可由类、结构体和枚举遵循，支持关联类型、泛型约束及扩展默认实现；Objective-C 协议面向对象，支持必须实现和可选实现的要求。</strong>Swift 用 <code>@objc</code> 声明可与 Objective-C 互操作的协议，这类协议只能由类遵循，成员的类型和签名也必须能用 Objective-C 表达，不能直接使用关联类型等 Swift 原生能力。默认实现为要求提供可执行代码，可选要求则允许遵循者根本不实现该方法，因此调用前需检查方法是否存在。Swift 原生协议不能直接用 <code>optional</code> 修饰要求。</p>
+</div>
+<h4>进一步理解</h4>
+<div class="understanding">
+<div class="explanation-item">
+<h5>有默认实现，和允许不实现，区别在哪里？</h5>
+<p>下面 Dot 没写 draw()，但协议扩展提供了函数体，所以 Dot().draw() 有代码可以执行，会打印“默认绘制”。Button 没写 optional 的 click()，则可能根本没有这个方法，因此调用时写 button.click?()，先检查方法是否存在。前者是“有一份备用实现”，后者是“允许没有实现”。Swift 原生协议不能直接用 optional 修饰要求。</p>
+</div>
+<div class="explanation-item">
+<h5>associatedtype 是给协议留了一个什么空位？</h5>
+<p>Source 规定“必须能 load 出某种数据”，但不同来源的数据类型可以不同，于是先用 associatedtype Item 留下一个类型名称。NumberSource 把 Item 确定为 Int，load() 就返回 Int。它不是枚举关联值：关联类型决定接口里使用哪种类型，枚举关联值则是某个枚举值随身携带的具体数据。</p>
+</div>
+<div class="explanation-item">
+<h5>加上 @objc，为什么不能继续使用所有 Swift 协议能力？</h5>
+<p>@objc 是让 Objective-C 运行时也能理解这份接口，所以成员类型和签名必须能用 OC 表达，不能直接放入 associatedtype 等 Swift 原生能力。它也把遵循者限定为类，结构体和枚举不能遵循。示例继承 NSObject 是常见互操作写法，不代表所有 @objc 协议遵循者都必须直接继承 NSObject。</p>
+</div>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-swift">import Foundation
@@ -755,19 +984,36 @@ print(NumberSource().load()) // 42
 <figure class="review-viz" aria-labelledby="viz-title-13">
 <div class="viz-heading"><span class="viz-kicker">第 13 题 · 看图复习</span><div class="viz-title" id="viz-title-13">默认实现 vs optional：一个有后备代码，一个可没有方法</div><p>这两条调用路径最能说明原生 Swift 协议与 @objc 可选要求的区别。</p></div>
 <div class="viz-lane"><div class="viz-lane-title">Swift 原生协议</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>struct Dot: Drawable</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>没写 draw → 使用扩展默认实现</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>Dot().draw() 打印「默认绘制」</strong></div></div></div><div class="viz-lane"><div class="viz-lane-title">@objc optional 协议</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>Button: Clickable 未实现 click</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>button.click?() 先检查方法存在</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>方法不存在 → 跳过，无输出</strong></div></div></div><div class="viz-cards"><div class="viz-node "><span class="viz-label">Swift 原生协议</span><strong>class / struct / enum 可遵循；支持关联类型与扩展</strong></div><div class="viz-node "><span class="viz-label">@objc 协议</span><strong>只由类遵循；成员须能由 Objective-C 表达，可有 optional 要求</strong></div></div>
-<figcaption><strong>面试记忆点</strong>默认实现 = 有代码可执行；optional = 允许根本没有这个方法。</figcaption>
 
 </figure>
 <p class="pitfall"><strong>别答错：</strong>@objc 协议限制为类，不表示每个遵循者都必须直接继承 NSObject；示例继承 NSObject 是常用互操作写法。</p>
+<details class="advanced-note">
+<summary>进阶补充：required 与运行时调用的区别</summary>
+<p>OC 协议中的 required 表示必须实现要求，与 Swift 初始化器的 required 修饰符含义不同。Swift 的 @objc 协议未标 optional 的要求默认必须实现。Swift 原生协议要求的典型调用可经协议见证表，OC 协议方法则使用运行时消息查找；Swift 协议扩展也不能直接当作 OC 协议默认实现机制。</p>
+</details>
 <p class="source-link">延伸核对：<a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/protocols/" target="_blank" rel="noopener noreferrer">Swift 官方文档 / 实现资料</a></p>
 </section>
 <section class="question" data-question="14">
 <h3 id="heading-14" data-id="heading-14">14. Codable 怎么把 JSON 转成模型？自动合成有什么坑？</h3>
 <span class="level">基础优先</span>
-<h4>面试总结（核心回答＋追问展开）</h4>
+<h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>核心回答：</strong>Codable 是 Encodable 与 Decodable 的组合，对这里的普通结构体，参与编码的属性满足 Encodable、参与解码的属性满足 Decodable 时，编译器可按规则自动生成相应方法，这就叫“自动合成”。JSONDecoder 把 JSON Data 解成模型，JSONEncoder 做反向转换；CodingKeys 指定字段选择和名称映射，Codable 本身也能配合其他格式的编码器使用。合成解码通常把可选字段缺失或 null 解为 nil，字段类型不匹配仍会抛错，可选并不代表忽略任意坏数据。</p>
-<p><strong>追问展开：</strong>默认值要区分情况：参与合成解码的 var 即使有初值，仍按字段类型解码，必填键缺失不会自动回退；已有初值的 let 不能再次赋值，合成解码会保留初值；未列入 CodingKeys 且有默认值的属性也可保留默认值。需要“缺失时用业务默认值”或特殊类型转换时，应自己编写 Decodable 要求的 init(from decoder:)：先取得按 CodingKeys 查找字段的容器，再读取每个字段；decodeIfPresent 配合 ?? 可处理缺键和 null，但类型不匹配仍会抛错。继承父类的 Codable 实现也不会让子类新增字段自动参与编解码。</p>
+<p><strong><code>Codable</code> 是 <code>Encodable</code> 与 <code>Decodable</code> 的组合；<code>JSONDecoder</code> 将 JSON 数据解码为模型，<code>JSONEncoder</code> 将模型编码为 JSON 数据。</strong>符合合成规则、相关属性满足对应协议要求时，编译器可生成实现；<code>CodingKeys</code> 用于指定参与编解码的属性及对应字段名称。合成解码通常将可选字段缺失或 <code>null</code> 处理为 <code>nil</code>，类型不匹配仍会抛错。参与合成解码的可变属性，即使声明了初值，也不会在缺字段时自动回退；需要业务默认值或特殊转换时，应自行实现解码逻辑。子类继承父类的实现，也不会让新增字段自动参与编解码。</p>
+</div>
+<h4>进一步理解</h4>
+<div class="understanding">
+<div class="explanation-item">
+<h5>JSON 字段和 Swift 属性名不同，解码器怎么对应？</h5>
+<p>下面模型把属性命名为 name，接口却返回 display_name。CodingKeys 中的 case name = &quot;display_name&quot; 建立对应关系，解码器读取这个 JSON 键，再按 String 类型解码给 name。自动合成就是编译器依据这些属性和键生成常规编解码代码，不是任意 JSON 都能自动变成模型。Codable 同时包含编码与解码能力，也不限于 JSON 格式。</p>
+</div>
+<div class="explanation-item">
+<h5>可选字段为什么还会解码失败？</h5>
+<p>nickname: String? 允许“没有昵称”，所以合成解码在缺少键或值为 null 时通常得到 nil。但如果服务器返回 nickname: 123，这个数字并不是期望的字符串，仍然会抛出类型不匹配错误。可选性解决的是“值可能不存在”，不是“任何类型的数据都接受”。</p>
+</div>
+<div class="explanation-item">
+<h5>写了 var retries = 3，为什么缺字段时不自动用 3？</h5>
+<p>参与合成解码的 var 仍会按字段类型读取 JSON，声明处的初值并不是“读取失败后的备用值”。需要缺键或 null 时使用 3，就自己实现 init(from:)，用 decodeIfPresent 先读取，得到 nil 再通过 ?? 3 补默认值。下面 Settings 的第三组输入是字符串 &quot;bad&quot;，类型错误仍会抛出，而不会回退成 3。</p>
+</div>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-swift">import Foundation
@@ -811,19 +1057,36 @@ for json in [#"{}"#, #"{"retries":null}"#, #"{"retries":"bad"}"#] {
 <figure class="review-viz" aria-labelledby="viz-title-14">
 <div class="viz-heading"><span class="viz-kicker">第 14 题 · 看图复习</span><div class="viz-title" id="viz-title-14">JSON 到模型：先找键，再按类型解码</div><p>CodingKeys 是字段名对照表；Codable = Encodable + Decodable。</p></div>
 <div class="viz-lane"><div class="viz-lane-title">字段映射</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>JSON：display_name = &quot;小明&quot;</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>CodingKeys.name = &quot;display_name&quot;</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>User.name = &quot;小明&quot;</strong></div></div></div><div class="viz-lane"><div class="viz-lane-title">缺失的可选字段</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>JSON 中没有 nickname</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>按 String? 合成解码</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>User.nickname = nil</strong></div></div></div><div class="viz-lane"><div class="viz-lane-title">错误类型</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>若 JSON 中 id = &quot;abc&quot;</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>模型要求 Int，解码失败</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>throw → 进入 catch</strong></div></div></div><div class="viz-strip">解码：JSON Data → JSONDecoder → User<br>编码：User → JSONEncoder → JSON Data</div>
-<figcaption><strong>面试记忆点</strong>字段名靠 CodingKeys，缺失可选值可为 nil，类型错仍会抛错。</figcaption>
 <p class="viz-note">给 var 写默认值不会自动变成缺键回退；需要容错时显式实现 init(from:)。</p>
 </figure>
 <p class="pitfall"><strong>别答错：</strong>不要把可选字段理解为“任何坏数据都能忽略”，类型错误仍然可能失败。</p>
+<details class="advanced-note">
+<summary>进阶补充：let 初值、CodingKeys 与继承的边界</summary>
+<p>已有初值的 let 不能被合成解码再次赋值，通常保留声明时的值；未列入 CodingKeys 且有默认值的属性也可保留默认值。这与参与合成解码的 var 不同，不能归纳成“有初值就会回退”。类继承父类的 Codable 实现，也不会让子类新增字段自动参与编解码，需要单独处理。</p>
+</details>
 <p class="source-link">延伸核对：<a href="https://developer.apple.com/documentation/foundation/encoding-and-decoding-custom-types" target="_blank" rel="noopener noreferrer">Swift 官方文档 / 实现资料</a></p>
 </section>
 <section class="question" data-question="15">
 <h3 id="heading-15" data-id="heading-15">15. Swift 实例对象、类、元类的内部结构是什么？</h3>
 <span class="level">进阶选学</span>
-<h4>面试总结（核心回答＋追问展开）</h4>
+<h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>核心回答：</strong>以常见原生 Swift 堆对象为概念模型，实例包含对象头（运行时管理对象所需的信息）和实例存储属性；对象头关联类型元数据（描述这个对象是什么类型的信息）和引用计数状态。相同具体类的实例共享类元数据，其中保存大小、父类、字段布局和虚表（可重写方法的入口表，见第 16 题）等运行时信息，方法代码不会复制到每个实例中。对象头编码、属性在内存中的位置、对齐，以及引用计数旁表（某些管理信息使用的额外存储）受平台及运行时形式影响，示意图不能当作固定内存偏移表。</p>
-<p><strong>追问展开：</strong>在 Apple 的 Objective-C 互操作环境中，类元数据兼容 OC 类对象，类对象通过 isa（对象关联运行时类的关系，此处从类对象指向元类）关联 OC 元类；元类可理解为描述类对象的运行时类，OC 类方法信息属于它；Swift class func 仍要按自身派发规则判断，不能全部等同为 OC 消息。Person.Type 是可保存 Person 及其子类类型值的 Swift 元类型，Person.self 是一个类型值，这里的元类型是 Swift 类型系统概念，而 OC metaclass（元类）是 OC 运行时对象，两者是不同概念，也不是创建了额外的 Person 实例。MemoryLayout&lt;Person&gt;.size 测量的是引用表示大小，不是整个对象的堆分配大小。</p>
+<p><strong>原生 Swift 类实例通常包含对象头和实例存储属性，对象头关联类型元数据及引用计数管理信息。</strong>同一具体类的实例共享类型元数据，用于描述大小、字段布局、继承关系及方法入口等，方法代码不会复制到每个实例。在 Apple 的 Objective-C 互操作环境下，类元数据兼容 OC 类对象，类对象通过 <code>isa</code> 关联 OC 元类，后者承载 OC 类方法相关信息。Swift 元类型用于表示类型本身，与 OC 运行时的元类是不同概念。对象头编码与具体布局受平台及运行时实现影响，不能把概念结构当作固定偏移；对类类型使用 <code>MemoryLayout</code> 测量的是引用表示大小，而非整个堆对象大小。</p>
+</div>
+<h4>进一步理解</h4>
+<div class="understanding">
+<div class="explanation-item">
+<h5>创建两个 Person，会把方法代码也复制两份吗？</h5>
+<p>不会。两个实例各自保存 age 等实例数据，也各有运行时管理所需的对象头；描述同一个具体类的信息则可以共享。对象头关联类元数据，让运行时知道“这是什么对象”，类元数据再提供字段布局、方法入口等信息。可以把它理解为每人各有资料，而同一类资料的格式说明共用一份；实际内存编码仍取决于平台与运行时。</p>
+</div>
+<div class="explanation-item">
+<h5>Person.self 和 Person() 为什么不是同一种东西？</h5>
+<p>Person() 创建一个具体的人，里面有这个实例自己的 age。Person.self 表示 Person 这个类型本身，可保存在 Person.Type 的变量里，用于把“类型”作为值传递，并没有因此再创建一个人。Person.Type 也能保存其子类的类型值；这是 Swift 类型系统里的“元类型”。</p>
+</div>
+<div class="explanation-item">
+<h5>OC 元类与 Swift 元类型，为什么都带一个“元”字？</h5>
+<p>在 Apple 的 OC 互操作环境中，还可以把类当作运行时对象来看：对实例调用 object_getClass 得到类，对类对象再调用一次得到 OC 元类。OC 元类承载 OC 类方法相关信息。它与 Person.Type 表达的 Swift 元类型概念不同，不能把两者混为同一种对象，也不能因此推断所有 Swift class func 都走 OC 消息派发。</p>
+</div>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-swift">import Foundation
@@ -847,19 +1110,36 @@ print(Person.species()) // Human</code></pre>
 <figure class="review-viz" aria-labelledby="viz-title-15">
 <div class="viz-heading"><span class="viz-kicker">第 15 题 · 看图复习</span><div class="viz-title" id="viz-title-15">实例、类型值、OC 元类：分清三个层次</div><p>先读实例到类的关系，再单独读 Swift 的类型表达式。</p></div>
 <div class="viz-timeline"><div class="viz-step"><span class="viz-number">1</span><div><strong>实例 person = Person()</strong><span>保存 age = 18 等实例数据；同类实例共享类元数据</span></div></div><div class="viz-step"><span class="viz-number">2</span><div><strong>object_getClass(person) → 类对象</strong><span>Apple 互操作下关联 Person 类元数据；描述布局和方法入口；class_isMetaClass 为 false</span></div></div><div class="viz-step"><span class="viz-number">3</span><div><strong>object_getClass(cls) → OC 元类</strong><span>承载 OC 类方法等信息；class_isMetaClass 为 true</span></div></div></div><div class="viz-cards"><div class="viz-node "><span class="viz-label">Person.Type · 类型</span><strong>可以保存 Person 及其子类的类型值</strong></div><div class="viz-node "><span class="viz-label">Person.self · 值</span><strong>一个类型值；没有新建 Person 实例</strong></div></div>
-<figcaption><strong>面试记忆点</strong>实例保存状态，类元数据描述类型，OC 元类承载 OC 类方法信息。</figcaption>
 <p class="viz-note">本图表达概念与 API 关系，不表示固定内存偏移。示例继承 NSObject，具体对象头受父类与运行时影响；Swift 元类型不能等同于 OC 元类。</p>
 </figure>
 <p class="pitfall"><strong>别答错：</strong>MemoryLayout&lt;Person&gt;.size 测到的是引用表示大小，不是 Person 实例连同属性的堆分配大小。</p>
+<details class="advanced-note">
+<summary>进阶补充：不要把示意图当作固定内存偏移表</summary>
+<p>对象头的编码、引用计数旁表、字段位置及对齐取决于平台与运行时形式。MemoryLayout&lt;Person&gt;.size 测量的是 Person 引用表示的大小，并不是整个实例在堆上的分配大小。结构图用来理解“谁关联谁、哪些信息共享”，不用于业务代码手算对象地址。</p>
+</details>
 <p class="source-link">延伸核对：<a href="https://github.com/swiftlang/swift/blob/main/docs/ABI/TypeMetadata.rst" target="_blank" rel="noopener noreferrer">Swift 官方文档 / 实现资料</a></p>
 </section>
 <section class="question" data-question="16">
 <h3 id="heading-16" data-id="heading-16">16. Swift 方法调用如何实现？四种派发怎么区分？</h3>
 <span class="level">重点理解</span>
-<h4>面试总结（核心回答＋追问展开）</h4>
+<h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>核心回答：</strong>“派发”就是从一个方法调用确定最终执行哪一份实现。Swift 常见四种方法派发：静态派发在编译期确定目标；虚表派发根据对象实际类的方法表槽位（预先安排的表项）选择重写实现；协议见证表派发根据具体类型的协议遵循找到要求的实现；OC 消息派发根据接收者和 selector（运行时识别方法的名称标识）查找 IMP（该方法实现的函数指针）。判断时要同时看成员声明和调用视角：已知具体类型的值类型方法、final 方法（禁止子类重写）常可直接调用，可重写类方法通常走虚表，协议视角的要求调用通常经见证入口。</p>
-<p><strong>追问展开：</strong>虚表按槽位选择入口，不是每次按方法名搜索父类链；协议见证表对应“某个具体类型遵循某个协议”，仅扩展新增的方法没有协议要求入口。OC 消息派发通常先查缓存，再查本类和父类的方法，找不到还可能进入动态解析或转发；@objc 把方法暴露给 OC，dynamic 要求保留运行时动态派发；本例 @objc dynamic 在 OC 互操作下走消息派发，仅 @objc 或继承 NSObject 并不强制所有 Swift 调用都走消息。优化器若能证明最终目标，也可能省去虚表或见证表查询，直接调用方法，这称为“去虚化”，所以不能回答“struct 永远静态、class 永远虚表”，也不能把静态派发和 static 关键字等同。</p>
+<p><strong>方法派发是确定一次调用最终执行哪份实现的过程，常见方式有四种。</strong>静态派发在编译期确定目标；虚表派发按对象的实际类，从方法表对应位置选择重写实现；协议见证表派发按具体类型与协议的遵循关系查找协议要求的实现；Objective-C 消息派发在运行时根据接收者和方法标识查找实现（IMP）。判断时要结合方法声明、调用处类型信息及编译优化，不能仅按值类型或引用类型划分。<code>@objc</code> 表示暴露给 OC，并不单独保证所有 Swift 调用都走消息派发；在 OC 互操作环境下，<code>@objc dynamic</code> 要求保留运行时动态派发。</p>
+</div>
+<h4>进一步理解</h4>
+<div class="understanding">
+<div class="explanation-item">
+<h5>变量写成 Animal，为什么调用到了 Dog.sound()？</h5>
+<p>下面 animal 的声明类型是 Animal，实际指向 Dog。sound 允许子类重写，运行时需要根据实际类选实现；典型做法是在类的方法表中，为这个方法预留一个位置，Dog 的对应位置指向重写版本，所以输出 Woof。这叫虚表派发，不是每次都按方法名从子类向父类逐层搜索。</p>
+</div>
+<div class="explanation-item">
+<h5>换成 any Speaker，运行时怎么知道该调用哪个 speak()？</h5>
+<p>Speaker 只声明能力，不指定唯一实现。Dog 遵循 Speaker 时建立“这个协议要求由 Dog.speak 满足”的记录。通过 speaker.speak() 调用时，可以借助这份协议见证表记录找到入口。虚表关心“实际类如何重写方法”，协议见证表关心“具体类型如何满足协议要求”，两者解决的问题不同。</p>
+</div>
+<div class="explanation-item">
+<h5>静态派发与 OC 消息派发，分别怎么找目标？</h5>
+<p>若调用处已经能确定唯一实现，例如已知 Dog 的 final speak()，就可以直接调用，不必再选择重写版本。OC 消息派发则把接收者和方法标识 selector 交给运行时查找实现，通常先查缓存，必要时查方法列表、父类，或进入动态解析和转发。示例的 @objc dynamic run() 在 OC 互操作环境中采用后一种方式。</p>
+</div>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-swift">import Foundation
@@ -885,19 +1165,36 @@ Demo().run() // @objc dynamic：采用 Objective-C 动态派发</code></pre>
 <figure class="review-viz" aria-labelledby="viz-title-16">
 <div class="viz-heading"><span class="viz-kicker">第 16 题 · 看图复习</span><div class="viz-title" id="viz-title-16">四种派发：沿着调用入口找到最终实现</div><p>每行是一条典型路径，判断时同时看声明与调用视角。</p></div>
 <div class="viz-lane"><div class="viz-lane-title">静态派发</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>dog.speak() · 已知 final 方法</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>编译期已确定调用目标</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>Dog.speak → Hello</strong></div></div></div><div class="viz-lane"><div class="viz-lane-title">虚表派发</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>animal.sound() · 变量声明为 Animal</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>按实际 Dog 类型的虚表找重写入口</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>Dog.sound → Woof</strong></div></div></div><div class="viz-lane"><div class="viz-lane-title">见证表派发</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>speaker.speak() · any Speaker</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>按 Dog: Speaker 的遵循找入口</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>Dog.speak → Hello</strong></div></div></div><div class="viz-lane"><div class="viz-lane-title">OC 消息派发</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>Demo().run() · @objc dynamic</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>receiver + selector → 查找 IMP</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>执行 run → Running</strong></div></div></div>
-<figcaption><strong>面试记忆点</strong>已知目标直接调；类重写查虚表；协议要求查见证表；OC 动态调用查 IMP。</figcaption>
 <p class="viz-note">这是典型路径，优化可去虚化为直接调用；见证入口也可能继续转发。不能只按 struct / class 判断。</p>
 </figure>
 <p class="pitfall"><strong>别答错：</strong>不能说“struct 永远静态、class 永远虚表”：struct 经协议接口可走见证表，class 的 final 方法可直接调用。</p>
+<details class="advanced-note">
+<summary>进阶补充：声明规则与优化后的机器代码</summary>
+<p>@objc 表示暴露给 Objective-C，单凭它或继承 NSObject，不能断言每次 Swift 调用都走消息派发。@objc dynamic 在这里要求使用运行时动态派发。对于虚表或见证表调用，优化器若能证明最终目标，也可能改成直接调用，这称为去虚化。因此既不能说“class 永远走虚表”，也不能把静态派发与 static 关键字画等号。</p>
+</details>
 <p class="source-link">延伸核对：<a href="https://github.com/swiftlang/swift/blob/main/docs/SIL/SIL.md" target="_blank" rel="noopener noreferrer">Swift 官方文档 / 实现资料</a></p>
 </section>
 <section class="question" data-question="17">
 <h3 id="heading-17" data-id="heading-17">17. Swift 协议内部是什么？见证表、存在容器怎么理解？</h3>
 <span class="level">进阶选学</span>
-<h4>面试总结（核心回答＋追问展开）</h4>
+<h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>核心回答：</strong>第 10 题的 any P 在运行时需要携带具体值、类型信息和调用所需的实现记录，这个组合称为“存在容器”。在此基础上区分四个角色：协议描述符记录协议身份和要求；协议见证表记录某个具体类型如何满足协议要求；类型元数据描述具体类型，并关联负责复制、销毁等值操作的值见证表；存在容器则承载 any P 的值和操作它所需的运行时信息。协议见证表解决“要求怎么实现”，值见证表解决“值怎么管理”，两者不能混用。</p>
-<p><strong>追问展开：</strong>ABI 是编译器与运行时对二进制布局和调用方式的约定；一个机器字在这里指一个指针大小，64 位环境通常为 8 字节。“非类限定”指协议没有通过 AnyObject 等约束只允许类遵循。普通非类限定存在值的典型 ABI 表示是三机器字的值缓冲区、具体类型元数据指针及所需协议见证表指针。值的大小和对齐（存储地址需满足的边界要求）合适时，直接放在容器自带的缓冲区里，称为内联；放不下则使用容器外的存储；在 64 位、一个普通方法协议的典型情况下共五个字，即 40 字节，但不能推广成所有 any 都固定 40 字节。类限定存在值（例如 P: AnyObject）可用“对象引用加所需见证表”的更紧凑表示，OC 协议、Error、标记协议（只标示性质、不提供普通方法要求的协议，例如 Sendable）等另有规则，不能照搬这个布局。保留通用实现、未针对具体类型优化的泛型，通常也使用元数据和见证表，却不要求先构造存在容器；布局知识用于解释成本，不用于业务代码手算偏移。</p>
+<p><strong>Swift 协议的运行时表示涉及协议描述符、协议见证表、类型元数据、值见证表和存在容器。</strong>协议描述符记录协议身份与要求；协议见证表记录具体类型如何满足协议要求，用于查找对应实现；类型元数据描述具体类型，并关联负责复制、销毁等管理操作的值见证表。<code>any</code> 协议值通过存在容器保存实际值及操作所需的类型和协议实现信息，大小与对齐合适时可放入内部缓冲区，否则需要外部存储。存在容器的具体布局取决于协议约束和平台；泛型也可以利用元数据与见证表，但不要求先构造存在容器。</p>
+</div>
+<h4>进一步理解</h4>
+<div class="understanding">
+<div class="explanation-item">
+<h5>只知道 any Speaker，为什么仍然能调用 speak()？</h5>
+<p>下面 small 装 Dog，large 装 BigSpeaker，调用方只使用 Speaker 接口。运行时既要保存实际值，也要知道它的具体类型，还要能找到它如何实现 speak()。承载这些值与必要信息的表示称为“存在容器”。因此 any Speaker 不是一个完全丢失类型信息的黑盒，而是让调用方通过统一接口使用不同具体值。</p>
+</div>
+<div class="explanation-item">
+<h5>协议见证表和值见证表，为什么要分开？</h5>
+<p>调用 small.speak() 时，需要知道“Dog 如何实现 Speaker.speak”，这是协议见证表负责的事。复制或销毁容器内的值时，需要知道“Dog 这种值怎样复制或销毁”，这是值见证表负责的事，并通过类型元数据关联。协议描述符则说明 Speaker 这个协议是谁、提出哪些要求。把它们分开看，就是接口说明、接口实现记录、具体类型说明和值管理规则。</p>
+</div>
+<div class="explanation-item">
+<h5>值太大放不下，存在容器怎么办？</h5>
+<p>普通非类限定协议的典型表示带有一小块值缓冲区。值的大小与对齐合适时，可直接放进去；BigSpeaker 有四个 Int，在示例的常见三机器字缓冲区里放不下，就需要容器之外的存储。两者都能调用 speak()，差别在于存放和管理成本。下面 MemoryLayout 测量的是容器自身，不会把外部存储也加进去。</p>
+</div>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-swift">protocol Speaker { func speak() -&gt; String }
@@ -921,19 +1218,36 @@ print(MemoryLayout&lt;any Speaker&gt;.size) // 本例在 64 位 Apple 平台为 
 <figure class="review-viz" aria-labelledby="viz-title-17">
 <div class="viz-heading"><span class="viz-kicker">第 17 题 · 看图复习</span><div class="viz-title" id="viz-title-17">any Speaker：值、类型信息、方法入口一起带着走</div><p>把存在容器理解成一个“随值携带使用说明的包”。</p></div>
 <div class="viz-container"><div class="viz-container-title">small: any Speaker = Dog(age: 1)</div><div class="viz-cards"><div class="viz-node "><span class="viz-label">① 值缓冲区 · 存什么</span><strong>本例 Dog(age: 1) 可内联保存</strong></div><div class="viz-node "><span class="viz-label">② 类型元数据 · 是什么</span><strong>具体类型为 Dog；关联复制、销毁等值操作</strong></div><div class="viz-node "><span class="viz-label">③ 协议见证表 · 怎么调用</span><strong>Dog: Speaker 的 speak 要求 → Dog.speak</strong></div></div></div><div class="viz-lane"><div class="viz-lane-title">发起协议调用</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>small.speak()</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>找到协议见证入口，并带上值</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>执行 Dog.speak → Woof</strong></div></div></div><div class="viz-lane"><div class="viz-lane-title">值较大时</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>large 保存 BigSpeaker</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>放不进内联缓冲区 → 关联外部存储</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>仍通过同样的 Speaker 接口调用</strong></div></div></div>
-<figcaption><strong>面试记忆点</strong>值缓冲区装数据，元数据认类型，协议见证表找要求的实现。</figcaption>
 <p class="viz-note">普通非类限定单协议存在值的典型 ABI：3 字缓冲区 + 元数据指针 + 见证表指针；不是所有 any 的固定布局。协议描述符列要求，值见证表管复制/销毁，协议见证表管协议要求。</p>
 </figure>
 <p class="pitfall"><strong>别答错：</strong>不要为了使用协议去手算地址偏移；先掌握 any、泛型和调用行为，布局只作为进阶解释。</p>
+<details class="advanced-note">
+<summary>进阶补充：40 字节这个数字的适用范围</summary>
+<p>ABI 是编译器与运行时关于二进制表示和调用方式的约定。普通非类限定存在值的典型表示包含三机器字的值缓冲区、类型元数据指针及所需协议见证表指针；在 64 位且只有一个普通方法协议的典型情形下，五个字合计 40 字节。P: AnyObject 等类限定协议、OC 协议、Error、Sendable 等标记协议有不同规则，不能说所有 any 都固定 40 字节。通用泛型也可使用元数据和见证表，但不要求先构造 any 容器。</p>
+</details>
 <p class="source-link">延伸核对：<a href="https://github.com/swiftlang/swift/blob/main/docs/ABI/TypeLayout.rst" target="_blank" rel="noopener noreferrer">Swift 官方文档 / 实现资料</a></p>
 </section>
 <section class="question" data-question="18">
 <h3 id="heading-18" data-id="heading-18">18. async/await 和 GCD 有什么区别？await 会阻塞线程吗？</h3>
 <span class="level">重点理解</span>
-<h4>面试总结（核心回答＋追问展开）</h4>
+<h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>核心回答：</strong>GCD 是 Grand Central Dispatch，也就是 DispatchQueue 这套队列调度 API；它用队列和代码块组织调度，async/await 用可挂起的异步函数表达任务中的执行流程，并与 throws、结构化并发、取消和 actor 隔离协作。任务是要完成的工作，线程是执行代码的资源，执行器负责安排任务在哪里执行。await 表示可能挂起：真正挂起时保存后续执行状态，让出执行资源，之后由执行器调度恢复，本身不会像信号量等待那样同步占住线程。它不保证一定挂起或切换线程，任务也不绑定某条固定线程。</p>
-<p><strong>追问展开：</strong>GCD 的 async 是提交工作后不等待完成，Swift 的 async 表示函数可以异步挂起，两者可以共存。异步函数里的同步重计算、同步 I/O、信号量等待仍会占用线程；Task {} 可能继承 MainActor，不能靠加 async 或 Task 就把重活搬走。执行位置需结合版本与设置：按 Swift 6.0/6.1 的通常规则，非 actor 隔离 async 在通用执行器运行；Swift 6.2 启用 NonisolatedNonsendingByDefault（改变非隔离异步函数默认执行隔离的编译选项）后，非隔离 async 默认遵循调用者隔离，@concurrent 可显式要求离开调用方 actor，但不保证固定后台线程。</p>
+<p><strong><code>await</code> 标记可能挂起的位置；真正挂起时，任务保存状态并让出执行资源，不会占住线程等待结果。</strong>GCD 用队列和代码块组织任务提交与调度，Swift 的 <code>async/await</code> 用可挂起的异步函数表达流程，并与错误处理、结构化并发、取消和 actor 隔离配合。GCD 的 <code>async</code> 表示提交后不等待完成，Swift 的 <code>async</code> 表示函数允许异步挂起。结果就绪后，挂起的任务会被调度恢复，但 <code>await</code> 不保证一定挂起或切换线程；异步函数中的同步计算和阻塞操作仍会占用线程。执行位置还受隔离规则及编译设置影响，不能认为加上 <code>async</code> 或 <code>Task</code> 就一定在后台执行。</p>
+</div>
+<h4>进一步理解</h4>
+<div class="understanding">
+<div class="explanation-item">
+<h5>await 等网络结果时，线程在做什么？</h5>
+<p>可以把任务理解为“先请求，再处理结果”这份工作。网络结果没回来时，任务若在 await 处真正挂起，会保存“回来后从哪里继续”的状态，并让出执行资源，线程可以去做别的工作。结果就绪后再安排任务继续，恢复时未必还是原来的线程。await 只标记可能挂起的位置；如果结果已经就绪，也可能直接继续执行。</p>
+</div>
+<div class="explanation-item">
+<h5>为什么 async 函数也可能让界面卡顿？</h5>
+<p>给函数加 async，只表示它可以异步挂起，不会自动把每一行代码搬到后台。如果它在主 actor 上连续进行大量同步计算，这段计算仍占用执行线程，界面就可能没机会更新。Task {} 也可能继承当前位置的主 actor 隔离，所以把计算包进 Task 并不能单凭这一点解决卡顿。同步 I/O 和信号量等待同样不会因为出现在 async 函数里就变成非阻塞操作。</p>
+</div>
+<div class="explanation-item">
+<h5>GCD 的 async 与 Swift 的 async，为什么容易混淆？</h5>
+<p>DispatchQueue.async 表示“把代码块提交到队列，提交方不等它做完”；Swift 函数上的 async 表示“这份工作允许在执行途中挂起”。前者主要组织队列与回调，后者让后续处理写在 await 后面，用返回值和 throws 传递结果。它们可以配合使用；是否在后台执行，还要看队列、actor 隔离和执行规则，不能只看 async 这个单词。</p>
+</div>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-swift">import Foundation
@@ -962,19 +1276,36 @@ try await demo() // 单独 Swift 文件的顶层异步入口</code></pre>
 <figure class="review-viz" aria-labelledby="viz-title-18">
 <div class="viz-heading"><span class="viz-kicker">第 18 题 · 看图复习</span><div class="viz-title" id="viz-title-18">await 真正挂起时：任务暂停，线程可去做别的事</div><p>Task 是工作，Executor 负责调度，Thread 是执行资源。</p></div>
 <div class="viz-timeline"><div class="viz-step"><span class="viz-number">1</span><div><strong>Task 执行到 await</strong><span>如果结果尚未就绪且实际发生挂起，保存后续执行所需状态</span></div></div><div class="viz-step"><span class="viz-number">2</span><div><strong>等待异步结果期间</strong><span>当前任务暂停；执行线程可交还给执行器，处理其他工作</span></div></div><div class="viz-step"><span class="viz-number">3</span><div><strong>结果就绪后</strong><span>执行器调度任务继续；普通任务不保证回到原线程</span></div></div></div><div class="viz-cards"><div class="viz-node "><span class="viz-label">GCD async</span><strong>提交 block 后调用者继续；异步提交本身也不阻塞</strong></div><div class="viz-node "><span class="viz-label">GCD sync / 阻塞式等待</span><strong>调用方等待完成，会占住当前执行线程</strong></div></div>
-<figcaption><strong>面试记忆点</strong>await 等的是任务结果，挂起本身不会占住线程干等。</figcaption>
 <p class="viz-note">await 是潜在挂起点，不保证每次都挂起；异步函数里调用阻塞 API 仍可能阻塞线程。</p>
 </figure>
 <p class="pitfall"><strong>别答错：</strong>不要在 Swift 并发任务里用信号量等待异步结果，这可能占住有限的工作线程。</p>
+<details class="advanced-note">
+<summary>进阶补充：非隔离 async 的执行位置与版本设置</summary>
+<p>按 Swift 6.0/6.1 的通常规则，非 actor 隔离 async 在通用执行器运行。Swift 6.2 启用 NonisolatedNonsendingByDefault 后，非隔离 async 默认遵循调用者隔离；@concurrent 可显式要求离开调用方 actor，但不保证固定后台线程。因此判断执行位置时要结合语言版本与编译设置。</p>
+</details>
 <p class="source-link">延伸核对：<a href="https://github.com/swiftlang/swift-evolution/blob/main/proposals/0461-async-function-isolation.md" target="_blank" rel="noopener noreferrer">异步隔离提案 SE-0461</a> · <a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/concurrency/" target="_blank" rel="noopener noreferrer">Swift 官方文档 / 实现资料</a></p>
 </section>
 <section class="question" data-question="19">
 <h3 id="heading-19" data-id="heading-19">19. async let、TaskGroup、Task 有什么区别？怎么取消？</h3>
 <span class="level">重点理解</span>
-<h4>面试总结（核心回答＋追问展开）</h4>
+<h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>核心回答：</strong>async let 适合数量固定的结构化子任务，TaskGroup 适合数量在运行时确定的子任务；父任务离开相应作用域前必须等待子任务结束，取消会沿结构化父子关系传播。Task {} 创建非结构化任务；返回的 handle 是任务句柄，也就是用来等待结果、请求取消的操作对象。这类任务生命周期不受创建作用域约束，也不会仅因创建者取消就自动取消，需要持有句柄并按业务主动管理。取消是协作式请求：用 Task.checkCancellation()、Task.isCancelled 或响应取消的 API 配合处理，cancel() 不等于任务已经结束。</p>
-<p><strong>追问展开：</strong>退出作用域的行为还要区分：未显式等待的 async let 会被取消并等待；普通任务组正常退出时等待剩余任务，不会仅因退出就取消，可用 cancelAll() 主动请求取消；使用 withThrowingTaskGroup 时，传入的任务组闭包（body）若以抛错方式退出，会取消并等待剩余任务；某个子任务抛错不等于所有兄弟任务立即自动取消，还取决于错误如何被取出和处理。Task {} 通常继承创建位置的 actor 隔离（在哪个 actor 的保护范围内执行）、优先级和任务局部值（沿任务调用链传递的上下文，例如追踪编号）；Task.detached 不继承该隔离和任务局部值，也不自动沿用当前优先级，但同样不保证新建线程。任务组结果通常按完成顺序取得，需要输入顺序时应携带索引并重排。</p>
+<p><strong><code>async let</code> 和 <code>TaskGroup</code> 用于创建结构化子任务：前者适合数量固定的任务，后者适合运行时动态添加任务。</strong>子任务生命周期受作用域管理，退出前必须等待它们结束，取消沿结构化父子关系传播。<code>Task {}</code> 创建非结构化任务，生命周期不受创建作用域约束，也不会仅因创建者取消就自动取消，需要通过任务句柄等待结果或主动取消。Swift 采用协作式取消，<code>cancel()</code> 只发出请求，任务需通过取消检查或支持取消的异步操作响应，因此请求取消不等于任务已经结束。任务组通常按完成顺序提供结果，不保证与添加顺序一致。</p>
+</div>
+<h4>进一步理解</h4>
+<div class="understanding">
+<div class="explanation-item">
+<h5>同时请求两份数据，为什么适合 async let？</h5>
+<p>若页面固定需要用户资料和订单，可以启动两个 async let，再等待两份结果。它们是当前任务下的结构化子任务，作用域结束前必须收尾，不会悄悄遗留在外面继续运行。若请求数量由列表长度决定，就用 TaskGroup 在循环中添加任务。任务组通常按完成顺序提供结果；需要原始列表顺序时，要随结果带上索引并重排。</p>
+</div>
+<div class="explanation-item">
+<h5>为什么 cancel() 之后还需要 await？</h5>
+<p>cancel() 发出“请尽快结束”的请求，不会强行打断正在执行的每一行代码。任务要通过 checkCancellation()、isCancelled，或能响应取消的 API 发现请求，再退出。下面 Task.sleep 能响应取消，而 await handle.value 用于等到任务真正结束。若任务已经完成，再调用 cancel() 也不会撤回已经完成的结果。</p>
+</div>
+<div class="explanation-item">
+<h5>离开函数后，Task {} 为什么还可能继续运行？</h5>
+<p>Task {} 创建非结构化任务，它的生命周期不被创建它的作用域包住。创建者返回或被取消，不代表这个任务自动结束；需要保存任务句柄，按业务等待或请求取消。它通常会继承创建位置的 actor 隔离等上下文，但“继承上下文”不等于“建立结构化父子关系”。因此不能把所有 Task 都当成 async let 一样管理。</p>
+</div>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-swift">func fetch(_ id: Int) async throws -&gt; Int {
@@ -1023,19 +1354,36 @@ await cancellable.value // 等它实际退出；本例输出“收到取消，�
 <figure class="review-viz" aria-labelledby="viz-title-19">
 <div class="viz-heading"><span class="viz-kicker">第 19 题 · 看图复习</span><div class="viz-title" id="viz-title-19">先选任务关系，再看取消怎么生效</div><p>结构化任务在作用域内收尾；Task {} 的生命周期需自行管理。</p></div>
 <div class="viz-container"><div class="viz-container-title">结构化父子任务 · 退出相应作用域前必须等孩子结束</div><div class="viz-cards"><div class="viz-node "><span class="viz-label">async let · 数量固定</span><strong>父任务 → 子任务 a + 子任务 b → 等结果</strong></div><div class="viz-node "><span class="viz-label">TaskGroup · 数量动态</span><strong>父任务 → group.addTask(...) → 按完成顺序收集</strong></div></div><div class="viz-strip">父任务取消 → 取消请求传播给结构化子任务</div></div><div class="viz-lane"><div class="viz-lane-title">非结构化任务</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>let handle = Task { ... }</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>创建者退出 / 被取消</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>不会因此自动等待 / 取消它</strong></div></div></div><div class="viz-timeline"><div class="viz-step"><span class="viz-number">1</span><div><strong>handle.cancel()</strong><span>只发出取消请求；不等于立即停止</span></div></div><div class="viz-step"><span class="viz-number">2</span><div><strong>任务协作响应</strong><span>checkCancellation() / isCancelled / 响应取消的 API</span></div></div><div class="viz-step"><span class="viz-number">3</span><div><strong>await handle.value</strong><span>等待任务真正结束；已完成的结果不会被 cancel 撤回</span></div></div></div>
-<figcaption><strong>面试记忆点</strong>固定数量用 async let，动态数量用 TaskGroup；Task {} 要管理句柄和生命周期。</figcaption>
 <p class="viz-note">普通任务组正常退出会等待剩余任务，不会仅因退出就取消；未等待的 async let 退出作用域时会被取消并等待。</p>
 </figure>
 <p class="pitfall"><strong>别答错：</strong>任务组结果通常按完成顺序取得，若业务要求输入顺序，应返回索引后重排。</p>
+<details class="advanced-note">
+<summary>进阶补充：任务组退出规则与 detached</summary>
+<p>未显式等待的 async let 在退出作用域时会被取消并等待；普通任务组正常退出时会等待剩余任务，不会仅因退出而取消，可用 cancelAll() 主动请求取消。withThrowingTaskGroup 的 body 若以抛错退出，会取消并等待剩余任务；某个子任务抛错是否导致这一结果，取决于错误如何被取出和处理。Task {} 通常继承 actor 隔离、优先级及任务局部值；Task.detached 不继承该隔离和任务局部值，也不自动沿用当前优先级，两者都不保证新建线程。</p>
+</details>
 <p class="source-link">延伸核对：<a href="https://github.com/swiftlang/swift-evolution/blob/main/proposals/0304-structured-concurrency.md" target="_blank" rel="noopener noreferrer">Swift 官方文档 / 实现资料</a></p>
 </section>
 <section class="question" data-question="20">
 <h3 id="heading-20" data-id="heading-20">20. actor、@MainActor、Sendable 各自解决什么问题？</h3>
 <span class="level">重点理解</span>
-<h4>面试总结（核心回答＋追问展开）</h4>
+<h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>核心回答：</strong>actor 是一种引用类型，可以把自己的可变状态保护起来，不允许外部任意并发读写；这种访问边界叫“隔离”，访问其隔离状态的代码串行执行；@MainActor 把声明隔离到全局主 actor，常用于 UI 状态，在 Apple UI 应用的常规环境中其执行器与主线程关联；Sendable 是一个协议，表示类型的值可以安全地跨隔离域（例如从一个 actor 传到另一个 actor）传递或共享。它们分别解决状态访问隔离、主 actor 隔离和值的跨域安全，Sendable 本身不会给对象自动加锁。</p>
-<p><strong>追问展开：</strong>“原子事务”在这里指检查到修改之间不被别的任务插入；actor 并不保证整个异步方法具备这一性质。await 真正挂起时，别的任务可以进入同一 actor 执行，这称为“重入”，其他任务可能修改状态，恢复后必须重新验证依赖条件，例如余额检查。普通 actor 不绑定专用线程，也不保证严格先进先出。同一隔离内调用同步方法无需 await，跨隔离调用通常需要；@MainActor 不能一概理解为主动调用任何同步函数都会自动跳线程，也不会移走同步重计算。结构体、枚举的相关成员需满足 Sendable 条件；普通非隔离类通常需 final、存储属性不可变且 Sendable 才能通过检查，全局 actor 类等另有规则，actor 自动满足 Sendable。@unchecked Sendable 的意思是“我自行保证线程安全，请跳过通常的遵循检查”，是开发者承担同步正确性的承诺，不能用来随意关闭检查。</p>
+<p><strong><code>actor</code> 通过隔离规则限制外部访问，使自身的隔离代码串行执行，避免对这些状态发生数据竞争。</strong>异步方法在 <code>await</code> 真正挂起时，其他任务仍可能进入同一 actor，这种重入意味着恢复后应重新检查依赖状态，不能把整个方法当作不可分割的事务。<code>@MainActor</code> 将声明隔离到全局主 actor，在 iOS 中常用于约束 UI 状态的访问，但不会自动移走同步耗时计算。<code>Sendable</code> 表示类型的值可以安全地跨隔离域传递或共享，需要类型本身满足相应安全条件，并不会自动加锁。</p>
+</div>
+<h4>进一步理解</h4>
+<div class="understanding">
+<div class="explanation-item">
+<h5>actor 是怎样保护共享计数器的？</h5>
+<p>假设两个任务同时给普通变量加 1，可能都先读到 0，再各自写入 1，漏掉一次计数。下面 Counter 把 value 放在 actor 的隔离范围内，increment() 中没有 await，读、加、写这一段不会与其他任务对该 actor 的访问交错。外部调用要经过 actor 的访问规则，而不是直接随意读写 value。actor 管理的是访问顺序，不是为每个实例分配一条专用线程。</p>
+</div>
+<div class="explanation-item">
+<h5>既然 actor 会串行访问，为什么提款还要检查两次余额？</h5>
+<p>设余额是 100，两笔提款各要取 80。第一笔检查余额足够后，await 等待授权；如果此时真正挂起，第二笔就可能进入 actor，也通过第一次余额检查。等两笔恢复时，余额可能已经被另一笔修改。恢复后重新检查，并在检查到扣款之间不再 await，才能防止两笔都成功。允许挂起期间进入其他任务叫“重入”，所以整个异步方法不能自动当作一个不可打断的事务。</p>
+</div>
+<div class="explanation-item">
+<h5>@MainActor 与 Sendable 为什么不能互相替代？</h5>
+<p>ScreenModel 的 title 是 UI 状态，用 @MainActor 约束它在哪里访问和修改。Snapshot 则是传递给它的一份计数结果，Sendable 表达“这种值可以安全跨隔离域传递或共享”。前者管访问隔离，后者管跨域值的安全条件。Sendable 不会自动加锁；@MainActor 也不会把其中的同步重计算移走，不能当成解决卡顿的开关。</p>
+</div>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-swift">actor Counter {
@@ -1096,10 +1444,13 @@ print([withdrawals.0, withdrawals.1].filter { $0 }.count) // 1：余额只够一
 <figure class="review-viz" aria-labelledby="viz-title-20">
 <div class="viz-heading"><span class="viz-kicker">第 20 题 · 看图复习</span><div class="viz-title" id="viz-title-20">三个工具分工：保护状态、隔离 UI、安全传值</div><p>沿着本题 Counter → Snapshot → ScreenModel 的数据流看。</p></div>
 <div class="viz-timeline"><div class="viz-step"><span class="viz-number">1</span><div><strong>actor Counter · 保护自己的 value</strong><span>await counter.increment() → 隔离内 value += 1 → 返回 1；这段没有 await</span></div></div><div class="viz-step"><span class="viz-number">2</span><div><strong>Sendable Snapshot · 安全传递结果</strong><span>Snapshot(count: 1) → 不可变 Int 满足 Sendable 检查</span></div></div><div class="viz-step"><span class="viz-number">3</span><div><strong>@MainActor ScreenModel · 保护 UI 状态</strong><span>await model.apply(snapshot) → 主 actor 隔离内 title = &quot;1&quot;</span></div></div></div><div class="viz-strip viz-caution"><strong>重入追问：</strong>读状态 → await 实际挂起 → 其他任务可能修改状态 → 恢复后重新验证，再决定是否修改。</div>
-<figcaption><strong>面试记忆点</strong>actor 管自己的隔离状态；MainActor 管主 actor 状态；Sendable 管跨隔离传值安全。</figcaption>
 <p class="viz-note">actor 不绑定专用线程；Sendable 不自动加锁。跨 await 的整个方法不保证是原子事务。</p>
 </figure>
 <p class="pitfall"><strong>别答错：</strong>把“读余额 → await 授权 → 扣钱”写进 actor 也可能出逻辑错误，恢复后应重新验证余额或重新设计状态机。</p>
+<details class="advanced-note">
+<summary>进阶补充：Sendable 的检查与 actor 调用边界</summary>
+<p>结构体、枚举的相关成员需满足 Sendable 条件；普通非隔离类通常需要 final、存储属性不可变且 Sendable，全局 actor 类等另有规则，actor 自动满足 Sendable。@unchecked Sendable 是开发者自行承担同步正确性的承诺，不会生成保护代码。同一隔离内调用同步方法无需 await，跨隔离通常需要；普通 actor 不保证严格先进先出，@MainActor 同步函数也不能理解为从任意上下文调用都会自动跳线程。</p>
+</details>
 <p class="source-link">延伸核对：<a href="https://github.com/swiftlang/swift-evolution/blob/main/proposals/0461-async-function-isolation.md" target="_blank" rel="noopener noreferrer">异步隔离提案 SE-0461</a> · <a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/concurrency/" target="_blank" rel="noopener noreferrer">Swift 官方文档 / 实现资料</a></p>
 </section>
 <aside class="study-intro"><p><strong>复习方法：</strong>遮住答案，先用自己的话回答，再预测代码输出。基础题能说明“是什么、何时用、容易错在哪”即可；底层题先讲清关系，不必背地址偏移。</p><p>更新：2026-11-11。20 题图示均已改为可选中文字的流程、对比与时间线，窄屏自动纵向排列，断网也能阅读。运行时图为概念模型，不是跨平台固定内存布局。</p></aside>
