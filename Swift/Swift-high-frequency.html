@@ -130,11 +130,11 @@ html{scroll-behavior:smooth}
 <div class="study-intro">
 <p><strong>Swift-high-frequency</strong></p>
 <p>每题先直接回答问题，再说明代码在什么情况下执行、会修改什么、最终得到什么结果。必要术语会结合具体行为解释。</p>
-<p><strong>阅读方法 · 第一次学习：</strong>先看「代码示例」，再结合「进一步理解」和图示看懂原因，再回头用自己的话说出「回答总结」。先理解原因，再记住结论，不必一开始就背答案。</p>
+<p><strong>阅读方法 · 第一次学习：</strong>先看「代码示例」，再结合「进一步理解」看懂原因；有图示的题目可以配合图示阅读，再回头用自己的话说出「回答总结」。先理解原因，再记住结论，不必一开始就背答案。</p>
 <p><strong>阅读方法 · 面试复习：</strong>先遮住答案尝试口述，再对照开头的「回答总结」检查遗漏；遇到不理解或说不清的地方，回到「进一步理解」和例子中核对。</p>
 <p><strong>学习顺序：</strong>先学 1–10 与 14 题，建立语法、内存与数据处理基础；再学 11–13、16、18–20 题；15、17 题涉及运行时结构，可在第二轮学习。</p>
 <p>共 20 题，学习优先级按基础知识和业务常用程度安排。每题示例独立运行，同一题内的代码按顺序阅读；示例使用 Swift 6，Objective-C 互操作部分面向 Apple 平台。</p>
-<p>每题按「回答总结 → 代码示例 → 进一步理解 → 图示说明 → 易错提醒」排列；相关的特殊情况放在可折叠的「进阶补充」中。图示从左到右阅读，窄屏从上到下阅读；运行时图表示概念关系。</p>
+<p>每题按「回答总结 → 代码示例 → 进一步理解 → 易错提醒」排列；涉及对象关系、内存结构或执行顺序的 11 题另有「图示说明」，放在「进一步理解」之后。相关的特殊情况放在可折叠的「进阶补充」中。图示从左到右阅读，窄屏从上到下阅读；运行时图表示概念关系。</p>
 </div>
 <section class="question" data-question="1">
 <h3 id="heading-1" data-id="heading-1">1. struct、class、enum 有什么区别？什么时候用？</h3>
@@ -248,12 +248,6 @@ print(value is String) // true，只检查类型
 <p>value 声明为 Any，编译器不知道里面一定是字符串，不能直接调用字符串的方法。<code>value as? String</code> 先尝试把它当作 String，成功时返回包含字符串的 String?，失败时返回 nil。接着用 if let 取出字符串，就能安全访问 count。只想知道类型是不是 String，用 is 即可。</p>
 </div>
 </div>
-<h4>图示说明</h4>
-<figure class="review-viz" aria-labelledby="viz-title-2">
-<div class="viz-heading"><span class="viz-kicker">第 02 题 · 看图复习</span><div class="viz-title" id="viz-title-2">Optional：先判断有没有值，再决定下一步</div><p>nil 是没有值；空字符串 &quot;&quot; 仍然是有值。</p></div>
-<div class="viz-lane"><div class="viz-lane-title">有值分支</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>String? = .some(&quot;小明&quot;)</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>if let / guard let 取出里面的字符串</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>得到 String：小明</strong></div></div></div><div class="viz-lane"><div class="viz-lane-title">无值分支</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>nickname = nil</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>nickname ?? &quot;游客&quot;</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>得到：游客</strong></div></div></div><div class="viz-lane"><div class="viz-lane-title">可选链</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>nickname = nil</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>nickname?.count</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>直接得到 nil，不访问 count</strong></div></div></div><div class="viz-lane"><div class="viz-lane-title">安全转换</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>Any 中保存 &quot;Swift&quot;</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>as? String → if let</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>转换成功，text.count = 5</strong></div></div></div>
-<p class="viz-note">as? 转换失败返回 nil；! 遇到 nil、as! 转换失败会崩溃。</p>
-</figure>
 <p class="pitfall"><strong>别答错：</strong>guard let 取出的值可以在后面的代码中继续使用；if let 取出的值只在对应分支中使用。</p>
 <p class="source-link">延伸核对：<a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/optionalchaining/" target="_blank" rel="noopener noreferrer">Swift 官方文档 / 实现资料</a></p>
 </section>
@@ -321,12 +315,6 @@ print(temperature.celsius)   // 100.0</code></pre>
 <p>每个 Meter 都有自己的 value，但“米”这个单位可以由所有 Meter 共用，所以写成 static let unit，用 Meter.unit 读取。Car 可以使用从 Vehicle 继承的 static category()，却不能替换它的实现。Vehicle 把 name() 声明为 class func，Car 就能用 override 改成自己的实现。</p>
 </div>
 </div>
-<h4>图示说明</h4>
-<figure class="review-viz" aria-labelledby="viz-title-3">
-<div class="viz-heading"><span class="viz-kicker">第 03 题 · 看图复习</span><div class="viz-title" id="viz-title-3">属性分两步看：属于谁？访问时做什么？</div><p>先看用实例名还是类型名访问，再看属性是直接存数据、读取时计算，还是第一次访问时才创建。</p></div>
-<div class="viz-cards"><div class="viz-node "><span class="viz-label">实例 · 存储属性</span><strong>value = 3：保存当前值</strong></div><div class="viz-node "><span class="viz-label">实例 · 计算属性</span><strong>doubled：访问时计算 3 × 2 = 6</strong></div><div class="viz-node "><span class="viz-label">实例 · lazy var</span><strong>history：首次访问才初始化</strong></div><div class="viz-node "><span class="viz-label">类型 · static let</span><strong>Meter.unit：通过类型访问「米」</strong></div></div><div class="viz-lane"><div class="viz-lane-title">类型方法对比</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>Car 继承 Vehicle</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>class name 可重写；static category 不可重写</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>Car.name()：汽车；Car.category()：车辆</strong></div></div></div>
-<p class="viz-note">存储属性直接存数据；计算属性读取时运行 getter；lazy 等第一次访问时才创建并保存值。</p>
-</figure>
 <p class="pitfall"><strong>别答错：</strong>lazy 的值创建后就会保存下来，不会因为其他属性变化而自动重新计算。</p>
 <details class="advanced-note">
 <summary>进阶补充：lazy 与类型存储属性的线程安全</summary>
@@ -539,12 +527,6 @@ log(false, String(1 + 2)) // 不执行 text()，也就不计算 String(1 + 2)</c
 <p>普通写法需要传 <code>{ 表达式 }</code>，@autoclosure 允许调用方直接传表达式，编译器会补上这层闭包。上面代码中的 log 先检查 enabled，只有为 true 才调用 text() 计算日志内容。enabled 为 false 时，连表达式都不用计算。函数调用 text() 几次，表达式就计算几次。</p>
 </div>
 </div>
-<h4>图示说明</h4>
-<figure class="review-viz" aria-labelledby="viz-title-6">
-<div class="viz-heading"><span class="viz-kicker">第 06 题 · 看图复习</span><div class="viz-title" id="viz-title-6">闭包捕获：读的是同一个变量，还是当时的值？</div><p>时间顺序：count = 1 → 创建两个闭包 → count = 2 → 调用。</p></div>
-<div class="viz-lane"><div class="viz-lane-title">默认捕获</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>readLive = { count }</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>读取同一个可变局部变量</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>readLive() = 2</strong></div></div></div><div class="viz-lane"><div class="viz-lane-title">[count] · 保存创建时的值</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>readSnapshot = { [count] in count }</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>保存创建闭包时的 Int 值 1</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>readSnapshot() = 1</strong></div></div></div><div class="viz-cards"><div class="viz-node "><span class="viz-label">@escaping · 返回后仍可调用闭包</span><strong>允许保存 / 返回闭包，在函数返回后调用；不代表异步</strong></div><div class="viz-node "><span class="viz-label">@autoclosure · 何时算表达式</span><strong>编译器补成无参闭包；log(false, …) 不调用 text，就不计算表达式</strong></div></div>
-<p class="viz-note">捕获类对象时，保存的是指向对象的引用，不会另外创建一个对象。</p>
-</figure>
 <p class="pitfall"><strong>别答错：</strong>@escaping 允许闭包在函数返回后使用，不表示异步执行；@autoclosure 也不会自动切换到后台。</p>
 <details class="advanced-note">
 <summary>进阶补充：可选闭包参数</summary>
@@ -634,12 +616,6 @@ let single: Int? = text.flatMap { Int($0) } // nil：不在转换结果外面再
 <p>text 是 String?，里面有 "x"，两个方法都会尝试 Int("x")，转换失败得到 nil。map 还要给结果外面再包一层，所以得到 .some(nil)，类型是 Int??：原字符串存在，但数字转换失败。flatMap 直接返回转换得到的 nil，类型是 Int?。这里处理的是一个可选值，不是在合并数组。</p>
 </div>
 </div>
-<h4>图示说明</h4>
-<figure class="review-viz" aria-labelledby="viz-title-8">
-<div class="viz-heading"><span class="viz-kicker">第 08 题 · 看图复习</span><div class="viz-title" id="viz-title-8">把输入和输出摆在一起，三个方法就好分了</div><p>先看数组怎样逐个处理元素，再看 Optional 怎样处理一个可选值。</p></div>
-<div class="viz-lane"><div class="viz-lane-title">map · 每项保留一个结果</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>[&quot;1&quot;, &quot;x&quot;, &quot;3&quot;]</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>逐项 Int(...)，失败保留 nil</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>[.some(1), nil, .some(3)] · [Int?]</strong></div></div></div><div class="viz-lane"><div class="viz-lane-title">compactMap · 去掉 nil，取出成功值</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>[&quot;1&quot;, &quot;x&quot;, &quot;3&quot;]</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>逐项 Int(...)，去掉失败项</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>[1, 3] · 类型 [Int]</strong></div></div></div><div class="viz-lane"><div class="viz-lane-title">flatMap · 把多个子数组接成一个</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>[[1, 2], [3]]</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>取出各子数组并拼接</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>[1, 2, 3]</strong></div></div></div><div class="viz-cards"><div class="viz-node "><span class="viz-label">Optional.map · text = &quot;x&quot;</span><strong>Int(&quot;x&quot;) 得到 nil，再包一层 → some(nil)，Int??</strong></div><div class="viz-node "><span class="viz-label">Optional.flatMap · text = &quot;x&quot;</span><strong>直接返回 Int(&quot;x&quot;) 的结果 → nil，Int?</strong></div></div>
-<p class="viz-note">map 保留所有位置；compactMap 去掉 nil；数组的 flatMap 把转换结果里的元素接起来。</p>
-</figure>
 <p class="pitfall"><strong>别答错：</strong>数组的 flatMap 可以合并子数组，Optional.flatMap 避免多包一层可选值；去掉数组转换结果中的 nil 用 compactMap。</p>
 <p class="source-link">延伸核对：<a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes/" target="_blank" rel="noopener noreferrer">Swift 官方文档 / 实现资料</a></p>
 </section>
@@ -696,12 +672,6 @@ case .failure(let error):
 <p>写 try! 就是告诉 Swift：“这次调用一定不会抛错。”实际抛错时，Swift 直接让程序崩溃，不会把错误交给外层 catch。网络失败、用户输入错误都可能正常发生，应让调用方处理，不能用 try! 假定成功。程序崩溃时，也不能指望 defer 一定执行。</p>
 </div>
 </div>
-<h4>图示说明</h4>
-<figure class="review-viz" aria-labelledby="viz-title-9">
-<div class="viz-heading"><span class="viz-kicker">第 09 题 · 看图复习</span><div class="viz-title" id="viz-title-9">同一次抛错调用，不同写法走向不同</div><p>以 parse(&quot;x&quot;) 抛出 invalidNumber 为起点比较。</p></div>
-<div class="viz-lane"><div class="viz-lane-title">try + do-catch</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>parse(&quot;x&quot;) 抛错</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>catch 接住错误</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>打印「输入错误」及原因</strong></div></div></div><div class="viz-lane"><div class="viz-lane-title">try?</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>parse(&quot;x&quot;) 抛错</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>把失败转换成可选结果</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>nil；错误原因丢失</strong></div></div></div><div class="viz-lane"><div class="viz-lane-title">try!</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>parse(&quot;x&quot;) 抛错</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>调用方认为不会失败，但函数实际抛错</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>程序崩溃</strong></div></div></div><div class="viz-cards"><div class="viz-node "><span class="viz-label">Result · 把结果存成值</span><strong>success(成功值) 或 failure(错误)，稍后再处理</strong></div><div class="viz-node "><span class="viz-label">defer · 离开当前代码块时收尾</span><strong>先打印「先执行」→ 后写的 defer 打印「其次」→ 先写的 defer 打印「最后」</strong></div></div>
-<p class="viz-note">try 不会自己处理错误；执行到 defer 才会记下收尾代码，程序崩溃时不能保证执行。</p>
-</figure>
 <p class="pitfall"><strong>别答错：</strong>不要用 try! 处理网络失败、用户输入等正常业务失败。</p>
 <p class="source-link">延伸核对：<a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/errorhandling/" target="_blank" rel="noopener noreferrer">Swift 官方文档 / 实现资料</a></p>
 </section>
@@ -762,12 +732,6 @@ print(sameWithWhere(1, 1)) // true</code></pre>
 <p>Named 只规定 name，即使 User 还有 age，拿到 any Named 的代码也不能直接读 age，因为里面可能是 Book。要读 User 专有的属性，先用 as? User 尝试转换。some Named 同样只公开 Named 的接口，调用方不能因为知道函数内部用了 User，就直接访问 User 的其他成员。</p>
 </div>
 </div>
-<h4>图示说明</h4>
-<figure class="review-viz" aria-labelledby="viz-title-10">
-<div class="viz-heading"><span class="viz-kicker">第 10 题 · 看图复习</span><div class="viz-title" id="viz-title-10">四种类型写法：能存什么值，能调用什么方法？</div><p>用同一套 User / Book 示例横向比较。</p></div>
-<div class="viz-lane"><div class="viz-lane-title">泛型 T · 调用者决定</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>identity(3)</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>输入 T = Int，输出也是 T</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>返回 Int，可直接 + 1</strong></div></div></div><div class="viz-lane"><div class="viz-lane-title">返回 some Named · 函数决定具体类型</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>make() 内返回 User</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>make() 返回 User，调用方可使用 Named 的 name</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>可读 name；本例不能另一路返回 Book</strong></div></div></div><div class="viz-lane"><div class="viz-lane-title">any Named · 可以保存 User，也可以保存 Book</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>current 先装 User</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>之后可改装 Book</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>通过 Named 接口读取 name</strong></div></div></div><div class="viz-lane"><div class="viz-lane-title">Any · 可以保存不同类型，但要转换后使用具体成员</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>可保存 Int / User / Book 等</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>编译器不知道这个值是否遵循 Named</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>要使用 name，需先转换</strong></div></div></div>
-<p class="viz-note">这里的 some 指普通非泛型函数的返回位置；参数 some P 是泛型参数简写。</p>
-</figure>
 <p class="pitfall"><strong>别答错：</strong>返回位置的 some 由函数实现决定具体类型；参数位置的 some 由调用方决定具体类型。</p>
 <details class="advanced-note">
 <summary>进阶补充：any 与泛型约束</summary>
@@ -815,12 +779,6 @@ show(Robot(name: &quot;R1&quot;)) // 编号：R1</code></pre>
 <p>show 只知道参数遵循 Named。如果希望调用 greeting() 时执行各类型自己的版本，就要在 Named 的声明里写出这个方法。只把方法放在扩展里，编译器会按调用处已知的类型选择方法，不会再去实际类型里找同名版本。下一题用代码展示这个区别。</p>
 </div>
 </div>
-<h4>图示说明</h4>
-<figure class="review-viz" aria-labelledby="viz-title-11">
-<div class="viz-heading"><span class="viz-kicker">第 11 题 · 看图复习</span><div class="viz-title" id="viz-title-11">面向协议：显示逻辑只写一份，User 和 Robot 都能用</div><p>show&lt;T: Named&gt; 只要求 name 和 greeting()，不需要共同父类。</p></div>
-<div class="viz-lane"><div class="viz-lane-title">User 没写 greeting</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>show(User(name: &quot;小明&quot;))</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>使用 Named 扩展的默认实现</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>你好，小明</strong></div></div></div><div class="viz-lane"><div class="viz-lane-title">Robot 自己写了 greeting</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>show(Robot(name: &quot;R1&quot;))</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>执行 Robot 自己写的 greeting()</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>编号：R1</strong></div></div></div><div class="viz-cards"><div class="viz-node "><span class="viz-label">协议：声明要提供什么</span><strong>Named 要求 name 与 greeting()</strong></div><div class="viz-node "><span class="viz-label">扩展：提供大家可共用的代码</span><strong>默认 greeting() 可以用 name 拼问候语</strong></div></div>
-<p class="viz-note">希望通过协议调用各类型自己的方法，就要在协议里声明这个方法。</p>
-</figure>
 <p class="pitfall"><strong>别答错：</strong>只在协议扩展里写方法，不代表通过协议调用时就会选类型自己的同名版本；要这样调用，先把方法写进协议声明。</p>
 <p class="source-link">延伸核对：<a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/protocols/" target="_blank" rel="noopener noreferrer">Swift 官方文档 / 实现资料</a></p>
 </section>
@@ -944,12 +902,6 @@ print(NumberSource().load()) // 42
 <p>Objective-C 必须能识别协议里的属性和方法，才能让 Objective-C 代码调用它们。所以 @objc 协议只能使用它能表达的类型和方法形式，不能直接使用 associatedtype。iOS 中常让实现这类协议的类继承 NSObject，示例 Button 就是这种写法。</p>
 </div>
 </div>
-<h4>图示说明</h4>
-<figure class="review-viz" aria-labelledby="viz-title-13">
-<div class="viz-heading"><span class="viz-kicker">第 13 题 · 看图复习</span><div class="viz-title" id="viz-title-13">默认实现与 optional：一个有代码可用，一个可以没有方法</div><p>这两条调用路径最能说明原生 Swift 协议与 @objc 可选要求的区别。</p></div>
-<div class="viz-lane"><div class="viz-lane-title">Swift 原生协议</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>struct Dot: Drawable</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>没写 draw → 使用扩展默认实现</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>Dot().draw() 打印「默认绘制」</strong></div></div></div><div class="viz-lane"><div class="viz-lane-title">@objc optional 协议</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>Button: Clickable 未实现 click</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>button.click?() 先检查方法存在</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>方法不存在 → 跳过，无输出</strong></div></div></div><div class="viz-cards"><div class="viz-node "><span class="viz-label">Swift 原生协议</span><strong>class / struct / enum 可遵循；支持关联类型与扩展</strong></div><div class="viz-node "><span class="viz-label">@objc 协议</span><strong>只能由类遵循；参数和返回值要让 Objective-C 能识别，方法可以标 optional</strong></div></div>
-
-</figure>
 <p class="pitfall"><strong>别答错：</strong>没写自己的方法时，默认实现仍有代码可执行；optional 方法则可能不存在，调用前要检查。</p>
 <p class="source-link">延伸核对：<a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/protocols/" target="_blank" rel="noopener noreferrer">Swift 官方文档 / 实现资料</a></p>
 </section>
@@ -1013,12 +965,6 @@ for json in [#"{}"#, #"{"retries":null}"#, #"{"retries":"bad"}"#] {
 <p>编译器自动生成的代码会从 JSON 读取 retries，并要求它是 Int，不会把 var retries = 3 当作失败后的备用值。需要缺字段或 null 时使用 3，就自己写 init(from:)，用 decodeIfPresent 读取；它返回 nil 时再通过 ?? 3 补默认值。字段存在但类型错误时，仍会抛错。</p>
 </div>
 </div>
-<h4>图示说明</h4>
-<figure class="review-viz" aria-labelledby="viz-title-14">
-<div class="viz-heading"><span class="viz-kicker">第 14 题 · 看图复习</span><div class="viz-title" id="viz-title-14">JSON 到模型：先找对应字段，再按属性类型读取</div><p>CodingKeys 是字段名对照表；Codable = Encodable + Decodable。</p></div>
-<div class="viz-lane"><div class="viz-lane-title">JSON 字段与属性名的对应关系</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>JSON：display_name = &quot;小明&quot;</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>CodingKeys.name = &quot;display_name&quot;</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>User.name = &quot;小明&quot;</strong></div></div></div><div class="viz-lane"><div class="viz-lane-title">缺失的可选字段</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>JSON 中没有 nickname</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>自动生成的代码读取 String?，字段缺失时得到 nil</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>User.nickname = nil</strong></div></div></div><div class="viz-lane"><div class="viz-lane-title">错误类型</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>若 JSON 中 id = &quot;abc&quot;</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>模型要求 Int，解码失败</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>throw → 进入 catch</strong></div></div></div><div class="viz-strip">解码：JSON Data → JSONDecoder → User<br>编码：User → JSONEncoder → JSON Data</div>
-<p class="viz-note">var 属性需要从 JSON 读取时，写一个初值不等于缺字段就使用它；要补默认值，自己写 init(from:)。</p>
-</figure>
 <p class="pitfall"><strong>别答错：</strong>可选属性允许字段缺失或为 null，但字段类型不对时，解码仍会失败。</p>
 <details class="advanced-note">
 <summary>进阶补充：属性初值与类继承</summary>
