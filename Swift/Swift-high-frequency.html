@@ -141,10 +141,10 @@ html{scroll-behavior:smooth}
 <span class="level">基础优先</span>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>struct 和 enum：</strong>都是值类型。赋值后得到两份值，修改其中一份值的属性，不会改变另一份。</p>
-<p><strong>class：</strong>是引用类型。赋值后，两个变量可以指向同一个对象；通过其中一个变量修改对象属性，另一个变量也能读到新值。类还支持继承。</p>
-<p><strong>什么时候用：</strong>独立的数据模型通常优先用 struct；多处代码需要使用同一个对象、修改同一份数据，或需要继承时，用 class；加载中、成功、失败这类一次只会出现一种的状态，用 enum。</p>
-<p><strong>共同点：</strong>三者都能定义属性和方法，也都能遵循协议。</p>
+<p><strong>struct 和 enum：</strong>都是值类型。赋值或传参会得到独立的值，修改一份值本身，不会改变另一份值。</p>
+<p><strong>class：</strong>是引用类型。赋值或传参会复制对象引用，多个引用可以指向同一个对象；通过任意引用修改对象属性，其他引用也能访问修改后的属性。类还支持继承。</p>
+<p><strong>什么时候用：</strong>需要独立的数据值时，通常优先用 struct；需要共享同一个对象的状态、区分对象身份或使用继承时，用 class；需要表示有限种互斥状态，并按状态携带不同数据时，用 enum。</p>
+<p><strong>共同点：</strong>struct、class 和 enum 都能定义属性和方法，也都能遵循协议。</p>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-swift">struct Profile { var name: String }
@@ -214,11 +214,11 @@ print(HTTPStatus.ok.rawValue) // 200
 <span class="level">基础优先</span>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>Optional 是什么：</strong>它是一个枚举，表示这里可能有值，也可能没有值。String? 是 Optional&lt;String&gt; 的简写，可以保存字符串，也可以是 nil。</p>
-<p><strong>if let 和 guard let：</strong>if let 在有值时取出里面的值，只在分支中使用；guard let 在没有值时先退出，让后面的代码直接使用取出的值。</p>
-<p><strong>?? 和 ?.：</strong>?? 在没有值时返回默认值；?. 在有值时才访问属性或调用方法，没有值就跳过。</p>
-<p><strong>类型检查与转换：</strong>is 检查类型；as? 尝试转换，失败返回 nil；as 用于编译器能确定成立的转换。</p>
-<p><strong>强制操作的风险：</strong>! 强行取出 nil 中的值、as! 强制转换失败，都会使程序崩溃。</p>
+<p><strong>Optional 是什么：</strong>Optional 是表示“有值”或“无值”的枚举。有值时保存一个指定类型的值，无值时表示为 nil；类型名后的 ? 是可选类型的简写。</p>
+<p><strong>if let 和 guard let：</strong>if let 在可选值非 nil 时解包，解包后的绑定在成功分支内可用；guard let 在可选值为 nil 时要求退出当前作用域，解包后的绑定在 guard 后的当前作用域内可用。</p>
+<p><strong>?? 和 ?.：</strong>?? 在可选值为 nil 时求取并返回默认值，否则返回解包后的值；?. 通过可选链访问属性或调用方法，遇到 nil 时停止后续访问，并返回 nil。</p>
+<p><strong>类型检查与转换：</strong>is 检查值是否属于指定类型；as? 尝试类型转换，失败返回 nil；as 用于编译器能确定成立的转换。</p>
+<p><strong>强制操作的风险：</strong>对 nil 使用 ! 强制解包，或使用 as! 进行类型转换但转换失败，都会使程序崩溃。</p>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-swift">let nickname: String? = nil
@@ -263,11 +263,11 @@ print(value is String) // true，只检查类型
 <span class="level">基础优先</span>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>存储属性与计算属性：</strong>存储属性直接保存数据；计算属性读取时执行 getter，再返回结果，也可以通过 setter 处理赋值。</p>
-<p><strong>lazy var：</strong>第一次访问时才创建并保存属性值，以后直接使用保存的值，不会因为其他属性变化而自动重新计算。</p>
-<p><strong>willSet 和 didSet：</strong>willSet 在新值写入前执行，didSet 在写入后执行，用来观察属性的赋值。</p>
-<p><strong>static：</strong>声明通过类型名访问的属性或方法，例如 Meter.unit，不需要先创建实例。在类中，子类可以继承，但不能重写。</p>
-<p><strong>class：</strong>声明通过类名访问的方法或计算属性，并允许子类重写；不能用它声明存储属性。</p>
+<p><strong>存储属性与计算属性：</strong>存储属性直接保存数据；计算属性不直接保存属性值，读取时执行 getter 返回结果，也可以定义 setter 处理赋值。</p>
+<p><strong>lazy var：</strong>延迟存储属性在第一次访问时才计算并保存初始值，后续访问使用已保存的值。其他属性变化不会让延迟存储属性自动重新计算。</p>
+<p><strong>willSet 和 didSet：</strong>willSet 在属性新值写入前执行，didSet 在新值写入后执行，用于观察属性赋值。</p>
+<p><strong>static：</strong>声明属于类型的属性或方法，通过类型名访问，无须创建实例。类中的 static 成员可以被子类继承，但不能被子类重写。</p>
+<p><strong>class：</strong>声明属于类的方法或计算属性，并允许子类重写；class 不能用于声明存储属性。</p>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-swift">struct Meter {
@@ -338,10 +338,10 @@ print(temperature.celsius)   // 100.0</code></pre>
 <span class="level">基础优先</span>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>指定初始化器：</strong>负责给实例属性设置初值。子类先设置自己新增的属性，再调用 super.init，让父类设置父类负责的属性。</p>
-<p><strong>便利初始化器：</strong>用 convenience init 声明，先调用本类的其他初始化器，复用已有的创建过程，最终调用到指定初始化器。</p>
-<p><strong>其他常见形式：</strong>init? 创建失败时返回 nil；抛错初始化器可以说明失败原因；required init 要求子类也支持同样的初始化方式，可以继承或自行实现。</p>
-<p><strong>两阶段初始化：</strong>第一阶段先把自己和父类负责的存储属性都准备好；第二阶段再执行其他设置、读取属性或调用实例方法。第一阶段完成前，不能读取实例属性、调用实例方法或把 self 传给其他代码。</p>
+<p><strong>指定初始化器：</strong>负责初始化所属类引入的存储属性。子类的指定初始化器先完成新增存储属性的初始化，再调用父类的指定初始化器，完成继承部分的初始化。</p>
+<p><strong>便利初始化器：</strong>使用 convenience init 声明，通过调用同一个类的其他初始化器复用初始化流程，调用链最终必须到达指定初始化器。</p>
+<p><strong>其他常见形式：</strong>init? 是可失败初始化器，创建失败时返回 nil；抛错初始化器通过抛出错误说明失败原因；required 初始化器要求子类保留相应的初始化能力，子类可以继承或自行实现。</p>
+<p><strong>两阶段初始化：</strong>第一阶段沿继承链完成全部存储属性的初始化；第二阶段再进行额外设置。第一阶段完成前，不能读取实例属性、调用实例方法或将 self 作为值传给其他代码。</p>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-swift">class Vehicle {
@@ -425,10 +425,10 @@ print(phone.name, phone.storage) // 手机 128</code></pre>
 <span class="level">基础优先</span>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>ARC 怎么工作：</strong>编译器自动插入 retain、release 等操作，程序运行时用它们增加或减少强引用计数。强引用让对象继续存在；计数变成 0 时，运行时执行 deinit 并清理对象。</p>
-<p><strong>weak：</strong>不增加强引用计数，也不阻止对象释放。对象释放后，weak 引用自动变成 nil，适合页面可能先释放、回调稍后才执行的情况。</p>
-<p><strong>unowned：</strong>同样不阻止对象释放，但不会自动变成 nil。只有每次访问时都能保证对象还存在，才适合使用；对象已释放后再访问会崩溃。</p>
-<p><strong>循环引用怎么处理：</strong>对象之间互相强引用，或对象与它保存的闭包互相强引用，都可能让计数一直无法归零。需要根据对象关系，把其中一方改为 weak、unowned，或在合适时机主动清空引用；ARC 不会自动拆开这个循环。</p>
+<p><strong>ARC 怎么工作：</strong>ARC 管理类实例的生命周期。编译器自动插入 retain、release 等操作，在运行时增加或减少强引用计数；强引用保持对象存活，最后一个强引用释放后，对象执行 deinit 并被清理。</p>
+<p><strong>weak：</strong>弱引用不增加强引用计数，也不阻止对象释放。对象释放后，弱引用自动变成 nil，适合引用目标可能先于引用持有者释放的关系。</p>
+<p><strong>unowned：</strong>无主引用不增加强引用计数，也不阻止对象释放，但不会在对象释放后自动变成 nil。只有能保证每次访问时目标对象仍然存活，才适合使用；访问已释放对象会崩溃。</p>
+<p><strong>循环引用怎么处理：</strong>多个对象形成闭合的强引用链，或对象强持有的闭包又强捕获对象，都可能使强引用计数无法归零。应根据生命周期关系，将强引用链中的适当引用改为 weak 或 unowned，或在不再需要时主动清空强引用；ARC 不会自动解除强引用循环。</p>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-swift">final class Page {
@@ -506,10 +506,10 @@ showCardOwner()</code></pre>
 <span class="level">基础优先</span>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>闭包怎样捕获变量：</strong>闭包可以使用定义它的函数里的变量，这叫“捕获”。默认捕获可变局部变量时，外部修改变量后，闭包会读到新值；写 [value] 则保存创建闭包时的值。</p>
-<p><strong>捕获类对象：</strong>闭包默认会强引用捕获的对象。需要避免阻止对象释放或形成循环引用时，可以根据对象的存活情况使用 [weak self] 或 [unowned self]。</p>
-<p><strong>@escaping：</strong>普通闭包参数默认只能在函数返回前使用；@escaping 允许函数把闭包保存或返回，留到函数返回后执行。它不会自动让闭包异步执行。</p>
-<p><strong>@autoclosure：</strong>让调用方直接传表达式，由编译器把它变成无参闭包。函数执行这个闭包时，才计算表达式，适合按条件决定是否计算。</p>
+<p><strong>闭包怎样捕获变量：</strong>闭包可以访问定义位置外围作用域中的变量，称为捕获。默认捕获可变局部变量时，闭包与外围代码共享变量的存储，双方都能读到变量的后续修改；通过捕获列表按值捕获时，保存闭包创建时的变量值。</p>
+<p><strong>捕获类对象：</strong>闭包默认强引用捕获的类实例。需要避免延长目标对象的生命周期或形成强引用循环时，可以在捕获列表中使用 weak 或 unowned；选择方式取决于闭包执行时能否保证目标对象仍然存活。</p>
+<p><strong>@escaping：</strong>闭包参数默认是非逃逸的，只能在被调用函数返回前执行；@escaping 允许闭包在被调用函数返回后执行，因而可以被保存或返回。@escaping 本身不会使闭包异步执行。</p>
+<p><strong>@autoclosure：</strong>允许调用方传入表达式，由编译器自动包装成无参数闭包。表达式推迟到闭包被调用时才求值，便于按条件决定是否执行求值。</p>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-swift">func demoCapture() {
@@ -559,10 +559,10 @@ log(false, String(1 + 2)) // 不执行 text()，也就不计算 String(1 + 2)</c
 <span class="level">基础优先</span>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>为什么赋值不一定很贵：</strong>Array 是值类型，但把数组赋值给另一个变量时，Swift 可以先不复制全部元素，让两份数组暂时使用同一块存放元素的内存。</p>
-<p><strong>COW 是什么：</strong>COW 就是“写时复制”。修改其中一份数组时，如果另一份还在使用这块内存，Swift 会先把元素复制到新的内存，再修改当前数组，因此另一份不受影响。</p>
-<p><strong>什么时候可以省去复制：</strong>如果只有当前数组在使用这块内存，通常就能直接修改，不必先复制元素。</p>
-<p><strong>使用时注意：</strong>元素如果是类引用，复制数组不会另外创建这些对象，两份数组仍可能使用同一个对象。COW 也不会替多个任务安排读写顺序，并发读写同一个数组变量仍要保护。</p>
+<p><strong>为什么赋值不一定很贵：</strong>Array 是值类型，但数组赋值不一定立即复制全部元素。多个数组值可以暂时共享存放元素的底层缓冲区，同时保持值语义。</p>
+<p><strong>COW 是什么：</strong>COW 是“写时复制”。修改数组时，如果底层缓冲区仍被其他数组值共享，就先复制缓冲区中的元素，再修改当前数组，避免改变其他数组值。</p>
+<p><strong>什么时候可以省去复制：</strong>当前数组独占底层缓冲区，且缓冲区容量满足修改需要时，通常可以直接修改元素，无须先复制全部元素。</p>
+<p><strong>使用时注意：</strong>数组元素如果是类引用，复制元素只会复制引用，不会另外创建引用指向的对象；不同数组中的元素仍可能指向同一个对象。COW 不负责并发同步，并发读写同一个数组变量仍需同步保护。</p>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-swift">let a = [1, 2, 3]
@@ -609,10 +609,10 @@ print(first[0].name) // 新：复制数组时，没有另外创建 Item</code></
 <span class="level">基础优先</span>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>map：</strong>对数组的每个元素执行转换，保留所有结果。把字符串转成整数时，转换失败的位置会保留 nil，结果类型是 [Int?]。</p>
-<p><strong>compactMap：</strong>逐个转换后去掉 nil，并取出成功的值。同样是把字符串转成整数，它只保留成功的整数，结果类型是 [Int]。</p>
-<p><strong>flatMap：</strong>把每个元素转换得到的数组或序列接成一个，例如把 [[1, 2], [3]] 变成 [1, 2, 3]。</p>
-<p><strong>Optional 上的同名方法：</strong>有值时才执行转换。如果转换结果本身就是可选值，Optional.map 会在外面再包一层 Optional，Optional.flatMap 则直接使用转换结果，不会再多包一层。</p>
+<p><strong>map：</strong>对序列的每个元素执行转换，并保留每次转换的结果，结果数量与输入元素数量相同。转换返回可选值时，结果中的 nil 也会被保留。</p>
+<p><strong>compactMap：</strong>对序列的每个元素执行返回可选值的转换，丢弃 nil，并将非 nil 的结果解包后组成数组。</p>
+<p><strong>flatMap：</strong>对序列的每个元素执行返回序列的转换，再按顺序拼接转换得到的序列，将嵌套结果展开一层。</p>
+<p><strong>Optional 上的同名方法：</strong>Optional.map 和 Optional.flatMap 都只在可选值非 nil 时执行转换。Optional.map 将转换结果包装为可选值；Optional.flatMap 要求转换本身返回可选值，并直接使用转换结果，避免增加一层 Optional。</p>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-swift">let input = [&quot;1&quot;, &quot;x&quot;, &quot;3&quot;]
@@ -650,11 +650,11 @@ let single: Int? = text.flatMap { Int($0) } // nil：不在转换结果外面再
 <span class="level">基础优先</span>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>throws、throw 和 try：</strong>throws 声明函数可能抛错，throw 抛出具体错误，调用方用 try 调用，再用 do-catch 处理。调用方自己也是 throws 函数时，也可以把错误继续交给上层。</p>
-<p><strong>try?：</strong>失败时返回 nil，不保留错误原因，适合只关心是否成功的情况。</p>
-<p><strong>try!：</strong>表示确信这次调用不会抛错，实际抛错时程序会崩溃。</p>
-<p><strong>Result：</strong>用 success 或 failure 保存成功值或错误，方便返回、传给回调或稍后通过 switch 处理。</p>
-<p><strong>defer：</strong>执行到这里时记下收尾代码，离开它所在的代码块时再执行。同一代码块里的多个 defer，后写的先执行。</p>
+<p><strong>throws、throw 和 try：</strong>throws 声明函数可能抛出错误，throw 抛出具体错误值，try 标记可能抛错的调用。调用方可以用 do-catch 处理错误，也可以通过自身的 throws 声明将错误继续向上传递。</p>
+<p><strong>try?：</strong>将抛错调用的结果转换为可选值，调用抛错时返回 nil，不保留错误原因。适合只关心能否取得结果、无须区分错误原因的情况。</p>
+<p><strong>try!：</strong>断言调用不会抛出错误；如果调用实际抛错，程序会崩溃。</p>
+<p><strong>Result：</strong>使用 success 和 failure 分别保存成功值与错误值，便于返回、传递或保存操作结果，并在需要时分别处理成功和失败。</p>
+<p><strong>defer：</strong>执行流程到达 defer 声明时，登记延迟执行的代码，在退出所属作用域时执行。正常结束、return 或抛错离开作用域都会执行已登记的 defer；同一作用域中，后登记的 defer 先执行。</p>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-swift">enum InputError: Error { case invalidNumber }
@@ -710,11 +710,11 @@ case .failure(let error):
 <span class="level">基础优先</span>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>泛型：</strong>让一份函数代码接收不同类型，同时写清哪些参数和返回值必须是同一种类型。例如 identity&lt;T&gt;(_: T) -&gt; T 接收 Int 就返回 Int，调用方不用再转换。</p>
-<p><strong>Any：</strong>能保存任意类型的值，但使用具体类型的属性或方法前，通常要先转换。</p>
-<p><strong>返回 some P：</strong>函数自己决定返回哪个具体类型，对外只公开 P 的接口。同一个普通函数的不同返回分支必须返回同一种具体类型。</p>
-<p><strong>参数 some P：</strong>是泛型参数的简写，可以接收任意遵循 P 的具体类型，由调用方决定传入哪一种。</p>
-<p><strong>any P：</strong>可以在同一变量中保存不同的协议遵循者，调用方通过 P 声明的属性和方法使用它们。</p>
+<p><strong>泛型：</strong>通过类型参数复用函数或类型定义，同时表达参数、返回值之间的类型关系，并用约束限定允许的操作。编译器保留具体类型信息，在编译时检查类型是否匹配。</p>
+<p><strong>Any：</strong>可以保存任意类型的值，但不统一声明具体类型的属性和方法。访问具体类型的成员前，通常需要进行类型转换。</p>
+<p><strong>返回位置的 some：</strong>表示不透明返回类型：函数实现决定具体类型，对外只公开声明的协议约束，同时保留底层类型的一致性。同一个普通函数的不同返回分支必须返回同一种具体类型。</p>
+<p><strong>参数位置的 some：</strong>是泛型参数的简写。调用方决定传入的具体类型，传入类型必须满足声明的协议约束。</p>
+<p><strong>any：</strong>表示协议的存在类型，允许同一变量在不同时间保存遵循指定协议的不同具体类型的值。调用方通过协议声明的要求使用所保存的值，不能直接依赖具体类型特有的成员。</p>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-swift">func identity&lt;T&gt;(_ value: T) -&gt; T { value }
@@ -778,10 +778,10 @@ print(sameWithWhere(1, 1)) // true</code></pre>
 <span class="level">重点理解</span>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>面向协议编程是什么：</strong>先用协议规定代码需要哪些属性和方法，再让不同类型提供这些内容。调用方通过协议使用它们，不必专门针对某个类编写代码。</p>
-<p><strong>Swift 提供了哪些支持：</strong>类、结构体和枚举都能遵循协议；协议扩展可以提供一份大家共用的实现；泛型函数或协议类型参数可以接收不同的遵循者。</p>
-<p><strong>怎样让各类型执行自己的方法：</strong>把方法写进协议声明，再由各类型自己实现，或使用扩展提供的默认实现。</p>
-<p><strong>有什么好处：</strong>共用调用代码，减少重复，也方便把真实实现换成测试实现。</p>
+<p><strong>面向协议编程是什么：</strong>先用协议声明调用方需要的属性和方法，再让具体类型遵循协议：属性必须符合协议规定的名称、类型和读写要求，方法必须符合协议规定的名称、参数和返回值要求，并具有可执行的实现。调用方依据协议访问属性、调用方法，同一份调用代码就能处理遵循同一协议的不同类型。</p>
+<p><strong>Swift 提供了哪些支持：</strong>类、结构体和枚举都能遵循协议；协议扩展可以为协议声明的属性和方法提供默认实现；带协议约束的泛型参数或协议类型参数，可以接收遵循相应协议的值。</p>
+<p><strong>怎样确定执行哪个方法实现：</strong>先把方法声明为协议要求。遵循协议的类型可以自行实现方法，也可以使用协议扩展提供的默认实现；通过协议要求调用方法时，会使用具体类型的协议遵循关系所确定的方法实现。</p>
+<p><strong>有什么好处：</strong>调用方可以用同一份代码处理遵循同一协议的不同类型；协议扩展可以复用默认实现，减少重复代码；测试时可以传入遵循同一协议的测试实现，替代真实实现。</p>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-swift">protocol Named {
@@ -805,7 +805,7 @@ show(Robot(name: &quot;R1&quot;)) // 编号：R1</code></pre>
 <div class="understanding">
 <div class="explanation-item">
 <h5>面向协议编程，能减少哪一种重复？</h5>
-<p>show 需要显示问候语，可以接收遵循 Named 的值，而不只接收 User。Named 规定有 name 和 greeting()，User、Robot 都提供这些内容，就都能传给 show。显示逻辑只写一份，也不用让 User 和 Robot 为此继承同一个父类。</p>
+<p>show 需要显示问候语，可以接收遵循 Named 的值，而不只接收 User。User、Robot 都有可读取的 name 属性，也都有可调用的 greeting() 方法（User 使用默认实现，Robot 自己实现），因此都满足 Named 的要求，都能传给 show。显示逻辑只写一份，也不用让 User 和 Robot 为此继承同一个父类。</p>
 </div>
 <div class="explanation-item">
 <h5>协议扩展的默认实现怎样复用？</h5>
@@ -824,9 +824,9 @@ show(Robot(name: &quot;R1&quot;)) // 编号：R1</code></pre>
 <span class="level">重点理解</span>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>方法写在协议声明中：</strong>编译器会记录具体类型用哪份代码实现这个方法。以后通过协议变量或泛型参数调用，也能按记录找到实现，本例的 hello() 因此会调用 Person 自己的版本。</p>
-<p><strong>方法只写在协议扩展中：</strong>编译器按调用处已知的类型选择方法，不会在运行时再找实际类型中的同名版本。所以 Person.bye() 执行自己的代码，any Greeter 和 T: Greeter 上的 bye() 执行扩展代码。</p>
-<p><strong>应该怎么写：</strong>希望通过协议调用各类型自己的版本，就把方法加入协议声明；扩展仍然可以提供默认实现。</p>
+<p><strong>方法写在协议声明中：</strong>方法属于协议要求，编译器在建立具体类型的协议遵循关系时，记录满足方法要求的实现。通过协议类型的值或带协议约束的泛型参数调用方法时，会使用协议遵循关系所确定的实现。</p>
+<p><strong>方法只写在协议扩展中：</strong>方法属于扩展提供的附加功能，编译器根据调用处已知的静态类型选择实现。调用处只知道协议约束时，使用适用的协议扩展实现，不会在运行时改选实际类型中的同名方法。</p>
+<p><strong>应该怎么写：</strong>需要通过协议要求调用具体类型的方法实现时，应将方法加入协议声明；协议扩展仍可提供默认实现，供未自行实现方法的遵循类型使用。</p>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-swift">protocol Greeter { func hello() -&gt; String }
@@ -898,9 +898,9 @@ print(polymorphic.hello()) // 重写 hello：通过协议也能调用到子类 o
 <h4>回答总结</h4>
 <div class="summary-answer">
 <p><strong>哪些类型能遵循：</strong>Swift 原生协议可以由类、结构体和枚举遵循；Objective-C 协议只能由类遵循。</p>
-<p><strong>Swift 原生协议的能力：</strong>可以用关联类型让各类型决定方法使用的数据类型，也可以用泛型提出要求、用协议扩展提供共用代码。</p>
-<p><strong>@objc 协议的限制：</strong>写 @objc protocol 可以把协议提供给 Objective-C 使用，但参数和返回值必须是 Objective-C 能识别的类型，不能声明 associatedtype。</p>
-<p><strong>默认实现和 optional 的区别：</strong>Swift 扩展的默认实现是“自己没写就用这份代码”；@objc optional 是“这个方法可以完全没有”。后者在调用前要检查方法是否存在。</p>
+<p><strong>Swift 原生协议的能力：</strong>可以通过关联类型声明由遵循类型确定的数据类型，通过泛型约束表达类型之间的要求，并通过协议扩展提供默认实现和附加功能。</p>
+<p><strong>@objc 协议的限制：</strong>使用 @objc 声明的协议可以供 Objective-C 使用，但协议成员必须能用 Objective-C 表示，属性类型、方法参数和返回值都受互操作规则限制；@objc 协议不能声明 associatedtype。</p>
+<p><strong>默认实现和 optional 的区别：</strong>Swift 协议要求仍需被满足，遵循类型未自行实现时可以采用适用的默认实现；@objc optional 则允许遵循类完全不实现可选要求，调用可选方法时需要检查方法是否存在。</p>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-swift">import Foundation
@@ -952,11 +952,11 @@ print(NumberSource().load()) // 42
 <span class="level">基础优先</span>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>JSON 怎么转成模型：</strong>模型遵循 Decodable 后，调用 JSONDecoder.decode，解码器按模型的属性类型读取 JSON Data 并创建模型。Codable 同时包含 Decodable 和 Encodable，后者让模型也能通过 JSONEncoder 转成 JSON Data。</p>
-<p><strong>自动生成代码的条件：</strong>模型的属性类型等条件满足协议要求时，编译器可以生成常规编解码代码，不必逐个字段手写。</p>
-<p><strong>CodingKeys 的作用：</strong>指定要处理哪些属性，以及它们对应的 JSON 字段名，用来解决属性名和接口字段名不同的问题。</p>
-<p><strong>缺字段、null 和类型错误：</strong>自动解码时，可选属性在字段缺失或为 null 时得到 nil；非可选属性缺失会失败，字段类型不匹配也会失败。</p>
-<p><strong>属性默认值的常见误区：</strong>给参与自动解码的 var 写初值，不会让缺字段时自动使用这个初值。要补默认值，需要自己实现 init(from:)。</p>
+<p><strong>JSON 怎么转成模型：</strong>模型遵循 Decodable 后，可以使用 JSONDecoder 将 JSON 数据解码为模型值。Codable 是 Decodable 与 Encodable 的组合，遵循 Codable 的模型也能使用 JSONEncoder 编码为 JSON 数据。</p>
+<p><strong>自动生成代码的条件：</strong>自动合成 Decodable 通常要求参与解码的存储属性类型都遵循 Decodable；自动合成 Encodable 通常要求参与编码的存储属性类型都遵循 Encodable。满足对应的合成规则后，编译器生成编解码实现，无须逐个属性手写。</p>
+<p><strong>CodingKeys 的作用：</strong>指定参与编解码的属性及其对应的外部字段名，用于控制字段选择和属性名与 JSON 字段名之间的映射。</p>
+<p><strong>缺字段、null 和类型错误：</strong>自动合成的解码实现会将字段缺失或值为 null 的可选属性设为 nil；必需的非可选属性对应的字段缺失或为 null 时解码失败。字段值与目标属性类型不匹配也会导致解码失败。</p>
+<p><strong>属性默认值的常见误区：</strong>为参与自动解码的 var 存储属性设置初始值，不会让解码器在字段缺失时自动采用属性初始值。需要按字段补默认值时，应自行实现解码初始化器 init(from:)。</p>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-swift">import Foundation
@@ -1023,10 +1023,10 @@ for json in [#"{}"#, #"{"retries":null}"#, #"{"retries":"bad"}"#] {
 <span class="level">进阶选学</span>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>实例对象：</strong>保存这个对象自己的属性，以及 Swift 管理对象所需的信息。对象开头的管理信息称为“对象头”，通常包含类型信息和引用计数管理信息。</p>
-<p><strong>类元数据：</strong>描述这个类的实例大小、属性位置、继承关系和部分方法地址。同一个类的实例共用这些信息，不需要每个实例都复制一份方法代码。</p>
-<p><strong>Objective-C 元类：</strong>Apple 平台的 Objective-C 把类也当成对象，类对象通过 isa 找到元类，元类保存 Objective-C 类方法的信息。</p>
-<p><strong>Swift 元类型：</strong>Person.self 是表示 Person 类型的值，Person.Type 是能保存这种类型值的变量类型。它用于在 Swift 代码中保存或传递类型，与 Objective-C 元类是两个概念。</p>
+<p><strong>实例对象：</strong>类实例保存实例自身的存储属性，以及运行时管理对象所需的信息。对象开头的管理区域称为对象头，通常包含类型信息和引用计数管理信息。</p>
+<p><strong>类元数据：</strong>描述类的实例大小、存储属性偏移、继承关系和方法表等信息。同一个类的实例共享类元数据，无须在每个实例中分别保存方法代码。</p>
+<p><strong>Objective-C 元类：</strong>在 Apple 平台的 Objective-C 运行时中，类本身也是对象。类对象通过 isa 关联到元类，元类记录 Objective-C 类方法的信息。</p>
+<p><strong>Swift 元类型：</strong>元类型是“类型本身作为值”时对应的类型，用于在 Swift 代码中保存或传递类型。类型名后的 .self 用于取得类型值，.Type 用于表示具体类型的元类型；Swift 元类型与 Objective-C 元类属于不同概念。</p>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-swift">import Foundation
@@ -1079,12 +1079,12 @@ print(Person.species()) // Human</code></pre>
 <span class="level">重点理解</span>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>方法派发是什么：</strong>确定一次方法调用最终执行哪一份代码。</p>
-<p><strong>静态派发：</strong>编译器已经知道要执行哪个实现，直接调用，不需要运行时再查找。</p>
-<p><strong>虚表派发：</strong>类保存一张方法地址表。程序根据对象的实际类型，从表里找到对应的方法，包括子类重写后的实现。</p>
-<p><strong>协议见证表派发：</strong>编译器记录“这个类型怎样实现协议里的方法”，通过协议调用时，根据这份记录找到代码。</p>
-<p><strong>Objective-C 消息派发：</strong>运行时拿到接收对象和方法标识 selector，再查找方法代码的地址 IMP。@objc 让 Objective-C 能调用成员；本例的 @objc dynamic 要求 Swift 调用时也交给 Objective-C 运行时查找。</p>
-<p><strong>判断时注意：</strong>不能只看 struct 或 class 就决定派发方式。编译器如果能确定最终实现，还可能省掉部分查表过程，优化成直接调用。</p>
+<p><strong>方法派发是什么：</strong>确定一次方法调用最终执行的方法实现。</p>
+<p><strong>静态派发：</strong>编译器在编译时确定最终实现，生成直接调用，无须在运行时查表或搜索方法。</p>
+<p><strong>虚表派发：</strong>类的方法表保存支持动态派发的方法入口。程序根据对象的实际类型和方法表找到实现，从而支持调用子类重写后的方法。</p>
+<p><strong>协议见证表派发：</strong>具体类型的协议遵循关系通过见证表关联协议要求与对应实现。通过协议要求调用方法时，可以根据见证表找到满足要求的方法实现。</p>
+<p><strong>Objective-C 消息派发：</strong>Objective-C 运行时根据消息接收对象和方法标识 selector 查找实现地址 IMP。@objc 使成员可通过 Objective-C 访问；@objc dynamic 要求 Swift 调用该成员时也使用 Objective-C 动态派发。</p>
+<p><strong>判断时注意：</strong>方法派发方式取决于声明方式、调用处的类型信息和编译器优化，不能仅凭所属类型是 struct 或 class 判断。编译器能确定最终实现时，可以将间接调用优化为直接调用。</p>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-swift">import Foundation
@@ -1139,11 +1139,11 @@ Demo().run() // Running：交给 Objective-C 运行时查找 run() 再执行</co
 <span class="level">进阶选学</span>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>协议描述符：</strong>记录协议本身规定了哪些要求。</p>
-<p><strong>协议见证表：</strong>记录某个具体类型用哪些方法满足协议要求，让程序知道调用哪份实现。</p>
-<p><strong>类型元数据和值见证表：</strong>类型元数据记录具体类型的信息，并能找到值见证表；值见证表提供复制、销毁这类值所需的操作。</p>
-<p><strong>存在容器：</strong>普通 Swift 的 any P 值会用一块这样的内存，保存实际值，以及类型元数据和协议见证表等信息。程序因此既能调用方法，也能正确复制和清理里面的值。</p>
-<p><strong>值放在哪里：</strong>本例的容器有一小块直接存值的空间。能放进去时直接保存，放不下时另找内存存值，再在容器中记下地址。泛型调用也能使用类型信息和见证表，不一定要先创建 any 容器。</p>
+<p><strong>协议描述符：</strong>记录协议的声明信息，包括继承的协议和成员要求。</p>
+<p><strong>协议见证表：</strong>描述具体类型如何满足某个协议的要求，关联协议方法要求与具体实现，供运行时执行协议调用。</p>
+<p><strong>类型元数据和值见证表：</strong>类型元数据描述具体类型，并提供访问值见证表的途径；值见证表记录值的大小、对齐要求，以及复制、销毁等操作。</p>
+<p><strong>存在容器：</strong>协议存在类型需要隐藏底层具体类型，同时保留保存值、调用协议方法和管理值生命周期所需的信息。对于不受类约束的普通 Swift 协议，常见的存在容器包含值缓冲区、类型元数据指针和协议见证表指针。</p>
+<p><strong>值放在哪里：</strong>值的大小和对齐满足内联存储条件时，可以直接存入存在容器的缓冲区；不满足时，通常在容器外分配存储，并在容器内保存指向外部存储的地址。泛型调用也能使用类型元数据和见证表，无须先将值包装为协议存在类型。</p>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-swift">protocol Speaker { func speak() -&gt; String }
@@ -1196,10 +1196,10 @@ print(MemoryLayout&lt;any Speaker&gt;.size) // 本例在常见 64 位 Apple 平�
 <span class="level">重点理解</span>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>async/await 怎么写异步流程：</strong>async 表示函数允许在等待时暂停任务；await 标出可能暂停的调用。调用方可以按“发请求、等结果、更新数据”的顺序写代码，不必层层嵌套回调。</p>
-<p><strong>与 GCD 的区别：</strong>GCD 把代码块提交到队列中执行，结果通常通过回调传递。DispatchQueue.async 提交后就返回，调用方不用等代码块执行完；Swift 的 async 则表示函数执行途中允许暂停和继续。</p>
-<p><strong>await 会阻塞线程吗：</strong>任务真正暂停时，Swift 会记下继续执行需要的状态，让线程去处理其他工作；结果回来后，再安排任务继续。等待期间不会占住线程，这种暂停叫“挂起”。</p>
-<p><strong>为什么仍可能卡主线程：</strong>await 不保证每次都暂停或换线程，async 和 Task {} 也不会自动把同步耗时计算搬到后台。代码如果在主 actor 上持续计算，仍会占用主线程。</p>
+<p><strong>async/await 怎么写异步流程：</strong>async 声明函数允许挂起和恢复执行，await 标记可能发生挂起的异步调用。调用方可以按操作的先后依赖关系书写代码，由语言机制保存暂停位置和继续执行所需的状态。</p>
+<p><strong>与 GCD 的区别：</strong>GCD 以队列和代码块为核心，将工作提交到队列执行，异步结果通常通过回调传递。DispatchQueue.async 表示异步提交代码块；Swift 的 async 则描述函数允许挂起和恢复，异步函数结果可以通过 await 取得。</p>
+<p><strong>await 会阻塞线程吗：</strong>等待异步结果而发生挂起时，任务保存执行状态并让出线程，等待过程本身不占用线程；满足恢复条件后，调度器安排任务继续执行。await 标记可能挂起的位置，并不保证每次调用都会挂起。</p>
+<p><strong>为什么仍可能卡主线程：</strong>async 声明、await 调用和创建 Task 都不保证将同步计算转移到后台线程。继承主 actor 隔离的任务如果持续执行耗时同步计算，仍会占用主线程。</p>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-swift">import Foundation
@@ -1256,11 +1256,11 @@ try await demo() // 把本题保存为独立 Swift 文件后，可以直接这�
 <span class="level">重点理解</span>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>async let：</strong>适合数量固定的并发工作，例如同时加载用户资料和订单。</p>
-<p><strong>TaskGroup：</strong>适合在循环中动态添加任务。结果按完成顺序取得，业务需要输入顺序时，应带上索引再排序。</p>
-<p><strong>两者共同的管理方式：</strong>它们创建结构化子任务。父任务取消时，子任务也收到取消请求；离开对应代码块前，必须等待子任务结束。</p>
-<p><strong>Task {}：</strong>创建非结构化任务，可以在创建它的函数返回后继续运行，创建者取消也不会自动取消它。需要保存 Task 返回的值，用来取消任务或等待结果。</p>
-<p><strong>怎么取消：</strong>cancel() 只发出请求，不会强行停止任务。任务要检查取消状态，或调用支持取消的 API，才能及时退出；await handle.value 用来等待任务真正结束并取得结果。</p>
+<p><strong>async let：</strong>创建结构化子任务，适合并发任务数量固定、在声明处即可确定每个任务的情况；在需要结果时等待对应的绑定。</p>
+<p><strong>TaskGroup：</strong>创建任务组，允许在运行过程中动态添加结构化子任务。任务组按完成顺序产生结果；需要保持输入顺序时，应记录每个任务的输入位置，并按位置整理结果。</p>
+<p><strong>结构化子任务的管理方式：</strong>async let 和 TaskGroup 创建的子任务受所属作用域约束。父任务取消会向子任务传播取消请求；退出对应作用域前，必须等待子任务全部结束。</p>
+<p><strong>Task：</strong>通过 Task 初始化器创建非结构化任务，任务可以在创建函数返回后继续运行，创建者取消不会自动取消该任务。创建时返回的任务句柄可用于请求取消或等待任务结果。</p>
+<p><strong>怎么取消：</strong>调用任务句柄的 cancel() 只设置取消状态，不会强行终止执行。任务需要检查取消状态，或调用支持取消的 API，并主动结束执行；等待任务句柄的 value 可以确认任务结束并取得结果，任务抛错时则传播错误。</p>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-swift">func fetch(_ id: Int) async throws -&gt; Int {
@@ -1338,10 +1338,10 @@ await cancellable.value // 等它实际退出；本例输出“收到取消，�
 <span class="level">重点理解</span>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>actor 解决什么问题：</strong>避免多个任务同时访问和修改它内部受保护的数据，一次只执行一段访问这些数据的代码。</p>
-<p><strong>@MainActor 解决什么问题：</strong>要求相关状态和方法按主 actor 的规则访问。iOS 的主 actor 在主线程上执行，适合更新 UI；其中的大量同步计算仍会卡住主线程。</p>
-<p><strong>Sendable 解决什么问题：</strong>表示这种值可以安全地在并发代码之间传递或共享，由编译器检查类型是否符合要求。它不会自动加锁，也不会修正不安全的读写。</p>
-<p><strong>actor 使用时要注意：</strong>方法在 await 处暂停后，其他任务可以进入同一个 actor 并修改数据。因此继续执行时，要重新检查之前读到的状态，不能认为 await 前后的数据一定没变。</p>
+<p><strong>actor 解决什么问题：</strong>actor 通过隔离可变状态，避免多个任务同时执行访问同一个 actor 隔离状态的代码。同一个 actor 一次只执行一段隔离代码，降低共享可变状态发生数据竞争的风险。</p>
+<p><strong>@MainActor 解决什么问题：</strong>@MainActor 将声明隔离到主 actor，访问隔离状态和方法需要遵循主 actor 的隔离规则。iOS 的主 actor 在主线程上执行，适合管理 UI 状态；耗时同步计算如果在主 actor 上持续执行，仍会阻塞主线程。</p>
+<p><strong>Sendable 解决什么问题：</strong>Sendable 表示类型的值可以安全地跨并发隔离边界传递或共享。编译器通常会检查类型是否满足安全要求；声明遵循 Sendable 不会自动添加锁，也不会自动修复不安全的读写。</p>
+<p><strong>actor 使用时要注意：</strong>actor 方法在 await 处挂起后，其他任务可以进入同一个 actor 并修改隔离状态。方法恢复执行时，必须重新验证依赖于共享状态的条件，不能假定挂起前后的状态保持不变。</p>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-swift">actor Counter {

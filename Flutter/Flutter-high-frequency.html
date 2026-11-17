@@ -212,10 +212,10 @@
 <h3 id="q1">1. var、Object、dynamic，以及空安全</h3>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>var：</strong>让编译器推断变量的静态类型。推断为 int 后，仍只能给它赋符合 int 类型的值，不是以后可以随意换类型。</p>
-<p><strong>Object 与 dynamic：</strong>Object 可以保存任意非空对象，Object? 还可以保存 null；使用具体类型的成员前要先检查或转换。dynamic 把大部分成员检查推迟到运行时，写错方法名也可能通过编译。</p>
-<p><strong>空安全：</strong>String 不能保存 null，String? 可以。判空后再使用值，或用 ?. 安全访问、?? 提供默认值；! 是非空断言，值实际为 null 时会抛错。</p>
-<p><strong>late 与类型提升：</strong>late 把部分初始化检查推迟到运行时；只有声明时，要在读取前赋值，带初始化表达式时可延迟到首次读取才计算。类型提升则是编译器确认条件成立后，在相应范围内按更具体的类型检查变量。</p>
+<p><strong>var：</strong>省略显式类型声明，由编译器推断静态类型；后续赋值必须符合推断出的类型。声明时没有初始化表达式且无其他类型信息时，变量类型为 dynamic。</p>
+<p><strong>Object 与 dynamic：</strong>Object 可持有任意非空对象，Object? 还允许 null。通过 Object 类型访问具体子类型的成员前，需要类型检查或转换；dynamic 将大部分成员检查推迟到运行时，成员不存在或调用不匹配时可能抛错。</p>
+<p><strong>空安全：</strong>非空类型不允许 null，可空类型允许 null。访问要求非空接收者的成员前，必须确认值非空；?. 用于空值安全访问，?? 提供空值替代值，! 执行非空断言，断言失败会抛错。</p>
+<p><strong>late 与类型提升：</strong>无初始化表达式的 late 变量必须在首次读取前赋值，否则抛出运行时错误；带初始化表达式时，首次读取才执行尚未完成的初始化。类型提升要求编译器能够证明类型条件在使用范围内持续成立，并且变量或字段符合提升条件。</p>
 </div>
 
 <h4>代码示例（看注释与结果）</h4>
@@ -270,10 +270,10 @@ String makeGreeting() {
 <h3 id="q2">2. const 和 final 的区别</h3>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>final：</strong>变量只能赋值一次，值可以在运行时确定。如果它引用的是可变列表，仍然可以修改列表内容。</p>
-<p><strong>const：</strong>表示编译期常量，常量对象及其内容不可修改；同一 isolate 内相同的常量对象会被规范化复用。</p>
-<p><strong>const 构造函数：</strong>允许按常量方式创建对象，实例字段必须为 final，初始化过程也要符合常量规则。普通调用 const 构造函数，不会自动成为常量调用。</p>
-<p><strong>Flutter 中的作用：</strong>复用同一个 Widget 实例，可以跳过父级更新带来的部分配置更新；节点自己的状态或依赖发生变化时，仍可能重建。</p>
+<p><strong>final：</strong>限制变量只能赋值一次，值可以在运行时确定；不保证引用对象的内容不可变，对象是否允许修改由对象自身决定。</p>
+<p><strong>const：</strong>声明编译期常量，初始化表达式必须符合常量规则；常量对象的状态不可修改，同一 isolate 内等价的常量对象会被规范化复用。</p>
+<p><strong>const 构造函数：</strong>允许创建常量实例，实例字段必须为 final，父类构造与初始化过程必须符合常量要求。只有显式使用 const 或处于常量上下文的调用才按常量方式构造。</p>
+<p><strong>Widget 复用：</strong>父节点更新时，复用同一个 Widget 实例可跳过对应节点的部分配置更新；节点因自身状态或已登记依赖变化而需要重建时，const 不阻止重建。</p>
 </div>
 
 <h4>代码示例（看注释与结果）</h4>
@@ -331,10 +331,10 @@ void main() {
 <h3 id="q3">3. Dart 是值传递还是引用传递</h3>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>传递规则：</strong>Dart 的参数按值传递；对象参数传递的是引用值的一份副本，不会因此复制整个对象。</p>
-<p><strong>修改对象：</strong>形参与实参最初指向同一个对象，所以通过参数给可变列表添加元素，调用方也会看到变化。</p>
-<p><strong>重新赋值：</strong>给形参换一个列表，只改变函数内局部变量的指向，外部变量仍指向原列表。需要替换调用方的对象时，应返回新对象并由调用方接收。</p>
-<p><strong>避免共享修改：</strong>不希望函数修改原数据时，可以使用不可变数据或按需要复制；浅复制不会自动复制内部所有可变对象。</p>
+<p><strong>传递规则：</strong>Dart 参数按值传递；对象参数传递的是对象引用值的副本，不会复制整个对象。</p>
+<p><strong>修改对象：</strong>形参与实参初始引用同一对象；对象允许修改时，通过形参修改对象状态，会影响所有持有该对象引用的代码。</p>
+<p><strong>重新赋值：</strong>给形参重新赋值只改变函数内局部变量的引用，不会改变调用方变量的引用。需要替换调用方持有的对象时，应返回新对象并由调用方赋值。</p>
+<p><strong>隔离修改：</strong>避免共享修改可采用不可变对象或复制对象；浅复制只复制外层结构，内部可变对象仍可能共享引用。</p>
 </div>
 
 <h4>代码示例（看注释与结果）</h4>
@@ -377,10 +377,10 @@ void main() {
 <h3 id="q4">4. extends、implements 和 mixin</h3>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>extends：</strong>单继承：获得父类可继承的实现，也建立子类型关系。需要沿用并扩展父类行为时使用。</p>
-<p><strong>implements：</strong>承诺满足接口，不继承对方的方法体。一个类可以实现多个接口，但具体类必须自己提供或从父类继承所需实现。</p>
-<p><strong>mixin 与 on：</strong>通过 with 跨类复用字段和方法；on 声明混入前必须满足的父类型条件，便于 mixin 使用这些能力。</p>
-<p><strong>同名方法：</strong>多个 mixin 定义同名方法时，with 中靠后的实现优先。只有实现中显式调用 super，才会继续沿查找链执行前面的实现。</p>
+<p><strong>extends：</strong>在类修饰符允许的范围内建立单继承关系，继承父类可继承的实现，并建立子类型关系；子类可按重写规则扩展或修改行为。</p>
+<p><strong>implements：</strong>在类修饰符允许的范围内实现一个或多个接口，不继承接口的方法体；非抽象类必须自行提供或从父类、mixin 获得全部必需实现。</p>
+<p><strong>mixin 与 on：</strong>通过 with 复用 mixin 的字段和方法；on 声明应用 mixin 时必须满足的超类约束，使 mixin 能依赖约束类型提供的成员。</p>
+<p><strong>同名成员：</strong>在签名兼容的前提下，类自身声明的实现优先；多个 mixin 的同名实现按 with 顺序由后向前查找。实现中显式调用 super，才会继续执行超类查找链中的实现。</p>
 </div>
 
 <h4>代码示例（看注释与结果）</h4>
@@ -434,10 +434,10 @@ void main() {
 <h3 id="q5">5. extension 是干什么的</h3>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>作用：</strong>extension 在不修改原类、不建立继承关系的情况下，为已有类型补充方法、getter 和 setter。</p>
-<p><strong>选择规则：</strong>编译器根据调用处的静态类型和可见扩展选择实现；扩展没有变成原对象的运行时成员，因此 dynamic 不会自动找到它。</p>
-<p><strong>能力边界：</strong>扩展不能新增实例字段，也不能覆盖原类型已有的同名实例成员；可以提供计算访问器和静态成员。</p>
-<p><strong>冲突处理：</strong>导入其他库的扩展后才能使用。多个扩展同名冲突时，可调整导入范围，或用扩展名显式指定实现。</p>
+<p><strong>作用：</strong>extension 在不修改原类、不建立继承关系的情况下，为已有类型补充方法、访问器和运算符。</p>
+<p><strong>选择规则：</strong>编译器根据接收者的静态类型和当前作用域内可见的扩展解析调用；扩展成员不是对象的运行时成员，dynamic 调用不会自动解析到扩展。</p>
+<p><strong>能力边界：</strong>扩展不能新增实例字段，也不能覆盖原类型的实例成员；可定义计算访问器及静态成员。隐式调用存在同名实例成员时，实例成员优先。</p>
+<p><strong>可见性与冲突：</strong>使用其他库的扩展必须先导入该库，并使扩展在调用处可见。编译器无法选出唯一适用扩展时，应调整导入范围，或通过具名扩展显式指定实现。</p>
 </div>
 
 <h4>代码示例（看注释与结果）</h4>
@@ -471,10 +471,10 @@ void main() {
 <h3 id="q6">6. 工厂构造函数和普通构造函数</h3>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>普通生成构造：</strong>负责创建并初始化当前类的实例，不能返回另一个对象。常量生成构造在常量调用中可以复用规范化后的实例。</p>
-<p><strong>factory：</strong>负责返回当前类型或子类型的对象，可以返回缓存对象，也可以创建新对象；缓存需要自己实现，不是 factory 自动提供的。</p>
-<p><strong>this 与 const：</strong>工厂中没有默认等待初始化的当前实例，不能用 this 访问它。带函数体的工厂不能是常量构造，重定向 const factory 可以委托给兼容的常量构造。</p>
-<p><strong>命名构造：</strong>命名描述构造入口叫什么，factory 描述怎样提供对象。命名构造既可以是生成构造，也可以是工厂构造。</p>
+<p><strong>生成构造函数：</strong>负责创建并初始化所属类的实例，不能返回另一个对象；常量生成构造函数在常量调用中可复用规范化实例。</p>
+<p><strong>工厂构造函数：</strong>factory 返回所属类型或子类型的对象，可以创建新对象或返回已有对象；对象缓存和复用策略需要自行实现。</p>
+<p><strong>this 与 const：</strong>工厂构造函数没有可通过 this 访问的当前实例。带函数体的工厂不能声明为 const；重定向 const factory 必须委托给签名兼容的常量构造函数。</p>
+<p><strong>命名构造函数：</strong>命名用于区分同一类的构造入口，factory 用于规定对象的提供方式；命名构造函数既可以是生成构造函数，也可以是工厂构造函数。</p>
 </div>
 
 <h4>代码示例（看注释与结果）</h4>
@@ -509,10 +509,10 @@ void main() {
 <h3 id="q7">7. Future 和 async / await</h3>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>Future：</strong>表示一次操作将来的完成结果：成功提供一个值，失败提供错误。它本身不创建线程，也不提供并行执行环境。</p>
-<p><strong>async / await：</strong>async 函数返回 Future，调用时先执行第一个 await 前的同步代码。await 暂停当前异步函数，结果就绪后再继续，不会阻塞整个 isolate。</p>
-<p><strong>错误与耗时计算：</strong>在 try/catch 中 await，才能在等待处处理异步错误。同步大循环即使放进 Future 或 async 函数，仍会占用当前 isolate。</p>
-<p><strong>组合结果：</strong>Future.wait 汇总多个结果，成功列表按输入顺序排列；Completer 让代码主动决定一个 Future 何时成功或失败。</p>
+<p><strong>Future：</strong>表示一次操作的完成结果，成功时提供值，失败时提供错误；Future 本身不创建线程，也不提供并行执行环境。</p>
+<p><strong>async / await：</strong>async 函数通常返回 Future，函数体先同步执行到首个 await；await 暂停当前函数的后续执行，等待结果后恢复，不阻塞整个 isolate。</p>
+<p><strong>错误与计算：</strong>用 try/catch 在等待处捕获 Future 的异步错误时，必须在 try 范围内 await，也可注册异步错误处理回调。放入 Future 或 async 函数的同步计算仍占用实际执行计算的 isolate。</p>
+<p><strong>结果组合：</strong>Future.wait 等待输入的 Future 集合，全部成功时按输入顺序返回结果；任一输入失败时，汇总 Future 按错误处理配置失败。Completer 用于主动完成 Future，成功或失败只能完成一次。</p>
 </div>
 
 <h4>代码示例（看注释与结果）</h4>
@@ -564,10 +564,10 @@ Future&lt;void&gt; main() async {
 <h3 id="q8">8. Future 和 Stream 有什么不一样</h3>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>一次与多次：</strong>Future 表示一次完成结果；Stream 可以连续产生数据和错误，并用结束事件表示不再产生数据。</p>
-<p><strong>订阅方式：</strong>单订阅流只允许订阅一次，广播流允许多个监听者；普通广播流不会为后来才订阅的人补发历史事件。</p>
-<p><strong>生成与消费：</strong>async* 和 yield 用于产生流事件；await for 顺序处理事件，listen 返回的订阅可以暂停、恢复和取消。</p>
-<p><strong>界面与生命周期：</strong>StreamBuilder 管理界面订阅并展示快照，但不保证呈现每个中间事件。逐事件业务处理应放在消费逻辑中，订阅用完要及时取消。</p>
+<p><strong>结果模型：</strong>Future 表示一次成功或失败的完成结果；Stream 表示按顺序产生的数据事件、错误事件及表示结束的完成事件。</p>
+<p><strong>订阅规则：</strong>单订阅流在整个生命周期内只允许一次订阅，取消后也不能重新订阅；广播流允许多个订阅者，普通广播流不向后来订阅者补发历史事件。</p>
+<p><strong>生成与消费：</strong>async* 声明异步生成器，yield 产生数据事件；await for 顺序消费流事件，listen 返回可暂停、恢复和取消的 StreamSubscription。</p>
+<p><strong>界面与释放：</strong>StreamBuilder 随组件生命周期管理订阅，构建时读取异步快照，不保证为每个事件执行一次构建。必须逐事件执行的处理应由流消费者完成；自行创建的订阅应在不再需要时取消。</p>
 </div>
 
 <h4>代码示例（看注释与结果）</h4>
@@ -599,10 +599,10 @@ Future&lt;void&gt; main() async {
 <h3 id="q9">9. Dart 是不是单线程？事件循环怎么跑</h3>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>单线程的范围：</strong>单个 isolate 同一时刻只执行一段 Dart 代码；整个 Dart 应用可以有多个 isolate，在 Dart VM 上能够并行计算。</p>
-<p><strong>事件循环顺序：</strong>当前同步代码先完成，然后清空微任务队列，再执行一个普通事件；该事件结束后，再处理新产生的微任务。</p>
-<p><strong>微任务优先级：</strong>微任务优先于下一个普通事件，但不能打断正在执行的同步代码。持续追加微任务，会使点击和帧事件一直得不到处理。</p>
-<p><strong>await 与卡顿：</strong>await 只暂停当前函数，不会停止事件循环。长时间同步计算仍会挡住其他事件，必要时应把计算交给其他 isolate。</p>
+<p><strong>单线程的范围：</strong>单个 isolate 同一时刻只执行一段 Dart 代码；Dart 应用可包含多个 isolate，在支持 isolate 的 Dart VM 平台上可并行计算。</p>
+<p><strong>调度顺序：</strong>当前同步代码执行完毕后，事件循环先清空微任务队列，再处理下一个事件；事件处理结束后，再清空执行期间产生的微任务。</p>
+<p><strong>微任务优先级：</strong>微任务优先于后续事件执行，但不能打断当前同步代码；持续追加微任务可能使事件队列长期得不到处理。</p>
+<p><strong>await 与阻塞：</strong>await 只暂停当前异步函数，允许事件循环处理其他工作；长时间同步计算仍阻塞当前 isolate。需要并行计算时，应在支持的平台上使用其他 isolate。</p>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-dart">import 'dart:async';
@@ -640,10 +640,10 @@ void main() {
 <h3 id="q10">10. Isolate 是什么，和 Future 有什么区别</h3>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>Isolate：</strong>独立执行 Dart 代码的环境，有自己的内存状态和事件循环。普通可变 Dart 对象不能跨 isolate 直接共享修改。</p>
-<p><strong>与 Future 的区别：</strong>Future 只表示将来的结果；isolate 提供独立执行环境，在 Dart VM 上可以与主 isolate 并行计算。</p>
-<p><strong>通信与入口：</strong>使用 SendPort 和 ReceivePort 传消息，并遵守可发送类型及复制、转移规则。一次性计算可用 Isolate.run 或 compute，持续通信可用 Isolate.spawn。</p>
-<p><strong>适用场景：</strong>适合会阻塞界面的 CPU 重活，启动和传数据都有成本，不必仅为等待 I/O 创建 isolate。Web 上的 compute 在当前事件循环执行，没有同样的并行能力。</p>
+<p><strong>Isolate：</strong>独立执行 Dart 代码的环境，维护自身内存状态和事件循环；普通可变 Dart 对象不能由多个 isolate 直接共享修改。</p>
+<p><strong>与 Future 的区别：</strong>Future 表示操作的完成结果，isolate 提供独立执行环境；Dart VM 上的不同 isolate 可并行计算，计算结果可通过 Future 暴露给调用方。</p>
+<p><strong>通信与入口：</strong>SendPort 和 ReceivePort 用于消息通信，消息必须符合可发送类型及复制、转移规则。支持 isolate 的平台可用 Isolate.run 执行一次性计算，或用 Isolate.spawn 创建需要持续通信的 isolate。</p>
+<p><strong>成本与平台限制：</strong>是否拆分计算应比较同步计算耗时与 isolate 启动、消息传递成本；等待异步 I/O 本身不要求新建 isolate。Flutter 的 compute 在原生平台使用独立 isolate，在 Web 上使用当前事件循环，不提供相同的并行能力。</p>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <p>纯 Dart 示例，用 Dart VM 运行；这里展示 Isolate.run，不适用于浏览器。</p>
@@ -694,10 +694,10 @@ Future&lt;void&gt; main() async {
 <h3 id="q11">11. Flutter 和原生开发的差别</h3>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>界面来源：</strong>普通 Flutter 组件由自身框架和引擎布局、绘制，不为每个组件创建系统原生控件；原生开发可以直接使用平台控件和界面体系。</p>
-<p><strong>更新方式：</strong>业务根据状态返回 Widget 配置，框架更新节点后完成布局和绘制。重新 build 不代表重新创建整屏控件。</p>
-<p><strong>平台能力：</strong>相机、权限等仍需要平台实现，可通过插件、平台通道或 FFI 接入；需要嵌入系统视图时使用 PlatformView。</p>
-<p><strong>收益与成本：</strong>可复用多端界面和业务代码，也要承担引擎体积、平台适配与混合视图成本。实际性能仍取决于构建、布局、绘制和计算开销。</p>
+<p><strong>界面实现：</strong>普通 Flutter 组件由 Flutter 框架和引擎布局、绘制，不为每个组件创建系统原生控件；原生界面开发直接使用平台提供的控件与界面机制。</p>
+<p><strong>更新机制：</strong>应用根据状态生成 Widget 配置，框架匹配和更新节点，再按需布局与绘制；重新执行 build 不要求重新创建全部节点。</p>
+<p><strong>平台集成：</strong>操作系统能力需要对应平台实现，可通过插件、平台通道或 FFI 接入；嵌入原生视图使用 PlatformView，并遵守平台视图的生命周期与合成要求。</p>
+<p><strong>成本与性能：</strong>Flutter 可复用多端界面和应用逻辑，同时增加引擎、平台适配与混合视图成本；性能取决于构建、布局、绘制、资源处理和计算开销。</p>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-dart">import 'package:flutter/material.dart';
@@ -728,10 +728,10 @@ void showMessage() =&gt; debugPrint('点击成功');
 <h3 id="q12">12. Flutter 的整体架构</h3>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>Framework：</strong>Dart 编写的框架层，提供 Widget、布局、手势、动画和组件体系，是业务开发主要使用的部分。</p>
-<p><strong>Engine：</strong>提供 Dart 运行环境、文字排版和图形渲染等底层能力，Framework 通过 dart:ui 使用引擎接口。</p>
-<p><strong>Embedder：</strong>把引擎接入操作系统，负责窗口、渲染表面、输入事件及平台运行环境。</p>
-<p><strong>任务与线程：</strong>UI、Raster、IO、Platform 描述任务职责和调度入口，不保证各自独占一条系统线程，具体映射取决于平台与版本。</p>
+<p><strong>Framework：</strong>使用 Dart 编写的框架层，提供组件、布局、手势和动画机制；应用通过框架 API 描述界面与交互。</p>
+<p><strong>Engine：</strong>提供 Dart 运行环境、文字排版和图形渲染能力；Framework 通过 dart:ui 使用引擎接口。</p>
+<p><strong>Embedder：</strong>将引擎接入操作系统，管理窗口、渲染表面、输入事件及平台运行环境。</p>
+<p><strong>任务与线程：</strong>UI、Raster、IO、Platform 表示任务职责与调度入口，不保证每种职责独占一条系统线程；任务到线程的映射取决于目标平台和引擎版本。</p>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-dart">import 'package:flutter/material.dart';
@@ -768,10 +768,10 @@ void main() =&gt; runApp(const MaterialApp(home: Scaffold(
 <h3 id="q13">13. main 和 runApp 分别做什么</h3>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>main：</strong>Dart 程序入口，用于启动业务并完成必要的初始化。热重载不会重跑已经执行过的 main，热重启会。</p>
-<p><strong>runApp：</strong>将根 Widget 接入框架，并安排首帧构建；调用返回后，还要经过构建、布局、绘制等步骤，画面才会显示。</p>
-<p><strong>绑定初始化：</strong>runApp 会确保 WidgetsFlutterBinding 已初始化，用它连接框架与引擎的帧调度、输入和平台消息。</p>
-<p><strong>启动前用插件：</strong>如果 runApp 之前需要使用依赖绑定的插件，先调用 WidgetsFlutterBinding.ensureInitialized()，再按插件要求完成初始化。</p>
+<p><strong>main：</strong>Dart 程序入口，执行启动逻辑及必要初始化；热重载不重新执行已运行的 main，热重启会重新执行入口。</p>
+<p><strong>runApp：</strong>将根 Widget 接入框架并安排构建；调用返回不表示画面已经显示，显示更新仍需完成后续构建、布局、绘制与呈现。</p>
+<p><strong>绑定初始化：</strong>runApp 会确保 WidgetsFlutterBinding 已初始化；绑定连接框架与引擎的帧调度、输入事件和平台消息。</p>
+<p><strong>初始化顺序：</strong>在 runApp 前调用依赖绑定的平台 API 或插件时，必须先执行 WidgetsFlutterBinding.ensureInitialized()；需要等待的初始化应完成后再启动依赖初始化结果的界面。</p>
 </div>
 
 <h4>代码示例（看注释与结果）</h4>
@@ -797,10 +797,10 @@ void main() {
 <h3 id="q14">14. Widget 有哪几类，为什么不能改</h3>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>Widget：</strong>描述界面和行为的不可变配置。参数变化时创建新配置，再由框架更新原节点；可变数据放在 State 等状态持有者中。</p>
-<p><strong>StatelessWidget：</strong>没有独立 State，根据参数和祖先依赖构建界面；父级配置或依赖变化时，仍可能多次 build。</p>
-<p><strong>StatefulWidget：</strong>配置本身同样不可变，通过与 Element 关联的 State 保存可变数据。复用节点可以保留 State，修改字段后仍需通知框架。</p>
-<p><strong>其他重要类型：</strong>InheritedWidget 向后代提供可订阅数据，RenderObjectWidget 创建或更新渲染对象，ParentDataWidget 提供父布局需要的子节点参数。</p>
+<p><strong>Widget：</strong>描述界面与行为的不可变配置；配置改变时创建新 Widget，由框架匹配并更新 Element，可变数据由状态持有者保存。</p>
+<p><strong>StatelessWidget：</strong>没有独立 State，根据构造参数和祖先依赖构建界面；父级配置更新或已登记依赖变化时，仍可能再次执行 build。</p>
+<p><strong>StatefulWidget：</strong>配置本身不可变，通过 StatefulElement 关联的 State 保存可变数据；只有原节点得到复用时才能延续原 State，数据修改后需要适当的更新通知。</p>
+<p><strong>其他类型：</strong>InheritedWidget 向后代提供可订阅数据；RenderObjectWidget 创建或更新渲染对象；ParentDataWidget 为配套的父布局提供子节点布局参数。</p>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-dart">import 'package:flutter/material.dart';
@@ -851,10 +851,10 @@ class CountLabel extends StatelessWidget {
 <h3 id="q15">15. State 的生命周期</h3>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>首次创建：</strong>主要顺序是 initState → didChangeDependencies → build。initState 对每个 State 执行一次，适合初始化资源。</p>
-<p><strong>依赖与配置更新：</strong>祖先依赖变化可再次触发 didChangeDependencies。同类型、同 key 的新配置更新原节点时，会调用 didUpdateWidget，随后重新 build，适合比较参数并切换订阅。</p>
-<p><strong>移除与销毁：</strong>deactivate 表示离开当前位置，仍可能重新插入；dispose 表示永久结束该 State 的使用，应释放 Controller、取消订阅和定时器。</p>
-<p><strong>异步与应用生命周期：</strong>异步完成后确认节点仍有效再更新，并尽量取消无用工作。State 生命周期与应用进入前后台是两套机制。</p>
+<p><strong>首次创建：</strong>框架创建 State 并与 Element 关联后，依次调用 initState、didChangeDependencies 和 build；每个 State 的 initState 只执行一次，不能在 initState 中登记 InheritedWidget 依赖。</p>
+<p><strong>更新条件：</strong>已登记的祖先依赖变化可触发 didChangeDependencies；在原位置用相同 runtimeType、相同 key 的新配置更新节点时，会调用 didUpdateWidget，随后执行 build。依赖配置的资源应在配置变化时同步调整。</p>
+<p><strong>移除与销毁：</strong>deactivate 表示节点离开当前位置，同一帧结束前仍可能重新插入；帧结束时未重新插入才进入 dispose，永久结束 State 的使用并释放其持有的资源。</p>
+<p><strong>异步与应用生命周期：</strong>异步完成后调用 setState 前，应确认 State 仍 mounted 且未进入销毁流程，并尽量取消已失去用途的异步工作。应用前后台状态由应用生命周期机制处理，与 State 的挂载和销毁分别管理。</p>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-dart">import 'package:flutter/material.dart';
@@ -943,10 +943,10 @@ class _ProbeState extends State&lt;Probe&gt; {
 <h3 id="q16">16. setState 做了什么</h3>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>执行过程：</strong>setState 先同步执行回调，再把当前 Element 标记为需要重建；框架随后在构建阶段调用 build。</p>
-<p><strong>刷新时机：</strong>字段会立即改变，屏幕要等待构建和绘制。直接修改字段不会自动通知框架，画面不一定更新。</p>
-<p><strong>更新范围：</strong>同一节点在下次构建前的多次标记通常会合并；子节点是否继续更新取决于配置与依赖，不等于重新创建整个应用。</p>
-<p><strong>使用要求：</strong>回调不能写成 async；先等待异步结果，再确认 State 有效并同步更新。dispose 后不能调用，状态应尽量放在真正变化的较小组件中。</p>
+<p><strong>执行过程：</strong>setState 同步执行传入的回调，随后将所属 Element 标记为需要重建；框架在后续构建阶段执行 build，不在调用时同步刷新屏幕。</p>
+<p><strong>通知机制：</strong>回调中的字段修改立即生效，画面更新仍依赖构建与渲染；setState 不负责比较字段变化，直接修改字段也不会自动标记节点重建。</p>
+<p><strong>更新范围：</strong>同一 Element 在再次构建前的重复标记通常合并处理；子节点是否更新取决于新旧配置匹配及节点自身依赖，不要求重新创建全部后代。</p>
+<p><strong>使用条件：</strong>回调必须同步完成，不能返回 Future。等待异步结果后，应确认 State 已挂载且未进入销毁流程，再同步更新；dispose 中及销毁后均不能调用 setState。状态与通知范围应尽量贴近实际变化的组件。</p>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-dart">import 'package:flutter/material.dart';
@@ -1001,10 +1001,10 @@ class _CounterState extends State&lt;Counter&gt; {
 <h3 id="q17">17. BuildContext 是什么</h3>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>含义：</strong>BuildContext 是 Element 实现的接口，表示一个节点在树中的位置，用于查找祖先和获取环境数据。</p>
-<p><strong>查找范围：</strong>查找从当前节点向祖先进行，不能找到当前 build 将要创建的后代。需要读取后代中的环境时，应使用后代自己的 context。</p>
-<p><strong>读取与订阅：</strong>依赖式读取还会登记依赖，数据通知时可触发重建；普通查找只获取当前结果，不自动订阅。initState 中不能登记 InheritedWidget 依赖。</p>
-<p><strong>异步后使用：</strong>跨 await 后检查将要使用的那个 context.mounted，确认节点没有卸载；其他 State 的 mounted 不能替代它。</p>
+<p><strong>含义：</strong>BuildContext 是 Element 实现的接口，标识组件在 Element 树中的位置，用于获取祖先节点与环境数据。</p>
+<p><strong>查找范围：</strong>祖先查找只沿当前 context 的祖先链进行，不搜索后代；读取当前 build 返回子树中新提供的环境数据，必须使用位于该环境提供者之下的 context。</p>
+<p><strong>读取与订阅：</strong>依赖式查找会登记当前 Element 对 InheritedWidget 的依赖，后续通知可触发重建；非依赖式查找只读取当前结果。不能在 initState 中登记 InheritedWidget 依赖，应在 didChangeDependencies 或 build 中登记。</p>
+<p><strong>异步后使用：</strong>跨越异步等待后，使用 BuildContext 前必须检查该 BuildContext 的 mounted；其他节点的 mounted 不能证明目标 context 仍有效，已卸载的 context 不可继续使用。</p>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-dart">import 'package:flutter/material.dart';
@@ -1049,10 +1049,10 @@ class Demo extends StatelessWidget {
 <h3 id="q18">18. Key 有什么用</h3>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>作用：</strong>帮助框架判断新配置应更新哪个旧节点。在同一父节点的匹配范围内，类型和 key 相同才可复用原 Element 并保留 State。</p>
-<p><strong>局部 Key：</strong>ValueKey 按值比较，ObjectKey 按对象身份比较，UniqueKey 每次创建都不同。key 应放在实际参与匹配的子项层，并在同级保持唯一。</p>
-<p><strong>GlobalKey：</strong>在活动树中必须唯一，可支持同帧跨父节点迁移并保留 State，也可访问节点状态。应长期保存并按需要使用。</p>
-<p><strong>边界：</strong>Key 标识身份，不保存或复活已销毁的状态。懒列表重排还可能需要 findChildIndexCallback，把 key 映射到新下标。</p>
+<p><strong>节点匹配：</strong>Key 参与新旧配置的身份匹配；在同一父节点的匹配范围内，runtimeType 和 key 均相同才可用新配置更新原 Element，并为有状态节点保留 State。</p>
+<p><strong>局部 Key：</strong>ValueKey 按值比较，ObjectKey 按对象身份比较，UniqueKey 的不同实例互不相等。局部 Key 应放在父节点实际匹配的子节点层级，并在同一父节点的子节点中保持唯一。</p>
+<p><strong>GlobalKey：</strong>在同时挂载的组件中必须全局唯一；节点移除后在同一帧内重新插入，可跨父节点迁移并保留 State。GlobalKey 还可访问关联的 context，并在类型匹配时访问 State，应由稳定的持有者保存。</p>
+<p><strong>能力边界：</strong>Key 只标识节点身份，不保存或恢复已经销毁的 State；懒列表顺序变化时，可能还需 findChildIndexCallback 将稳定 Key 映射到新的子项索引。</p>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-dart">import 'package:flutter/material.dart';
@@ -1122,10 +1122,10 @@ class _EntryState extends State&lt;Entry&gt; {
 <h3 id="q19">19. 滑出屏幕后，状态怎么留住</h3>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>何时销毁：</strong>懒列表通常维护可见及缓存范围内的节点；离开维护范围后 State 可能销毁，滑出屏幕不代表立即销毁。</p>
-<p><strong>保留 State：</strong>使用 AutomaticKeepAliveClientMixin，通过 wantKeepAlive 表达需求，在 build 中调用 super.build(context)，并由祖先 AutomaticKeepAlive 处理请求。</p>
-<p><strong>需求与成本：</strong>保活需求变化时调用 updateKeepAlive()。保留节点会增加内存，不代表它持续布局和绘制，也不会自动暂停业务订阅。</p>
-<p><strong>只恢复位置：</strong>PageStorageKey 配合滚动偏移保存机制，可以恢复滚动位置；它不保留整个 State，也不是磁盘持久化。</p>
+<p><strong>销毁条件：</strong>懒列表通常维护可见及缓存范围内的子节点；超出维护范围且未被保活的节点可能被销毁，离开可见区域不等于立即销毁。</p>
+<p><strong>保留 State：</strong>AutomaticKeepAliveClientMixin 通过 wantKeepAlive 声明保活需求，build 必须调用 super.build(context)，并需要祖先 AutomaticKeepAlive 接收保活通知；混入本身不能单独完成保活。</p>
+<p><strong>需求与成本：</strong>wantKeepAlive 的结果变化时应调用 updateKeepAlive()；保留节点增加内存占用，不要求节点持续布局和绘制，也不会自动暂停节点持有的订阅或其他任务。</p>
+<p><strong>恢复滚动位置：</strong>存在有效 PageStorage 存储桶、使用稳定且可区分的 PageStorageKey，并启用滚动偏移保存时，可保存和恢复滚动位置；PageStorage 不保留整个 State，也不提供磁盘持久化。</p>
 </div>
 
 <h4>代码示例（看注释与结果）</h4>
@@ -1174,10 +1174,10 @@ class _TabState extends State&lt;TabPage&gt;
 <h3 id="q20">20. 热重载和热重启</h3>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>热重载：</strong>把新 Dart 代码更新到正在运行的应用，并请求现有组件重建，尽量保留已有状态。</p>
-<p><strong>不会重跑的部分：</strong>已执行过的 main、现有 State 的 initState、已完成的全局和静态字段初始化，不会因热重载重新执行。</p>
-<p><strong>热重启：</strong>重新启动 Dart 应用，重跑入口并重建状态，原有 Dart 内存状态被清除；它不等于卸载应用或清空磁盘数据。</p>
-<p><strong>完整重建：</strong>部分类型结构变化需要热重启；修改原生代码或插件集成配置通常要停止后重新构建。热重载属于支持该能力的 debug 开发环境。</p>
+<p><strong>热重载：</strong>在支持热重载的 debug 环境中，将兼容的新 Dart 代码载入运行中的应用并请求组件重建，尽量保留已有状态。</p>
+<p><strong>初始化边界：</strong>热重载不会重新执行已运行的 main、现有 State 的 initState，以及已经完成的全局或静态字段初始化；修改初始化代码不保证已有状态随之更新。</p>
+<p><strong>热重启：</strong>重新启动 Dart 应用并执行入口，清除原有 Dart 内存状态；不会因此卸载应用或清除磁盘数据。</p>
+<p><strong>完整重建：</strong>不兼容热重载的类型结构变化需要热重启；原生代码或插件集成配置变化通常需要停止应用并重新构建。具体可重载范围取决于目标平台与开发工具支持。</p>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-dart">import 'package:flutter/material.dart';
@@ -1237,10 +1237,10 @@ class _ReloadDemoState extends State&lt;ReloadDemo&gt; {
 <h3 id="q21">21. InheritedWidget 是干什么的</h3>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>作用：</strong>沿组件树向后代提供共享数据，减少逐层传参；它本身是不可变配置，不负责凭空产生可变状态。</p>
-<p><strong>登记依赖：</strong>后代通过 dependOnInheritedWidgetOfExactType 查找最近的指定类型祖先，同时登记当前 Element 的依赖。</p>
-<p><strong>通知条件：</strong>新配置替换旧配置时，updateShouldNotify 决定是否通知已登记的依赖者重建；不是无条件重建整棵子树。</p>
-<p><strong>读取与扩展：</strong>不登记依赖的查询只取当前值，不会自动收到后续通知。细分依赖可用 InheritedModel，连接可监听对象可用 InheritedNotifier。</p>
+<p><strong>数据提供：</strong>InheritedWidget 沿组件树向后代提供共享数据，减少逐层传参；InheritedWidget 本身是不可变配置，可变状态必须由外部状态持有者管理。</p>
+<p><strong>依赖登记：</strong>dependOnInheritedWidgetOfExactType 查找最近且类型精确匹配的 InheritedWidget 祖先，并登记当前 Element 对该祖先的依赖。</p>
+<p><strong>通知条件：</strong>已挂载的 InheritedWidget 被同类型新配置更新时，updateShouldNotify 决定是否通知已登记的依赖者；返回 true 才会因该次数据更新触发依赖通知，不要求整棵子树重建。</p>
+<p><strong>读取与扩展：</strong>非依赖式查询不会登记依赖，调用方不会仅因该次读取收到后续依赖通知；InheritedModel 可细分依赖，InheritedNotifier 可连接可监听对象并传播通知。</p>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-dart">import 'package:flutter/material.dart';
@@ -1299,10 +1299,10 @@ class CountText extends StatelessWidget {
 <h3 id="q22">22. 状态管理怎么选</h3>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>先确定职责：</strong>说清状态由谁持有、怎样修改和通知、谁订阅，以及何时释放，再选择状态管理方式。</p>
-<p><strong>局部与共享：</strong>局部状态可用 setState 或 ValueNotifier；跨组件共享数据，可通过 InheritedWidget 或相应状态管理库组织。</p>
-<p><strong>常见方案：</strong>Provider 基于树提供数据和依赖，Riverpod 通过容器组织状态与依赖；Cubit 用方法产生状态，Bloc 用事件处理产生状态。</p>
-<p><strong>选择依据：</strong>结合状态范围、业务复杂度、测试和团队维护成本。性能主要取决于状态与订阅的位置，换库不会自动减少所有无关重建。</p>
+<p><strong>职责划分：</strong>选择状态管理方式前，明确状态的持有者、修改入口、通知方式、订阅范围和释放时机。</p>
+<p><strong>作用范围：</strong>局部状态由局部组件持有并通知更新；跨组件共享状态需要稳定的共享持有者与依赖传播机制，订阅范围应限定在实际使用状态的节点。</p>
+<p><strong>机制区别：</strong>setState 通知所属节点重建，ValueNotifier 通过值变更通知监听者；InheritedWidget 和 Provider 通过组件树提供数据与依赖，Riverpod 通过容器组织依赖，Cubit 通过方法产生状态，Bloc 通过事件处理产生状态。</p>
+<p><strong>选择依据：</strong>根据状态共享范围、状态转换复杂度、可测试性和维护成本选择机制；重建成本主要受状态粒度、订阅位置和通知规则影响，更换状态管理库不保证自动减少无关重建。</p>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-dart">import 'package:flutter/material.dart';
@@ -1363,10 +1363,10 @@ class _LocalCounterState extends State&lt;LocalCounter&gt; {
 <h3 id="q23">23. Navigator 和 MaterialApp 做了什么</h3>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>Navigator：</strong>管理 Route 导航栈，负责进入、返回、替换和转场。push 返回等待路由结果的 Future，pop 可以把结果传回。</p>
-<p><strong>MaterialApp：</strong>配置主题、本地化和导航入口，根据构造方式接入 Navigator 或 Router；它与导航器承担的职责不同。</p>
-<p><strong>路由与状态：</strong>旧页面被覆盖不等于销毁，是否保留取决于路由策略和生命周期；嵌套导航中，context 的位置决定找到哪个导航器。</p>
-<p><strong>导航方式：</strong>push/pop 是命令式操作；需要让地址、深链与页面配置同步时，可用 Router 体系组织。返回控制和导航副作用应放在明确流程中，避免在 build 中重复执行。</p>
+<p><strong>Navigator：</strong>管理 Route 导航栈，负责路由入栈、出栈、替换和转场；push 返回等待路由结果的 Future，pop 可通过结果参数完成对应的路由结果。</p>
+<p><strong>MaterialApp：</strong>配置 Material 应用的主题、本地化和导航入口，根据构造方式接入 Navigator 或 Router；MaterialApp 是应用配置组件，Navigator 是路由栈管理组件。</p>
+<p><strong>状态与查找：</strong>路由被覆盖时是否保留页面状态取决于路由的保留策略；资源应随对应 State 或路由的生命周期释放。默认通过 context 查找最近的祖先 Navigator，嵌套导航必须明确目标导航器。</p>
+<p><strong>导航方式：</strong>push/pop 直接修改路由栈，Router 体系协调路由信息、页面配置与导航状态；导航副作用应在事件或明确的生命周期流程中触发，不能依赖可能重复执行的 build 发起导航。</p>
 </div>
 
 <h4>代码示例（看注释与结果）</h4>
@@ -1421,10 +1421,10 @@ class HomePage extends StatelessWidget {
 <h3 id="q24">24. 动画怎么做，vsync 是什么</h3>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>隐式与显式：</strong>隐式动画只需提供目标值与时长，由组件管理过程；显式动画由代码持有 AnimationController，控制开始、反向、停止和重复。</p>
-<p><strong>值怎样变化：</strong>Controller 提供进度，Tween 把进度映射到宽度、颜色等取值范围，曲线调整进度变化方式。</p>
-<p><strong>vsync：</strong>接收 TickerProvider，由它提供与帧调度配合的 Ticker，不是传入一个刷新率数字。TickerMode 可以让 Ticker 静默，但时间仍会推进。</p>
-<p><strong>资源与范围：</strong>Controller 随 State 销毁而释放；用 AnimatedBuilder 等方式，把监听和重建限制在实际变化的区域。</p>
+<p><strong>隐式与显式动画：</strong>隐式动画组件根据目标属性与动画配置管理过渡；显式动画由调用方持有 AnimationController，控制播放方向、停止和重复，并管理控制器生命周期。</p>
+<p><strong>值的生成：</strong>AnimationController 提供随时间变化的进度，Tween 将进度映射到属性取值范围，曲线调整进度与插值之间的关系。</p>
+<p><strong>vsync：</strong>AnimationController 的 vsync 参数接收 TickerProvider，由提供者创建与帧调度同步的 Ticker。遵循 TickerMode 的 Ticker 被静默时不产生逐帧回调，但经过的时间仍会累计。</p>
+<p><strong>资源与更新范围：</strong>控制器不再使用时必须 dispose，由 State 持有时通常在 State.dispose 中释放；动画监听与界面重建应限制在受动画影响的节点，并复用不变的子树。</p>
 </div>
 
 <h4>代码示例（看注释与结果）</h4>
@@ -1475,10 +1475,10 @@ class _BoxState extends State&lt;Box&gt; with SingleTickerProviderStateMixin {
 <h3 id="q25">25. 布局时，约束和尺寸怎么传</h3>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>基本规则：</strong>约束向下、尺寸向上、父节点决定位置。子节点的 width 或 height 仍必须服从父级约束。</p>
-<p><strong>紧约束与无界：</strong>紧约束已经确定尺寸；无界表示没有有限上限，不是要求子节点尺寸无限大。</p>
-<p><strong>弹性布局：</strong>Expanded 占满分配空间，Flexible 默认允许更小。主轴无界时不能直接按剩余空间分配，应先解决父级约束关系。</p>
-<p><strong>滚动与 shrinkWrap：</strong>滚动视口通常需要滚动方向上的有限尺寸；shrinkWrap 可按内容确定尺寸，但会增加测量成本，不能作为通用修复。</p>
+<p><strong>布局协议：</strong>在 RenderBox 布局协议中，父节点向子节点传递约束，子节点在约束内确定尺寸，父节点决定子节点位置；尺寸属性不能覆盖父级约束。</p>
+<p><strong>紧约束与无界：</strong>某一维度的最小值与最大值相同表示该维度为紧约束；最大值无限表示该维度无界，不要求子节点选择无限尺寸。</p>
+<p><strong>弹性分配：</strong>Flex 按主轴可用空间与弹性系数分配空间；Expanded 使用紧约束占满分配量，Flexible 默认使用松约束允许更小尺寸。按剩余空间分配要求主轴有有限可分配空间，Expanded 不能直接解决主轴无界。</p>
+<p><strong>滚动与 shrinkWrap：</strong>shrinkWrap 为 false 时，滚动视口需要滚动方向上的有限约束；为 true 时可按内容确定该方向尺寸，但仍需满足其他布局约束，并可能增加测量与滚动期间的布局成本。</p>
 </div>
 
 <h4>代码示例（看注释与结果）</h4>
@@ -1520,10 +1520,10 @@ void main() =&gt; runApp(MaterialApp(home: Scaffold(
 <h3 id="q26">26. Widget、Element、RenderObject、Layer 和一帧渲染</h3>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>Widget 与 Element：</strong>Widget 是不可变配置；Element 维护当前配置和树节点关系，有状态节点还关联 State。新配置匹配原节点时可以继续保留状态。</p>
-<p><strong>RenderObject 与 Layer：</strong>RenderObject 负责布局、记录绘制内容和命中测试；Layer 组织需要合成的内容。Widget、RenderObject、Layer 不是一一对应。</p>
-<p><strong>一帧的过程：</strong>完整更新通常经历 build、layout、paint，再由引擎合成并光栅化成像素；实际只处理需要更新的阶段。</p>
-<p><strong>复用与重绘：</strong>build 不等于重建所有节点，更不等于重绘所有像素。RepaintBoundary 可隔离绘制变化，但也有图层和内存成本。</p>
+<p><strong>Widget 与 Element：</strong>Widget 是不可变配置，Element 维护配置与树节点关系，StatefulElement 关联 State；新旧配置符合类型和 Key 匹配规则且原节点未销毁时，可以复用 Element 与 State。</p>
+<p><strong>RenderObject 与 Layer：</strong>RenderObject 负责布局、绘制内容记录和命中测试；Layer 组织参与合成的内容。部分 Widget 不创建 RenderObject，部分 RenderObject 不创建独立 Layer，三类对象不一一对应。</p>
+<p><strong>帧更新流程：</strong>需要完整更新时，框架依次处理构建、布局、合成信息更新与绘制，再由引擎合成和光栅化；实际执行范围取决于各节点的脏标记及边界。</p>
+<p><strong>绘制隔离：</strong>重新执行 build 不要求重新创建所有节点或重绘全部像素；RepaintBoundary 可隔离不同区域的绘制更新，但增加图层及内存成本，应根据实际绘制开销决定是否使用。</p>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-dart">import 'package:flutter/material.dart';
@@ -1575,10 +1575,10 @@ class _PaintDemoState extends State&lt;PaintDemo&gt; {
 <h3 id="q27">27. 线程模型，以及高刷新率上怎么看掉帧</h3>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>传统任务职责：</strong>Platform 处理平台交互，UI 执行 Dart 界面工作，Raster 负责光栅化相关工作，IO 处理资源相关任务；这些名称不保证对应四条独立线程。</p>
-<p><strong>UI 与 Raster：</strong>主 isolate 进行构建、布局和绘图指令记录；Raster 与 GPU 配合生成像素。Raster 线程不是显卡本身。</p>
-<p><strong>刷新预算：</strong>60Hz 的刷新间隔约为 16.7ms，120Hz 约为 8.3ms；刷新率越高，持续供帧的时间要求越紧。</p>
-<p><strong>排查方法：</strong>在目标真机的 profile 模式观察 DevTools 帧时间，先区分 UI 和 Raster 瓶颈，再检查计算、布局、绘制与资源处理。debug 帧时间不能代表发布性能。</p>
+<p><strong>任务职责：</strong>Platform 负责平台交互，UI 执行 Dart 界面任务，Raster 负责光栅化相关工作，IO 处理资源相关任务；任务职责到系统线程的映射取决于平台与引擎版本。</p>
+<p><strong>UI 与 Raster：</strong>主 isolate 执行构建、布局及绘制指令记录，Raster 任务与 GPU 配合生成像素；Raster 线程是执行渲染任务的系统线程，GPU 是处理图形计算的硬件。</p>
+<p><strong>刷新预算：</strong>目标刷新率决定相邻显示机会的间隔，刷新间隔与刷新率成反比；持续按目标刷新率供帧要求各流水线阶段及时完成，超过可用时间可能错过显示机会。</p>
+<p><strong>诊断条件：</strong>在目标真机支持的 profile 模式下使用 DevTools 观察帧时间，区分 UI 与 Raster 瓶颈，再分析计算、布局、绘制和资源开销；debug 模式的额外检查与调试开销使帧时间不能直接代表发布性能。</p>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <p>这是性能排查操作示例，在终端运行；无需把命令放入 main.dart。</p>
@@ -1630,10 +1630,10 @@ flutter run --profile -d &lt;设备ID&gt;
 <h3 id="q28">28. 什么时候自定义布局</h3>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>先选层级：</strong>优先组合现有组件。只改变绘制内容用 CustomPaint；需要安排子节点约束和位置，可用自定义布局代理。</p>
-<p><strong>何时写 RenderObject：</strong>现有组件与布局代理无法表达所需测量关系，或测量证明确有必要时，再实现 RenderObjectWidget 和 RenderObject。</p>
-<p><strong>布局协议：</strong>RenderBox 必须在父约束内确定自身尺寸，并正确布局、定位子节点；不能在 paint 阶段偷偷修改布局结果。</p>
-<p><strong>完整职责：</strong>配置改变后按影响请求 layout 或 paint，同时处理命中测试、辅助功能语义和父布局数据。重绘边界也应根据实际成本选择。</p>
+<p><strong>实现层级：</strong>优先组合现有组件；只改变绘制内容时使用 CustomPaint，需要控制子节点约束与位置且布局代理能表达测量关系时，使用自定义布局代理。</p>
+<p><strong>自定义渲染对象：</strong>现有组件和布局代理无法表达所需测量关系，或性能测量证明必须降低现有布局开销时，可实现 RenderObjectWidget 与配套 RenderObject。</p>
+<p><strong>布局协议：</strong>自定义 RenderBox 必须在父级约束内确定自身尺寸，并按协议布局与定位子节点；绘制阶段可以应用绘制变换，不能替代布局阶段修改尺寸和约束。</p>
+<p><strong>完整职责：</strong>配置变化后按影响标记重新布局、重绘或语义更新，并正确处理命中测试、辅助功能语义与父布局数据；是否设置重绘边界应根据绘制隔离收益和资源成本判断。</p>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-dart">import 'package:flutter/material.dart';
@@ -1671,10 +1671,10 @@ class LinePainter extends CustomPainter {
 <h3 id="q29">29. 一次点击为什么只有一个组件响应</h3>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>两个过程：</strong>命中测试决定哪些节点收到指针事件，手势识别再根据按下、移动、抬起判断动作；收到事件不等于最终点击成功。</p>
-<p><strong>手势竞技场：</strong>多个识别器竞争同一指针时，会决定接受或拒绝。普通父子点击竞争通常由内层胜出，但父级仍可能收到原始事件和部分提前回调。</p>
-<p><strong>拖动与点击：</strong>拖动识别器胜出后，点击可能取消；onTapDown 已执行，也不代表之后一定触发 onTap。</p>
-<p><strong>Listener 与 behavior：</strong>Listener 观察原始指针，不参与手势竞争。HitTestBehavior 影响命中范围与后方命中，不直接改变父子 tap 竞争规则。</p>
+<p><strong>命中与识别：</strong>命中测试决定接收原始指针事件的节点，手势识别器根据指针事件序列判断手势；收到指针事件不表示手势识别成功。</p>
+<p><strong>手势竞争：</strong>识别器进入同一指针的手势竞技场后，按接受、拒绝和收尾规则确定归属；普通父子点击识别器同时命中并竞争时，内层通常先进入竞技场并胜出，父级仍可收到原始事件及部分提前回调。</p>
+<p><strong>回调条件：</strong>onTapDown 可在最终胜负确定前触发，不能保证后续执行 onTap；点击识别器未获胜或不再满足点击条件时，应按取消流程处理。手势团队可协作，不能将普通点击规则推广为所有手势只能有一个响应者。</p>
+<p><strong>Listener 与命中行为：</strong>Listener 监听原始指针事件，不参与手势竞技场；HitTestBehavior 控制节点自身与后方目标的命中行为，不直接改变已进入竞技场的父子点击识别器的竞争规则。</p>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-dart">import 'package:flutter/material.dart';
@@ -1723,10 +1723,10 @@ void main() =&gt; runApp(MaterialApp(home: Scaffold(body: Center(
 <h3 id="q30">30. Flutter 如何和 Android / iOS 通信</h3>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>平台通道：</strong>在 Dart 和 Android/iOS 实现之间交换消息。MethodChannel 用于方法调用与结果，EventChannel 用于事件流，BasicMessageChannel 用于双向消息。</p>
-<p><strong>编码与线程：</strong>双方通过 codec 编解码，不共享同一个对象。异步返回结果不代表原生 handler 自动在后台，耗时工作仍需按平台线程规则调度。</p>
-<p><strong>Pigeon：</strong>根据接口定义生成两端类型化通信代码，减少手写协议，底层仍使用平台通道。</p>
-<p><strong>FFI 与 PlatformView：</strong>FFI 调用兼容 C 接口的函数，需要管理类型和内存；PlatformView 嵌入原生界面，涉及视图生命周期和合成。</p>
+<p><strong>平台通道：</strong>平台通道在 Dart 与平台实现之间交换消息；MethodChannel 表达方法调用及结果，EventChannel 表达事件流，BasicMessageChannel 提供双向消息通信。</p>
+<p><strong>协议与线程：</strong>通信两端必须使用匹配的通道标识和编解码协议，交换编码后的值，不共享同一个 Dart 对象；异步结果不保证平台处理函数在后台线程执行，任务必须遵守平台 API 与通道的线程要求。</p>
+<p><strong>Pigeon：</strong>根据接口定义生成两端的类型化通信代码，减少协议手写与类型不匹配；生成代码底层仍使用平台通道，两端定义和生成版本必须兼容。</p>
+<p><strong>FFI 与 PlatformView：</strong>FFI 调用兼容 C ABI 的原生接口，调用方必须维护类型、内存及资源生命周期；PlatformView 嵌入原生视图，需要处理视图生命周期和平台合成约束。</p>
 </div>
 
 <h4>代码示例（看注释与结果）</h4>
@@ -1774,10 +1774,10 @@ class _SettingsState extends State&lt;SettingsPage&gt; {
 <h3 id="q31">31. 包和插件有什么区别</h3>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>package：</strong>代码、资源和依赖的复用发布单位，可包含 Dart 逻辑、Flutter 组件和资源。</p>
-<p><strong>plugin：</strong>按 Flutter 平台集成约定提供平台实现和注册信息的一类 package，让应用通过 Dart API 使用平台能力。</p>
-<p><strong>实现方式：</strong>插件可以使用 Platform Channel 或 FFI；在应用内写了通道代码，不等于已经封装出可复用插件。</p>
-<p><strong>联邦插件：</strong>把面向应用的 API、平台接口和各平台实现分开维护。应用通常依赖入口包，并检查目标平台支持及相应实现是否接入。</p>
+<p><strong>package：</strong>代码、资源与依赖的复用和发布单位，可封装 Dart 逻辑、Flutter 组件及资源，并通过包元数据声明依赖。</p>
+<p><strong>plugin：</strong>遵循 Flutter 平台集成约定、声明平台实现和注册信息的一类 package，通过 Dart API 向应用提供平台能力。</p>
+<p><strong>实现与封装：</strong>插件可通过平台通道或 FFI 接入原生实现；应用内部的平台通信代码只有在完成包结构、平台声明和相应集成配置后，才构成可复用插件。</p>
+<p><strong>联邦插件：</strong>将面向应用的 API、平台接口和各平台实现分离维护；应用依赖入口包时，仍需确认目标平台受支持，并已接入对应的平台实现。</p>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <p>这是项目结构示例。命令会创建两个新目录，请在空的练习目录执行。</p>
@@ -1803,10 +1803,10 @@ flutter create --template=plugin --platforms=android,ios interview_device
 <h3 id="q32">32. 混合栈怎么组织</h3>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>两套导航：</strong>混合栈要协调原生容器栈与 Flutter 路由栈，统一处理进入、返回、可见性、输入和生命周期。</p>
-<p><strong>容器与引擎：</strong>原生容器负责展示，FlutterEngine 运行 Dart 内容。容器不可见，不代表引擎中的定时器、动画和订阅已经停止。</p>
-<p><strong>复用引擎：</strong>可减少启动成本，但根 isolate、路由和全局状态通常延续，需要明确进入时重置什么、退出时保留什么。</p>
-<p><strong>多引擎：</strong>各引擎有独立的根 isolate 和导航状态，资源与管理成本也更高。FlutterEngineGroup 可共享部分底层资源，并不是多个页面共用同一个引擎。</p>
+<p><strong>导航协调：</strong>混合栈同时包含原生容器栈与 Flutter 路由栈，必须明确进入、返回和路由结果的处理主体，并协调可见性、输入与生命周期。</p>
+<p><strong>容器与引擎：</strong>原生容器承载 Flutter 画面，FlutterEngine 运行 Dart 内容；容器不可见或被移除不保证引擎停止，定时器、动画与订阅需要按各自生命周期管理。</p>
+<p><strong>引擎复用：</strong>复用仍在运行的引擎可降低重复启动成本，但根 isolate、路由和全局状态通常继续存在；必须定义容器重新接入时的状态恢复、重置与退出清理规则。</p>
+<p><strong>多引擎：</strong>各引擎拥有独立的根 isolate 与导航状态，需要分别协调通信和生命周期；FlutterEngineGroup 可共享部分底层资源，但不会把多个引擎合并成同一执行环境。</p>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <p>这是 Android add-to-app 的宿主片段，用于说明引擎复用；不能放入 Dart 文件直接运行。</p>
@@ -1861,10 +1861,10 @@ startActivity(
 <h3 id="q33">33. 构建模式和多端产物</h3>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>三种模式：</strong>debug 用于调试并保留检查，支持的平台可热重载；profile 保留性能分析能力；release 面向发布并启用发布优化。</p>
-<p><strong>编译方式：</strong>移动端和桌面 debug 通常用 JIT，profile/release 用 AOT；Web 有自己的编译路径，不能统一说成手机机器码。</p>
-<p><strong>优化与混淆：</strong>tree shaking 删除从有效入口不可达的 Dart 代码；混淆需要显式开启，并保存符号信息。release 不代表分发签名已经配置正确。</p>
-<p><strong>产物：</strong>Android 常见 APK/AAB，iOS 通过归档导出分发包，桌面生成平台应用，Web 生成 JavaScript 或 Wasm 等静态资源。应在目标平台和对应模式下评估。</p>
+<p><strong>构建模式：</strong>debug 保留调试检查，并在受支持的平台提供热重载；profile 保留性能分析能力；release 面向分发并启用发布优化，模式可用性取决于目标平台。</p>
+<p><strong>编译方式：</strong>Flutter 移动端和桌面端在受支持的 debug 环境中通常使用 JIT，profile 与 release 通常使用 AOT；Web 使用独立的编译路径，不能套用移动端机器码产物规则。</p>
+<p><strong>优化与混淆：</strong>tree shaking 移除从有效入口不可达的代码；在支持 Dart 代码混淆的构建目标上，混淆需显式启用并保存还原堆栈所需的符号信息。分发签名与构建模式分别配置。</p>
+<p><strong>平台产物：</strong>构建产物由目标平台与分发方式决定：Android 生成 APK 或 AAB，iOS 生成应用归档及相应分发包，桌面端生成平台应用，Web 生成 JavaScript 或 Wasm 等静态资源；验证必须针对实际目标与构建模式进行。</p>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <p>这是构建命令示例，在终端按目标平台选用；不需要安装示例中所有平台工具。</p>
@@ -1913,10 +1913,10 @@ flutter build appbundle --release --obfuscate --split-debug-info=build/symbols
 <h3 id="q34">34. 怎样减少重建、长列表卡顿和大图开销</h3>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>先定位：</strong>在真机 profile 模式观察帧时间和内存，确认瓶颈在构建、布局、绘制还是计算，再选择优化方式。</p>
-<p><strong>重建与列表：</strong>缩小状态和订阅范围，复用不变的 Widget；长列表按需构建，尺寸统一时提供尺寸信息，避免多余测量与大量保活。重排还需稳定 Key 及必要的索引映射。</p>
-<p><strong>绘制与图片：</strong>按测量结果设置重绘边界、减少昂贵效果。图片按显示所需的物理像素解码，并控制预加载和缓存规模。</p>
-<p><strong>计算与验证：</strong>支持的平台可把 CPU 重活交给后台 isolate；及时释放 Controller、Timer 和订阅。最终以帧时间、内存和实际交互改善验证效果。</p>
+<p><strong>定位条件：</strong>在目标真机支持的 profile 模式下检查帧时间与内存，确认瓶颈属于构建、布局、绘制、资源处理还是同步计算，再确定优化措施。</p>
+<p><strong>重建与列表：</strong>缩小状态与订阅范围，复用不变的 Widget；懒列表按需构建，已知子项尺寸时提供准确尺寸信息，减少重复测量与过度保活。重排需要稳定的 Key，并在委托需要时提供 Key 到新索引的映射。</p>
+<p><strong>绘制与图片：</strong>根据测量结果设置重绘边界并降低高成本绘制；按显示所需物理像素规划图片解码尺寸，在平台与图片源支持时使用解码尺寸控制，并限制预加载与缓存占用。</p>
+<p><strong>计算与验证：</strong>在支持 isolate 的平台上，计算收益超过启动和通信成本时可将同步计算移至其他 isolate；资源不再使用时释放控制器、定时器和订阅，最终用同等条件下的帧时间、内存与交互响应验证效果。</p>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-dart">import 'package:flutter/material.dart';
