@@ -123,8 +123,32 @@ html{scroll-behavior:smooth}
 .markdown-body .viz-strip{background:#e5eef8;color:#254b70;padding:12px 14px;border-radius:7px;font-size:14px;margin:14px 0;line-height:1.9}
 .markdown-body .viz-caution{background:#fff5e4;color:#79531b;border:1px solid #e5cc9b}
 .markdown-body .review-viz .viz-note{font-size:13px;color:#536579;margin:10px 0 0;line-height:1.7}
+.markdown-body .dispatch-viz{--dispatch-background:#f5f8fc;--dispatch-line:#507ca4}
+.markdown-body .dispatch-viz code{padding:0;background:none;color:inherit;font-size:inherit}
+.markdown-body .dispatch-class-diagram{max-width:440px;margin:14px auto 0;font-size:13px}
+.markdown-body .dispatch-box{border:1px solid #bfd1e2;border-radius:8px;background:#fff}
+.markdown-body .dispatch-box-title{padding:8px 10px;border-bottom:1px solid #bfd1e2;border-radius:7px 7px 0 0;background:#eaf2fa;color:#163c60;text-align:center;font-weight:700}
+.markdown-body .dispatch-box-title small{display:block;font-size:12px;font-weight:400;color:#466481}
+.markdown-body .dispatch-box-fields{margin:0;padding:4px 10px}
+.markdown-body .dispatch-box-fields>div{
+  display:grid;
+  grid-template-columns:minmax(7em,2fr) minmax(0,3fr);
+  align-items:baseline;
+  gap:8px;
+  padding:5px 0;
+}
+.markdown-body .dispatch-box-fields>div+div{border-top:1px solid #e5edf5}
+.markdown-body .dispatch-box-fields dt{font-weight:600;color:#345775}
+.markdown-body .dispatch-box-fields dd{margin:0}
+.markdown-body .dispatch-arrow{position:relative;display:grid;place-items:center;min-height:40px;text-align:center;color:#365e82;font-size:12px}
+.markdown-body .dispatch-arrow::before,.markdown-body .dispatch-arrow::after{content:"";position:absolute;left:50%;pointer-events:none}
+.markdown-body .dispatch-arrow::before{top:0;bottom:1px;border-left:1px solid var(--dispatch-line)}
+.markdown-body .dispatch-arrow::after{bottom:2px;width:7px;height:7px;border-right:1px solid var(--dispatch-line);border-bottom:1px solid var(--dispatch-line);transform:translateX(-50%) rotate(45deg)}
+.markdown-body .dispatch-arrow span{position:relative;padding:0 4px;background:var(--dispatch-background)}
+.markdown-body .dispatch-viz :target{scroll-margin-top:2rem}
+.markdown-body .dispatch-box:target,.markdown-body .dispatch-box-fields>div:target{outline:2px solid #507ca4;outline-offset:2px}
 @media(max-width:600px){.markdown-body .review-viz{padding:15px 12px}.markdown-body .viz-flow{grid-template-columns:minmax(0,1fr);gap:4px}.markdown-body .viz-arrow{transform:rotate(90deg);height:20px}.markdown-body .viz-node{padding:11px 13px}.markdown-body .viz-cards,.markdown-body .viz-choice .viz-cards{grid-template-columns:minmax(0,1fr)}.markdown-body .viz-title{font-size:18px}.markdown-body .viz-container{padding:10px}}
-@media print{.review-viz{break-inside:auto;background:#fff!important}.viz-lane,.viz-step,.viz-cards{break-inside:avoid}.viz-heading{break-after:avoid}}
+@media print{.review-viz{break-inside:auto;background:#fff!important}.viz-lane,.viz-step,.viz-cards,.dispatch-viz{break-inside:avoid}.viz-heading{break-after:avoid}}
 
 </style>
 <div class="study-intro">
@@ -1121,18 +1145,90 @@ Demo().run() // Running：交给 Objective-C 运行时查找 run() 再执行</co
 <p>Dog 的 speak() 标记为 final，子类不能再改写；直接用 Dog 调用时，编译器已经能确定实现，不用再查表。Objective-C 的调用则把对象和 selector 交给运行时，由运行时找到 IMP，也就是实际方法代码的地址，再执行。Demo.run() 的 @objc dynamic 要求使用后一种方式。</p>
 </div>
 </div>
-<h4>图示说明</h4>
-<figure class="review-viz" aria-labelledby="viz-title-16">
-<div class="viz-heading"><span class="viz-kicker">第 16 题 · 看图复习</span><div class="viz-title" id="viz-title-16">四种派发：谁来选择最终实现？</div><p>看方法怎样声明、变量写的是什么类型，再判断程序会直接调用还是查表找方法。</p></div>
-<div class="viz-lane"><div class="viz-lane-title">静态派发</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>dog.speak() · 已知 final 方法</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>编译器已经知道要调用 Dog.speak()</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>Dog.speak → Hello</strong></div></div></div><div class="viz-lane"><div class="viz-lane-title">虚表派发</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>animal.sound() · 变量声明为 Animal</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>从 Dog 的虚表找到 Dog.sound()</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>Dog.sound → Woof</strong></div></div></div><div class="viz-lane"><div class="viz-lane-title">见证表派发</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>speaker.speak() · any Speaker</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>从 Dog 的协议见证表找到 Dog.speak()</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>Dog.speak → Hello</strong></div></div></div><div class="viz-lane"><div class="viz-lane-title">OC 消息派发</div><div class="viz-flow"><div class="viz-node "><span class="viz-label">起点</span><strong>Demo().run() · @objc dynamic</strong></div><span class="viz-arrow" aria-label="然后">→</span><div class="viz-node "><span class="viz-label">操作 / 规则</span><strong>OC 运行时根据对象和方法标识，查找方法代码的地址</strong></div><span class="viz-arrow" aria-label="得到">→</span><div class="viz-node viz-result"><span class="viz-label">结果</span><strong>执行 run → Running</strong></div></div></div>
-<p class="viz-note">图示展示常见过程；编译器如果知道查表后一定调用哪个方法，也可能省掉查表直接调用。</p>
+<h4 id="viz-title-16">图示说明</h4>
+<figure class="review-viz dispatch-viz" aria-labelledby="viz-vtable-16">
+<figcaption class="viz-title" id="viz-vtable-16">Swift 类实例与类元数据</figcaption>
+<p class="viz-note">每个实例保存自己的存储属性。同一类型的实例共享一份类元数据。</p>
+<div class="dispatch-class-diagram">
+  <div class="dispatch-box" id="dispatch-object-16">
+    <div class="dispatch-box-title">原生 Swift 类实例</div>
+    <dl class="dispatch-box-fields">
+      <div><dt><code>metadata</code></dt><dd>指向实际类的元数据</dd></div>
+      <div><dt><code>refCounts</code></dt><dd>引用计数状态</dd></div>
+      <div><dt>存储属性</dt><dd>该实例自己的数据</dd></div>
+    </dl>
+  </div>
+  <div class="dispatch-arrow"><span><code>metadata</code> 指向</span></div>
+  <div class="dispatch-box" id="dispatch-metadata-16">
+    <div class="dispatch-box-title">类元数据<small><code>ClassMetadata</code></small></div>
+    <dl class="dispatch-box-fields">
+      <div><dt><code>Superclass</code></dt><dd>指向父类</dd></div>
+      <div><dt><code>Description</code></dt><dd>指向类描述符</dd></div>
+      <div id="dispatch-vtable-16"><dt><code>vtable</code>（虚表）</dt><dd>内联在类元数据中，按槽位存放 Swift 方法入口</dd></div>
+    </dl>
+  </div>
+</div>
+</figure>
+
+<figure class="review-viz dispatch-viz" aria-labelledby="viz-objc-16">
+<figcaption class="viz-title" id="viz-objc-16">Objective-C 实例与运行时类</figcaption>
+<div class="dispatch-class-diagram">
+  <div class="dispatch-box">
+    <div class="dispatch-box-title">Objective-C 实例<small><code>objc_object</code> 对象头</small></div>
+    <dl class="dispatch-box-fields">
+      <div><dt><code>isa</code></dt><dd>用于定位实例所属的类</dd></div>
+      <div><dt>实例变量（如有）</dt><dd>存储在实例的对象头之后</dd></div>
+    </dl>
+  </div>
+  <div class="dispatch-arrow"><span>由 <code>isa</code> 定位</span></div>
+  <div class="dispatch-box">
+    <div class="dispatch-box-title">运行时类<small><code>objc_class</code></small></div>
+    <dl class="dispatch-box-fields">
+      <div><dt><code>isa</code></dt><dd>关联元类</dd></div>
+      <div><dt><code>superclass</code></dt><dd>指向父类</dd></div>
+      <div><dt><code>cache</code></dt><dd>方法缓存，记录 <code>SEL</code> 到 <code>IMP</code> 的映射</dd></div>
+      <div><dt><code>bits</code></dt><dd>类数据地址和标志位</dd></div>
+    </dl>
+  </div>
+  <div class="dispatch-arrow"><span><code>bits</code> 关联</span></div>
+  <div class="dispatch-box" id="dispatch-objc-16">
+    <div class="dispatch-box-title">Objective-C 类数据</div>
+    <dl class="dispatch-box-fields">
+      <div><dt>方法列表</dt><dd>保存 Objective-C 可见的实例方法</dd></div>
+      <div><dt>方法表项</dt><dd><code>SEL</code>（方法标识）、类型编码、<code>IMP</code>（实现地址）</dd></div>
+    </dl>
+  </div>
+</div>
+</figure>
+
+<figure class="review-viz dispatch-viz" aria-labelledby="viz-witness-16">
+<figcaption class="viz-title" id="viz-witness-16">协议存在容器与见证表</figcaption>
+<p class="viz-note">一张协议见证表对应某个具体类型对某个协议的遵循。</p>
+<div class="dispatch-class-diagram">
+  <div class="dispatch-box">
+    <div class="dispatch-box-title">协议存在容器<small>普通的非类约束 Swift 协议</small></div>
+    <dl class="dispatch-box-fields">
+      <div><dt>值缓冲区</dt><dd>保存值或指向额外存储的指针</dd></div>
+      <div><dt>类型元数据指针</dt><dd>指向具体类型的元数据</dd></div>
+      <div><dt>见证表指针</dt><dd>指向该类型对应的协议见证表</dd></div>
+    </dl>
+  </div>
+  <div class="dispatch-arrow"><span>见证表指针指向</span></div>
+  <div class="dispatch-box" id="dispatch-witness-table-16">
+    <div class="dispatch-box-title">协议见证表<small><code>WitnessTable</code></small></div>
+    <dl class="dispatch-box-fields">
+      <div><dt><code>Description</code></dt><dd>指向协议遵循描述符</dd></div>
+      <div><dt>方法表项</dt><dd>为每个协议方法要求记录对应的实现入口</dd></div>
+    </dl>
+  </div>
+</div>
 </figure>
 <p class="pitfall"><strong>别答错：</strong>struct 通过协议调用方法时也可能查见证表；class 的 final 方法也可以直接调用，不能只看 struct 或 class 就判断。</p>
 <details class="advanced-note">
 <summary>进阶补充：编译优化会改变派发方式</summary>
 <p>编译器如果已经知道查表后一定会调用哪个方法，就可能省掉查表，直接调用这个方法。这种优化叫“去虚化”。所以图示用于说明常见调用过程，要确认最终有没有查表，需要检查编译后的代码；不能只看类型或方法名字就下结论。</p>
 </details>
-<p class="source-link">延伸核对：<a href="https://github.com/swiftlang/swift/blob/main/docs/SIL/SIL.md" target="_blank" rel="noopener noreferrer">Swift 官方文档 / 实现资料</a></p>
+<p class="source-link">延伸核对：<a href="https://github.com/swiftlang/swift/blob/main/docs/ABI/TypeMetadata.rst#class-metadata" target="_blank" rel="noopener noreferrer">Swift 类元数据</a> · <a href="https://github.com/apple-oss-distributions/objc4/blob/main/runtime/objc-runtime-new.h#L2432-L2440" target="_blank" rel="noopener noreferrer">Objective-C 类定义</a> · <a href="https://github.com/swiftlang/swift/blob/main/docs/ABI/TypeLayout.rst" target="_blank" rel="noopener noreferrer">Swift 存在容器</a></p>
 </section>
 <section class="question" data-question="17">
 <h3 id="heading-17" data-id="heading-17">17. Swift 协议内部是什么？见证表、存在容器怎么理解？</h3>
