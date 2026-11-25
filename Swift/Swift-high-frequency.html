@@ -273,7 +273,8 @@ html{scroll-behavior:smooth}
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-swift">protocol Named {
     var name: String { get }
-    func greeting() -&gt; String // 声明为协议要求，show 才能根据协议遵循关系调用 greeting() 的实现
+    // 声明为协议要求，show 才能根据协议遵循关系调用 greeting() 的实现
+    func greeting() -&gt; String
 }
 extension Named {
     func greeting() -&gt; String { &quot;你好，\(name)&quot; } // 默认实现
@@ -284,7 +285,8 @@ struct Robot: Named {
     func greeting() -&gt; String { &quot;编号：\(name)&quot; }
 }
 func show&lt;T: Named&gt;(_ value: T) {
-    print(value.greeting()) // 只需要 Named 规定的 greeting()，User 和 Robot 都能传入
+    // 只需要 Named 规定的 greeting()，User 和 Robot 都能传入
+    print(value.greeting())
 }
 show(User(name: &quot;小明&quot;))  // 你好，小明
 show(Robot(name: &quot;R1&quot;)) // 编号：R1</code></pre>
@@ -465,11 +467,11 @@ Demo().run() // Running：交给 Objective-C 运行时查找 run() 再执行</co
     <div class="dispatch-box-title">类元数据<small><code>ClassMetadata</code></small></div>
     <dl class="dispatch-box-fields">
       <div><dt><code>Superclass</code></dt><dd>指向父类</dd></div>
-      <div><dt><code>Description</code></dt><dd>指向类描述符</dd></div>
-      <div><dt><code>vtable</code>（虚表）</dt><dd>内联在类元数据中的方法槽位</dd></div>
+      <div><dt><code>Description</code></dt><dd>指向类的基础描述信息（类名、字段等）</dd></div>
+      <div><dt><code>vtable</code>（虚表）</dt><dd>直接嵌在类元数据里的方法地址表</dd></div>
     </dl>
   </div>
-  <div class="dispatch-arrow"><span>展开内联槽位</span></div>
+  <div class="dispatch-arrow"><span>展开查看虚表里存放的方法地址</span></div>
   <div class="dispatch-box" id="dispatch-vtable-16">
     <div class="dispatch-box-title"><code>vtable</code> · 槽位与入口<small>每个槽位保存一个函数入口地址</small></div>
     <dl class="dispatch-box-fields">
@@ -513,39 +515,52 @@ Demo().run() // Running：交给 Objective-C 运行时查找 run() 再执行</co
 </figure>
 
 <figure class="review-viz dispatch-viz dispatch-paths" aria-labelledby="viz-dispatch-paths-16">
-<figcaption class="viz-title" id="viz-dispatch-paths-16">Swift 的三种方法调用路径</figcaption>
+<figcaption class="viz-title" id="viz-dispatch-paths-16">四种方法调用路径对比</figcaption>
 <div class="viz-lane" role="group" aria-labelledby="dispatch-static-flow-16">
-  <div class="viz-lane-title" id="dispatch-static-flow-16">静态派发</div>
+  <div class="viz-lane-title" id="dispatch-static-flow-16">1. 静态派发</div>
   <div class="viz-flow dispatch-direct-flow">
-    <div class="viz-node"><strong>编译时确定目标</strong></div>
+    <div class="viz-node"><strong>编译时直接确定目标</strong></div>
     <span class="viz-arrow" aria-hidden="true">→</span>
     <div class="viz-node viz-result"><strong>直接调用方法实现</strong></div>
   </div>
 </div>
 <div class="viz-lane" role="group" aria-labelledby="dispatch-vtable-flow-16">
-  <div class="viz-lane-title" id="dispatch-vtable-flow-16">虚表派发</div>
+  <div class="viz-lane-title" id="dispatch-vtable-flow-16">2. 虚表派发（可重写的类方法）</div>
   <div class="dispatch-lookup">
     <div class="viz-node"><span class="viz-label">对象实例</span><strong><code>metadata</code> 指针</strong></div>
-    <div class="dispatch-arrow dispatch-reference"><span>引用</span></div>
+    <div class="dispatch-arrow dispatch-reference"><span>找到类</span></div>
     <div class="viz-node"><span class="viz-label">实际类的元数据</span><strong><a href="#dispatch-vtable-16">定位虚表槽位</a></strong></div>
     <div class="dispatch-arrow dispatch-reference"><span>读地址</span></div>
     <div class="viz-node"><span class="viz-label">虚表槽位中的值</span><strong>方法实现的地址</strong></div>
     <div class="dispatch-arrow dispatch-call"><span>间接调用</span></div>
-    <div class="viz-node viz-result"><strong>具体方法实现</strong></div>
+    <div class="viz-node viz-result"><strong>真实方法实现</strong></div>
   </div>
 </div>
 <div class="viz-lane" role="group" aria-labelledby="dispatch-witness-flow-16">
-  <div class="viz-lane-title" id="dispatch-witness-flow-16">协议见证表派发</div>
+  <div class="viz-lane-title" id="dispatch-witness-flow-16">3. 协议见证表派发（通过协议调用）</div>
   <div class="dispatch-lookup">
-    <div class="viz-node"><span class="viz-label">协议存在容器</span><strong>见证表指针</strong></div>
-    <div class="dispatch-arrow dispatch-reference"><span>引用</span></div>
-    <div class="viz-node"><span class="viz-label">协议见证表</span><strong><a href="#speaker-witness-table">按协议要求定位槽位</a></strong><span class="viz-label">读出槽位中的函数地址</span></div>
+    <div class="viz-node"><span class="viz-label">协议变量（存在容器）</span><strong>见证表指针</strong></div>
+    <div class="dispatch-arrow dispatch-reference"><span>找到表</span></div>
+    <div class="viz-node"><span class="viz-label">协议见证表</span><strong><a href="#speaker-witness-table">按协议要求定位槽位</a></strong><span class="viz-label">取出对应的函数地址</span></div>
     <div class="dispatch-arrow dispatch-call"><span>间接调用</span></div>
-    <div class="viz-node"><span class="viz-label">槽位指向的函数</span><strong>见证函数</strong></div>
-    <div class="dispatch-arrow dispatch-call"><span>转调</span></div>
-    <div class="viz-node viz-result"><strong>具体方法实现</strong></div>
+    <div class="viz-node"><span class="viz-label">槽位指向的函数</span><strong>桥接跳转函数（见证函数）</strong></div>
+    <div class="dispatch-arrow dispatch-call"><span>转发调用</span></div>
+    <div class="viz-node viz-result"><strong>真实方法实现</strong></div>
   </div>
 </div>
+<div class="viz-lane" role="group" aria-labelledby="dispatch-objc-flow-16">
+  <div class="viz-lane-title" id="dispatch-objc-flow-16">4. Objective-C 消息派发（<code>@objc dynamic</code>）</div>
+  <div class="dispatch-lookup">
+    <div class="viz-node"><span class="viz-label">发起消息调用</span><strong><code>objc_msgSend</code></strong><span class="viz-label">传入对象与 <code>SEL</code></span></div>
+    <div class="dispatch-arrow dispatch-reference"><span>按 <code>isa</code> 查</span></div>
+    <div class="viz-node"><span class="viz-label">类的方法缓存</span><strong>先查 <code>cache</code></strong><span class="viz-label">命中则直接拿 <code>IMP</code></span></div>
+    <div class="dispatch-arrow dispatch-reference"><span>未命中时</span></div>
+    <div class="viz-node"><span class="viz-label">类与父类方法列表</span><strong><a href="#dispatch-objc-16">查找 <code>method_t</code></a></strong><span class="viz-label">匹配 <code>SEL</code> 取出 <code>IMP</code></span></div>
+    <div class="dispatch-arrow dispatch-call"><span>动态调用</span></div>
+    <div class="viz-node viz-result"><strong>真实 <code>IMP</code> 实现</strong></div>
+  </div>
+</div>
+<p class="viz-note">注：普通 <code>any</code> 协议变量会在内存中用一个固定大小的“存在容器”打包保存数据与见证表指针，详细结构见第 9 题。</p>
 </figure>
 <p class="pitfall"><strong>别答错：</strong>struct 通过协议调用方法时也可能查见证表；class 的 final 方法也可以直接调用，不能只看 struct 或 class 就判断。</p>
 <p class="source-link">延伸核对：<a href="https://github.com/swiftlang/swift/blob/main/docs/ABI/TypeMetadata.rst#class-metadata" target="_blank" rel="noopener noreferrer">Swift 类元数据</a> · <a href="https://github.com/apple-oss-distributions/objc4/blob/main/runtime/objc-runtime-new.h#L2432-L2440" target="_blank" rel="noopener noreferrer">Objective-C 类定义</a> · <a href="https://github.com/swiftlang/swift/blob/main/docs/ABI/TypeLayout.rst" target="_blank" rel="noopener noreferrer">Swift 存在容器</a></p>
@@ -637,7 +652,7 @@ try await demo() // 把本题保存为独立 Swift 文件后，可以直接这�
 <p class="pitfall"><strong>别答错：</strong>不要在 Swift 并发任务里用信号量等待异步结果，这可能占住有限的工作线程。</p>
 <details class="advanced-note">
 <summary>进阶补充：非隔离 async 的执行位置</summary>
-<p>没有指定 actor 的 async 函数，执行位置会受 Swift 版本和编译设置影响。Swift 6.0/6.1 通常让它离开调用方 actor，由通用执行器安排执行。Swift 6.2 启用 <code>NonisolatedNonsendingByDefault</code> 后，它默认可以继续在调用方 actor 上执行；要明确离开调用方 actor，可以用 <code>@concurrent</code>。这些规则都不保证使用某一条固定的后台线程。</p>
+<p>没有绑定到特定 actor 的 <code>async</code> 函数，具体在哪里执行会随 Swift 版本和编译设置变化：在 Swift 6.0 / 6.1 中，它默认会离开调用方所在的 actor，交给系统后台的公共调度池（通用执行器）去执行；而在 Swift 6.2 开启编译选项 <code>NonisolatedNonsendingByDefault</code> 后，为了避免普通异步工具函数无意间来回切换上下文，它会默认继续留在调用方原本的 actor 上执行——只有明确想让它切到后台并发执行时，才加上 <code>@concurrent</code>。不过无论哪种规则，都不能保证一定落在某一条固定编号的后台线程上。</p>
 </details>
 <p class="source-link">延伸核对：<a href="https://github.com/swiftlang/swift-evolution/blob/main/proposals/0461-async-function-isolation.md" target="_blank" rel="noopener noreferrer">异步隔离提案 SE-0461</a> · <a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/concurrency/" target="_blank" rel="noopener noreferrer">Swift 官方文档 / 实现资料</a></p>
 </section>
@@ -702,7 +717,7 @@ await handle.value // 等它实际退出；本例输出“收到取消，结束�
 </div>
 <div class="explanation-item">
 <h5>离开函数后，Task {} 为什么还可能继续运行？</h5>
-<p>Task {} 创建的非结构化任务不会因为调用 Task 初始化器的函数返回就结束；执行 Task 初始化器的当前任务被取消时，新创建的非结构化任务也不会自动取消。需要用 handle 保存 Task 初始化器返回的任务句柄，再通过 handle.cancel() 请求取消该任务，或 await handle.value 等待该任务的执行结果。这里的 handle 是任务句柄，handle.value 才用于取得任务执行结果。Task {} 创建的任务可以沿用创建位置的 actor 等设置，但仍需要自行管理这个非结构化任务。</p>
+<p><code>Task {}</code> 创建的是脱离当前作用域的“独立任务”：即使外层函数已经返回，或者当前父任务被取消了，它也不会自动停下来。因此需要自己用变量保存它返回的控制句柄 <code>handle</code>——调用 <code>handle.cancel()</code> 用来请求取消，调用 <code>await handle.value</code> 用来等待它跑完并拿到返回值。它虽然会继承创建位置的 actor 等上下文环境，但生命周期仍需要自行管理。</p>
 </div>
 </div>
 <h4>图示说明</h4>
@@ -849,7 +864,7 @@ print([withdrawals.0, withdrawals.1].filter { $0 }.count) // 1：余额只够一
 </div>
 <div class="explanation-item">
 <h5>@MainActor 与 Sendable 为什么不能互相替代？</h5>
-<p>ScreenModel 用 @MainActor，要求 title 的读取和修改都遵守主 actor 的访问规则。Snapshot 保存计数结果，Snapshot.count 的类型 Int 也符合 Sendable 要求。@MainActor 规定访问隔离状态和方法时必须遵守主 actor 的隔离规则；Sendable 表示类型的值可以安全地跨并发隔离边界传递或共享。@MainActor 与 Sendable 解决的问题不同，不能互相替代。</p>
+<p>两者解决的问题完全不同，不能互相替代：<code>@MainActor</code> 管的是<strong>“代码在哪执行”</strong>——它强制要求 <code>ScreenModel</code> 中 <code>title</code> 等状态的读写都在主线程（主 actor）上排队执行，避免后台线程直接改界面；而 <code>Sendable</code> 管的是<strong>“数据能不能安全跨任务传递”</strong>——它向编译器证明像 <code>Snapshot</code>（内部只有不可变的 <code>Int</code>）这样的值在多个并发任务之间传递或共享时，不会出现“一边写一边读”的数据竞争。</p>
 </div>
 </div>
 <h4>图示说明</h4>
@@ -988,7 +1003,7 @@ print(Person.species()) // Human</code></pre>
 <h4>回答总结</h4>
 <div class="summary-answer">
 <p><strong>理解协议的运行时结构，可以先分清方法怎么找、值怎么存。</strong> 协议描述符记录协议有哪些要求。协议见证表记录某个具体类型用哪些实现来满足这些要求。通过协议调用这些方法时，Swift 就能从表里找到要执行的实现。</p>
-<p>用没有类约束的普通 <code>any</code> 协议类型保存值时，存在容器会存下这个值或它的地址，同时保留具体类型的信息和协议见证表。值适合放进容器的缓冲区就直接存，否则通常另外分配空间。</p>
+<p>用没有类约束的普通 <code>any</code> 协议类型保存值时，Swift 会用一个固定大小的“打包盒”（即<strong>存在容器</strong>）来统一装下任意遵循该协议的值：盒子里既保存值本身（或它的堆内存地址），也记录着具体类型信息和协议见证表。只要值小到能放进盒子自带的缓冲区就直接存进去；放不下就另外分配一块内存保存，盒子里只记下地址。</p>
 <p>类型元数据标识具体类型，并关联值见证表。值见证表告诉 Swift 值占多少空间、怎样复制和销毁。带协议约束的泛型也可以用协议见证表调用协议要求，同时按泛型参数的具体类型传递值。</p>
 </div>
 <h4>代码示例（看注释与结果）</h4>
@@ -998,7 +1013,8 @@ struct Dog: Speaker {
     func speak() -&gt; String { &quot;Woof&quot; }
 }
 struct BigSpeaker: Speaker {
-    var a, b, c, d: Int // 常见 64 位 Apple 平台上占 32 字节，容器内部 24 字节放不下
+    // 常见 64 位 Apple 平台上占 32 字节，容器内部 24 字节放不下
+    var a, b, c, d: Int
     func speak() -&gt; String { &quot;Big&quot; }
 }
 let small: any Speaker = Dog(age: 1)
@@ -1007,8 +1023,11 @@ print(small.speak()) // Woof
 print(large.speak()) // Big：调用方不必知道容器里的具体类型
 
 func call&lt;T: Speaker&gt;(_ value: T) -&gt; String { value.speak() }
-print(call(Dog(age: 2))) // Woof：泛型函数直接接收 Dog，不用先保存到 any Speaker
-print(MemoryLayout&lt;any Speaker&gt;.size) // 本例在常见 64 位 Apple 平台上为 40，不包括 large 的容器外用于保存 BigSpeaker 值的内存</code></pre>
+// 输出 Woof：泛型函数直接接收 Dog，不用先装进 any Speaker 容器
+print(call(Dog(age: 2)))
+// 本例在常见 64 位 Apple 平台上为 40 字节，
+// 不包括 large 容器外单独分配的 BigSpeaker 内存
+print(MemoryLayout&lt;any Speaker&gt;.size)</code></pre>
 <h4>进一步理解</h4>
 <div class="understanding">
 <div class="explanation-item">
@@ -1855,7 +1874,7 @@ showName(Book(name: "Swift")) // 参数类型由调用者选择</code></pre>
 </div>
 <div class="explanation-item">
 <h5>some Named 与 any Named，谁决定里面的具体类型？</h5>
-<p>make() 声明返回 some Named，函数内部决定始终返回 User，调用方只需要知道结果有 Named 规定的 name。这个普通函数不能另一条分支改为返回 Book。any Named 的变量则可以先保存 User，之后再改成 Book；[any Named] 数组也可以同时保存两种值。</p>
+<p><code>make()</code> 声明返回 <code>some Named</code>，表示具体返回哪种类型由函数内部决定，且每次只能固定返回同一种（这里是 <code>User</code>）——同一个函数里不能在另一条分支改为返回 <code>Book</code>，调用方只需要知道结果有 <code>Named</code> 规定的 <code>name</code>。而 <code>any Named</code> 变量相当于动态容器，可以先保存 <code>User</code>，之后再改成 <code>Book</code>；<code>[any Named]</code> 数组也可以同时混装这两种值。</p>
 </div>
 <div class="explanation-item">
 <h5>为什么隐藏类型后，不能直接使用所有专有成员？</h5>
