@@ -223,9 +223,9 @@ void main() {
 <span class="level">重点理解</span>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong><code>Future</code> 表示一次操作的结果，<code>await</code> 让异步函数等到结果后接着执行。</strong> 函数体先同步运行到第一个 <code>await</code>。等待尚未完成的 Future 时，当前函数暂停，所在 isolate 可以处理其他事件。</p>
-<p>把 <code>await</code> 放在 <code>try</code> 内，就可以用 <code>catch</code> 处理 Future 的失败。如果只在 <code>try</code> 中发起调用，可以另外给返回的 Future 注册错误处理。</p>
-<p>多个 Future 都成功时，<code>Future.wait</code> 按输入顺序返回结果。<code>Completer</code> 可以让代码主动交付成功值或错误，每个 Completer 只能完成一次。同步计算即使放进 Future，执行时仍会占用所在 isolate。</p>
+<p><strong><code>Future</code> 代表一个“以后才会拿到”的结果，<code>await</code> 让异步代码能像同步代码那样按顺序往下写。</strong> 加了 <code>async</code> 的函数在遇到第一个 <code>await</code> 之前都会立刻同步执行；等它遇到还没完成的 <code>Future</code> 时，当前函数就会先暂停交出控制权，让所在的 isolate 去处理点击、绘制等其他事情，等结果回来了再接着往下跑。</p>
+<p>想用 <code>try / catch</code> 接住异步错误，就必须把 <code>await</code> 写在 <code>try</code> 里面。如果调用时没写 <code>await</code>，<code>try / catch</code> 只接得住同步抛出的异常，异步错误必须另外给返回的 Future 挂上 <code>.catchError()</code> 来处理。</p>
+<p>需要同时等好几个请求都成功时，用 <code>Future.wait</code>，它会按传入的顺序把结果一起返回。如果想把“回调式老接口”封装成 <code>Future</code>，可以用 <code>Completer</code> 手动触发完成或报错（每个 Completer 只能完成一次）。还要记住：把耗时的纯 CPU 循环塞进 <code>Future</code> 并不等于开了多线程，跑起来时照样会卡住当前 isolate。</p>
 </div>
 
 <h4>代码示例（看注释与结果）</h4>
@@ -256,7 +256,7 @@ Future&lt;void&gt; main() async {
 <div class="explanation-item"><h5>把大循环放进 Future，为什么界面还是卡？</h5><p><code>Future(() { ... })</code> 把回调排到当前 isolate 的事件队列。轮到它执行时，循环仍会占住这个 isolate，输入和构建只能等。异步 I/O 则能在等待期间让出执行机会。CPU 计算的并行处理见<a href="#q10">第 5 题</a>。</p></div>
 </div>
 <p class="pitfall"><strong>别答错：</strong>Future 不会自动把同步计算搬到后台，异步错误要在正确的等待位置处理。</p>
-<details class="advanced-note"><summary>进阶补充：多个 Future 的错误时序</summary><p><code>Future.wait</code> 默认等待全部完成后报告遇到的第一个错误。<code>eagerError: true</code> 可以提前报错，其他操作仍会继续。普通 Future 和 <code>Completer.sync</code> 等实现的回调时序可能不同，每一级 <code>then</code> 都单独排进微任务队列的假设并不可靠。</p></details>
+<details class="advanced-note"><summary>进阶补充：多个 Future 的错误时序</summary><p><code>Future.wait</code> 默认会等所有任务都结束，再把最先遇到的错误抛出来；如果把 <code>eagerError</code> 设为 <code>true</code>，只要有一个失败就会立刻报错，但其余还在跑的任务仍会继续执行完。另外，不要想当然以为“每多写一个 <code>then</code> 就一定会按固定微任务顺序排队”，因为像 <code>Completer.sync</code> 这类同步完成的特例，回调触发时机和普通 Future 不太一样。</p></details>
 <p class="source-link">官方核对：<a href="https://api.dart.dev/dart-async/Completer/Completer.sync.html" target="_blank" rel="noopener noreferrer">Future 的同步完成特例</a>。</p>
 <p class="source-link">基础语法：<a href="https://dart.dev/libraries/async/async-await" target="_blank" rel="noopener noreferrer">Future 与 async/await</a>。</p>
 </section>
@@ -266,9 +266,9 @@ Future&lt;void&gt; main() async {
 <span class="level">重点理解</span>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>一次请求的成功值或错误用 <code>Future</code>，连续到达的数据或错误用 <code>Stream</code>。</strong> 流完成时会发出结束通知。用 <code>async*</code> 声明异步生成器，再用 <code>yield</code> 产出数据。消费方可以用 <code>await for</code>，也可以用 <code>listen</code> 并通过订阅暂停、恢复或取消。</p>
-<p>单订阅流整个生命周期只接受一次订阅。广播流允许多个监听者，普通广播流只把事件交给当时已经订阅的监听者。</p>
-<p><code>StreamBuilder</code> 会管理订阅并按帧调度构建快照，可能跳过中间快照。需要处理每个事件时，把逻辑放在流的消费者中。自己建立的订阅要在不再使用时取消。</p>
+<p><strong>一次性的结果（比如发一次网络请求）用 <code>Future</code>，源源不断产生的数据流（比如倒计时、蓝牙消息、下载进度）用 <code>Stream</code>。</strong> 流在结束时会发一个完成通知。想自己制造一条流，可以用 <code>async*</code> 配合 <code>yield</code> 往外吐数据；接收方可以用 <code>await for</code> 一条条等，或者用 <code>listen</code> 拿到订阅对象，随时暂停、恢复或取消。</p>
+<p>Stream 分两种：<strong>单订阅流</strong>一辈子只能被监听一次；<strong>广播流</strong>允许同时有多个监听者，但普通广播流不会“补发历史消息”，你什么时候开始监听，就只能收到那之后的新事件。</p>
+<p>界面上展示流数据常用 <code>StreamBuilder</code>，它能自动管理订阅和释放。不过它只按屏幕刷新节奏（按帧）更新 UI：如果同一帧里连续推来好几条数据，<code>StreamBuilder</code> 可能只按最后一条状态刷新，中间几条就跳过了。所以像记日志、累加计数这种“每条数据都不能漏”的业务逻辑，别写在 <code>StreamBuilder</code> 的 <code>builder</code> 里，而要放在流的监听回调里。自己手动 <code>listen</code> 的订阅，记得在不用时取消。</p>
 </div>
 
 <h4>代码示例（看注释与结果）</h4>
@@ -291,7 +291,7 @@ Future&lt;void&gt; main() async {
 <div class="explanation-item"><h5>为什么不要在 build 中反复 listen？</h5><p>同一节点可以构建多次，每次手动监听都可能累加订阅。把订阅放在对应的生命周期内并在退出时取消，或交给 <code>StreamBuilder</code>。需要逐笔处理的逻辑放在事件消费端。</p></div>
 </div>
 <p class="pitfall"><strong>别答错：</strong>StreamBuilder 不保证呈现每个中间事件，不应承担逐事件业务处理。</p>
-<details class="advanced-note"><summary>进阶补充：暂停订阅与流错误</summary><p>广播流不会给后来订阅者补发历史，但可以给已经存在且暂停的订阅缓冲事件。<code>await for</code> 的循环体等待时可能暂停订阅。未处理的流错误会让循环退出并抛出。</p></details>
+<details class="advanced-note"><summary>进阶补充：暂停订阅与流错误</summary><p>广播流虽然不会给后来者补发历史事件，但如果某个已经存在的监听者调用了暂停（pause），部分流实现可以为其暂存期间的数据。另外，在 <code>await for</code> 的循环体里做异步等待时，底层可能会自动暂停订阅来控速；如果流里抛出了未处理的错误，<code>await for</code> 循环会直接中断并把错误抛出来。</p></details>
 <p class="source-link">官方核对：<a href="https://api.flutter.dev/flutter/widgets/StreamBuilder-class.html" target="_blank" rel="noopener noreferrer">StreamBuilder 快照与构建时序</a>。</p>
 </section>
 <hr>
@@ -335,9 +335,9 @@ void main() {
 <span class="level">重点理解</span>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>isolate 决定计算在哪里执行，<code>Future</code> 表示计算或 I/O 何时交付结果。</strong> Dart VM 可以让不同 isolate 并行执行。直接在当前 isolate 创建 Future，会继续在当前 isolate 处理它安排的 Dart 计算。</p>
-<p>每个 isolate 有自己的状态和事件循环。普通可变 Dart 对象不能被多个 isolate 直接共享修改。一次性计算用 <code>Isolate.run</code>，需要持续双向通信时用 <code>Isolate.spawn</code>，通过 <code>SendPort</code> 和 <code>ReceivePort</code> 交换可发送的消息。</p>
-<p>网络等待一般无需另开 isolate。CPU 重活是否值得移走，要考虑启动和消息传递成本。Flutter 的 <code>compute</code> 在原生平台可使用另一个 isolate，在 Web 上则使用当前事件循环。</p>
+<p><strong><code>Future</code> 管“什么时候拿到结果”（异步等待），<code>isolate</code> 管“代码到底在哪块隔离的内存里跑”（并发执行）。</strong> 直接在当前线程里建一个 <code>Future</code>，里面的 Dart 代码还是在当前 isolate 排队执行；而在 Dart VM 等平台上，多个 isolate 可以真正利用多核并行计算。</p>
+<p>每个 isolate 都有自己独立的内存堆和事件循环，互相之间不能直接读写对方的普通变量，也就省去了传统多线程加锁、死锁的麻烦。它们只能通过 <code>SendPort</code> 和 <code>ReceivePort</code> 收发消息（支持基本类型、简单集合等，大对象默认需要复制一份过去）。如果只是一次性重计算，直接用 <code>Isolate.run</code> 最省事；需要长期双向通信时，再用 <code>Isolate.spawn</code>。</p>
+<p>像网络请求、读文件这类“等待型”异步任务，直接用 <code>Future</code> 就够了，没必要新开 isolate；只有大图压缩、大 JSON 解析这类“纯吃 CPU”的重活才值得放进后台 isolate（同时还要权衡创建 isolate 和传递数据的开销）。Flutter 提供的 <code>compute</code> 在手机和桌面端会启用后台 isolate，但在 Web 端会退化为在当前事件循环里执行，这一点面试别答错。</p>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <p>纯 Dart 示例，用 Dart VM 运行；这里展示 Isolate.run，不适用于浏览器。</p>
@@ -358,7 +358,7 @@ Future&lt;void&gt; main() async {
 }</code></pre>
 <h4>进一步理解</h4>
 <div class="understanding">
-<div class="explanation-item"><h5>大量字节怎样交给另一个 isolate？</h5><p>发送普通可变列表通常要复制对象图。对大块字节可以考虑 <code>TransferableTypedData</code>。把包装对象发送出去以后，发送端不能再通过该包装读取数据。<code>fromList</code> 构造包装时会先复制原始字节，原数组仍能使用。</p></div>
+<div class="explanation-item"><h5>大量字节怎样交给另一个 isolate？</h5><p>普通 <code>List</code> 跨 isolate 发送时通常要把整份数据拷贝一份，字节多了开销很大。对于大块二进制数据（如图片字节），可以用 <code>TransferableTypedData</code> 包装：虽然用 <code>fromList</code> 包装时会先复制一次原始字节，但随后跨 isolate 发送包装对象时只需要“移交所有权”，接收方直接拿走底层内存，不再发生跨线程拷贝（作为代价，发送端发出去后就不能再通过这个包装读取数据了，而原来的普通数组如果还在手里则不受影响）。</p></div>
 </div>
 
 <h4>图示说明</h4>
@@ -371,7 +371,7 @@ Future&lt;void&gt; main() async {
 <figcaption>示例中的 <code>Isolate.run</code> 在工作 isolate 计算，通过 Future 把结果交回主 isolate。</figcaption>
 </figure>
 <p class="pitfall"><strong>别答错：</strong>普通 Dart 可变对象不跨 isolate 直接共享，Web compute 不等同于后台并行。</p>
-<details class="advanced-note"><summary>进阶补充：消息传递与端口释放</summary><p>运行时认可的不可变对象可以共享，带某些原生资源的对象则不能发送。<code>Isolate.exit</code> 在满足条件时可转交最终消息，普通消息仍要遵守各自的复制或转移规则。<code>ReceivePort</code> 用完应调用 <code>close()</code>。FFI 的原生共享内存需要另外处理同步与生命周期。</p></details>
+<details class="advanced-note"><summary>进阶补充：消息传递与端口释放</summary><p>像字符串、数字等底层确认不可变的数据在部分版本中可以直接共享引用，减少拷贝；但绑定了原生底层句柄的对象（如部分文件句柄、Socket）无法跨 isolate 发送。<code>Isolate.exit</code> 可以在工作 isolate 结束使命时顺手把最终结果“移交”给主 isolate，省去一次额外拷贝。另外，手动创建的 <code>ReceivePort</code> 不用时记得调 <code>close()</code>，否则会让 isolate 一直挂着不退出。如果走 FFI 共享原生 C 内存，就得自己处理线程同步与内存释放。</p></details>
 <p class="source-link">官方核对：<a href="https://docs.flutter.dev/perf/isolates" target="_blank" rel="noopener noreferrer">Flutter isolate 的平台限制</a>。</p>
 <p class="source-link">官方核对：<a href="https://api.dart.dev/dart-isolate/TransferableTypedData-class.html" target="_blank" rel="noopener noreferrer">可转移字节数据</a>。</p>
 </section>
@@ -752,9 +752,9 @@ class CountText extends StatelessWidget {
 <span class="level">重点理解</span>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>先确定谁持有状态、谁可以修改、谁需要订阅，以及何时释放。</strong> 一个组件自己使用的状态可用 <code>setState</code>。局部有多处监听时，<code>ValueNotifier</code> 可以在值变化后单独通知监听者。</p>
-<p>跨组件共享时，<code>InheritedWidget</code> 和 Provider 通过组件树提供数据，Riverpod 用容器组织依赖。Cubit 用方法发出新状态，Bloc 把输入组织为事件。选择时考虑共享范围、状态转换、测试和团队维护成本。</p>
-<p>重建范围取决于订阅放在哪里、订阅了哪些数据、何时发出通知。把订阅尽量放到真正读取状态的节点，必要时只订阅需要的字段。</p>
+<p><strong>选状态管理不要先背框架名字，先回答清楚四个问题：状态归谁管、谁能改、谁需要跟着刷新、不用时什么时候释放。</strong> 只是单个页面或小组件自己用的状态（比如开关、计数器），直接用 <code>setState</code> 最干净；如果局部有几处需要联动但不想重建整棵子树，用 <code>ValueNotifier</code> + <code>ValueListenableBuilder</code> 就能精准刷新。</p>
+<p>需要跨组件、跨页面共享时再上状态管理库：<strong>InheritedWidget / Provider</strong> 顺着组件树往下传数据，轻量且好上手；<strong>Riverpod</strong> 脱离了 <code>BuildContext</code> 的树位置限制，用容器统一管理依赖和生命周期，方便测试和组合；<strong>Cubit</strong> 通过调方法直接发新状态，直观好写；<strong>Bloc</strong> 则把所有交互抽象成 Event → State 的单向流，适合状态流转复杂、需要严格追溯和团队规范的中大型项目。</p>
+<p>想控制刷新范围，关键在于“把监听点放得足够小”：只在真正展示数据的叶子组件里去监听，如果一个大对象里只有某个字段变了，就用 <code>select</code> 只盯着那个字段。</p>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-dart">import 'package:flutter/material.dart';
@@ -783,12 +783,12 @@ class _LocalCounterState extends State&lt;LocalCounter&gt; {
 // 先把持有者、修改入口、订阅范围和释放位置说清，再考虑共享状态方案。</code></pre>
 <h4>进一步理解</h4>
 <div class="understanding">
-<div class="explanation-item"><h5>read、watch 和 select 分别做什么？</h5><p><code>read</code> 取当前值，<code>watch</code> 订阅变化，<code>select</code> 只关注选择结果。选择结果是原地修改的同一个可变对象时，比较可能看不出变化。父级正常重建也仍可能更新这个节点。</p></div>
+<div class="explanation-item"><h5>read、watch 和 select 分别做什么？</h5><p>简单记：<code>read</code> 只“拿一次当前值”（比如点击按钮时调方法），不订阅后续变化；<code>watch</code> 是“一直盯着”，数据一变当前组件就重建；<code>select</code> 是“只盯着其中某一个字段”。要注意，这些库大多通过新旧值比较（<code>==</code>）来判断是否刷新——如果你直接往一个 <code>List</code> 里 <code>add</code> 元素而不是返回新列表，前后引用指向的还是同一个对象，比较结果相等，UI 就不会刷新（父组件自己重跑 build 的情况除外）。</p></div>
 <div class="explanation-item"><h5>一个计数器和跨页面订单怎样选？</h5><p>局部计数只由当前组件使用，用 <code>setState</code> 就能管理。订单需要被多个页面读取，还可能涉及请求、缓存和失败重试，可以用独立的共享状态持有者明确这些规则。</p></div>
 </div>
 
 <p class="pitfall"><strong>别答错：</strong>只修改可变对象内部内容，不一定触发值比较式通知。</p>
-<details class="advanced-note"><summary>进阶补充：通知与自动释放条件</summary><p>ValueNotifier 仅在新旧 value 按相等规则比较不同时通知，直接修改其所指 List 的内容不自动触发通知。ChangeNotifier 需要显式 notifyListeners。Provider 的 watch 与 read、Riverpod 的 ref.watch 与读取、BlocBuilder 的 buildWhen、GetX 的 Obx 与 GetBuilder 都有各自依赖和通知机制，不能混用概念。Riverpod 自动释放是否开启取决于声明方式与版本，释放时机也受监听、重新计算及容器生命周期影响。</p></details>
+<details class="advanced-note"><summary>进阶补充：通知机制与自动销毁别混用</summary><p><code>ValueNotifier</code> 只有在新旧 <code>value</code> 不相等时才自动通知（原地改内部元素不触发），而 <code>ChangeNotifier</code> 必须手动调 <code>notifyListeners()</code>。不同库的精细控制手段也别记混：Provider/Riverpod 常用 <code>watch</code>、<code>read</code>、<code>select</code>，Bloc 用 <code>buildWhen</code> 控制重建条件，GetX 则要分清响应式 <code>Obx</code> 和手动更新的 <code>GetBuilder</code>。另外，Riverpod 是否在页面退出后自动释放状态，要看定义时是否开启了自动销毁（autoDispose）以及当前版本和容器生命周期，并不是所有 Provider 默认都会自动清零。</p></details>
 <p class="source-link">官方核对：<a href="https://riverpod.dev/docs/concepts2/auto_dispose" target="_blank" rel="noopener noreferrer">Riverpod 自动销毁与版本 API</a>。</p>
 </section>
 <hr>
@@ -797,9 +797,9 @@ class _LocalCounterState extends State&lt;LocalCounter&gt; {
 <span class="level">重点理解</span>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong><code>Navigator</code> 管理 Route 栈，<code>MaterialApp</code> 配置主题、本地化和导航入口。</strong> 普通 <code>MaterialApp</code> 可建立导航器，<code>MaterialApp.router</code> 则把路由信息交给 Router 体系协调。</p>
-<p><code>push</code> 返回一个等待路由结果的 Future，<code>pop(result)</code> 结束路由并交回结果。普通 <code>MaterialPageRoute</code> 默认保留被盖住的页面。旧页能否保留还要看路由策略。</p>
-<p><code>Navigator.of(context)</code> 找到最近的祖先导航器。嵌套导航时要选择要操作的那一层，并在用户事件或明确的生命周期流程中导航，避免在反复执行的 <code>build</code> 里重复入栈。</p>
+<p><strong><code>Navigator</code> 就像管理页面“栈”的调度员（压栈打开新页、出栈返回上一页），而 <code>MaterialApp</code> 是应用的大管家，顺带帮你配好主题、多语言和顶层导航器。</strong> 普通写法用 <code>MaterialApp</code> 就自带了一个开箱即用的 <code>Navigator</code>；如果需要深度适配浏览器 URL 或复杂深链接，则改用 <code>MaterialApp.router</code>，把页面栈交由 Router 规则统一生成。</p>
+<p>调 <code>push</code> 打开新页面时，它会返回一个 <code>Future</code> 等着接收结果；新页面调 <code>pop(result)</code> 关闭时，就能把这个结果传回给上一页。默认用 <code>MaterialPageRoute</code> 跳转时，被盖在下面的旧页面其实还留在树里没被销毁，只是看不见了。</p>
+<p><code>Navigator.of(context)</code> 会顺着组件树往上找最近的那一层导航器。如果页面里嵌套了局部导航（比如底部 Tab 里各自有独立子栈），跳转时要传对内层或外层的 <code>context</code>；另外跳转代码要放在点击回调或明确的生命周期流程里，千万别直接写在随时可能重跑的 <code>build</code> 方法中，否则页面会反复入栈。</p>
 </div>
 
 <h4>代码示例（看注释与结果）</h4>
@@ -836,7 +836,7 @@ class HomePage extends StatelessWidget {
 <div class="explanation-item"><h5>什么时候需要把地址和页面栈一起管理？</h5><p>按钮打开详情后返回结果，可以直接用 <code>push</code> 和 <code>pop</code>。如果浏览器地址、外部深链接和应用页面要保持一致，就要解析地址并同步页面配置，可以用 Router 或采用相应的路由封装。</p></div>
 </div>
 <p class="pitfall"><strong>别答错：</strong>页面被遮住不等于销毁，跳转不应放在可能重复执行的 build 中。</p>
-<details class="advanced-note"><summary>进阶补充：返回控制与路由库</summary><p>PopScope 通过 canPop 声明是否允许弹出，并通过 onPopInvokedWithResult 等回调接收结果；回调报告结果不等于在弹出后重新撤销这次操作。pushReplacement 和 pushAndRemoveUntil 可替换或清理旧路由。Router 与 go_router 组织页面配置和地址关系，最终仍使用 Flutter 导航能力，不是另一套页面渲染运行时。</p></details>
+<details class="advanced-note"><summary>进阶补充：返回拦截与路由封装库</summary><p>需要拦截系统返回键时（如编辑未保存提示），新版本推荐用 <code>PopScope</code>：通过 <code>canPop</code> 决定能不能直接返回；<code>onPopInvokedWithResult</code> 只是在返回动作发生后通知你结果，在这个回调里是“来不及反悔撤销这次返回”的，想拦住必须提前把 <code>canPop</code> 设为 <code>false</code>。要替换当前页或清空历史栈可以用 <code>pushReplacement</code>、<code>pushAndRemoveUntil</code>。至于 <code>go_router</code> 这类路由库，本质上是在 Router API 上帮你更方便地做路径解析和重定向封装，底层依然靠 Flutter 自己的页面栈机制运行。</p></details>
 
 <p class="source-link">延伸核对：<a href="https://api.flutter.dev/flutter/widgets/Navigator-class.html" target="_blank" rel="noopener noreferrer">导航栈与路由结果</a>。</p>
 </section>
@@ -846,9 +846,9 @@ class HomePage extends StatelessWidget {
 <span class="level">重点理解</span>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>只需让属性过渡到新目标时，用隐式动画。要安排播放、反向、停止或重复，就持有 <code>AnimationController</code>。</strong> 控制器产生进度，曲线调整进度的变化方式，Tween 把进度映射为宽度、颜色等属性值。</p>
-<p><code>vsync</code> 接收 <code>TickerProvider</code>，由它提供与帧调度配合的 Ticker。Ticker 被 <code>TickerMode</code> 静默期间，逐帧回调停止，经过的时间仍会累计。</p>
-<p>用 <code>AnimatedBuilder</code> 等机制把更新限制在变化的区域，不随动画变化的子树可以通过 <code>child</code> 复用。控制器由 State 持有时，在 <code>dispose</code> 中释放。</p>
+<p><strong>只是想让宽高、颜色平滑过渡到新目标值，直接用现成的隐式动画（如 <code>AnimatedContainer</code>）最省心；如果需要自己控制播放、暂停、倒放或无限循环，就得用 <code>AnimationController</code>。</strong> 可以把动画拆成三个角色：<code>AnimationController</code> 像进度条（默认按时间输出 0.0 到 1.0），<code>Curve</code> 控制节奏（先快后慢等缓动效果），<code>Tween</code> 负责把 0~1 的进度换算成具体数值（比如 40 到 120 的宽度、红到蓝的颜色）。</p>
+<p><strong><code>vsync</code> 的核心作用是“跟着屏幕刷新信号走，省电又防掉帧”</strong>：它接收一个 <code>TickerProvider</code>（常用 <code>SingleTickerProviderStateMixin</code>），每当屏幕准备刷新一帧时才发一次回调，不会在两帧之间白算；更重要的是，当这个页面被切走或不可见时，<code>TickerMode</code> 会自动把它的逐帧回调静默停掉，避免看不见的动画还在后台空转耗费资源（注意：回调虽然停了，但流逝的时间仍在按时钟走）。</p>
+<p>写动画界面时，尽量用 <code>AnimatedBuilder</code> 把刷新范围圈在真正会动的小组件里，静态不变的子树通过 <code>child</code> 参数传进去复用，避免整页跟着每帧重绘。只要自己创建了 <code>AnimationController</code>，退出页面时务必在 <code>dispose</code> 里释放。</p>
 </div>
 
 <h4>代码示例（看注释与结果）</h4>
@@ -886,7 +886,7 @@ class _BoxState extends State&lt;Box&gt; with SingleTickerProviderStateMixin {
 <h4>进一步理解</h4>
 <div class="understanding">
 <div class="explanation-item"><h5>进度怎样换算成不同属性？</h5><p>示例把控制器的 <code>0.0–1.0</code> 进度映射成 <code>40–120</code> 的宽度。有多个属性要共用一段动画时，可以分别用 Tween 映射颜色、位移等值。</p></div>
-<div class="explanation-item"><h5>静默后恢复，动画为什么可能跳到后面？</h5><p><code>TickerMode</code> 静默期间不派发逐帧回调，时间仍在走。恢复后的回调可能报告更晚的进度。需要停在当前进度时，用控制器主动停止播放。</p></div>
+<div class="explanation-item"><h5>静默后恢复，动画为什么可能跳到后面？</h5><p>因为页面不可见时，<code>TickerMode</code> 只是暂停了每帧派发回调，并没有把时钟拨停。等页面切回来恢复回调时，控制器会按真实过去的时间算出当前应该在哪个进度，于是画面就可能直接跳到后面（甚至已经播完）。如果希望切走时真正停在原地，要主动调用控制器的 <code>stop()</code>。</p></div>
 </div>
 <p class="pitfall"><strong>别答错：</strong>Ticker 静默不等于时间停止，Controller 必须及时释放。</p>
 <details class="advanced-note"><summary>进阶补充：Ticker 数量、动画子树与转场</summary><p>一个 State 整个生命周期只提供一个 Ticker 时可用 SingleTickerProviderStateMixin，可能先后或同时提供多个时用 TickerProviderStateMixin。AnimatedBuilder 的 child 可保存不随动画变化的子树。Hero 用相同 tag 对应转场两端，并在 Overlay 显示过渡内容，不是用 GlobalKey 把原 Element 直接迁移到另一页。</p></details>
@@ -898,9 +898,9 @@ class _BoxState extends State&lt;Box&gt; with SingleTickerProviderStateMixin {
 <span class="level">重点理解</span>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>RenderBox 布局是约束向下、尺寸向上、父节点定位置。</strong> 父节点给出宽高范围，子节点在范围内选尺寸。某一维最小值等于最大值时，尺寸已固定。最大值无限表示没有有限上限。</p>
-<p>Flex 的主轴有有限剩余空间时，可以按弹性系数分配。<code>Expanded</code> 要求子节点占满分到的空间，<code>Flexible</code> 默认允许更小。外层主轴无界时，光加 <code>Expanded</code> 算不出剩余量。</p>
-<p>滚动组件默认需要在滚动方向上得到有限的视口尺寸。<code>shrinkWrap</code> 让视口按内容确定这个方向的大小，同时仍受上层约束，并可能增加测量和滚动时的布局成本。</p>
+<p><strong>Flutter 布局就一句话：约束往下传，尺寸往上传，位置由父组件定。</strong> 父组件先告诉子组件“你的宽高最小能多少、最大不能超过多少”（约束）；子组件在允许范围内自己决定要多大并报上去（尺寸）；最后父组件再决定把子组件摆在哪个坐标（位置）。如果某一维的最小值等于最大值，那这一边就写死了；最大值是无穷大，表示父组件对这一边暂不设上限。</p>
+<p>在 <code>Row</code> 和 <code>Column</code> 里，当父级总长度有限时，剩下的空间可以按比例分给弹性子组件：<code>Expanded</code> 会强迫孩子把分到的空间全部填满，<code>Flexible</code> 则允许孩子比分配的空间更小。但如果外层本身在排列方向上就没有上限（比如把 <code>Column</code> 放进可以无限往下滑的 <code>SingleChildScrollView</code> 里），系统根本算不出“还剩多少空间”，这时加 <code>Expanded</code> 就会直接报错。</p>
+<p><code>ListView</code> 等滚动列表默认需要一个有限的显示区域高度（或宽度）。如果外层高度无限，有些人会给列表加 <code>shrinkWrap: true</code>，让列表根据内容总长度自己撑开高度——但这等于要一口气把所有列表项先测量一遍，列表一长就会明显卡顿，所以仍应优先用 <code>Expanded</code> 或定高容器来限制列表尺寸。</p>
 </div>
 
 <h4>代码示例（看注释与结果）</h4>
@@ -932,7 +932,7 @@ void main() =&gt; runApp(MaterialApp(home: Scaffold(
 <figcaption>纵向列表的视口默认需要从父节点收到有限高度。视口给普通列表子项的高度约束通常没有有限上限。</figcaption>
 </figure>
 <p class="pitfall"><strong>别答错：</strong>无界不等于要求尺寸无限大，shrinkWrap 也不是无成本的通用修复。</p>
-<details class="advanced-note"><summary>进阶补充：测量工具与父数据约束</summary><p>LayoutBuilder 根据收到的约束生成布局；IntrinsicHeight/IntrinsicWidth 查询固有尺寸，可能增加测量次数。AspectRatio、FittedBox、ConstrainedBox 都仍需遵守上层约束。Expanded/Flexible 还要求正确的 Flex 父数据链路，不能直接作为普通列表子项。debug 的布局断言被移除，不代表 release 中违反协议的布局就变合法。</p></details>
+<details class="advanced-note"><summary>进阶补充：测量工具与嵌套限制</summary><p>想根据父级给的约束动态决定怎么排版，可以用 <code>LayoutBuilder</code>；需要让一行里不同高度的孩子对齐最高那个时可用 <code>IntrinsicHeight</code>，但会带来二次测量开销。<code>AspectRatio</code>、<code>FittedBox</code> 等组件不管怎么缩放，最终都必须服从父级传下来的约束范围。另外，<code>Expanded</code> 和 <code>Flexible</code> 必须直接放在 <code>Row</code>、<code>Column</code> 或 <code>Flex</code> 下面（中间不能隔着非 Flex 的普通容器或放进普通列表子项里）。顺便一提，debug 模式下布局越界或无界会弹红字报错，release 模式虽然去掉了这些开发断言，但布局本身依然是错的，不能指望线上环境自动合法。</p></details>
 <p class="source-link">官方核对：<a href="https://api.flutter.dev/flutter/rendering/RenderFlex/performLayout.html" target="_blank" rel="noopener noreferrer">Flex 布局中的 assert 诊断</a>。</p>
 </section>
 <hr>
@@ -941,9 +941,9 @@ void main() =&gt; runApp(MaterialApp(home: Scaffold(
 <span class="level">重点理解</span>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>Widget 提供配置，Element 维护树节点，RenderObject 负责布局、记录绘制和命中测试，Layer 组织合成内容。</strong> 类型和 Key 匹配时，框架可以复用原 Element 及关联的 State。有些 Widget 只组合其他组件，有些 RenderObject 与其他对象共用一个 Layer。</p>
-<p>需要更新时，框架按构建、布局、合成信息更新、绘制等阶段处理已标记的节点，再把场景交给引擎合成和光栅化。一帧具体执行哪些工作，取决于数据变化和更新边界。</p>
-<p>改变颜色可以只请求重绘。用 <code>RepaintBoundary</code> 隔离重绘能减少波及的区域，但会引入图层和内存开销，适合根据实际绘制负担使用。</p>
+<p><strong>可以把三棵树理解成：Widget 是“设计图纸”（轻量且不可变，随时重画一份新的）；Element 是“施工管家”（真正在树里长久站岗，手里攥着对应的 State，负责对比新旧图纸，类型和 Key 对得上就只更新属性不拆重建）；RenderObject 是“实际干活的工人”（真正去量尺寸、算位置、记录怎么画以及处理点击命中）；Layer 则是把画好的各块内容分层贴在一起交给引擎合成。</strong> 注意它们不是严格 1:1 对应的：很多纯组合类的 Widget 自己没有 RenderObject，好几个 RenderObject 也经常共用同一个 Layer。</p>
+<p>每次状态变化触发一帧刷新时，框架只会针对“需要更新”的节点按顺序干活：<strong>Build（重新生成配置）→ Layout（重新算宽高位置）→ Paint（记录绘制指令并塞进 Layer）</strong>，最后交给引擎合成并把像素画到屏幕上（光栅化）。</p>
+<p>所以不是每次 <code>setState</code> 都要把所有步骤全跑一遍：像本例只换个背景色而不改尺寸，就只需要重绘（Paint），不需要重新布局（Layout）。如果某个局部动画特别频繁、画起来又很重，可以套一层 <code>RepaintBoundary</code> 把它隔成独立图层，避免连累周围静态内容一起重绘；但它也会增加额外的图层和显存开销，要看实测收益再加。</p>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-dart">import 'package:flutter/material.dart';
@@ -985,7 +985,7 @@ class _PaintDemoState extends State&lt;PaintDemo&gt; {
 <figcaption>配置、树节点、渲染对象和图层并非一一对应。一帧只执行实际需要的更新。</figcaption>
 </figure>
 <p class="pitfall"><strong>别答错：</strong>重建、重新布局、重绘和光栅化不是同一件事。</p>
-<details class="advanced-note"><summary>进阶补充：图层与离屏绘制不是一回事</summary><p>RepaintBoundary 提供独立绘制记录，Opacity、Transform、Clip 等是否使用特定图层还取决于实际配置与框架实现。Layer 是合成结构，saveLayer 是画布上的离屏绘制操作，两者不能一一对应。PlatformView 的合成路径也随平台变化。只有需要更新的阶段才被安排，markNeedsBuild、markNeedsLayout 与 markNeedsPaint 对应不同工作。</p></details>
+<details class="advanced-note"><summary>进阶补充：图层与离屏绘制不是一回事</summary><p><code>RepaintBoundary</code> 会强制拆出独立的绘制图层；至于 <code>Opacity</code>、<code>Transform</code>、<code>Clip</code> 这些组件会不会新开图层，要看具体参数和框架实现。还要分清两个常混淆的概念：<code>Layer</code> 是引擎用来合并画面的外层合成结构，而 <code>canvas.saveLayer</code> 是画画中途临时开一块离屏画布再贴回来（开销通常更大），两者不是一回事。只有真正受影响的阶段才会被触发，对应源码里的 <code>markNeedsBuild</code>、<code>markNeedsLayout</code> 和 <code>markNeedsPaint</code>。</p></details>
 <p class="source-link">官方核对：<a href="https://github.com/flutter/flutter/blob/3.41.6/packages/flutter/lib/src/rendering/proxy_box.dart" target="_blank" rel="noopener noreferrer">Flutter 3.41.6 的 Opacity、Transform、Clip 实现</a>。</p>
 </section>
 <hr>
@@ -994,9 +994,9 @@ class _PaintDemoState extends State&lt;PaintDemo&gt; {
 <span class="level">重点理解</span>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>普通父子组件都监听同一次点击时，内层识别器通常先加入竞技场并胜出。</strong> 父级仍可能收到指针事件和 <code>onTapDown</code>，最终成功的 <code>onTap</code> 由胜出的识别器处理。</p>
-<p>命中测试先确定哪些节点能收到原始指针事件。手势识别器再观察整串事件，并在竞技场里确定归属。点击途中变成拖动等手势时，原先的点击可能取消。</p>
-<p><code>Listener</code> 可以观察原始事件。<code>HitTestBehavior</code> 影响节点和后方目标是否命中。已经入场的父子识别器仍按同一套竞争规则处理。</p>
+<p><strong>父子组件都包了 <code>GestureDetector</code> 并监听点击时，默认只有里面的子组件能触发 <code>onTap</code>，因为 Flutter 用了一套“手势竞技场（GestureArena）”来裁决谁赢，而内层组件处于树的更深处，通常优先胜出。</strong> 不过在最终分出胜负之前，父组件和外层的 <code>Listener</code> 其实都能收到手指按下的原始事件（父组件的 <code>onTapDown</code> 也可能先触发，竞选失败后再回调 <code>onTapCancel</code>）。</p>
+<p>一次触摸大致分两步走：第一步是<strong>命中测试（HitTest）</strong>，从根节点往下找手指点在了哪些组件范围里，把它们排进派发名单；第二步是<strong>手势竞争</strong>，路径上所有手势识别器都会观察这一串按下、移动、抬起事件，谁先满足条件并宣布“我认领了”（或别人中途放弃），谁就赢得这次手势。比如你点在按钮上没松手直接滑动，拖动识别器一旦达标胜出，原本的点击就会立刻被取消。</p>
+<p>如果想不管竞争结果、单纯监听原始触摸事件，用 <code>Listener</code>；如果想让空白区域也能点到、或者让点击穿透到底下的兄弟组件，可以调整 <code>HitTestBehavior</code>（<code>deferToChild</code> 看孩子、<code>opaque</code> 挡住后方、<code>translucent</code> 透传给后方）。但注意 <code>behavior</code> 只管“谁能接到触摸事件”，改不了父子组件抢 <code>onTap</code> 时谁赢的规则。</p>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-dart">import 'package:flutter/material.dart';
@@ -1033,7 +1033,7 @@ void main() =&gt; runApp(MaterialApp(home: Scaffold(body: Center(
 <figcaption><code>Listener</code> 收到原始指针事件。谁执行 <code>onTap</code> 由竞技场决定。</figcaption>
 </figure>
 <p class="pitfall"><strong>别答错：</strong>命中不等于识别成功，behavior 不负责改变父子 tap 的胜负。</p>
-<details class="advanced-note"><summary>进阶补充：竞技场并非所有手势都只剩一个对象</summary><p>识别器可以接受或拒绝，竞技场收尾也有规则；手势团队还能协作，不能推广成所有手势永久只有一个响应者。opaque 与 translucent 影响命中区域和后方目标，普通父子 tap 竞争规则不因此改变。移动容差用于区分轻微抖动与拖动，具体数值随设备与设置变化。</p></details>
+<details class="advanced-note"><summary>进阶补充：手势竞技场并不总是“绝对唯一”</summary><p>虽然普通父子点击通常只剩一个赢家，但手势竞技场并不是死规定永远只能有一个对象响应：各个识别器既可以主动“认领”也可以“弃权”，手指全部抬起时如果还没决出胜负，竞技场会按规则兜底收尾；此外像 <code>GestureArenaTeam</code> 这类团队机制还能让多个识别器互相配合。轻微的手指抖动不会立刻取消点击，只有移动距离超过系统的拖动阈值（slop，不同设备略有差异）才会被判成拖动。</p></details>
 <p class="source-link">官方核对：<a href="https://api.flutter.dev/flutter/widgets/GestureDetector-class.html" target="_blank" rel="noopener noreferrer">父子手势竞争与提前回调</a>。</p>
 <p class="source-link">官方核对：<a href="https://api.flutter.dev/flutter/gestures/GestureArenaManager-class.html" target="_blank" rel="noopener noreferrer">手势竞技场的接受、拒绝和收尾规则</a>。</p>
 </section>
@@ -1093,9 +1093,9 @@ class _SettingsState extends State&lt;SettingsPage&gt; {
 <span class="level">重点理解</span>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>先在目标设备上用 profile 找到瓶颈，再处理构建、布局、光栅化、解码或同步计算。</strong> 在相同场景下比较帧时间和内存，确认改动是否有收益。</p>
-<p>把状态和订阅放到真正变化的组件，复用不变的配置。长列表用 builder 按需创建，尺寸统一时可提供已知的主轴尺寸。可重排子项用稳定 Key，列表需要时再提供 Key 到新索引的映射。保活范围控制在真正需要恢复状态的条目。</p>
-<p>大图按显示所需的物理像素规划解码尺寸，同时限制预加载和缓存。高成本绘制可按测量结果隔离。同步计算只有在收益盖过启动和通信成本时，才值得移到其他 isolate。组件退出后，及时释放控制器、定时器和订阅。</p>
+<p><strong>性能优化第一条铁律：先在真机的 <code>profile</code> 模式下用 DevTools 录一段操作，看清瓶颈到底在 UI 构建布局、GPU 光栅化、图片解码还是同步计算，改完后在同设备同场景下对比帧耗时，别凭感觉瞎优化。</strong></p>
+<p>针对三个高频痛点，常见落地手段很明确：<strong>减少无效重建</strong>——把状态和监听往下沉到真正要变的叶子组件，不变的组件多用 <code>const</code> 并抽成独立类或通过 <code>child</code> 复用；<strong>解决长列表卡顿</strong>——用 <code>ListView.builder</code> 按需加载而不是一次性塞进 <code>children</code>，行高固定时加上 <code>itemExtent</code> 或 <code>prototypeItem</code> 省掉逐个算高度，支持增删排序时用稳定的 <code>ValueKey</code>（必要时配合 <code>findChildIndexCallback</code> 帮框架快速找回位置），并且只对真正需要保留输入状态或播放进度的少数条目加保活（KeepAlive）。</p>
+<p><strong>降低大图内存与卡顿</strong>——如果原图 2000px 但头像只显示 48 逻辑像素，给 <code>Image</code> 传入按屏幕像素比算好的 <code>cacheWidth</code> / <code>cacheHeight</code>，让解码时直接按小图尺寸解码（不过这不会减少原图下载字节数，最好后端就下发缩略图）；控制预加载数量，复杂高频重绘的局部可以用 <code>RepaintBoundary</code> 隔离开；纯 CPU 算力重活确认划算时再丢进独立 isolate；最后别忘了在 <code>dispose</code> 里把控制器、定时器和监听全清掉。</p>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-dart">import 'package:flutter/material.dart';
@@ -1141,9 +1141,9 @@ class Feed extends StatelessWidget {
 <span class="level">进阶选学</span>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>滑出屏幕的子项可能仍在列表缓存范围内。</strong> 移出维护范围后，框架可以销毁没有保活要求的节点。需要保留原 State 时，可用 <code>AutomaticKeepAliveClientMixin</code> 向祖先的 <code>AutomaticKeepAlive</code> 发出要求。</p>
-<p>用 <code>wantKeepAlive</code> 声明是否保活，在 <code>build</code> 中调用 <code>super.build(context)</code>，需求改变后调用 <code>updateKeepAlive()</code>。保活会延长 State 和资源的存续时间。屏幕外可以停止绘制，State 持有的订阅和定时器仍要自行管理。</p>
-<p>只需恢复滚动偏移时，使用存储范围内可区分的 <code>PageStorageKey</code>，并启用偏移保存。<code>PageStorage</code> 在存储桶里记录位置，进程重启或 State 销毁后的业务数据要由相应机制另行保存。</p>
+<p><strong>列表项刚滑出屏幕一点时，通常还留在滚动容器的预留缓存区（<code>cacheExtent</code>）里，暂时不会销毁；一旦滑得太远彻底移出这个缓存范围，框架就会把它的节点和 <code>State</code> 回收掉以省内存。</strong> 如果希望某页或某一项滑出屏幕后依然保住状态（比如切 Tab 后输入框里的字、选中的开关还在），可以让对应的 <code>State</code> 混入 <code>AutomaticKeepAliveClientMixin</code>。</p>
+<p>具体用法有三步：重写 <code>wantKeepAlive =&gt; true</code> 告诉父容器“留着我”，在 <code>build</code> 方法第一行调用 <code>super.build(context)</code>，后续如果不需要再保活了再调用 <code>updateKeepAlive()</code> 通知更新。不过保活会让这个页面的 <code>State</code> 和内存资源一直留在树里不销毁，虽然屏幕外不会重绘，但你自己订阅的流、定时器不会自动暂停，需要自己管好。</p>
+<p>如果不需要保住整个页面状态，只是想<strong>记住列表滚动到第几行</strong>（比如切到别的 Tab 再切回来还能回到上次滚的位置），给滚动组件加上唯一的 <code>PageStorageKey</code> 并确保开启了滚动位置保存（<code>keepScrollOffset</code>）即可。<code>PageStorage</code> 会在当前路由/树共享的临时存储空间里记录这个偏移量；但一旦进程被杀或整个页面被彻底关闭，业务数据还是得靠本地存储或状态库持久化。</p>
 </div>
 
 <h4>代码示例（看注释与结果）</h4>
@@ -1179,7 +1179,7 @@ class _TabState extends State&lt;TabPage&gt;
 }
 // 在第一页加一，滑到第二页再滑回来，计数会保留。</code></pre>
 <p class="pitfall"><strong>别答错：</strong>保活、缓存范围与滚动位置恢复是不同机制。</p>
-<details class="advanced-note"><summary>进阶补充：保活包装与滚动位置的范围</summary><p>默认列表代理通常会添加 <code>AutomaticKeepAlive</code>。关闭 <code>addAutomaticKeepAlives</code> 时要确认仍有相应祖先。<code>PageStorage</code> 只在对应存储桶内恢复偏移，例如滚动控制器启用 <code>keepScrollOffset</code> 时。</p></details>
+<details class="advanced-note"><summary>进阶补充：保活依赖与存储作用域</summary><p><code>ListView.builder</code>、<code>PageView</code> 等默认都会在每个子项外自动包一层 <code>AutomaticKeepAlive</code> 来响应子项的保活请求；如果你手动关闭了 <code>addAutomaticKeepAlives: false</code>，子项里的 mixin 就会失效。另外，<code>PageStorageKey</code> 只是在同一个 <code>PageStorage</code> 作用域内按 Key 区分并恢复滚动位置（例如配合开启了 <code>keepScrollOffset</code> 的滚动控制器），别把它当成全局持久缓存。</p></details>
 <p class="source-link">官方核对：<a href="https://api.flutter.dev/flutter/widgets/AutomaticKeepAliveClientMixin-mixin.html" target="_blank" rel="noopener noreferrer">保活所需的祖先与调用约定</a>。</p>
 </section>
 <hr>
@@ -1188,9 +1188,9 @@ class _TabState extends State&lt;TabPage&gt;
 <span class="level">进阶选学</span>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>先用帧时间分清 UI 和 Raster 哪个阶段超时，再看目标刷新率。</strong> 60 Hz 的显示间隔约为 16.7 毫秒，120 Hz 约为 8.3 毫秒。不同帧的 UI 和 Raster 阶段可以重叠，持续流畅仍要求各阶段都及时完成。</p>
-<p>UI 负责 Dart 界面工作，包括构建、布局和记录绘制指令。Raster 执行光栅化相关任务并与 GPU 配合。Platform 处理平台交互，IO 处理资源相关任务。这些职责与系统线程的映射取决于平台和引擎配置。</p>
-<p>在目标真机支持的 profile 模式下录制 DevTools Performance。UI 慢时查同步计算、构建和布局，Raster 慢时查绘制、图层和图像等开销。debug 的额外检查会影响帧时间。</p>
+<p><strong>查掉帧先看两张时间条：UI 耗时和 Raster 耗时谁超标了，而且预算要按目标屏幕刷新率算。</strong> 60Hz 屏幕每帧只有约 16.7 毫秒，到了 120Hz 高刷屏直接腰斩到约 8.3 毫秒。虽然引擎允许上一帧的 Raster 和下一帧的 UI 流水线并行，但只要任意一段长期超时，画面就会掉帧卡顿。</p>
+<p>Flutter 引擎按职责分成四个 Task Runner：<strong>UI</strong> 跑 Dart 代码（Widget 构建、布局计算和记录绘制指令）；<strong>Raster</strong> 负责光栅化（把绘制指令真正画成像素纹理并交给 GPU 显示）；<strong>Platform</strong> 处理宿主原生交互；<strong>IO</strong> 负责加载图片、解码资源等 I/O 准备。这四份工作到底分别落在系统哪几个线程上，取决于不同平台和引擎版本的配置。</p>
+<p>排查时切记<strong>一定要用真机的 profile 模式</strong>打开 DevTools Performance 录制（debug 模式下有大量调试检查，测出来的掉帧不作数）：如果是 UI 超时，重点查是不是主线程做了同步大计算、布局嵌套过深或频繁全树重建；如果是 Raster 超时，重点查是不是用了太多复杂遮罩、阴影、大尺寸图绘制或反复触发离屏绘制。</p>
 </div>
 <h4>终端操作示例</h4>
 <p>在 Flutter 工程目录中运行以下命令。</p>
@@ -1239,9 +1239,9 @@ flutter run --profile -d "$flutter_device_id"
 <span class="level">进阶选学</span>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>现有组件能表达布局时，先组合组件。只需定制图形时，用 <code>CustomPaint</code>。</strong> 如果要自己决定子节点的约束和位置，可先考虑 <code>CustomSingleChildLayout</code> 或 <code>CustomMultiChildLayout</code>。</p>
-<p>布局代理无法表达测量关系，或实测需要降低布局开销时，再考虑实现 <code>RenderObjectWidget</code> 和配套的 RenderObject。自定义 RenderBox 要在父级约束内定自己的尺寸，并按协议测量和定位子节点。</p>
-<p>会影响尺寸的变化要请求布局，只改外观时可请求绘制。自定义时还要处理命中测试、语义和父布局数据，再根据绘制开销决定是否隔离重绘。</p>
+<p><strong>能用 <code>Row</code>、<code>Column</code>、<code>Stack</code>、<code>Align</code> 这些现成组件拼出来的布局，绝对先用组合。</strong> 如果只是想画不规则线条、图表或波浪背景，布局尺寸用现成容器定好，画图交给 <code>CustomPaint</code> 就行。如果现成容器满足不了，需要自己算子组件的位置或尺寸关系，先试轻量级的 <code>CustomSingleChildLayout</code> 或 <code>CustomMultiChildLayout</code>。</p>
+<p>只有当<strong>连多子布局代理也搞不定</strong>（比如父容器自己的宽高必须等几个孩子先量完尺寸、互相参考后再反推出来），或者有明确性能数据表明现有组件嵌套太深拖慢了布局时，才值得自己去继承 <code>RenderObjectWidget</code> 和 <code>RenderBox</code>。手写 <code>RenderBox</code> 必须守规矩：在父级给的约束内定好自身大小，再依次测量并摆好每个子节点的位置。</p>
+<p>自己写渲染层时很容易漏掉三件事：第一，改了尺寸要调 <code>markNeedsLayout</code>，只改颜色形状只需调 <code>markNeedsPaint</code>；第二，不规则图形如果能点击，必须自己补上命中测试（如 <code>hitTestSelf</code>），不然点上去没反应；第三，别忘了补上无障碍读屏语义，有需要时再按绘制开销决定是否隔离重绘。</p>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <pre><code class="language-dart">import 'package:flutter/material.dart';
@@ -1269,7 +1269,7 @@ class LinePainter extends CustomPainter {
 </div>
 
 <p class="pitfall"><strong>别答错：</strong>绘制正确不代表命中测试和辅助功能语义也正确。</p>
-<details class="advanced-note"><summary>进阶补充：Flow 与父布局数据</summary><p>Flow 主要通过绘制变换安排孩子，不等同于任意改变布局测量。parentData 是父布局保存在孩子上的布局参数，应由配套父布局解释。semantics 提供读屏需要的名称和行为。isRepaintBoundary 可以隔离重绘，但增加层及资源开销，必须结合测量选择。</p></details>
+<details class="advanced-note"><summary>进阶补充：Flow、parentData 与语义</summary><p><code>Flow</code> 适合做高频动画里移动多个子组件的位置，因为它在绘制阶段直接用变换矩阵移动孩子、不反复触发布局测量，但它并不能像自定义 <code>RenderBox</code> 那样任意改写父子尺寸协商。另外，像 <code>Positioned</code>、<code>Expanded</code> 这类组件之所以能给父组件传坐标或比例，靠的就是把参数挂在子节点的 <code>parentData</code> 上让配套父布局去读取。自定义渲染时是否开启 <code>isRepaintBoundary</code> 要看重绘收益和图层内存成本的权衡，<code>semantics</code> 则负责提供读屏所需的名称与操作。</p></details>
 <p class="source-link">官方核对：<a href="https://api.flutter.dev/flutter/widgets/Flow-class.html" target="_blank" rel="noopener noreferrer">Flow 在绘制阶段变换孩子位置</a>。</p>
 </section>
 <hr>
@@ -1278,9 +1278,9 @@ class LinePainter extends CustomPainter {
 <span class="level">进阶选学</span>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>混合导航同时涉及原生容器栈和 Flutter 路由栈。</strong> 先约定由哪边处理进入、返回和结果，再同步页面可见性、输入和生命周期。</p>
-<p>原生容器承载画面，<code>FlutterEngine</code> 运行 Dart。容器退出后，引擎可能继续运行。复用引擎可以减少重复启动，也会延续已有的根 isolate、路由和全局数据。再次打开页面时，需要明确哪些状态要恢复或重置。</p>
-<p>为不同流程创建多个引擎时，每个引擎有自己的根 isolate 和导航状态。<code>FlutterEngineGroup</code> 可以让这些引擎共享部分底层资源。各引擎的通信、宿主绑定和释放仍要分别管理。</p>
+<p><strong>当一个原生 Android/iOS App 里混着嵌入了好几个 Flutter 页面时，页面跳转就会同时牵扯原生的页面栈（Activity / ViewController）和 Flutter 自己的路由栈，这就是混合栈问题。</strong> 设计混合栈第一步，要先拍板“所有页面进出和回退到底由原生统一管，还是各自管各自的片段”，并把页面可见性、系统返回键和页面生命周期同步好。</p>
+<p>每个原生容器只是用来装画面的“壳”，真正跑 Dart 代码和渲染的是背后的 <code>FlutterEngine</code>。如果只创建并缓存一个共享引擎，下次再进 Flutter 页时秒开不卡顿，但页面退出后引擎里的全局状态、定时器甚至旧路由可能还留着，下次进来得自己做好页面切换和状态清理。</p>
+<p>如果业务上想让不同 Flutter 模块彻底隔离（互相不影响路由栈和全局变量），就得给不同流程开多个引擎。直接新开多个引擎内存开销很大，所以官方提供了 <code>FlutterEngineGroup</code>，让后续新开的引擎可以共享底层部分资源以省内存；但各个引擎之间的数据通信、宿主绑定和销毁还是得分别管好。</p>
 </div>
 <h4>代码示例（看注释与结果）</h4>
 <p>这是 Android add-to-app 的宿主片段，用于说明引擎复用；不能放入 Dart 文件直接运行。</p>
@@ -1321,7 +1321,7 @@ startActivity(
 <figcaption>重新接入同一个引擎时可沿用 Dart 状态。不同引擎各自维护 Dart 路由，<code>FlutterEngineGroup</code> 可以共享部分底层资源。</figcaption>
 </figure>
 <p class="pitfall"><strong>别答错：</strong>页面容器退出不等于引擎停止，复用引擎往往也会保留旧状态。</p>
-<details class="advanced-note"><summary>进阶补充：共享引擎与引擎缓存的区别</summary><p>Android 的 FlutterEngineCache 按标识保存已有引擎，EngineGroup 则用于创建可共享部分底层资源的多个引擎。普通宿主与引擎的绑定受平台 attachment 规则限制，不能假设一个引擎可同时绑定任意多个页面。flutter_boost 是可选的第三方混合导航方案；全部页面都由 Flutter 管理时，通常无需因此引入混合栈。</p></details>
+<details class="advanced-note"><summary>进阶补充：引擎缓存、EngineGroup 与三方混合栈</summary><p>分清两个常见类：Android 上的 <code>FlutterEngineCache</code> 只是把“同一个引擎实例”存起来反复拿给不同页面用（同一时间一般只能附着绑定在一个活跃容器上，不能同时贴到好几个同屏容器里）；而 <code>FlutterEngineGroup</code> 则是用来生出“多个相互独立、但底层共享部分资源的新引擎”。如果项目里频繁出现原生与 Flutter 交替套娃跳转（比如原生 A → Flutter B → 原生 C → Flutter D），可以考虑引入 <code>flutter_boost</code> 等成熟混合栈方案；如果是纯 Flutter 为主的 App，完全没必要为了用而硬上混合栈。</p></details>
 <p class="source-link">官方核对：<a href="https://docs.flutter.dev/add-to-app/multiple-flutters" target="_blank" rel="noopener noreferrer">Android/iOS 的多引擎与 EngineGroup</a>。</p>
 <p class="source-link">示例前置配置：<a href="https://docs.flutter.dev/add-to-app/android/add-flutter-screen" target="_blank" rel="noopener noreferrer">Android 缓存引擎与 FlutterActivity</a>。</p>
 </section>
@@ -1389,9 +1389,9 @@ String makeGreeting() {
 <span class="level">基础优先</span>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong><code>final</code> 限制变量只能赋值一次，<code>const</code> 要求值在编译期符合常量规则。</strong> <code>final</code> 可以接收运行时结果。它指向可变列表时，列表仍能添加元素。常量列表的内容也不可修改，同一 isolate 内等价的常量对象会复用同一个实例。</p>
-<p><code>const</code> 构造函数要求实例字段为 <code>final</code>，父构造和初始化也要符合常量规则。调用处显式写 <code>const</code> 或处于常量上下文时，才会创建可规范化复用的常量实例。普通调用仍可接收运行时参数。</p>
-<p>父节点再次传入同一个 Widget 实例时，框架可以跳过这次配置更新。常量 Widget 有助于复用实例。节点自己的 State 或已订阅的依赖变化时，仍可能重建。</p>
+<p><strong>共同点是“只能赋值一次”；区别在于 <code>final</code> 在程序跑起来时赋值（运行时常量），<code>const</code> 必须在写完代码编译时就确定下来（编译期常量）。</strong> 比如获取当前时间 <code>final now = DateTime.now()</code> 可以，但写成 <code>const</code> 就会报错。另外，用 <code>final</code> 修饰一个 <code>List</code>，只是这个变量不能再指向别的列表，但往里面 <code>add</code> 元素依然是可以的；而 <code>const</code> 修饰的列表连里面的内容都彻底锁死，改了运行时会报错，而且在同一个 isolate 里相同的 <code>const</code> 对象只会保留一份内存实例，大家共用（即 <code>identical</code> 为 <code>true</code>）。</p>
+<p>如果给类写了 <code>const</code> 构造函数，就要求它的所有实例字段都必须是 <code>final</code>。注意：写了 <code>const</code> 构造函数不代表每次创建出来都是常量——只有在调用时显式写了 <code>const</code>（或者处在外层 <code>const</code> 列表等常量环境里），才会生成共享复用的常量对象；直接写 <code>Box(n)</code> 照样可以传运行时变量进去当普通对象用。</p>
+<p>在 Flutter 里写 UI 时多给不变的子组件加 <code>const</code> 有个实惠的好处：父组件刷新的时候，如果传给子组件的还是那份一模一样的常量实例，框架就能直接跳过子组件的更新检查，省下重建开销（当然，如果子组件自己有 <code>State</code> 或监听了全局主题，该刷的时候还是会刷）。</p>
 </div>
 
 <h4>代码示例（看注释与结果）</h4>
@@ -1420,7 +1420,7 @@ void main() {
   print(identical(box2, boxes.single)); // true
 }</code></pre>
 <p class="pitfall"><strong>别答错：</strong>final 不等于对象内容不可变；const 也不意味着组件以后永不重建。</p>
-<details class="advanced-note"><summary>进阶补充：常量构造的要求</summary><p>常量生成构造不能有普通函数体，包含继承字段在内的实例字段必须为 final，父构造和初始化列表也要满足常量要求。实例字段不能声明 const，类型级常量可用 static const。同一 isolate 内的常量规范化，不应扩大成跨 isolate 的进程全局身份保证。</p></details>
+<details class="advanced-note"><summary>进阶补充：const 构造函数的语法限制</summary><p>能加 <code>const</code> 的普通构造函数不能有花括号函数体，且它自己以及父类的所有实例字段都必须是 <code>final</code>（初始化列表也只能用编译期能算出的常量）。另外，类的普通成员属性不能直接写 <code>const</code>，想在类上挂常量得用 <code>static const</code>。同一 isolate 内相同的 <code>const</code> 对象共享同一份实例，但不同 isolate 各自独立，不要假设跨 isolate 它们还是同一个内存地址。</p></details>
 
 <p class="source-link">延伸核对：<a href="https://dart.dev/language/variables" target="_blank" rel="noopener noreferrer">final 与 const</a>。</p>
 </section>
@@ -1506,9 +1506,9 @@ void main() {
 <span class="level">基础优先</span>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>生成构造函数创建并初始化本类实例，工厂构造函数可以返回本类或子类型的新对象，也可以复用已有对象。</strong> 例如缓存工厂要自己查找和保存实例。工厂执行时没有待初始化的当前实例，因此没有可用的 <code>this</code>。</p>
-<p>命名构造函数提供不同的创建入口。像 <code>User.fromJson</code> 这样的入口可以是生成构造，也可以声明为 <code>factory</code>，由它选择要返回的对象。</p>
-<p>带函数体的工厂构造不能声明为 <code>const</code>。需要常量工厂时，使用重定向的 <code>const factory</code>，把创建工作交给签名兼容的常量构造函数。</p>
+<p><strong>普通构造函数（包括命名构造）的职责是“每次老老实实创建一个全新的本类实例”；而 <code>factory</code> 工厂构造函数更像一个“对象加工厂”，不一定非要新建对象——它可以从缓存里捞一个旧实例还给你，也可以根据条件返回一个子类对象。</strong> 因为工厂函数进门时新对象还没影子，所以里面<strong>不能用 <code>this</code></strong>，必须自己 <code>return</code> 一个对象出去。</p>
+<p>像 <code>User.fromJson</code> 这种叫“命名构造函数”，它既可以写成普通构造函数（直接把字段赋值初始化好），也可以加个 <code>factory</code> 关键字（比如需要先校验参数、走缓存，或者根据 JSON 里的类型返回不同的子类）。</p>
+<p>自己写了大括号函数体的 <code>factory</code> 不能声明成 <code>const</code>；只有那种直接把创建工作转发给另一个常量构造函数的“重定向工厂”（比如 <code>const factory A() = B;</code>），才能加上 <code>const</code>。</p>
 </div>
 
 <h4>代码示例（看注释与结果）</h4>
@@ -1655,9 +1655,9 @@ class _ReloadDemoState extends State&lt;ReloadDemo&gt; {
 <span class="level">基础优先</span>
 <h4>回答总结</h4>
 <div class="summary-answer">
-<p><strong>package 是代码、资源和依赖的发布单位，plugin 是能接入目标平台实现的一类 Flutter package。</strong> 插件有可依赖的 Dart API，并声明平台实现和注册信息，让 Flutter 工具链接入应用。</p>
-<p>在项目里写了 <code>MethodChannel</code>，只是实现了当前应用的通信。要让其他项目使用，还需要可复用的包结构、平台声明和集成配置。插件也可采用 FFI 调用原生库。</p>
-<p>联邦插件把应用 API、平台接口和各平台实现分开维护。接入时要检查目标平台是否支持，以及对应实现是否已随入口包接入。</p>
+<p><strong>一句话分清：<code>package</code>（包）主要是纯 Dart 代码或 Flutter UI 组件的复用单位；<code>plugin</code>（插件）是包的一种特殊形式，专门用来桥接 Android、iOS、桌面等各平台的原生能力。</strong> 只要包里需要调相机、定位、蓝牙等系统 API，并包含了对应的原生代码和平台配置，它就是插件。</p>
+<p>你在自己项目里写一个 <code>MethodChannel</code> 只是在当前工程里通了信，算不上插件；把它按规范整理成独立目录、写好 <code>pubspec.yaml</code> 里的平台注册声明，让其他项目 <code>pub add</code> 就能直接接入原生代码，这才叫 Flutter 插件（底层通信既可以用平台通道，也可以用 FFI 调原生库）。</p>
+<p>现在很多官方和大型三方库都采用<strong>联邦插件（Federated Plugin）</strong>架构，说白了就是“把一个大插件按端拆开维护”：顶层一个面向业务的入口包 + 中间一个约定接口规范的 <code>platform_interface</code> 包 + 底下 Android、iOS、Web 各自独立的平台实现包。这样不同平台可以由不同团队独立发版修 Bug，互不干扰。接入时记得确认入口包默认引入了你要的目标平台实现。</p>
 </div>
 <h4>终端操作示例</h4>
 <p>这是项目结构示例。命令会创建两个新目录，请在空的练习目录执行。</p>
